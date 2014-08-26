@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.Usuario" table="USUARIO" schema="MIGUEL">
+        <id name="usuarioId" type="string">
+            <column name="USUARIO_ID" length="30" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="oficina" class="mapeo.Oficina" fetch="select">
+            <column name="OFICINA_ID_OFICINA" length="5" not-null="true" />
+        </many-to-one>
+        <property name="usuarioNombre" type="string">
+            <column name="USUARIO_NOMBRE" length="153" />
+        </property>
+        <property name="usuarioPassword" type="string">
+            <column name="USUARIO_PASSWORD" length="16" />
+        </property>
+        <set name="usuTrammovs" table="USU_TRAMMOV" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_ID" length="30" />
+            </key>
+            <one-to-many class="mapeo.UsuTrammov" />
+        </set>
+        <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USUARIO_ID" length="30" not-null="true" />
+            </key>
+            <one-to-many class="mapeo.TramiteDatos" />
+        </set>
+    </class>
+</hibernate-mapping>

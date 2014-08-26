@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.DepeorigTrammov" table="DEPEORIG_TRAMMOV" schema="MIGUEL">
+        <composite-id name="id" class="mapeo.DepeorigTrammovId">
+            <key-property name="depOrigCod" type="big_decimal">
+                <column name="DEP_ORIG_COD" precision="22" scale="0" />
+            </key-property>
+            <key-property name="idMovi" type="big_decimal">
+                <column name="ID_MOVI" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="tramiteMovimiento" class="mapeo.TramiteMovimiento" update="false" insert="false" fetch="select">
+            <column name="ID_MOVI" precision="22" scale="0" />
+        </many-to-one>
+        <many-to-one name="dependenciaOrigen" class="mapeo.DependenciaOrigen" update="false" insert="false" fetch="select">
+            <column name="DEP_ORIG_COD" precision="22" scale="0" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

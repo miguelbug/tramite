@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
+        <id name="idMovi" type="big_decimal">
+            <column name="ID_MOVI" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="tramNum" type="string">
+            <column name="TRAM_NUM" length="50" not-null="true" />
+        </property>
+        <property name="movimientoNum" type="big_decimal">
+            <column name="MOVIMIENTO_NUM" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="movimientoFechaEnvio" type="date">
+            <column name="MOVIMIENTO_FECHA_ENVIO" length="7" not-null="true" />
+        </property>
+        <property name="movimientoFechaIng" type="date">
+            <column name="MOVIMIENTO_FECHA_ING" length="7" not-null="true" />
+        </property>
+        <property name="movimientoObserv" type="string">
+            <column name="MOVIMIENTO_OBSERV" length="250" />
+        </property>
+        <property name="movimientoEstado" type="string">
+            <column name="MOVIMIENTO_ESTADO" length="50" not-null="true" />
+        </property>
+        <set name="indicadTrammovs" table="INDICAD_TRAMMOV" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_MOVI" precision="22" scale="0" />
+            </key>
+            <one-to-many class="mapeo.IndicadTrammov" />
+        </set>
+        <set name="usuTrammovs" table="USU_TRAMMOV" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_MOVI" precision="22" scale="0" />
+            </key>
+            <one-to-many class="mapeo.UsuTrammov" />
+        </set>
+        <set name="depeorigTrammovs" table="DEPEORIG_TRAMMOV" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_MOVI" precision="22" scale="0" />
+            </key>
+            <one-to-many class="mapeo.DepeorigTrammov" />
+        </set>
+    </class>
+</hibernate-mapping>

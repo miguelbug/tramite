@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.DependenciaDestino" table="DEPENDENCIA_DESTINO" schema="MIGUEL">
+        <id name="depDestCod" type="big_decimal">
+            <column name="DEP_DEST_COD" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="depDestNombre" type="string">
+            <column name="DEP_DEST_NOMBRE" length="300" />
+        </property>
+    </class>
+</hibernate-mapping>

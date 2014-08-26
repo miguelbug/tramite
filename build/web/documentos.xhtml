@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>DOCUMENTOS</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <br></br>
+                    <br></br>
+                    <center>
+                        <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="20"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}">
+
+                            <f:facet name="header" >DOCUMENTOS</f:facet>
+
+                            <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                <h:outputText value="#{item.numerotramite}"/>
+                            </p:column>
+
+                            <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                <h:outputText value="#{item.fecha}"/>
+                            </p:column>
+
+                            <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                <h:outputText value="#{item.observacion}"/>
+                            </p:column>
+
+                            <p:column headerText="USUSARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                <h:outputText value="#{item.usuario}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </center>
+                    <br></br>
+                    <br></br>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

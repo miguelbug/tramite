@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@//172.16.89.130:1521/xe</property>
+    <property name="hibernate.connection.username">miguel</property>
+    <property name="hibernate.connection.password">miguelon</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="mapeo/Oficina.hbm.xml"/>
+    <mapping resource="mapeo/DependenciaDestino.hbm.xml"/>
+    <mapping resource="mapeo/IndicadTrammov.hbm.xml"/>
+    <mapping resource="mapeo/TramiteMovimiento.hbm.xml"/>
+    <mapping resource="mapeo/UsuTrammov.hbm.xml"/>
+    <mapping resource="mapeo/Usuario.hbm.xml"/>
+    <mapping resource="mapeo/TramiteDatos.hbm.xml"/>
+    <mapping resource="mapeo/DepeorigTrammov.hbm.xml"/>
+    <mapping resource="mapeo/DependenciaOrigen.hbm.xml"/>
+    <mapping resource="mapeo/Indicador.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

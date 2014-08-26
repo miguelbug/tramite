@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.TramiteDatos" table="TRAMITE_DATOS" schema="MIGUEL">
+        <id name="idTramite" type="big_decimal">
+            <column name="ID_TRAMITE" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="mapeo.Usuario" fetch="select">
+            <column name="USUARIO_ID" length="30" not-null="true" />
+        </many-to-one>
+        <many-to-one name="dependenciaOrigen" class="mapeo.DependenciaOrigen" fetch="select">
+            <column name="DEPORIG_COD" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="tramNum" type="string">
+            <column name="TRAM_NUM" length="42" not-null="true" />
+        </property>
+        <property name="tramFecha" type="date">
+            <column name="TRAM_FECHA" length="7" not-null="true" />
+        </property>
+        <property name="tramObs" type="string">
+            <column name="TRAM_OBS" length="250" />
+        </property>
+        <property name="estaDescrip" type="string">
+            <column name="ESTA_DESCRIP" length="10" />
+        </property>
+        <property name="docuPric" type="string">
+            <column name="DOCU_PRIC" length="30" not-null="true" />
+        </property>
+        <property name="docuNombre" type="string">
+            <column name="DOCU_NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="docuNum" type="string">
+            <column name="DOCU_NUM" length="10" />
+        </property>
+        <property name="docuSiglas" type="string">
+            <column name="DOCU_SIGLAS" length="30" />
+        </property>
+        <property name="docuAnio" type="string">
+            <column name="DOCU_ANIO" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

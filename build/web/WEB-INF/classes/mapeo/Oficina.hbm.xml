@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.Oficina" table="OFICINA" schema="MIGUEL">
+        <id name="idOficina" type="string">
+            <column name="ID_OFICINA" length="5" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreOficina" type="string">
+            <column name="NOMBRE_OFICINA" length="200" />
+        </property>
+        <set name="usuarios" table="USUARIO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="OFICINA_ID_OFICINA" length="5" not-null="true" />
+            </key>
+            <one-to-many class="mapeo.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>

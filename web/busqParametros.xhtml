@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <br></br>
+                    <center>
+                    <p:panelGrid style="margin-bottom:10px" id="panelpadre" >
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Numero de Trámite: "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="numtramite" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="Código: "/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="identif" value="" >
+                                    <f:selectItem itemLabel="Codigo..." itemValue=" " />
+                                    <f:selectItems  value="#{documentosBean.codigosdepe}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="Año: "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="idanio" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Asunto: "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="asunto"  />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="Mes: " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="mes" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Buscar" />
+                            </p:column>
+                        </p:row>
+                    <p:panelGrid style="margin-bottom:10px" id="panelhijo">
+                        
+                    </p:panelGrid>
+                    </center>
+                    <br></br>
+                    <p:panelGrid 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/08/2014 02:20:24 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="mapeo.Indicador" table="INDICADOR" schema="MIGUEL">
+        <id name="indcadCod" type="big_decimal">
+            <column name="INDCAD_COD" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="indicNombre" type="string">
+            <column name="INDIC_NOMBRE" length="60" />
+        </property>
+        <set name="indicadTrammovs" table="INDICAD_TRAMMOV" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="INDCAD_COD" precision="22" scale="0" />
+            </key>
+            <one-to-many class="mapeo.IndicadTrammov" />
+        </set>
+    </class>
+</hibernate-mapping>

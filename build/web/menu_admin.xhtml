@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="messages"/>
+            <h3 align="center">SISTEMA TRÁMITE OGPL</h3>
+            <h:outputLabel value="Usuario: #{loginBean.usu.usuarioNombre}"/>
+            <br></br>
+            <br></br>
+            <p:menubar>
+                <p:submenu label="Usuarios" icon="ui-icon-pencil">
+                    <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
+                </p:submenu>
+                <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
+                    <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
+                </p:submenu>
+                <p:submenu label="Opciones" icon="ui-icon-pencil">
+                    <p:menuitem value="Derivar" action="derivar?faces-redirect=true"/>
+                    <p:menuitem value="Archivar" action="archivar?faces-redirect=true" />
+                </p:submenu>
+                <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
+            </p:menubar>
+        </h:form>
+    </h:body>
+</html>

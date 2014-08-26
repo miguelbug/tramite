@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-schema="MIGUEL"/>
+  <table-filter match-name="INDICAD_TRAMMOV"/>
+  <table-filter match-name="DEPENDENCIA_DESTINO"/>
+  <table-filter match-name="TRAMITE_DATOS"/>
+  <table-filter match-name="USUARIO"/>
+  <table-filter match-name="DEPEORIG_TRAMMOV"/>
+  <table-filter match-name="DEPENDENCIA_ORIGEN"/>
+  <table-filter match-name="USU_TRAMMOV"/>
+  <table-filter match-name="OFICINA"/>
+  <table-filter match-name="TRAMITE_MOVIMIENTO"/>
+  <table-filter match-name="INDICADOR"/>
+</hibernate-reverse-engineering>
