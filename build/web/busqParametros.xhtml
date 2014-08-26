@@ -19,53 +19,53 @@ and open the template in the editor.
                 <h:form>
                     <br></br>
                     <center>
-                    <p:panelGrid style="margin-bottom:10px" id="panelpadre" >
-                        <p:row>
-                            <p:column>
-                                <h:outputLabel value="Numero de Trámite: "/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="numtramite" />
-                            </p:column>
-                            <p:column>
-                                <h:outputLabel value="Código: "/>
-                            </p:column>
-                            <p:column>
-                                <p:selectOneMenu id="identif" value="" >
-                                    <f:selectItem itemLabel="Codigo..." itemValue=" " />
-                                    <f:selectItems  value="#{documentosBean.codigosdepe}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column>
-                                <h:outputLabel value="Año: "/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="idanio" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <h:outputLabel value="Asunto: "/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="asunto"  />
-                            </p:column>
-                            <p:column>
-                                <h:outputLabel value="Mes: " />
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="mes" />
-                            </p:column>
-                            <p:column>
-                                <p:commandButton value="Buscar" />
-                            </p:column>
-                        </p:row>
-                    <p:panelGrid style="margin-bottom:10px" id="panelhijo">
-                        
-                    </p:panelGrid>
+                        <p:panelGrid style="margin-bottom:10px" id="panelpadre" >
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Numero de Trámite: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="numtramite" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Código: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="identif" value="" >
+                                        <f:selectItem itemLabel="Codigo..." itemValue=" " />
+                                        <f:selectItems  value="#{documentosBean.codigosdepe}"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Año: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="idanio" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Asunto: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="asunto"  />
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Mes: " />
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="mes" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Buscar" />
+                                </p:column>
+                            </p:row>
+                            <p:panelGrid style="margin-bottom:10px" id="panelhijo">
+
+                            </p:panelGrid>
                     </center>
                     <br></br>
-                    <p:panelGrid 
+                    </p:panelGrid>
                 </h:form>
             </ui:define>
         </ui:composition>
