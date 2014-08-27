@@ -29,12 +29,10 @@ public class DocumentosBean implements Serializable {
     private List documentos;
     private DocumentoDAO dd;
     private List otrosdocus;
-    private List codigosdepe;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         documentos = new ArrayList<Map<String,String>>();
-        codigosdepe=dd.getCodigos();
         MostrarDocumentos();
         
     }
@@ -46,7 +44,7 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocumentos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[4];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -54,6 +52,12 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
                 listaaux.put("usuario", String.valueOf(obj[3]));
+                listaaux.put("descripcion", String.valueOf(obj[4]));
+                listaaux.put("docunombre", String.valueOf(obj[5]));
+                listaaux.put("docunumero", String.valueOf(obj[6]));
+                listaaux.put("docusiglas", String.valueOf(obj[7]));
+                listaaux.put("docuanio", String.valueOf(obj[8]));
+                listaaux.put("departorigen", String.valueOf(obj[9]));
                 documentos.add(listaaux);
             }
         } catch (Exception e) {
@@ -78,18 +82,6 @@ public class DocumentosBean implements Serializable {
     }
     public List getOtrosdocus() {
         return otrosdocus;
-    }
-
-    public void setOtrosdocus(List otrosdocus) {
-        this.otrosdocus = otrosdocus;
-    }
-
-    public List getCodigosdepe() {
-        return codigosdepe;
-    }
-
-    public void setCodigosdepe(List codigosdepe) {
-        this.codigosdepe = codigosdepe;
     }
     
 }

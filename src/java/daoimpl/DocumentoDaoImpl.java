@@ -16,7 +16,7 @@ import util.HibernateUtil;
  *
  * @author OGPL
  */
-public class DocumentoDaoImpl implements DocumentoDAO{
+public class DocumentoDaoImpl implements DocumentoDAO {
 
     Session session;
 
@@ -28,10 +28,21 @@ public class DocumentoDaoImpl implements DocumentoDAO{
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.USUARIO_ID FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO WHERE TD.USUARIO_ID=USU.USUARIO_ID AND TD.DEPORIG_COD=DO.DEP_ORIG_COD");
+            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,\n"
+                    + " TD.TRAM_OBS,\n"
+                    + " TD.USUARIO_ID,\n"
+                    + " TD.ESTA_DESCRIP,\n"
+                    + " TD.DOCU_NOMBRE,\n"
+                    + " TD.DOCU_NUM,\n"
+                    + " TD.DOCU_SIGLAS,\n"
+                    + " TD.DOCU_ANIO,\n"
+                    + " DO.DEP_ORIG_NOMBRE\n"
+                    + " FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO \n"
+                    + " WHERE TD.USUARIO_ID=USU.USUARIO_ID \n"
+                    + " AND TD.DEPORIG_COD=DO.DEP_ORIG_COD");
             docus = query.list();
             System.out.println("despues de query session");
-            if(docus==null){
+            if (docus == null) {
                 System.out.println("qué carajos?");
             }
             session.beginTransaction().commit();
@@ -64,6 +75,27 @@ public class DocumentoDaoImpl implements DocumentoDAO{
         }
         System.out.println("retorna");
         return codigos;
+    }
+
+    @Override
+    public List getBusqueda(String n1, String n2, String n3, String n4, String n5) {
+        String[] cadena = new String[6];
+        cadena[0] = "'%" + n1 + "%'";
+        cadena[1] = "'%" + n2 + "%'";
+        cadena[2] = "'%" + n3 + "%'";
+        cadena[3] = "'%" + n4 + "%'";
+        cadena[4] = "'%" + n5 + "%'";
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String CrearAnd(String objeto, int posi) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String CrearVariable(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

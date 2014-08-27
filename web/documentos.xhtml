@@ -36,6 +36,55 @@
                             <p:column headerText="USUSARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                 <h:outputText value="#{item.usuario}"/>
                             </p:column>
+
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:panelGrid style="margin-bottom:10px">
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputText value="Descripcion:" />
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.descripcion}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Doc. Nombre:"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.docunombre}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Doc. Numero:"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.docunumero}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputText value="Doc. Siglas:"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.docusiglas}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Doc. Año:"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.docuanio}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Origen:"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{item.departorigen}"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:rowExpansion>
                         </p:dataTable>
                     </center>
                     <br></br>

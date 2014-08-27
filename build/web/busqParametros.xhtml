@@ -20,6 +20,9 @@ and open the template in the editor.
                     <br></br>
                     <center>
                         <p:panelGrid style="margin-bottom:10px" id="panelpadre" >
+                            <f:facet name="header">
+                                <p:outputLabel value="Busqueda Avanzada"/>
+                            </f:facet>
                             <p:row>
                                 <p:column>
                                     <h:outputLabel value="Numero de Trámite: "/>
@@ -31,9 +34,32 @@ and open the template in the editor.
                                     <h:outputLabel value="Código: "/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="identif" value="" >
-                                        <f:selectItem itemLabel="Codigo..." itemValue=" " />
-                                        <f:selectItems  value="#{documentosBean.codigosdepe}"/>
+                                    <p:selectOneMenu id="identif" value="#{buscarDocumentosBean.codigosdepe}" >
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
+                                        <f:selectItem itemLabel="DGA" itemValue="DGA" />
+                                        <f:selectItem itemLabel="EPG" itemValue="EPG" />
+                                        <f:selectItem itemLabel="FCA" itemValue="FCA" />
+                                        <f:selectItem itemLabel="FCB" itemValue="FCB" />
+                                        <f:selectItem itemLabel="FCC" itemValue="FCC" />
+                                        <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
+                                        <f:selectItem itemLabel="FCE" itemValue="FCE" />
+                                        <f:selectItem itemLabel="FCF" itemValue="FCF" />
+                                        <f:selectItem itemLabel="FCM" itemValue="FCM" />
+                                        <f:selectItem itemLabel="FD" itemValue="FD" />
+                                        <f:selectItem itemLabel="FE" itemValue="FE" />
+                                        <f:selectItem itemLabel="FFB" itemValue="FFB" />
+                                        <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
+                                        <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
+                                        <f:selectItem itemLabel="FII" itemValue="FII" />
+                                        <f:selectItem itemLabel="FISI" itemValue="FISI" />
+                                        <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
+                                        <f:selectItem itemLabel="FMV" itemValue="FMV" />
+                                        <f:selectItem itemLabel="FM" itemValue="FM" />
+                                        <f:selectItem itemLabel="FO" itemValue="FO" />
+                                        <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
+                                        <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
+                                        <f:selectItem itemLabel="OCA" itemValue="OCA" />
                                     </p:selectOneMenu>
                                 </p:column>
                                 <p:column>
@@ -62,7 +88,7 @@ and open the template in the editor.
                             </p:row>
                         </p:panelGrid >
                         <p:panelGrid style="margin-bottom:10px" id="panelhermano">
-                            
+
                         </p:panelGrid>
                     </center>
                     <br></br>
