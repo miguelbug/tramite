@@ -18,4 +18,5 @@ public interface DocumentoDAO {
     public List getBusqueda(String n1, String n2, String n3, String n4, String n5);
     public String CrearAnd(String objeto, int posi);
     public String CrearVariable(int i);
+    public String getSQL(String[] a);
 }

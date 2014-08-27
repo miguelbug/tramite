@@ -79,23 +79,77 @@ public class DocumentoDaoImpl implements DocumentoDAO {
 
     @Override
     public List getBusqueda(String n1, String n2, String n3, String n4, String n5) {
-        String[] cadena = new String[6];
-        cadena[0] = "'%" + n1 + "%'";
-        cadena[1] = "'%" + n2 + "%'";
-        cadena[2] = "'%" + n3 + "%'";
-        cadena[3] = "'%" + n4 + "%'";
-        cadena[4] = "'%" + n5 + "%'";
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("estoy aca");
+        String[] cadena = new String[5];
+        cadena[0] = n1;
+        cadena[1] = n2;
+        cadena[2] = n3;
+        cadena[3] = n4;
+        cadena[4] = n5;
+        for (String cadena1 : cadena) {
+            if(cadena1!=null){
+                System.out.println(cadena1 + "-" + cadena1.length());
+            }
+        }
+        String sql = getSQL(cadena);
+
+        List busqueda = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("entra");
+            session.beginTransaction();
+            System.out.println("despues de begin");
+            Query query = session.createSQLQuery(sql);
+            busqueda = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna");
+        return busqueda;
     }
 
     @Override
     public String CrearAnd(String objeto, int posi) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return " And " + CrearVariable(posi) + " LIKE '%" + objeto + "%' ";
     }
 
     @Override
     public String CrearVariable(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String variable = "";
+        if (i == 0) {
+            variable = "TD.TRAM_NUM";
+        }
+        if (i == 1) {
+            variable = "TD.TRAM_NUM";
+        }
+        if (i == 2) {
+            variable = "TD.TRAM_NUM";
+        }
+        if (i == 3) {
+            variable = "TD.TRAM_OBS";
+        }
+        if (i == 4) {
+            variable = "TD.TRAM_FECHA";
+        }
+        return variable;
+    }
+
+    @Override
+    public String getSQL(String[] a) {
+        int i = 0;
+        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.USUARIO_ID FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO WHERE TD.USUARIO_ID=USU.USUARIO_ID AND TD.DEPORIG_COD=DO.DEP_ORIG_COD";
+        while (i < a.length) {
+            if (a[i]!=null && a[i].length()!=0) {
+                System.out.println(a[i]);
+                comienzo += CrearAnd(a[i], i);
+            }
+            i++;
+        }
+        return comienzo;
     }
 
 }
