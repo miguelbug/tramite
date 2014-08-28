@@ -35,14 +35,16 @@ public class BuscarDocumentosBean implements Serializable{
     private String asunto;
     private String mes;
     private List filtro;
+    private boolean aparece;
 
     public BuscarDocumentosBean() {
         dd = new DocumentoDaoImpl();
         docus = new ArrayList<Map<String,String>>();
+        aparece=false;
     }
 
     public void Buscar() {
-        //docus.clear();
+        docus.clear();
         System.out.println("listando");
         System.out.println(numerotramite+"-"+codigosdepe+"-"+anio+"-"+asunto+"-"+mes);
         try {
@@ -59,9 +61,11 @@ public class BuscarDocumentosBean implements Serializable{
                 listaaux.put("usuario", String.valueOf(obj[3]));
                 docus.add(listaaux);
             }
+            aparece=true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(aparece);
     }
 
     public DocumentoDAO getDd() {
@@ -136,4 +140,12 @@ public class BuscarDocumentosBean implements Serializable{
         this.filtro = filtro;
     }
 
+    public boolean isAparece() {
+        return aparece;
+    }
+
+    public void setAparece(boolean aparece) {
+        this.aparece = aparece;
+    }
+    
 }

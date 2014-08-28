@@ -133,7 +133,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             variable = "TD.TRAM_OBS";
         }
         if (i == 4) {
-            variable = "TD.TRAM_FECHA";
+            variable = "TO_CHAR(TD.TRAM_FECHA,'MM')";
         }
         return variable;
     }
