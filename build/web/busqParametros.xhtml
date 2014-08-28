@@ -110,7 +110,7 @@ and open the template in the editor.
                                 </p:column>
                             </p:row>
                             <p:row>
-                                <p:column colspan="4">
+                                <p:column colspan="5">
                                     <p:dataTable value="#{buscarDocumentosBean.docus}" var="item" paginator="true" rows="20" id="tabladocus"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}">
@@ -130,6 +130,54 @@ and open the template in the editor.
                                         <p:column headerText="USUSARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                             <h:outputText value="#{item.usuario}"/>
                                         </p:column>
+
+                                        <p:column style="width:16px">
+                                            <p:rowToggler />
+                                        </p:column>
+                                        <p:rowExpansion>
+                                            <p:panelGrid style="margin-bottom:10px">
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:outputText value="Descripcion:" />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.descripcion}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="Doc. Nombre:"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.docunombre}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="Doc. Numero:"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.docunumero}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <h:outputText value="Doc. Siglas:"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.docusiglas}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="Doc. Año:"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.docuanio}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="Origen:"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <h:outputText value="#{item.departorigen}"/>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+                                        </p:rowExpansion>
                                     </p:dataTable>
                                 </p:column>
 

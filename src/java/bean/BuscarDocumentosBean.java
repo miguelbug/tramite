@@ -51,7 +51,7 @@ public class BuscarDocumentosBean implements Serializable{
             List lista = new ArrayList();
             lista = dd.getBusqueda(numerotramite, codigosdepe, anio, asunto, mes);
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[4];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -59,6 +59,12 @@ public class BuscarDocumentosBean implements Serializable{
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
                 listaaux.put("usuario", String.valueOf(obj[3]));
+                listaaux.put("descripcion", String.valueOf(obj[4]));
+                listaaux.put("docunombre", String.valueOf(obj[5]));
+                listaaux.put("docunumero", String.valueOf(obj[6]));
+                listaaux.put("docusiglas", String.valueOf(obj[7]));
+                listaaux.put("docuanio", String.valueOf(obj[8]));
+                listaaux.put("departorigen", String.valueOf(obj[9]));
                 docus.add(listaaux);
             }
             aparece=true;
