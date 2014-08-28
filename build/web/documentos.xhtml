@@ -37,8 +37,16 @@
                                 <h:outputText value="#{item.usuario}"/>
                             </p:column>
 
-                            <p:column style="width:16px">
+                            <p:column headerText="DETALLE" style="width:16px">
                                 <p:rowToggler />
+                            </p:column>
+
+                            <p:column headerText="Acciones" style="width:16px">
+                                <p:menuButton value="Opciones">
+                                    <p:menuitem value="Derivar"  icon="ui-icon-disk"/>
+                                    <p:menuitem value="Archivar" icon="ui-icon-arrowrefresh-1-w"/>
+                                    <p:menuitem value="Seguimiento"  icon="ui-icon-close"/>
+                                </p:menuButton>
                             </p:column>
 
                             <p:rowExpansion>
