@@ -29,10 +29,13 @@ public class DocumentosBean implements Serializable {
     private List documentos;
     private DocumentoDAO dd;
     private List otrosdocus;
+    private List docselec;
+    private boolean mostrar=false;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         documentos = new ArrayList<Map<String,String>>();
+        docselec = new ArrayList<Map<String,String>>();
         MostrarDocumentos();
         
     }
@@ -64,7 +67,9 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
+    public void cambiar(){
+        mostrar=true;
+    }
     public List getDocumentos() {
         return documentos;
     }
@@ -82,6 +87,22 @@ public class DocumentosBean implements Serializable {
     }
     public List getOtrosdocus() {
         return otrosdocus;
+    }
+
+    public List getDocselec() {
+        return docselec;
+    }
+
+    public void setDocselec(List docselec) {
+        this.docselec = docselec;
+    }
+
+    public boolean isMostrar() {
+        return mostrar;
+    }
+
+    public void setMostrar(boolean mostrar) {
+        this.mostrar = mostrar;
     }
     
 }

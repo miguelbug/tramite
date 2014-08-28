@@ -33,7 +33,7 @@ public class LoginBean implements Serializable {
     private Usuario usu;
     private HttpServletRequest httpServletRequest;
     private FacesContext contex;
-    private String url;
+    private String direccion;
 
     public LoginBean() {
         contex = FacesContext.getCurrentInstance();
@@ -54,7 +54,8 @@ public class LoginBean implements Serializable {
                 contex = FacesContext.getCurrentInstance();
                 httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();
                 httpServletRequest.getSession().setAttribute("sesionUsuario", usu);
-                 message= new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsuarioNombre());
+                 message= new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsuarioId());
+                 getPathRol();
                 url= "template";
             } catch (Exception e) {
                  message= new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario/Password Incorrecto");
@@ -66,7 +67,7 @@ public class LoginBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         return url;
     }
-
+    
     public String logout() {
         limpiarlabels();
         httpServletRequest.removeAttribute("sesionUsuario");
@@ -83,10 +84,10 @@ public class LoginBean implements Serializable {
         if (usu != null) {
             System.out.println("sale de aca");
             if (usu.getOficina().getIdOficina().equals("10069")) {
-                url = "menu_admin.xhtml";
+                direccion = "menu_admin.xhtml";
             }
             if (!usu.getOficina().getIdOficina().equals("10069")) {
-                url = "menu_user.xhtml";
+                direccion = "menu_user.xhtml";
             }
         }
 
@@ -119,13 +120,29 @@ public class LoginBean implements Serializable {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
-
-    public String getUrl() {
-        return url;
+    
+    public HttpServletRequest getHttpServletRequest() {
+        return httpServletRequest;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
     }
 
+    public FacesContext getContex() {
+        return contex;
+    }
+
+    public void setContex(FacesContext contex) {
+        this.contex = contex;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    
 }

@@ -15,7 +15,7 @@
                     <br></br>
                     <br></br>
                     <center>
-                        <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="20"
+                        <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="20" id="tabladocumentos" 
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}">
 
@@ -37,20 +37,19 @@
                                 <h:outputText value="#{item.usuario}"/>
                             </p:column>
 
-                            <p:column headerText="DETALLE" style="width:16px">
-                                <p:rowToggler />
-                            </p:column>
+                            <p:column style="width:16px">  
+                                <p:rowToggler />  
+                            </p:column>  
 
-                            <p:column headerText="Acciones" style="width:16px">
+                            <p:column headerText="Herramientas" style="width:16px">
                                 <p:menuButton value="Opciones">
                                     <p:menuitem value="Derivar"  icon="ui-icon-arrowrefresh-1-w"/>
                                     <p:menuitem value="Archivar" icon="ui-icon-disk"/>
-                                    <p:menuitem value="Seguimiento"  icon="ui-icon-search"/>
+                                    <p:menuitem value="Seguimiento"  icon="ui-icon-extlink"/>
                                 </p:menuButton>
                             </p:column>
-
-                            <p:rowExpansion >
-                                <p:panelGrid style="margin-bottom:10px">
+                            <p:rowExpansion>
+                                <p:panelGrid style="margin-bottom:10px" >
                                     <p:row>
                                         <p:column>
                                             <h:outputText value="Descripcion:" />
