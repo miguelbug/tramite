@@ -104,5 +104,9 @@ public class DocumentosBean implements Serializable {
     public void setMostrar(boolean mostrar) {
         this.mostrar = mostrar;
     }
+
+    public void setOtrosdocus(List otrosdocus) {
+        this.otrosdocus = otrosdocus;
+    }
     
 }
