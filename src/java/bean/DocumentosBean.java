@@ -30,13 +30,6 @@ public class DocumentosBean implements Serializable {
 
     private List documentos;
     private DocumentoDAO dd;
-<<<<<<< HEAD
-
-    public void setOtrosdocus(List otrosdocus) {
-        this.otrosdocus = otrosdocus;
-    }
-=======
->>>>>>> origin/master
     private List otrosdocus;
     private List docselec;
     private boolean mostrar=false;
