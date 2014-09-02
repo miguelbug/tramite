@@ -34,6 +34,7 @@ public class DocumentosBean implements Serializable {
     private List docselec;
     private boolean mostrar=false;
     private List seglista;
+    private String seleccion;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -64,13 +65,13 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    public void Detalles(RowEditEvent event){
+    public List Detalles(){
         System.out.println("listando detalles");
         //seglista.clear();
         try {
             List lista = new ArrayList();
-            System.out.println(String.valueOf(((HashMap)event.getObject()).get("numerotramite")));
-            lista = dd.getDetalle(String.valueOf(((HashMap)event.getObject()).get("numerotramite")));
+            System.out.println(seleccion);
+            lista = dd.getDetalle(seleccion);
             Iterator ite = lista.iterator();
             Object obj[] = new Object[8];
             while (ite.hasNext()) {
@@ -86,10 +87,10 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("docuanio", String.valueOf(obj[7]));
                 seglista.add(listaaux);
             }
-            RequestContext.getCurrentInstance().openDialog("detalles");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return seglista;
     }
     public void cambiar(){
         mostrar=true;
@@ -139,6 +140,14 @@ public class DocumentosBean implements Serializable {
 
     public void setSeglista(List seglista) {
         this.seglista = seglista;
+    }
+
+    public String getSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(String seleccion) {
+        this.seleccion = seleccion;
     }
     
 }
