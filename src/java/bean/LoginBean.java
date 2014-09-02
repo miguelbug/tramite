@@ -17,7 +17,7 @@ import org.primefaces.context.RequestContext;
 import dao.LoginDao;
 import daoimpl.LoginDaoImpl;
 import javax.servlet.http.HttpServletRequest;
-import mapeo.Usuario;
+import maping.Usuario;
 
 /**
  *
@@ -54,7 +54,7 @@ public class LoginBean implements Serializable {
                 contex = FacesContext.getCurrentInstance();
                 httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();
                 httpServletRequest.getSession().setAttribute("sesionUsuario", usu);
-                 message= new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsuarioId());
+                 message= new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsu());
                  getPathRol();
                 url= "template";
             } catch (Exception e) {

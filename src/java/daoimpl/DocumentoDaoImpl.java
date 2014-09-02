@@ -28,18 +28,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,\n"
-                    + " TD.TRAM_OBS,\n"
-                    + " TD.USUARIO_ID,\n"
-                    + " TD.ESTA_DESCRIP,\n"
-                    + " TD.DOCU_NOMBRE,\n"
-                    + " TD.DOCU_NUM,\n"
-                    + " TD.DOCU_SIGLAS,\n"
-                    + " TD.DOCU_ANIO,\n"
-                    + " DO.DEP_ORIG_NOMBRE\n"
-                    + " FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO \n"
-                    + " WHERE TD.USUARIO_ID=USU.USUARIO_ID \n"
-                    + " AND TD.DEPORIG_COD=DO.DEP_ORIG_COD");
+            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP\n"
+                    + "FROM TRAMITE_DATOS TD");
             docus = query.list();
             System.out.println("despues de query session");
             if (docus == null) {
@@ -87,7 +77,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         cadena[3] = n4;
         cadena[4] = n5;
         for (String cadena1 : cadena) {
-            if(cadena1!=null){
+            if (cadena1 != null) {
                 System.out.println(cadena1 + "-" + cadena1.length());
             }
         }
@@ -142,25 +132,53 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public String getSQL(String[] a) {
         int i = 0;
         String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,\n"
-                    + " TD.TRAM_OBS,\n"
-                    + " TD.USUARIO_ID,\n"
-                    + " TD.ESTA_DESCRIP,\n"
-                    + " TD.DOCU_NOMBRE,\n"
-                    + " TD.DOCU_NUM,\n"
-                    + " TD.DOCU_SIGLAS,\n"
-                    + " TD.DOCU_ANIO,\n"
-                    + " DO.DEP_ORIG_NOMBRE\n"
-                    + " FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO \n"
-                    + " WHERE TD.USUARIO_ID=USU.USUARIO_ID \n"
-                    + " AND TD.DEPORIG_COD=DO.DEP_ORIG_COD";
+                + " TD.TRAM_OBS,\n"
+                + " TD.USUARIO_ID,\n"
+                + " TD.ESTA_DESCRIP,\n"
+                + " TD.DOCU_NOMBRE,\n"
+                + " TD.DOCU_NUM,\n"
+                + " TD.DOCU_SIGLAS,\n"
+                + " TD.DOCU_ANIO,\n"
+                + " DO.DEP_ORIG_NOMBRE\n"
+                + " FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO \n"
+                + " WHERE TD.USUARIO_ID=USU.USUARIO_ID \n"
+                + " AND TD.DEPORIG_COD=DO.DEP_ORIG_COD";
         while (i < a.length) {
-            if (a[i]!=null && a[i].length()!=0) {
+            if (a[i] != null && a[i].length() != 0) {
                 System.out.println(a[i]);
                 comienzo += CrearAnd(a[i], i);
             }
             i++;
         }
         return comienzo;
+    }
+
+    @Override
+    public List getDetalle(String tramnum) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.USU,U.USU_NOMBRE,OFI.NOMBRE_OFICINA,DEP.NOMBRE,\n"
+                    + "DOC.DOCU_NOMBRE,\n"
+                    + "DOC.DOCU_NUM,\n"
+                    + "DOC.DOCU_SIGLAS,\n"
+                    + "DOC.DOCU_ANIO\n"
+                    + "FROM TRAMITE_DATOS TD, USUARIO U,DEPENDENCIA DEP, TIPO_DOCU DOC,OFICINA OFI\n"
+                    + "WHERE TD.TRAM_NUM='" + tramnum+  "' \n"
+                    + "AND TD.USU=U.USU\n"
+                    + "AND TD.CODIGO=DEP.CODIGO\n"
+                    + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
+                    + "AND U.ID_OFICINA=OFI.ID_OFICINA");
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
     }
 
 }

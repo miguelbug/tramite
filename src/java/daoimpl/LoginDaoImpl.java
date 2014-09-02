@@ -9,7 +9,7 @@ package daoimpl;
 import org.hibernate.Session;
 import dao.LoginDao;
 import util.HibernateUtil;
-import mapeo.Usuario;
+import maping.Usuario;
 
 /**
  *
@@ -24,7 +24,7 @@ public class LoginDaoImpl implements LoginDao{
         System.out.println("loginbuscar");
         Usuario nuevoUsu = null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "FROM Usuario WHERE USUARIO_ID = '" + usu + "' AND USUARIO_PASSWORD='" + pass + "'";
+        String sql = "FROM Usuario WHERE USU = '" + usu + "' AND CLAVE='" + pass + "'";
         try {
             session.beginTransaction();
             nuevoUsu = (Usuario) session.createQuery(sql).uniqueResult();

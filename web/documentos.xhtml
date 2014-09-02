@@ -15,9 +15,10 @@
                     <br></br>
                     <br></br>
                     <center>
-                        <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="20" id="tabladocumentos" 
+                        <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}">
+                                     emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}"
+                                     >
 
                             <f:facet name="header" >DOCUMENTOS</f:facet>
 
@@ -33,65 +34,19 @@
                                 <h:outputText value="#{item.observacion}"/>
                             </p:column>
 
-                            <p:column headerText="USUSARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
-                                <h:outputText value="#{item.usuario}"/>
+                            <p:column headerText="DESCRIPCION" width="5" sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" filterMatchMode="contains">
+                                <h:outputText value="#{item.descripcion}"/>
                             </p:column>
 
-                            <p:column style="width:16px">  
-                                <p:rowToggler />  
-                            </p:column>  
-
-                            <p:column headerText="Herramientas" style="width:16px">
+                            <!--<p:column headerText="Herramientas" style="width:16px">
                                 <p:menuButton value="Opciones">
+                                    <p:menuitem value="Detalles"  icon="ui-icon-search" />
                                     <p:menuitem value="Derivar"  icon="ui-icon-arrowrefresh-1-w"/>
                                     <p:menuitem value="Archivar" icon="ui-icon-disk"/>
                                     <p:menuitem value="Seguimiento"  icon="ui-icon-extlink"/>
                                 </p:menuButton>
-                            </p:column>
-                            <p:rowExpansion>
-                                <p:panelGrid style="margin-bottom:10px" >
-                                    <p:row>
-                                        <p:column>
-                                            <h:outputText value="Descripcion:" />
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.descripcion}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="Doc. Nombre:"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.docunombre}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="Doc. Numero:"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.docunumero}"/>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>
-                                            <h:outputText value="Doc. Siglas:"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.docusiglas}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="Doc. Año:"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.docuanio}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="Origen:"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{item.departorigen}"/>
-                                        </p:column>
-                                    </p:row>
-                                </p:panelGrid>
-                            </p:rowExpansion>
+                            </p:column>-->
+                            
                         </p:dataTable>
                     </center>
                     <br></br>

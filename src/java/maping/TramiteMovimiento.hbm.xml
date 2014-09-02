@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02/09/2014 12:28:11 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
+        <id name="idMovi" type="big_decimal">
+            <column name="ID_MOVI" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
+            <column name="TRAM_NUM" length="42" />
+        </many-to-one>
+        <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO1" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="indicador" class="maping.Indicador" fetch="select">
+            <column name="INDI_COD" precision="5" scale="0" />
+        </many-to-one>
+        <property name="moviNum" type="java.lang.Short">
+            <column name="MOVI_NUM" precision="4" scale="0" />
+        </property>
+        <property name="fechaEnvio" type="date">
+            <column name="FECHA_ENVIO" length="7" />
+        </property>
+        <property name="fechaIngr" type="date">
+            <column name="FECHA_INGR" length="7" />
+        </property>
+        <property name="moviObs" type="string">
+            <column name="MOVI_OBS" length="250" />
+        </property>
+        <property name="estaNombre" type="string">
+            <column name="ESTA_NOMBRE" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>
