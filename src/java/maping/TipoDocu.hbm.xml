@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02/09/2014 12:28:11 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.TipoDocu" table="TIPO_DOCU" schema="MIGUEL">
+        <id name="idDocu" type="big_decimal">
+            <column name="ID_DOCU" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
+            <column name="TRAM_NUM" length="42" />
+        </many-to-one>
+        <property name="docuPric" type="string">
+            <column name="DOCU_PRIC" length="30" not-null="true" />
+        </property>
+        <property name="docuNombre" type="string">
+            <column name="DOCU_NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="docuNum" type="string">
+            <column name="DOCU_NUM" length="10" />
+        </property>
+        <property name="docuSiglas" type="string">
+            <column name="DOCU_SIGLAS" length="30" />
+        </property>
+        <property name="docuAnio" type="string">
+            <column name="DOCU_ANIO" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

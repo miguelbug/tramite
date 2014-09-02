@@ -1,5 +1,5 @@
-package mapeo;
-// Generated 22/08/2014 02:20:23 PM by Hibernate Tools 3.6.0
+package maping;
+// Generated 02/09/2014 12:28:10 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -19,8 +19,9 @@ public class Oficina  implements java.io.Serializable {
     }
 
 	
-    public Oficina(String idOficina) {
+    public Oficina(String idOficina, String nombreOficina) {
         this.idOficina = idOficina;
+        this.nombreOficina = nombreOficina;
     }
     public Oficina(String idOficina, String nombreOficina, Set<Usuario> usuarios) {
        this.idOficina = idOficina;

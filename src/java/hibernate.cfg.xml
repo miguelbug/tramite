@@ -9,15 +9,12 @@
     <property name="hibernate.connection.password">miguelon</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="mapeo/Oficina.hbm.xml"/>
-    <mapping resource="mapeo/DependenciaDestino.hbm.xml"/>
-    <mapping resource="mapeo/IndicadTrammov.hbm.xml"/>
-    <mapping resource="mapeo/TramiteMovimiento.hbm.xml"/>
-    <mapping resource="mapeo/UsuTrammov.hbm.xml"/>
-    <mapping resource="mapeo/Usuario.hbm.xml"/>
-    <mapping resource="mapeo/TramiteDatos.hbm.xml"/>
-    <mapping resource="mapeo/DepeorigTrammov.hbm.xml"/>
-    <mapping resource="mapeo/DependenciaOrigen.hbm.xml"/>
-    <mapping resource="mapeo/Indicador.hbm.xml"/>
+    <mapping resource="maping/Dependencia.hbm.xml"/>
+    <mapping resource="maping/TramiteMovimiento.hbm.xml"/>
+    <mapping resource="maping/TipoDocu.hbm.xml"/>
+    <mapping resource="maping/Usuario.hbm.xml"/>
+    <mapping resource="maping/TramiteDatos.hbm.xml"/>
+    <mapping resource="maping/Indicador.hbm.xml"/>
+    <mapping resource="maping/Oficina.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

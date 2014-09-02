@@ -19,4 +19,5 @@ public interface DocumentoDAO {
     public String CrearAnd(String objeto, int posi);
     public String CrearVariable(int i);
     public String getSQL(String[] a);
+    public List getDetalle(String tramnum);
 }

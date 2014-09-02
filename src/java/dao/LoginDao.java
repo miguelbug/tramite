@@ -6,7 +6,7 @@
 
 package dao;
 
-import mapeo.Usuario;
+import maping.Usuario;
 
 /**
  *

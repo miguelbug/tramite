@@ -17,6 +17,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import dao.DocumentoDAO;
 import daoimpl.DocumentoDaoImpl;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -31,6 +33,7 @@ public class DocumentosBean implements Serializable {
     private List otrosdocus;
     private List docselec;
     private boolean mostrar=false;
+    private List seglista;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -47,22 +50,43 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocumentos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[10];
+            Object obj[] = new Object[4];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
-                listaaux.put("usuario", String.valueOf(obj[3]));
-                listaaux.put("descripcion", String.valueOf(obj[4]));
-                listaaux.put("docunombre", String.valueOf(obj[5]));
-                listaaux.put("docunumero", String.valueOf(obj[6]));
-                listaaux.put("docusiglas", String.valueOf(obj[7]));
-                listaaux.put("docuanio", String.valueOf(obj[8]));
-                listaaux.put("departorigen", String.valueOf(obj[9]));
+                listaaux.put("descripcion", String.valueOf(obj[3]));
                 documentos.add(listaaux);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void Detalles(RowEditEvent event){
+        System.out.println("listando detalles");
+        //seglista.clear();
+        try {
+            List lista = new ArrayList();
+            System.out.println(String.valueOf(((HashMap)event.getObject()).get("numerotramite")));
+            lista = dd.getDetalle(String.valueOf(((HashMap)event.getObject()).get("numerotramite")));
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("usuario", String.valueOf(obj[0]));
+                listaaux.put("usunombre", String.valueOf(obj[1]));
+                listaaux.put("oficina", String.valueOf(obj[2]));
+                listaaux.put("depnombre", String.valueOf(obj[3]));
+                listaaux.put("docunombre", String.valueOf(obj[4]));
+                listaaux.put("docunumero", String.valueOf(obj[5]));
+                listaaux.put("docusiglas", String.valueOf(obj[6]));
+                listaaux.put("docuanio", String.valueOf(obj[7]));
+                seglista.add(listaaux);
+            }
+            RequestContext.getCurrentInstance().openDialog("detalles");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -107,6 +131,14 @@ public class DocumentosBean implements Serializable {
 
     public void setOtrosdocus(List otrosdocus) {
         this.otrosdocus = otrosdocus;
+    }
+
+    public List getSeglista() {
+        return seglista;
+    }
+
+    public void setSeglista(List seglista) {
+        this.seglista = seglista;
     }
     
 }
