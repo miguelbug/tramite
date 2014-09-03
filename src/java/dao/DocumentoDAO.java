@@ -20,4 +20,5 @@ public interface DocumentoDAO {
     public String CrearVariable(int i);
     public String getSQL(String[] a);
     public List getDetalle(String tramnum);
+    public List getDeatalle2(String tramnum);
 }

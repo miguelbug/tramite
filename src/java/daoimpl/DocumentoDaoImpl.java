@@ -181,4 +181,9 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         return codigos;
     }
 
+    @Override
+    public List getDeatalle2(String tramnum) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
