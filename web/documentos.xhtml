@@ -7,15 +7,17 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>DOCUMENTOS</title>
+               <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+             <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
-    <h:body>
+    <h:body style="background-color: #D0D0D0;" >
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
-                <h:form id="form">
+                <h:form id="form" >
                     <br></br>
                     <br></br>
                     <center>
-                        <p:panel header="DOCUMENTOS" id="principal">
+                        <p:panel header="DOCUMENTOS" id="principal" style="background-color: #D0D0D0;">
                             <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
