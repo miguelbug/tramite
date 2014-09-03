@@ -48,9 +48,15 @@ public class DocumentosBean implements Serializable {
     }
     public void Aumentar(ActionEvent event){
         contador++;
+        CambiarEstado();
+        System.out.println(contador);
+        System.out.println(select);
     }
     public void Disminuir(ActionEvent event){
         contador--;
+        CambiarEstado();
+        System.out.println(contador);
+        System.out.println(select);
     }
     public void CambiarEstado(){
         if(contador==0){
@@ -168,6 +174,7 @@ public class DocumentosBean implements Serializable {
     }
 
     public boolean isSelect() {
+        System.out.println(select);
         return select;
     }
 

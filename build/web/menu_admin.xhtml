@@ -24,8 +24,6 @@
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
-                <p:menuitem value="Confirmar" rendered="#{documentosBean.select}"/>
-                <p:menuitem value="Seguimiento" rendered="#{documentosBean.select}"/>
                 <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
             </p:menubar>
         </h:form>
