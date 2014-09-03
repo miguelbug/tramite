@@ -16,7 +16,7 @@
            <!-- <h3 align="center">SISTEMA TRÁMITE OGPL</h3>
             <h:outputLabel value="Usuario: #{loginBean.usu.usuNombre}"/>-->
             <br></br>
-            <br></br>
+            
             <p:menubar>
                 <p:submenu label="Ver" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
@@ -27,13 +27,8 @@
              
                <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                      <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
-                </p:submenu>
-                
-                
-           
-                
+                </p:submenu>            
             </p:menubar>
         </h:form>
-     
     </h:body>
 </html>
