@@ -34,7 +34,11 @@ public class DocumentosBean implements Serializable {
     private List docselec;
     private boolean mostrar=false;
     private List seglista;
+<<<<<<< HEAD
     private Map<String,String> seleccion;
+=======
+    private Map<String, String> seleccion;
+>>>>>>> origin/master
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -150,5 +154,7 @@ public class DocumentosBean implements Serializable {
     public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
     }
+
+   
     
 }
