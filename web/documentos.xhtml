@@ -15,13 +15,14 @@
                     <br></br>
                     <br></br>
                     <center>
+                        <p:panel header="DOCUMENTOS" id="principal">
                         <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}"
-                                     selection="#{documentosBean.seleccion}" rowKey="#{item.numerotramite}" >
+                                     selection="#{documentosBean.seleccion}" selectionMode="single" rowKey="#{item.numerotramite}" >
 
-                            <f:facet name="header" >DOCUMENTOS</f:facet>
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                           <!--<  <f:facet name="header" >DOCUMENTOS</f:facet>   borrado por miguelito-->
+                            <!--<p:column selectionMode="multiple" style="width:16px;text-align:center"/>-->
                             <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                 <h:outputText value="#{item.numerotramite}"/>
                             </p:column>
@@ -47,49 +48,53 @@
                                 </p:menuButton>
                             </p:column>-->
                             <p:column style="width:32px;text-align: center">
-                                <p:commandButton update="tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                <p:commandButton  oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                     <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}" />
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:dataTable var="car" value="#{documentosBean.detalles()}" id="tabladetalles" >
-                                <p:column headerText="Id">
+                            <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
+                                <p:column headerText="usuario">
                                     <h:outputText value="#{car.usuario}" />
                                 </p:column>
 
-                                <p:column headerText="Year">
+                                <p:column headerText="Nombre User">
                                     <h:outputText value="#{car.usunombre}" />
                                 </p:column>
 
-                                <p:column headerText="Brand">
+                                <p:column headerText="Oficina">
                                     <h:outputText value="#{car.oficina}" />
                                 </p:column>
 
-                                <p:column headerText="Color">
+                                <p:column headerText="Depencencia">
                                     <h:outputText value="#{car.depnombre}" />
                                 </p:column>
 
-                                <p:column headerText="Color">
+                                <p:column headerText="Doc Nombre">
                                     <h:outputText value="#{car.docunombre}" />
                                 </p:column>
 
-                                <p:column headerText="Color">
+                                <p:column headerText="Num de Doc">
                                     <h:outputText value="#{car.docunumero}" />
                                 </p:column>
 
-                                <p:column headerText="Color">
+                                <p:column headerText="Siglas de Doc">
                                     <h:outputText value="#{car.docusiglas}" />
                                 </p:column>
 
-                                <p:column headerText="Color">
+                                <p:column headerText="Año">
                                     <h:outputText value="#{car.docuanio}" />
                                 </p:column>
                             </p:dataTable>
                         </p:dialog>
+                             </p:panel>
+                        
                     </center>
                     <br></br>
                     <br></br>
+                   
+                        
                 </h:form>
             </ui:define>
         </ui:composition>
