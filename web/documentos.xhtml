@@ -18,10 +18,7 @@
                         <p:panel header="DOCUMENTOS" id="principal">
                             <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}"
-
-
-                                         <f:facet name="header" >DOCUMENTOS</f:facet>
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}">
 
                                 <!--<  <f:facet name="header" >DOCUMENTOS</f:facet>   borrado por miguelito-->
                                 <!--<p:column selectionMode="multiple" style="width:16px;text-align:center"/>-->
