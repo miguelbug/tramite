@@ -28,8 +28,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP\n"
-                    + "FROM TRAMITE_DATOS TD");
+            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO");
             docus = query.list();
             System.out.println("despues de query session");
             if (docus == null) {
@@ -159,15 +158,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.USU,U.USU_NOMBRE,OFI.NOMBRE_OFICINA,DEP.NOMBRE,\n"
+            Query query = session.createSQLQuery("SELECT TD.USU,U.USU_NOMBRE,OFI.NOMBRE_OFICINA,\n"
                     + "DOC.DOCU_NOMBRE,\n"
                     + "DOC.DOCU_NUM,\n"
                     + "DOC.DOCU_SIGLAS,\n"
                     + "DOC.DOCU_ANIO\n"
-                    + "FROM TRAMITE_DATOS TD, USUARIO U,DEPENDENCIA DEP, TIPO_DOCU DOC,OFICINA OFI\n"
+                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
                     + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
                     + "AND TD.USU=U.USU\n"
-                    + "AND TD.CODIGO=DEP.CODIGO\n"
                     + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
                     + "AND U.ID_OFICINA=OFI.ID_OFICINA");
             codigos = query.list();

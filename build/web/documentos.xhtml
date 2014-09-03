@@ -18,10 +18,11 @@
                         <p:panel header="DOCUMENTOS" id="principal">
                             <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}">
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
+                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <!--<  <f:facet name="header" >DOCUMENTOS</f:facet>   borrado por miguelito-->
-                                <!--<p:column selectionMode="multiple" style="width:16px;text-align:center"/>-->
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                 <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                     <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
@@ -38,14 +39,10 @@
                                     <h:outputText value="#{item.descripcion}"/>
                                 </p:column>
 
-                                <!--<p:column headerText="Herramientas" style="width:16px">
-                                    <p:menuButton value="Opciones">
-                                        <p:menuitem value="Detalles"  icon="ui-icon-search" />
-                                        <p:menuitem value="Derivar"  icon="ui-icon-arrowrefresh-1-w"/>
-                                        <p:menuitem value="Archivar" icon="ui-icon-disk"/>
-                                        <p:menuitem value="Seguimiento"  icon="ui-icon-extlink"/>
-                                    </p:menuButton>
-                                </p:column>-->
+                                <p:column headerText="Depencencia" width="5" sortBy="#{item.depnombre}" filterBy="#{item.depnombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.depnombre}" />
+                                </p:column>
+                                
                                 <p:column style="width:32px;text-align: center">
 
                                     <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
@@ -55,22 +52,17 @@
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
-
+                                    
                                     <p:column headerText="Usuario">
                                         <h:outputText value="#{car.usuario}" />
                                     </p:column>
-
+                                    
                                     <p:column headerText="Nombre User">
                                         <h:outputText value="#{car.usunombre}" />
                                     </p:column>
 
                                     <p:column headerText="Oficina">
                                         <h:outputText value="#{car.oficina}" />
-                                    </p:column>
-
-
-                                    <p:column headerText="Dep. Nombre">
-                                        <h:outputText value="#{car.depnombre}" />
                                     </p:column>
 
                                     <p:column headerText="Doc. Nombre">
@@ -82,22 +74,6 @@
                                     </p:column>
 
                                     <p:column headerText="Doc. Siglas">
-                                        <h:outputText value="#{car.docusiglas}" />
-                                    </p:column>
-
-                                    <p:column headerText="Depencencia">
-                                        <h:outputText value="#{car.depnombre}" />
-                                    </p:column>
-
-                                    <p:column headerText="Doc Nombre">
-                                        <h:outputText value="#{car.docunombre}" />
-                                    </p:column>
-
-                                    <p:column headerText="Num de Doc">
-                                        <h:outputText value="#{car.docunumero}" />
-                                    </p:column>
-
-                                    <p:column headerText="Siglas de Doc">
                                         <h:outputText value="#{car.docusiglas}" />
                                     </p:column>
 

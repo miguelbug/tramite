@@ -39,7 +39,6 @@ public class DocumentosBean implements Serializable {
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         documentos = new ArrayList<Map<String,String>>();
-        docselec = new ArrayList<Map<String,String>>();
         seglista= new ArrayList<Map<String,String>>();
         MostrarDocumentos();
         
@@ -52,7 +51,7 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocumentos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[4];
+            Object obj[] = new Object[5];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -60,6 +59,7 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
                 listaaux.put("descripcion", String.valueOf(obj[3]));
+                listaaux.put("depnombre",String.valueOf(obj[4]));
                 documentos.add(listaaux);
             }
         } catch (Exception e) {
@@ -74,18 +74,17 @@ public class DocumentosBean implements Serializable {
             System.out.println(seleccion.get("numerotramite").toString());
             lista = dd.getDetalle(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[8];
+            Object obj[] = new Object[7];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("usuario", String.valueOf(obj[0]));
                 listaaux.put("usunombre", String.valueOf(obj[1]));
                 listaaux.put("oficina", String.valueOf(obj[2]));
-                listaaux.put("depnombre", String.valueOf(obj[3]));
-                listaaux.put("docunombre", String.valueOf(obj[4]));
-                listaaux.put("docunumero", String.valueOf(obj[5]));
-                listaaux.put("docusiglas", String.valueOf(obj[6]));
-                listaaux.put("docuanio", String.valueOf(obj[7]));
+                listaaux.put("docunombre", String.valueOf(obj[3]));
+                listaaux.put("docunumero", String.valueOf(obj[4]));
+                listaaux.put("docusiglas", String.valueOf(obj[5]));
+                listaaux.put("docuanio", String.valueOf(obj[6]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {
