@@ -17,6 +17,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import dao.DocumentoDAO;
 import daoimpl.DocumentoDaoImpl;
+import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
@@ -35,6 +36,8 @@ public class DocumentosBean implements Serializable {
     private boolean mostrar=false;
     private List seglista;
     private Map<String,String> seleccion;
+    private boolean select=false;
+    private int contador=0;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -42,6 +45,20 @@ public class DocumentosBean implements Serializable {
         seglista= new ArrayList<Map<String,String>>();
         MostrarDocumentos();
         
+    }
+    public void Aumentar(ActionEvent event){
+        contador++;
+    }
+    public void Disminuir(ActionEvent event){
+        contador--;
+    }
+    public void CambiarEstado(){
+        if(contador==0){
+            select=false;
+        }
+        if(contador>0){
+            select=true;
+        }
     }
 
     public void MostrarDocumentos() {
@@ -148,6 +165,22 @@ public class DocumentosBean implements Serializable {
 
     public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
     }
 
    
