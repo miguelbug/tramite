@@ -165,7 +165,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "DOC.DOCU_SIGLAS,\n"
                     + "DOC.DOCU_ANIO\n"
                     + "FROM TRAMITE_DATOS TD, USUARIO U,DEPENDENCIA DEP, TIPO_DOCU DOC,OFICINA OFI\n"
-                    + "WHERE TD.TRAM_NUM='" + tramnum+  "' \n"
+                    + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
                     + "AND TD.USU=U.USU\n"
                     + "AND TD.CODIGO=DEP.CODIGO\n"
                     + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
@@ -183,7 +183,23 @@ public class DocumentoDaoImpl implements DocumentoDAO {
 
     @Override
     public List getDeatalle2(String tramnum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.CODIGO,DEP.NOMBRE\n"
+                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP\n"
+                    + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
+                    + "AND TD.CODIGO=DEP.CODIGO;");
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
     }
 
 }
