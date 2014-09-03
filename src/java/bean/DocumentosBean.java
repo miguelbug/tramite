@@ -34,12 +34,13 @@ public class DocumentosBean implements Serializable {
     private List docselec;
     private boolean mostrar=false;
     private List seglista;
-    private String seleccion;
+    private Map<String,String> seleccion;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         documentos = new ArrayList<Map<String,String>>();
         docselec = new ArrayList<Map<String,String>>();
+        seglista= new ArrayList<Map<String,String>>();
         MostrarDocumentos();
         
     }
@@ -67,11 +68,11 @@ public class DocumentosBean implements Serializable {
     }
     public List Detalles(){
         System.out.println("listando detalles");
-        //seglista.clear();
+        seglista.clear();
         try {
             List lista = new ArrayList();
-            System.out.println(seleccion);
-            lista = dd.getDetalle(seleccion);
+            System.out.println(seleccion.get("numerotramite").toString());
+            lista = dd.getDetalle(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
             Object obj[] = new Object[8];
             while (ite.hasNext()) {
@@ -142,11 +143,11 @@ public class DocumentosBean implements Serializable {
         this.seglista = seglista;
     }
 
-    public String getSeleccion() {
+    public Map<String, String> getSeleccion() {
         return seleccion;
     }
 
-    public void setSeleccion(String seleccion) {
+    public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
     }
     
