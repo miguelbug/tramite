@@ -24,9 +24,6 @@
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                <p:ajax event="rowSelectCheckbox" listener="#{documentosBean.Aumentar(event)}" update="tabladocumentos"/>
-                                <p:ajax event="rowUnselectCheckbox" listener="#{documentosBean.Disminuir(event)}" update="tabladocumentos"/>
-
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                 <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                     <h:outputText value="#{item.numerotramite}"/>
@@ -49,7 +46,8 @@
                                     </p:commandButton>
                                 </p:column>
                                 <f:facet name="footer">
-                                    <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" rendered="#{documentosBean.select}"/>
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="text-align: left"/>
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar"/>
                                 </f:facet>
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
