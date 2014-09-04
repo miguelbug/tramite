@@ -32,7 +32,6 @@ public class DocumentosBean implements Serializable {
     private List documentos;
     private DocumentoDAO dd;
     private List otrosdocus;
-    private List docselec;
     private boolean mostrar=false;
     private List seglista;
     private Map<String,String> seleccion;
@@ -114,15 +113,6 @@ public class DocumentosBean implements Serializable {
     public List getOtrosdocus() {
         return otrosdocus;
     }
-
-    public List getDocselec() {
-        return docselec;
-    }
-
-    public void setDocselec(List docselec) {
-        this.docselec = docselec;
-    }
-
     public boolean isMostrar() {
         return mostrar;
     }

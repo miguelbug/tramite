@@ -188,7 +188,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             Query query = session.createSQLQuery("SELECT TD.CODIGO,DEP.NOMBRE\n"
                     + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP\n"
                     + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
-                    + "AND TD.CODIGO=DEP.CODIGO;");
+                    + "AND TD.CODIGO=DEP.CODIGO");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
