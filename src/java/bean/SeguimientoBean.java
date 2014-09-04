@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bean;
 
 import dao.SeguimientoDAO;
@@ -27,12 +26,13 @@ public class SeguimientoBean {
     private List seguimientolista;
     private SeguimientoDAO sgd;
     private List docselec;
-    
+
     public SeguimientoBean() {
-        sgd= new SeguimientoDaoImpl();
-        seguimientolista= new ArrayList<Map<String,String>>();
+        sgd = new SeguimientoDaoImpl();
+        seguimientolista = new ArrayList<Map<String, String>>();
     }
-    public void MostrarSeguimiento(String tramnum){
+
+    public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista.clear();
         try {
@@ -47,22 +47,30 @@ public class SeguimientoBean {
                 listaaux.put("movimnum", String.valueOf(obj[1]));
                 listaaux.put("origen", String.valueOf(obj[2]));
                 listaaux.put("destino", String.valueOf(obj[3]));
-                listaaux.put("fechaenvio",String.valueOf(obj[4]));
-                listaaux.put("fechaingr",String.valueOf(obj[5]));
-                listaaux.put("indicador",String.valueOf(obj[6]));
-                listaaux.put("observacion",String.valueOf(obj[7]));
-                listaaux.put("estado",String.valueOf(obj[8]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
                 seguimientolista.add(listaaux);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    public void RecorrerLista(){
-        for(int i=0;i<docselec.size();i++){
-            MostrarSeguimiento(docselec.get(i).toString());            
+
+    public void RecorrerLista() {
+        /*for(int i=0;i<docselec.size();i++){
+         MostrarSeguimiento(docselec.get(i).toString());            
+         }*/
+        Map<String,String> hm=(HashMap<String,String>)docselec.get(0);
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            MostrarSeguimiento(e.getValue().toString());
         }
     }
+
     public List getSeguimientolista() {
         return seguimientolista;
     }
@@ -86,5 +94,5 @@ public class SeguimientoBean {
     public void setDocselec(List docselec) {
         this.docselec = docselec;
     }
-    
+
 }
