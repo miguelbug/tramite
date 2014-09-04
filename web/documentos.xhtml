@@ -24,8 +24,8 @@
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                <p:ajax event="rowSelectCheckbox" listener="#{documentosBean.Aumentar(event)}" />
-                                <p:ajax event="rowUnselectCheckbox" listener="#{documentosBean.Disminuir(event)}"/>
+                                <p:ajax event="rowSelectCheckbox" listener="#{documentosBean.Aumentar(event)}" update="tabladocumentos"/>
+                                <p:ajax event="rowUnselectCheckbox" listener="#{documentosBean.Disminuir(event)}" update="tabladocumentos"/>
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                 <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
