@@ -130,18 +130,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getSQL(String[] a) {
         int i = 0;
-        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,\n"
-                + " TD.TRAM_OBS,\n"
-                + " TD.USUARIO_ID,\n"
-                + " TD.ESTA_DESCRIP,\n"
-                + " TD.DOCU_NOMBRE,\n"
-                + " TD.DOCU_NUM,\n"
-                + " TD.DOCU_SIGLAS,\n"
-                + " TD.DOCU_ANIO,\n"
-                + " DO.DEP_ORIG_NOMBRE\n"
-                + " FROM TRAMITE_DATOS TD, USUARIO USU,DEPENDENCIA_ORIGEN DO \n"
-                + " WHERE TD.USUARIO_ID=USU.USUARIO_ID \n"
-                + " AND TD.DEPORIG_COD=DO.DEP_ORIG_COD";
+        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
         while (i < a.length) {
             if (a[i] != null && a[i].length() != 0) {
                 System.out.println(a[i]);

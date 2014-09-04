@@ -6,6 +6,7 @@
 package bean;
 
 import dao.DocumentoDAO;
+import dao.SeguimientoDAO;
 import daoimpl.DocumentoDaoImpl;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,10 +37,16 @@ public class BuscarDocumentosBean implements Serializable{
     private String mes;
     private List filtro;
     private boolean aparece;
+    private List seglista;
+    private Map<String,String> seleccion;
+    private List seguimientolista;
+    private SeguimientoDAO sgd;
+    private List docselec;
 
     public BuscarDocumentosBean() {
         dd = new DocumentoDaoImpl();
         docus = new ArrayList<Map<String,String>>();
+        seglista= new ArrayList<Map<String,String>>();
         aparece=false;
     }
 
@@ -51,20 +58,15 @@ public class BuscarDocumentosBean implements Serializable{
             List lista = new ArrayList();
             lista = dd.getBusqueda(numerotramite, codigosdepe, anio, asunto, mes);
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[10];
+            Object obj[] = new Object[5];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
-                listaaux.put("usuario", String.valueOf(obj[3]));
-                listaaux.put("descripcion", String.valueOf(obj[4]));
-                listaaux.put("docunombre", String.valueOf(obj[5]));
-                listaaux.put("docunumero", String.valueOf(obj[6]));
-                listaaux.put("docusiglas", String.valueOf(obj[7]));
-                listaaux.put("docuanio", String.valueOf(obj[8]));
-                listaaux.put("departorigen", String.valueOf(obj[9]));
+                listaaux.put("descripcion", String.valueOf(obj[3]));
+                listaaux.put("departorigen", String.valueOf(obj[4]));
                 docus.add(listaaux);
             }
             aparece=true;
@@ -73,7 +75,75 @@ public class BuscarDocumentosBean implements Serializable{
         }
         System.out.println(aparece);
     }
-
+    
+    public List Detalles(){
+        System.out.println("listando detalles");
+        seglista.clear();
+        try {
+            List lista = new ArrayList();
+            System.out.println(seleccion.get("numerotramite").toString());
+            lista = dd.getDetalle(seleccion.get("numerotramite").toString());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("usuario", String.valueOf(obj[0]));
+                listaaux.put("usunombre", String.valueOf(obj[1]));
+                listaaux.put("oficina", String.valueOf(obj[2]));
+                listaaux.put("docunombre", String.valueOf(obj[3]));
+                listaaux.put("docunumero", String.valueOf(obj[4]));
+                listaaux.put("docusiglas", String.valueOf(obj[5]));
+                listaaux.put("docuanio", String.valueOf(obj[6]));
+                seglista.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return seglista;
+    }
+    public void RecorrerLista() {
+        /*for(int i=0;i<docselec.size();i++){
+         MostrarSeguimiento(docselec.get(i).toString());            
+         }*/
+        Map<String,String> hm=(HashMap<String,String>)docselec.get(0);
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            if(e.getKey().toString().equals("numerotramite")){
+                System.out.println(e.getValue().toString());
+                MostrarSeguimiento(e.getValue().toString());
+            }
+            
+        }
+        docselec.clear();
+    }
+    public void MostrarSeguimiento(String tramnum) {
+        System.out.println("listando documentos");
+        seguimientolista.clear();
+        try {
+            List lista = new ArrayList();
+            lista = sgd.getSeguimiento(tramnum);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                seguimientolista.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public DocumentoDAO getDd() {
         return dd;
     }
@@ -152,6 +222,22 @@ public class BuscarDocumentosBean implements Serializable{
 
     public void setAparece(boolean aparece) {
         this.aparece = aparece;
+    }
+
+    public List getSeglista() {
+        return seglista;
+    }
+
+    public void setSeglista(List seglista) {
+        this.seglista = seglista;
+    }
+
+    public Map<String, String> getSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(Map<String, String> seleccion) {
+        this.seleccion = seleccion;
     }
     
 }
