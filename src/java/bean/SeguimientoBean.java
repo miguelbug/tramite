@@ -67,8 +67,14 @@ public class SeguimientoBean {
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry e = (Map.Entry) it.next();
-            MostrarSeguimiento(e.getValue().toString());
+            if(e.getKey().toString().equals("numerotramite")){
+                System.out.println(e.getValue().toString());
+                MostrarSeguimiento(e.getValue().toString());
+            }
+            
         }
+        docselec.clear();
+        
     }
 
     public List getSeguimientolista() {
