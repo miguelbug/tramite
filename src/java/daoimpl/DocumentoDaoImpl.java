@@ -28,7 +28,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO");
+            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
+                    + "order by tram_fecha desc");
             docus = query.list();
             System.out.println("despues de query session");
             if (docus == null) {

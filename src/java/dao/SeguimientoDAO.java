@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface SeguimientoDAO {
     public List getSeguimiento(String tramnum);
+    public List seguimientoUser(String oficina);
 }

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import maping.Usuario;
 
 /**
  *
@@ -24,14 +27,23 @@ import javax.faces.bean.ViewScoped;
 public class SeguimientoBean {
 
     private List seguimientolista;
+    private List seguimientolista2;
     private SeguimientoDAO sgd;
     private List docselec;
+    private Usuario usu;
+    private final FacesContext faceContext;
 
     public SeguimientoBean() {
+        faceContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
+        usu= (Usuario)session.getAttribute("sesionUsuario");
         sgd = new SeguimientoDaoImpl();
         seguimientolista = new ArrayList<Map<String, String>>();
+        seguimientolista2 = new ArrayList<Map<String, String>>();
+        MostrarParaUsuario();
+        
     }
-
+    //seguimiento para un cierto tramite
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista.clear();
@@ -76,7 +88,37 @@ public class SeguimientoBean {
         docselec.clear();
         
     }
-
+    //
+    
+    //mostrar el total de seguimientos  
+    public void MostrarParaUsuario(){
+        System.out.println("listando documentos2");
+        seguimientolista2.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            System.out.println(usu.getOficina().getIdOficina());
+            lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                seguimientolista2.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public List getSeguimientolista() {
         return seguimientolista;
     }
@@ -101,4 +143,20 @@ public class SeguimientoBean {
         this.docselec = docselec;
     }
 
+    public List getSeguimientolista2() {
+        return seguimientolista2;
+    }
+
+    public void setSeguimientolista2(List seguimientolista2) {
+        this.seguimientolista2 = seguimientolista2;
+    }
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+    
 }

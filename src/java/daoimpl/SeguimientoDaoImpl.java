@@ -39,7 +39,40 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "WHERE TM.TRAM_NUM='" + tramnum + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
-                    + "AND TM.INDI_COD=I.INDI_COD");
+                    + "AND TM.INDI_COD=I.INDI_COD\n"
+                    + "ORDER BY TM.MOVI_NUM");
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
+    }
+
+    @Override
+    public List seguimientoUser(String oficina) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
+                    + "TM.MOVI_NUM,\n"
+                    + "M1.NOMBRE AS ORIGEN,\n"
+                    + "M2.NOMBRE AS DESTINO,\n"
+                    + "TM.FECHA_ENVIO,\n"
+                    + "TM.FECHA_INGR,\n"
+                    + "I.INDI_NOMBRE,\n"
+                    + "TM.MOVI_OBS,\n"
+                    + "TM.ESTA_NOMBRE\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I\n"
+                    + "WHERE TM.CODIGO1='" + oficina + "' \n"
+                    + "AND TM.CODIGO=M1.CODIGO\n"
+                    + "AND TM.CODIGO1=M2.CODIGO\n"
+                    + "AND TM.INDI_COD=I.INDI_COD\n"
+                    + "ORDER BY TM.FECHA_ENVIO DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();

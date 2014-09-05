@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>DOCUMENTOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form" >
+                    <br></br>
+                    <br></br>
+                    <center>
+                        <p:panel header="DOCUMENTOS" id="principal" style="background-color: #D0D0D0;">
+
+                            <p:dataTable value="#{seguimientoBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{seguimientoBean.docselec}"
+                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.movimnum}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                                <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaenvio}" />
+                                </p:column>
+                                <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaingr}" />
+                                </p:column>
+                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.indicador}" />
+                                </p:column>
+                                <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.observacion}" />
+                                </p:column>
+                                <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.estado}" />
+                                </p:column>
+                                <!--<p:column style="width:32px;text-align: center">
+                                    <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                        <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                    </p:commandButton>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
+                                                     update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista()}"/>
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
+                                </f:facet>
+                            </p:dataTable>
+                            <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{car.usuario}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre User">
+                                        <h:outputText value="#{car.usunombre}" />
+                                    </p:column>
+                                    <p:column headerText="Oficina">
+                                        <h:outputText value="#{car.oficina}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Nombre">
+                                        <h:outputText value="#{car.docunombre}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Numero">
+                                        <h:outputText value="#{car.docunumero}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Siglas">
+                                        <h:outputText value="#{car.docusiglas}" />
+                                    </p:column>
+                                    <p:column headerText="Año">
+                                        <h:outputText value="#{car.docuanio}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:dialog>
+                            <p:dialog header="Car Info" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
+                                    <p:column headerText="Num. Tramite">
+                                        <h:outputText value="#{seg.numerotramite}" />
+                                    </p:column>
+                                    <p:column headerText="Num. Mov.">
+                                        <h:outputText value="#{seg.movimnum}" />
+                                    </p:column>
+                                    <p:column headerText="Origen">
+                                        <h:outputText value="#{seg.origen}" />
+                                    </p:column>
+                                    <p:column headerText="Destino">
+                                        <h:outputText value="#{seg.destino}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Envio">
+                                        <h:outputText value="#{seg.fechaenvio}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Ing">
+                                        <h:outputText value="#{seg.fechaingr}" />
+                                    </p:column>
+                                    <p:column headerText="Indicador">
+                                        <h:outputText value="#{seg.indicador}" />
+                                    </p:column>
+                                    <p:column headerText="Obs.">
+                                        <h:outputText value="#{seg.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="#{seg.estado}" />
+                                    </p:column>-->
+                                </p:dataTable>
+                           <!-- </p:dialog> -->
+                        </p:panel>
+                    </center>
+                    <br></br>
+                    <br></br>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

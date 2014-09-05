@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+         <img src="resources/img/banner4.jpg" style=" height:150px; width: 100%;border-radius: 30%;opacity: 0.7s; filter:alpha(opacity=90);"
+                               onmouseover="this.style.opacity=1;this.filters.alpha.opacity='50';" onmouseout="this.style.opacity=0.5;this.filters.alpha.opacity='50';"> </img>
+        <h:form>            
+            <p:growl id="messages"/>
+            <br></br>
+            
+            <p:menubar>
+                <p:submenu label="Ver" icon="ui-icon-pencil">
+                    <p:menuitem value="Documentos" action="documentos_user?faces-redirect=true"/>
+                </p:submenu>
+                
+                <p:menuitem value="Doc. Derivados" icon="ui-icon-search"/>
+             
+               <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
+                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
+                </p:submenu>            
+            </p:menubar>
+        </h:form>
+    </h:body>
+</html>
