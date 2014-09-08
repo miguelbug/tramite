@@ -25,9 +25,13 @@
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
              
+                <p:submenu label="Reportes" icon="ui-icon-document" styleClass="conf">
+                    <p:menuitem value="reportePrueba" action="reporteVista?faces-redirect=true" />
+                </p:submenu>
+                
                <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                      <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
-                </p:submenu>            
+               </p:submenu>            
             </p:menubar>
         </h:form>
     </h:body>
