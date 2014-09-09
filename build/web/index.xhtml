@@ -7,68 +7,70 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>STD-OGPL WEB</title>
-             <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
-             <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
-             <h:outputStylesheet name="bootstrap/css/docs.css" />
-             <h:outputStylesheet name="css/dashboard.css" />
-             <h:outputStylesheet name="css/codecomparator.css" />
-           
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
-            <h:outputScript name="bootstrap/js/bootstrap.js" />
-            
-            
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+        <h:outputStylesheet name="bootstrap/css/docs.css" />
+        <h:outputStylesheet name="css/dashboard.css" />
+        <h:outputStylesheet name="css/codecomparator.css" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
+        <h:outputScript name="bootstrap/js/bootstrap.js" />
+
+
     </h:head>
-    
-     <h:body style="background-color: #D0D0D0;" >
-    
-     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-          </button>
-          <a class="navbar-brand" href="#">Sistema de Tramite Documentario v 2.0 </a>
+
+    <h:body style="background-color: #D0D0D0;" >
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="#">Sistema de Tramite Documentario v 2.0 </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
- 
+
         <div class="container">
             <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                <h:form id="login">  
-                    <p:panel id="basic" header=" Oficina General de planificacion " >
-                      
-                         <img src="resources/img/unmsm3.jpg" style="width: 38%;border-radius: 55%;margin-left: 32%;opacity: 0.5; filter:alpha(opacity=50);"
-                               onmouseover="this.style.opacity=1;this.filters.alpha.opacity='90';" onmouseout="this.style.opacity=0.5;this.filters.alpha.opacity='50';"> </img>
-                        <h:panelGrid columns="1" cellpadding="5">
-                            
-                            <div id="usuario" class="form-group">  
+            <h:form id="login">  
+                <p:panel id="basic" header=" Oficina General de planificacion " >
+
+                    <img src="resources/img/unmsm3.jpg" style="width: 38%;border-radius: 55%;margin-left: 32%;opacity: 0.5; filter:alpha(opacity=50);"
+                         onmouseover="this.style.opacity = 1;
+                                 this.filters.alpha.opacity = '90';" onmouseout="this.style.opacity = 0.5;
+                                         this.filters.alpha.opacity = '50';"> </img>
+                    <h:panelGrid columns="1" cellpadding="5">
+
+                        <div id="usuario" class="form-group">  
                             <p:inputText id="username" value="#{loginBean.usuario}" required="true" label="username" 
                                          style="width: 250px; height:32px; text-align: center ; margin-left: 8px" placeholder="    Usuario " />
-                            </div>
-                            <div id="contrasenia" class="form-group">
+                        </div>
+                        <div id="contrasenia" class="form-group">
                             <p:password  id="password" value="#{loginBean.pass}" required="true" label="password"  
-                                          style="width: 250px; height:32px; text-align: center; margin-left: 8px" placeholder="    Contraseña"/>
-                            </div>
-                                  <label class="checkbox">
-                                      <input type="checkbox" value="remember-me">Recordar Usuario  </input>
-           </label>
-                            <f:facet name="footer">
-                               
+                                         style="width: 250px; height:32px; text-align: center; margin-left: 8px" placeholder="    Contraseña"/>
+                        </div>
+                        <label class="checkbox">
+                            <input type="checkbox" value="remember-me">Recordar Usuario  </input>
+                        </label>
+                        <f:facet name="footer">
+
                             <p:commandButton  value=" Ingresar" update=":growl" style="width: 150px; height:50px; text-align: center ;float:bottom; margin-left: 57px;
-      color: #fff;background-color: #428bca; border-color: #357ebd" action="#{loginBean.ActionLogin()}"/>
-                           
-                           
-                            </f:facet>  
-                        </h:panelGrid>
-                    </p:panel>
-                </h:form>
+                                              color: #fff;background-color: #428bca; border-color: #357ebd" action="#{loginBean.ActionLogin()}"/>
+
+
+                        </f:facet>  
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
             <a href="#" class="crear_cuent">¿Haz olvidado tu contraseña?</a>
         </div>
-          <br> </br>
-        
-         
+        <br> </br>
+
+
     </h:body>
-    
-    
-    
+
+
+
 </html>

@@ -114,8 +114,11 @@ and open the template in the editor.
                                     <p:column colspan="5">
                                         <p:dataTable value="#{buscarDocumentosBean.docus}" var="item" paginator="true" rows="20" id="tabladocus"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}">
-
+                                                     emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}"
+                                                     selection="#{buscarDocumentosBean.docselec}"
+                                                     rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                                            
+                                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                             <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                                 <h:outputText value="#{item.numerotramite}"/>
                                             </p:column>
@@ -138,21 +141,18 @@ and open the template in the editor.
 
                                             <p:column style="width:32px;text-align: center">
                                                 <p:commandButton update="tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                                    <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                                    <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion}"/>
                                                 </p:commandButton>
                                             </p:column>
                                             <f:facet name="footer">
                                                 <p:commandButton process="tabladocus" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                                 update="tablaseguim" actionListener="#{seguimientoBean.RecorrerLista()}"/>
+                                                                 update="tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
                                                 <p:commandButton process="tabladocus" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
                                             </f:facet>
                                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                                <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
+                                                <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles()}" id="tabladetalles" >
                                                     <p:column headerText="Usuario">
                                                         <h:outputText value="#{car.usuario}" />
-                                                    </p:column>
-                                                    <p:column headerText="Nombre User">
-                                                        <h:outputText value="#{car.usunombre}" />
                                                     </p:column>
                                                     <p:column headerText="Oficina">
                                                         <h:outputText value="#{car.oficina}" />
@@ -171,8 +171,8 @@ and open the template in the editor.
                                                     </p:column>
                                                 </p:dataTable>
                                             </p:dialog>
-                                            <p:dialog header="Car Info" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                                <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
+                                            <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                                <p:dataTable var="seg" value="#{buscarDocumentosBean.seguimientolista}" id="tablaseguim" >
                                                     <p:column headerText="Num. Tramite">
                                                         <h:outputText value="#{seg.numerotramite}" />
                                                     </p:column>

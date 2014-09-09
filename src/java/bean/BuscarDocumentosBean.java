@@ -73,28 +73,38 @@ public class BuscarDocumentosBean implements Serializable{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(aparece);
     }
     
     public List Detalles(){
-        System.out.println("listando detalles");
-        seglista.clear();
+        System.out.println("listando detalles busqparam");
+        //seglista.clear();
         try {
             List lista = new ArrayList();
-            System.out.println(seleccion.get("numerotramite").toString());
-            lista = dd.getDetalle(seleccion.get("numerotramite").toString());
+            System.out.println(seleccion.get("numerotramite").toString()+"---"+"este es");
+            if(seleccion.get("numerotramite").toString().indexOf("OGPL")!=-1){
+                System.out.println(seleccion.get("numerotramite").toString());
+                lista = dd.getDetalle(seleccion.get("numerotramite").toString());
+                System.out.println("1");
+            }
+            else{
+                if(seleccion.get("numerotramite").toString().indexOf("OGPL")==-1){
+                    System.out.println(seleccion.get("numerotramite").toString());
+                    lista = dd.getDeatalle2(seleccion.get("numerotramite").toString());
+                    System.out.println("0");
+                }
+            }
+            
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[6];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("usuario", String.valueOf(obj[0]));
-                listaaux.put("usunombre", String.valueOf(obj[1]));
-                listaaux.put("oficina", String.valueOf(obj[2]));
-                listaaux.put("docunombre", String.valueOf(obj[3]));
-                listaaux.put("docunumero", String.valueOf(obj[4]));
-                listaaux.put("docusiglas", String.valueOf(obj[5]));
-                listaaux.put("docuanio", String.valueOf(obj[6]));
+                listaaux.put("oficina", String.valueOf(obj[1]));
+                listaaux.put("docunombre", String.valueOf(obj[2]));
+                listaaux.put("docunumero", String.valueOf(obj[3]));
+                listaaux.put("docusiglas", String.valueOf(obj[4]));
+                listaaux.put("docuanio", String.valueOf(obj[5]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {
@@ -103,9 +113,6 @@ public class BuscarDocumentosBean implements Serializable{
         return seglista;
     }
     public void RecorrerLista() {
-        /*for(int i=0;i<docselec.size();i++){
-         MostrarSeguimiento(docselec.get(i).toString());            
-         }*/
         Map<String,String> hm=(HashMap<String,String>)docselec.get(0);
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
@@ -120,7 +127,7 @@ public class BuscarDocumentosBean implements Serializable{
     }
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
-        seguimientolista.clear();
+        //seguimientolista.clear();
         try {
             List lista = new ArrayList();
             lista = sgd.getSeguimiento(tramnum);
@@ -238,6 +245,30 @@ public class BuscarDocumentosBean implements Serializable{
 
     public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
+    }
+
+    public List getSeguimientolista() {
+        return seguimientolista;
+    }
+
+    public void setSeguimientolista(List seguimientolista) {
+        this.seguimientolista = seguimientolista;
+    }
+
+    public SeguimientoDAO getSgd() {
+        return sgd;
+    }
+
+    public void setSgd(SeguimientoDAO sgd) {
+        this.sgd = sgd;
+    }
+
+    public List getDocselec() {
+        return docselec;
+    }
+
+    public void setDocselec(List docselec) {
+        this.docselec = docselec;
     }
     
 }

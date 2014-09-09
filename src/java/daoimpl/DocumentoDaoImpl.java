@@ -148,7 +148,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.USU,U.USU_NOMBRE,OFI.NOMBRE_OFICINA,\n"
+            Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
                     + "DOC.DOCU_NOMBRE,\n"
                     + "DOC.DOCU_NUM,\n"
                     + "DOC.DOCU_SIGLAS,\n"
@@ -175,15 +175,20 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.CODIGO,DEP.NOMBRE\n"
-                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP\n"
+            Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
+                    + "DOC.DOCU_NOMBRE,\n"
+                    + "DOC.DOCU_NUM,\n"
+                    + "DOC.DOCU_SIGLAS,\n"
+                    + "DOC.DOCU_ANIO\n"
+                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
                     + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
-                    + "AND TD.CODIGO=DEP.CODIGO");
+                    + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
+                    + "AND U.ID_OFICINA=OFI.ID_OFICINA");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("no entró1111");
+            System.out.println("no entró22222");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
         }
