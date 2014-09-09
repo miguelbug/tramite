@@ -48,16 +48,14 @@
                                 <f:facet name="footer">
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                      update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista()}"/>
-                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" oncomplete="PF('derivarDialog').show()"
+                                                     update=":form:panelDeriv" actionListener="#{documentosBean.Derivar()}"/>
                                 </f:facet>
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                     <p:column headerText="Usuario">
                                         <h:outputText value="#{car.usuario}" />
-                                    </p:column>
-                                    <p:column headerText="Nombre User">
-                                        <h:outputText value="#{car.usunombre}" />
                                     </p:column>
                                     <p:column headerText="Oficina">
                                         <h:outputText value="#{car.oficina}" />
@@ -106,6 +104,51 @@
                                         <h:outputText value="#{seg.estado}" />
                                     </p:column>
                                 </p:dataTable>
+                            </p:dialog>
+                            <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:panelGrid columns="2" id="panelDeriv">
+                                    <p:outputLabel value="Oficina Interna: "/>
+                                    <p:selectOneMenu id="identif" value="#{buscarDocumentosBean.codigosdepe}" >
+                                            <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                            <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
+                                            <f:selectItem itemLabel="DGA" itemValue="DGA" />
+                                            <f:selectItem itemLabel="EPG" itemValue="EPG" />
+                                            <f:selectItem itemLabel="FCA" itemValue="FCA" />
+                                            <f:selectItem itemLabel="FCB" itemValue="FCB" />
+                                            <f:selectItem itemLabel="FCC" itemValue="FCC" />
+                                            <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
+                                            <f:selectItem itemLabel="FCE" itemValue="FCE" />
+                                            <f:selectItem itemLabel="FCF" itemValue="FCF" />
+                                            <f:selectItem itemLabel="FCM" itemValue="FCM" />
+                                            <f:selectItem itemLabel="FD" itemValue="FD" />
+                                            <f:selectItem itemLabel="FE" itemValue="FE" />
+                                            <f:selectItem itemLabel="FFB" itemValue="FFB" />
+                                            <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
+                                            <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
+                                            <f:selectItem itemLabel="FII" itemValue="FII" />
+                                            <f:selectItem itemLabel="FISI" itemValue="FISI" />
+                                            <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
+                                            <f:selectItem itemLabel="FMV" itemValue="FMV" />
+                                            <f:selectItem itemLabel="FM" itemValue="FM" />
+                                            <f:selectItem itemLabel="FO" itemValue="FO" />
+                                            <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
+                                            <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
+                                            <f:selectItem itemLabel="OCA" itemValue="OCA" />
+                                        </p:selectOneMenu>
+
+                                    <p:outputLabel value="Fecha: "/>
+                                    <p:outputLabel value="#{documentosBean.fechadia}" />
+
+                                    <p:outputLabel value="Hora: " />
+                                    <p:outputLabel value="#{documentosBean.fechahora}" />
+
+                                    <p:outputLabel value="Motivo: " />
+                                    <p:outputLabel value="#{documentosBean.motivo}" />
+                                    
+                                    <p:outputLabel value="Usuario: " />
+                                    <p:outputLabel value="#{documentosBean.usuario}" />
+                                </p:panelGrid>
+
                             </p:dialog>
                         </p:panel>
                     </center>

@@ -195,4 +195,24 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         return codigos;
     }
 
+    @Override
+    public String getMotivo(String tramnum) {
+        String codigos = "";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.TRAM_OBS \n"
+                    + "FROM TRAMITE_DATOS TD\n"
+                    + "WHERE TD.TRAM_NUM='" + tramnum + "' ");
+            codigos = (String) query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problemasmotivo");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
+    }
+
 }

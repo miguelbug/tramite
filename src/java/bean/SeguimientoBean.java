@@ -8,6 +8,7 @@ package bean;
 import dao.SeguimientoDAO;
 import daoimpl.SeguimientoDaoImpl;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,7 @@ public class SeguimientoBean {
     private List docselec;
     private Usuario usu;
     private final FacesContext faceContext;
+    
 
     public SeguimientoBean() {
         faceContext = FacesContext.getCurrentInstance();
@@ -158,5 +160,4 @@ public class SeguimientoBean {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
-    
 }

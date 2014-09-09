@@ -25,6 +25,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
+            System.out.println("entragetseguimiento");
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
                     + "TM.MOVI_NUM,\n"
@@ -45,7 +46,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("no entró1111");
+            System.out.println("problemasseguimiento");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
         }

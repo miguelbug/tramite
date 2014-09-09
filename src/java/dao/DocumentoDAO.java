@@ -21,4 +21,5 @@ public interface DocumentoDAO {
     public String getSQL(String[] a);
     public List getDetalle(String tramnum);
     public List getDeatalle2(String tramnum);
+    public String getMotivo(String tramnum);
 }

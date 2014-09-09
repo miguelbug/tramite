@@ -17,7 +17,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import dao.DocumentoDAO;
 import daoimpl.DocumentoDaoImpl;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
+import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
@@ -26,24 +33,68 @@ import org.primefaces.event.RowEditEvent;
  * @author OGPL
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class DocumentosBean implements Serializable {
 
     private List documentos;
     private DocumentoDAO dd;
     private List otrosdocus;
-    private boolean mostrar=false;
+    private boolean mostrar = false;
     private List seglista;
-    private Map<String,String> seleccion;
+    private Map<String, String> seleccion;
+    private Date fecha;
+    private String fechadia = "";
+    private String fechahora = "";
+    private String motivo= "";
+    private String usuario="";
+    private Usuario usu;
+    private final FacesContext faceContext;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
-        documentos = new ArrayList<Map<String,String>>();
-        seglista= new ArrayList<Map<String,String>>();
+        documentos = new ArrayList<Map<String, String>>();
+        seglista = new ArrayList<Map<String, String>>();
+        faceContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
+        usu= (Usuario)session.getAttribute("sesionUsuario");
         MostrarDocumentos();
-        
     }
-
+    public void Derivar(){
+        IniciarFecha();
+        Motivo();
+        UsuarioSelec();
+    }
+    public void IniciarFecha() {
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia.equals("")) {
+                fechadia = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
+    }
+    public void Motivo(){
+        try{
+            motivo=dd.getMotivo(seleccion.get("numerotramite").toString());
+        }
+        catch(Exception e){
+            System.out.println("error");
+            System.out.println(e.getMessage());
+        }
+    }
+    public void UsuarioSelec(){
+        try{
+            usuario=usu.getUsuNombre();
+        }
+        catch(Exception e){
+            System.out.println("error2");
+            System.out.println(e.getMessage());
+        }
+    }
     public void MostrarDocumentos() {
         System.out.println("listando documentos");
         documentos.clear();
@@ -59,14 +110,15 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
                 listaaux.put("descripcion", String.valueOf(obj[3]));
-                listaaux.put("depnombre",String.valueOf(obj[4]));
+                listaaux.put("depnombre", String.valueOf(obj[4]));
                 documentos.add(listaaux);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    public List Detalles(){
+
+    public List Detalles() {
         System.out.println("listando detalles");
         seglista.clear();
         try {
@@ -74,17 +126,16 @@ public class DocumentosBean implements Serializable {
             System.out.println(seleccion.get("numerotramite").toString());
             lista = dd.getDetalle(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[6];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("usuario", String.valueOf(obj[0]));
-                listaaux.put("usunombre", String.valueOf(obj[1]));
-                listaaux.put("oficina", String.valueOf(obj[2]));
-                listaaux.put("docunombre", String.valueOf(obj[3]));
-                listaaux.put("docunumero", String.valueOf(obj[4]));
-                listaaux.put("docusiglas", String.valueOf(obj[5]));
-                listaaux.put("docuanio", String.valueOf(obj[6]));
+                listaaux.put("oficina", String.valueOf(obj[1]));
+                listaaux.put("docunombre", String.valueOf(obj[2]));
+                listaaux.put("docunumero", String.valueOf(obj[3]));
+                listaaux.put("docusiglas", String.valueOf(obj[4]));
+                listaaux.put("docuanio", String.valueOf(obj[5]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {
@@ -92,9 +143,11 @@ public class DocumentosBean implements Serializable {
         }
         return seglista;
     }
-    public void cambiar(){
-        mostrar=true;
+
+    public void cambiar() {
+        mostrar = true;
     }
+
     public List getDocumentos() {
         return documentos;
     }
@@ -110,9 +163,11 @@ public class DocumentosBean implements Serializable {
     public void setDd(DocumentoDAO dd) {
         this.dd = dd;
     }
+
     public List getOtrosdocus() {
         return otrosdocus;
     }
+
     public boolean isMostrar() {
         return mostrar;
     }
@@ -140,4 +195,53 @@ public class DocumentosBean implements Serializable {
     public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFechadia() {
+        return fechadia;
+    }
+
+    public void setFechadia(String fechadia) {
+        this.fechadia = fechadia;
+    }
+
+    public String getFechahora() {
+        return fechahora;
+    }
+
+    public void setFechahora(String fechahora) {
+        this.fechahora = fechahora;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+    
 }

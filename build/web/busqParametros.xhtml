@@ -16,7 +16,7 @@ and open the template in the editor.
     <h:body>
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
-                <h:form>
+                <h:form id="form">
                     <br></br>
                     <center>
                         <p:panel header="BUSQUEDA" id="principal" style="background-color: #D0D0D0;">
@@ -117,7 +117,7 @@ and open the template in the editor.
                                                      emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}"
                                                      selection="#{buscarDocumentosBean.docselec}"
                                                      rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-                                            
+
                                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                             <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                                 <h:outputText value="#{item.numerotramite}"/>
@@ -140,72 +140,72 @@ and open the template in the editor.
                                             </p:column>
 
                                             <p:column style="width:32px;text-align: center">
-                                                <p:commandButton update="tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                                <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                                     <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion}"/>
                                                 </p:commandButton>
                                             </p:column>
                                             <f:facet name="footer">
                                                 <p:commandButton process="tabladocus" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                                 update="tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
+                                                                 update=":form:tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
                                                 <p:commandButton process="tabladocus" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
                                             </f:facet>
-                                            <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                                <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles()}" id="tabladetalles" >
-                                                    <p:column headerText="Usuario">
-                                                        <h:outputText value="#{car.usuario}" />
-                                                    </p:column>
-                                                    <p:column headerText="Oficina">
-                                                        <h:outputText value="#{car.oficina}" />
-                                                    </p:column>
-                                                    <p:column headerText="Doc. Nombre">
-                                                        <h:outputText value="#{car.docunombre}" />
-                                                    </p:column>
-                                                    <p:column headerText="Doc. Numero">
-                                                        <h:outputText value="#{car.docunumero}" />
-                                                    </p:column>
-                                                    <p:column headerText="Doc. Siglas">
-                                                        <h:outputText value="#{car.docusiglas}" />
-                                                    </p:column>
-                                                    <p:column headerText="Año">
-                                                        <h:outputText value="#{car.docuanio}" />
-                                                    </p:column>
-                                                </p:dataTable>
-                                            </p:dialog>
-                                            <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                                <p:dataTable var="seg" value="#{buscarDocumentosBean.seguimientolista}" id="tablaseguim" >
-                                                    <p:column headerText="Num. Tramite">
-                                                        <h:outputText value="#{seg.numerotramite}" />
-                                                    </p:column>
-                                                    <p:column headerText="Num. Mov.">
-                                                        <h:outputText value="#{seg.movimnum}" />
-                                                    </p:column>
-                                                    <p:column headerText="Origen">
-                                                        <h:outputText value="#{seg.origen}" />
-                                                    </p:column>
-                                                    <p:column headerText="Destino">
-                                                        <h:outputText value="#{seg.destino}" />
-                                                    </p:column>
-                                                    <p:column headerText="Fech. Envio">
-                                                        <h:outputText value="#{seg.fechaenvio}" />
-                                                    </p:column>
-                                                    <p:column headerText="Fech. Ing">
-                                                        <h:outputText value="#{seg.fechaingr}" />
-                                                    </p:column>
-                                                    <p:column headerText="Indicador">
-                                                        <h:outputText value="#{seg.indicador}" />
-                                                    </p:column>
-                                                    <p:column headerText="Obs.">
-                                                        <h:outputText value="#{seg.observacion}" />
-                                                    </p:column>
-                                                    <p:column headerText="Estado">
-                                                        <h:outputText value="#{seg.estado}" />
-                                                    </p:column>
-                                                </p:dataTable>
-                                            </p:dialog>
                                         </p:dataTable>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
+                            <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles()}" id="tabladetalles" >
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{car.usuario}" />
+                                    </p:column>
+                                    <p:column headerText="Oficina">
+                                        <h:outputText value="#{car.oficina}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Nombre">
+                                        <h:outputText value="#{car.docunombre}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Numero">
+                                        <h:outputText value="#{car.docunumero}" />
+                                    </p:column>
+                                    <p:column headerText="Doc. Siglas">
+                                        <h:outputText value="#{car.docusiglas}" />
+                                    </p:column>
+                                    <p:column headerText="Año">
+                                        <h:outputText value="#{car.docuanio}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:dialog>
+                            <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:dataTable var="seg" value="#{buscarDocumentosBean.seguimientolista}" id="tablaseguim" >
+                                    <p:column headerText="Num. Tramite">
+                                        <h:outputText value="#{seg.numerotramite}" />
+                                    </p:column>
+                                    <p:column headerText="Num. Mov.">
+                                        <h:outputText value="#{seg.movimnum}" />
+                                    </p:column>
+                                    <p:column headerText="Origen">
+                                        <h:outputText value="#{seg.origen}" />
+                                    </p:column>
+                                    <p:column headerText="Destino">
+                                        <h:outputText value="#{seg.destino}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Envio">
+                                        <h:outputText value="#{seg.fechaenvio}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Ing">
+                                        <h:outputText value="#{seg.fechaingr}" />
+                                    </p:column>
+                                    <p:column headerText="Indicador">
+                                        <h:outputText value="#{seg.indicador}" />
+                                    </p:column>
+                                    <p:column headerText="Obs.">
+                                        <h:outputText value="#{seg.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="#{seg.estado}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:dialog>
                         </p:panel>
                     </center>
                     <br></br>

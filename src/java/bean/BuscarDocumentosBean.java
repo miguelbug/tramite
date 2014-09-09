@@ -8,6 +8,7 @@ package bean;
 import dao.DocumentoDAO;
 import dao.SeguimientoDAO;
 import daoimpl.DocumentoDaoImpl;
+import daoimpl.SeguimientoDaoImpl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +48,8 @@ public class BuscarDocumentosBean implements Serializable{
         dd = new DocumentoDaoImpl();
         docus = new ArrayList<Map<String,String>>();
         seglista= new ArrayList<Map<String,String>>();
+        seguimientolista= new ArrayList<Map<String,String>>();
+        sgd = new SeguimientoDaoImpl();
         aparece=false;
     }
 
@@ -77,7 +80,7 @@ public class BuscarDocumentosBean implements Serializable{
     
     public List Detalles(){
         System.out.println("listando detalles busqparam");
-        //seglista.clear();
+        seglista.clear();
         try {
             List lista = new ArrayList();
             System.out.println(seleccion.get("numerotramite").toString()+"---"+"este es");
@@ -129,6 +132,7 @@ public class BuscarDocumentosBean implements Serializable{
         System.out.println("listando documentos");
         //seguimientolista.clear();
         try {
+            System.out.println("entra");
             List lista = new ArrayList();
             lista = sgd.getSeguimiento(tramnum);
             Iterator ite = lista.iterator();
@@ -148,7 +152,9 @@ public class BuscarDocumentosBean implements Serializable{
                 seguimientolista.add(listaaux);
             }
         } catch (Exception e) {
+            System.out.println("buuuuu");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     public DocumentoDAO getDd() {
