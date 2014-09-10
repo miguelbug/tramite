@@ -42,59 +42,14 @@ public class DocumentosBean implements Serializable {
     private boolean mostrar = false;
     private List seglista;
     private Map<String, String> seleccion;
-    private Date fecha;
-    private String fechadia = "";
-    private String fechahora = "";
-    private String motivo= "";
-    private String usuario="";
-    private Usuario usu;
-    private final FacesContext faceContext;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         documentos = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
-        faceContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
-        usu= (Usuario)session.getAttribute("sesionUsuario");
         MostrarDocumentos();
     }
-    public void Derivar(){
-        IniciarFecha();
-        Motivo();
-        UsuarioSelec();
-    }
-    public void IniciarFecha() {
-        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fecha = new Date();
-        StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
-        while (tokens.hasMoreTokens()) {
-            if (fechadia.equals("")) {
-                fechadia = tokens.nextToken();
-            }
-            if (fechahora.equals("")) {
-                fechahora = tokens.nextToken();
-            }
-        }
-    }
-    public void Motivo(){
-        try{
-            motivo=dd.getMotivo(seleccion.get("numerotramite").toString());
-        }
-        catch(Exception e){
-            System.out.println("error");
-            System.out.println(e.getMessage());
-        }
-    }
-    public void UsuarioSelec(){
-        try{
-            usuario=usu.getUsuNombre();
-        }
-        catch(Exception e){
-            System.out.println("error2");
-            System.out.println(e.getMessage());
-        }
-    }
+
     public void MostrarDocumentos() {
         System.out.println("listando documentos");
         documentos.clear();
@@ -196,52 +151,4 @@ public class DocumentosBean implements Serializable {
         this.seleccion = seleccion;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getFechadia() {
-        return fechadia;
-    }
-
-    public void setFechadia(String fechadia) {
-        this.fechadia = fechadia;
-    }
-
-    public String getFechahora() {
-        return fechahora;
-    }
-
-    public void setFechahora(String fechahora) {
-        this.fechahora = fechahora;
-    }
-
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public Usuario getUsu() {
-        return usu;
-    }
-
-    public void setUsu(Usuario usu) {
-        this.usu = usu;
-    }
-    
 }

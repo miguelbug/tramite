@@ -5,14 +5,19 @@
  */
 package bean;
 
+import dao.DocumentoDAO;
 import dao.SeguimientoDAO;
+import daoimpl.DocumentoDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -30,21 +35,29 @@ public class SeguimientoBean {
     private List seguimientolista;
     private List seguimientolista2;
     private SeguimientoDAO sgd;
+    private DocumentoDAO dd;
     private List docselec;
     private Usuario usu;
+    private Date fecha;
+    private String fechadia = "";
+    private String fechahora = "";
+    private String motivo = "";
+    private String usuario = "";
     private final FacesContext faceContext;
-    
+    private String codinterno;
 
     public SeguimientoBean() {
+        dd= new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
-        usu= (Usuario)session.getAttribute("sesionUsuario");
+        usu = (Usuario) session.getAttribute("sesionUsuario");
         sgd = new SeguimientoDaoImpl();
         seguimientolista = new ArrayList<Map<String, String>>();
         seguimientolista2 = new ArrayList<Map<String, String>>();
         MostrarParaUsuario();
-        
+
     }
+
     //seguimiento para un cierto tramite
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
@@ -77,23 +90,23 @@ public class SeguimientoBean {
         /*for(int i=0;i<docselec.size();i++){
          MostrarSeguimiento(docselec.get(i).toString());            
          }*/
-        Map<String,String> hm=(HashMap<String,String>)docselec.get(0);
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry e = (Map.Entry) it.next();
-            if(e.getKey().toString().equals("numerotramite")){
+            if (e.getKey().toString().equals("numerotramite")) {
                 System.out.println(e.getValue().toString());
                 MostrarSeguimiento(e.getValue().toString());
             }
-            
+
         }
         docselec.clear();
-        
+
     }
     //
-    
+
     //mostrar el total de seguimientos  
-    public void MostrarParaUsuario(){
+    public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
         try {
@@ -121,6 +134,56 @@ public class SeguimientoBean {
             System.out.println(e.getMessage());
         }
     }
+
+    public void Derivar() {
+        IniciarFecha();
+        Motivo();
+        UsuarioSelec();
+    }
+
+    public void IniciarFecha() {
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia.equals("")) {
+                fechadia = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
+    }
+
+    public void Motivo() {
+        try {
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+            Iterator it = hm.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry e = (Map.Entry) it.next();
+                if (e.getKey().toString().equals("numerotramite")) {
+                    System.out.println(e.getValue().toString());
+                    motivo=dd.getMotivo(hm.get("numerotramite").toString());
+                }
+
+            }
+            docselec.clear();
+        } catch (Exception e) {
+            System.out.println("error");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void UsuarioSelec() {
+        try {
+            usuario = usu.getUsuNombre();
+        } catch (Exception e) {
+            System.out.println("error2");
+            System.out.println(e.getMessage());
+        }
+    }
+
     public List getSeguimientolista() {
         return seguimientolista;
     }
@@ -160,4 +223,61 @@ public class SeguimientoBean {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
+
+    public DocumentoDAO getDd() {
+        return dd;
+    }
+
+    public void setDd(DocumentoDAO dd) {
+        this.dd = dd;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFechadia() {
+        return fechadia;
+    }
+
+    public void setFechadia(String fechadia) {
+        this.fechadia = fechadia;
+    }
+
+    public String getFechahora() {
+        return fechahora;
+    }
+
+    public void setFechahora(String fechahora) {
+        this.fechahora = fechahora;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getCodinterno() {
+        return codinterno;
+    }
+
+    public void setCodinterno(String codinterno) {
+        this.codinterno = codinterno;
+    }
+    
 }

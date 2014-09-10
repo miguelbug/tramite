@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>DOCUMENTOS</title>
         <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
@@ -49,7 +50,7 @@
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                      update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista()}"/>
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" oncomplete="PF('derivarDialog').show()"
-                                                     update=":form:panelDeriv" actionListener="#{documentosBean.Derivar()}"/>
+                                                     update=":form:panelDeriv" actionListener="#{seguimientoBean.Derivar()}"/>
                                 </f:facet>
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
@@ -108,47 +109,50 @@
                             <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:panelGrid columns="2" id="panelDeriv">
                                     <p:outputLabel value="Oficina Interna: "/>
-                                    <p:selectOneMenu id="identif" value="#{buscarDocumentosBean.codigosdepe}" >
-                                            <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                            <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
-                                            <f:selectItem itemLabel="DGA" itemValue="DGA" />
-                                            <f:selectItem itemLabel="EPG" itemValue="EPG" />
-                                            <f:selectItem itemLabel="FCA" itemValue="FCA" />
-                                            <f:selectItem itemLabel="FCB" itemValue="FCB" />
-                                            <f:selectItem itemLabel="FCC" itemValue="FCC" />
-                                            <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
-                                            <f:selectItem itemLabel="FCE" itemValue="FCE" />
-                                            <f:selectItem itemLabel="FCF" itemValue="FCF" />
-                                            <f:selectItem itemLabel="FCM" itemValue="FCM" />
-                                            <f:selectItem itemLabel="FD" itemValue="FD" />
-                                            <f:selectItem itemLabel="FE" itemValue="FE" />
-                                            <f:selectItem itemLabel="FFB" itemValue="FFB" />
-                                            <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
-                                            <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
-                                            <f:selectItem itemLabel="FII" itemValue="FII" />
-                                            <f:selectItem itemLabel="FISI" itemValue="FISI" />
-                                            <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
-                                            <f:selectItem itemLabel="FMV" itemValue="FMV" />
-                                            <f:selectItem itemLabel="FM" itemValue="FM" />
-                                            <f:selectItem itemLabel="FO" itemValue="FO" />
-                                            <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
-                                            <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
-                                            <f:selectItem itemLabel="OCA" itemValue="OCA" />
-                                        </p:selectOneMenu>
+                                    <p:selectOneMenu id="identif" value="#{seguimientoBean.codinterno}" >
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
+                                        <f:selectItem itemLabel="DGA" itemValue="DGA" />
+                                        <f:selectItem itemLabel="EPG" itemValue="EPG" />
+                                        <f:selectItem itemLabel="FCA" itemValue="FCA" />
+                                        <f:selectItem itemLabel="FCB" itemValue="FCB" />
+                                        <f:selectItem itemLabel="FCC" itemValue="FCC" />
+                                        <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
+                                        <f:selectItem itemLabel="FCE" itemValue="FCE" />
+                                        <f:selectItem itemLabel="FCF" itemValue="FCF" />
+                                        <f:selectItem itemLabel="FCM" itemValue="FCM" />
+                                        <f:selectItem itemLabel="FD" itemValue="FD" />
+                                        <f:selectItem itemLabel="FE" itemValue="FE" />
+                                        <f:selectItem itemLabel="FFB" itemValue="FFB" />
+                                        <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
+                                        <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
+                                        <f:selectItem itemLabel="FII" itemValue="FII" />
+                                        <f:selectItem itemLabel="FISI" itemValue="FISI" />
+                                        <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
+                                        <f:selectItem itemLabel="FMV" itemValue="FMV" />
+                                        <f:selectItem itemLabel="FM" itemValue="FM" />
+                                        <f:selectItem itemLabel="FO" itemValue="FO" />
+                                        <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
+                                        <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
+                                        <f:selectItem itemLabel="OCA" itemValue="OCA" />
+                                    </p:selectOneMenu>
 
                                     <p:outputLabel value="Fecha: "/>
-                                    <p:outputLabel value="#{documentosBean.fechadia}" />
+                                    <p:outputLabel value="#{seguimientoBean.fechadia}" />
 
                                     <p:outputLabel value="Hora: " />
-                                    <p:outputLabel value="#{documentosBean.fechahora}" />
+                                    <p:outputLabel value="#{seguimientoBean.fechahora}" />
 
                                     <p:outputLabel value="Motivo: " />
-                                    <p:outputLabel value="#{documentosBean.motivo}" />
-                                    
-                                    <p:outputLabel value="Usuario: " />
-                                    <p:outputLabel value="#{documentosBean.usuario}" />
-                                </p:panelGrid>
+                                    <p:outputLabel value="#{seguimientoBean.motivo}" />
 
+                                    <p:outputLabel value="Usuario: " />
+                                    <p:outputLabel value="#{seguimientoBean.usuario}" />
+                                </p:panelGrid>
+                                <br></br>
+                                <center>
+                                    <p:commandButton value="Guardar"/>
+                                </center>
                             </p:dialog>
                         </p:panel>
                     </center>
