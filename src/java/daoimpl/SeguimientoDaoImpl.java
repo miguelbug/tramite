@@ -32,16 +32,16 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
                     + "TM.FECHA_ENVIO,\n"
-                    + "TM.FECHA_INGR,\n"
+                    + "DECODE(TM.FECHA_INGR,NULL,' ',TM.FECHA_INGR) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
-                    + "TM.MOVI_OBS,\n"
+                    + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I\n"
                     + "WHERE TM.TRAM_NUM='" + tramnum + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "ORDER BY TM.MOVI_NUM");
+                    + "ORDER BY TM.MOVI_NUM DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -64,9 +64,9 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
                     + "TM.FECHA_ENVIO,\n"
-                    + "TM.FECHA_INGR,\n"
+                    + "DECODE(TM.FECHA_INGR,NULL,' ',TM.FECHA_INGR) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
-                    + "TM.MOVI_OBS,\n"
+                    + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I\n"
                     + "WHERE TM.CODIGO1='" + oficina + "' \n"

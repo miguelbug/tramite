@@ -24,6 +24,7 @@ public class LoginDaoImpl implements LoginDao{
         System.out.println("loginbuscar");
         Usuario nuevoUsu = null;
         session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("impl: "+usu+" "+pass);
         String sql = "FROM Usuario WHERE USU = '" + usu + "' AND CLAVE='" + pass + "'";
         try {
             session.beginTransaction();
@@ -31,6 +32,7 @@ public class LoginDaoImpl implements LoginDao{
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
+            System.out.println("mal");
             session.beginTransaction().rollback();
             session.close();
         }

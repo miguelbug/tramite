@@ -50,6 +50,7 @@ public class LoginBean implements Serializable {
         FacesMessage message = null;
         if (usuario != null && pass != null) {
             usu = ld.getUsuario(usuario, pass);
+            System.out.println(usuario+" "+pass);
             try {
                 contex = FacesContext.getCurrentInstance();
                 httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();

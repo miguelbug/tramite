@@ -28,7 +28,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
+            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,\n"
+                    + "       TD.TRAM_FECHA,\n"
+                    + "       DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,\n"
+                    + "       TD.ESTA_DESCRIP,\n"
+                    + "       DEP.NOMBRE \n"
+                    + "       FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
                     + "order by tram_fecha desc");
             docus = query.list();
             System.out.println("despues de query session");
@@ -44,27 +49,6 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         }
         System.out.println("retorna");
         return docus;
-    }
-
-    @Override
-    public List getCodigos() {
-        List codigos = new ArrayList();
-        session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            System.out.println("entra");
-            session.beginTransaction();
-            System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT REPLACE(R1.TRAM_NUM,'-') FROM ( SELECT DISTINCT SUBSTR(TRAM_NUM,7,3)  AS TRAM_NUM FROM vw_ogpl002@TRAMITEDBLINK ) R1 ORDER BY REPLACE(R1.TRAM_NUM,'-')");
-            codigos = query.list();
-            session.beginTransaction().commit();
-            session.close();
-        } catch (Exception e) {
-            System.out.println("no entró");
-            session.beginTransaction().rollback();
-            System.out.println(e.getMessage());
-        }
-        System.out.println("retorna");
-        return codigos;
     }
 
     @Override
@@ -131,7 +115,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getSQL(String[] a) {
         int i = 0;
-        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,TD.TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
+        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
         while (i < a.length) {
             if (a[i] != null && a[i].length() != 0) {
                 System.out.println(a[i]);
