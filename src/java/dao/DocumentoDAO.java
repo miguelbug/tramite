@@ -7,6 +7,7 @@
 package dao;
 
 import java.util.List;
+import maping.Usuario;
 
 /**
  *
@@ -21,4 +22,5 @@ public interface DocumentoDAO {
     public List getDetalle(String tramnum);
     public List getDeatalle2(String tramnum);
     public String getMotivo(String tramnum);
+    public String getOficina(Usuario usu);
 }

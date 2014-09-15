@@ -1,5 +1,5 @@
 package maping;
-// Generated 02/09/2014 12:28:10 PM by Hibernate Tools 3.6.0
+// Generated 15/09/2014 10:37:29 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -18,8 +18,10 @@ public class TramiteDatos  implements java.io.Serializable {
      private Date tramFecha;
      private String tramObs;
      private String estaDescrip;
-     private Set<TipoDocu> tipoDocus = new HashSet<TipoDocu>(0);
+     private Set<MovimientoInterno> movimientoInternos = new HashSet<MovimientoInterno>(0);
+     private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
      private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
+     private Set<TipoDocu> tipoDocus = new HashSet<TipoDocu>(0);
 
     public TramiteDatos() {
     }
@@ -29,15 +31,17 @@ public class TramiteDatos  implements java.io.Serializable {
         this.tramNum = tramNum;
         this.tramFecha = tramFecha;
     }
-    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<TipoDocu> tipoDocus, Set<TramiteMovimiento> tramiteMovimientos) {
+    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<MovimientoInterno> movimientoInternos, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
        this.tramNum = tramNum;
        this.usuario = usuario;
        this.dependencia = dependencia;
        this.tramFecha = tramFecha;
        this.tramObs = tramObs;
        this.estaDescrip = estaDescrip;
-       this.tipoDocus = tipoDocus;
+       this.movimientoInternos = movimientoInternos;
+       this.docusInternoses = docusInternoses;
        this.tramiteMovimientos = tramiteMovimientos;
+       this.tipoDocus = tipoDocus;
     }
    
     public String getTramNum() {
@@ -82,12 +86,19 @@ public class TramiteDatos  implements java.io.Serializable {
     public void setEstaDescrip(String estaDescrip) {
         this.estaDescrip = estaDescrip;
     }
-    public Set<TipoDocu> getTipoDocus() {
-        return this.tipoDocus;
+    public Set<MovimientoInterno> getMovimientoInternos() {
+        return this.movimientoInternos;
     }
     
-    public void setTipoDocus(Set<TipoDocu> tipoDocus) {
-        this.tipoDocus = tipoDocus;
+    public void setMovimientoInternos(Set<MovimientoInterno> movimientoInternos) {
+        this.movimientoInternos = movimientoInternos;
+    }
+    public Set<DocusInternos> getDocusInternoses() {
+        return this.docusInternoses;
+    }
+    
+    public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
+        this.docusInternoses = docusInternoses;
     }
     public Set<TramiteMovimiento> getTramiteMovimientos() {
         return this.tramiteMovimientos;
@@ -95,6 +106,13 @@ public class TramiteDatos  implements java.io.Serializable {
     
     public void setTramiteMovimientos(Set<TramiteMovimiento> tramiteMovimientos) {
         this.tramiteMovimientos = tramiteMovimientos;
+    }
+    public Set<TipoDocu> getTipoDocus() {
+        return this.tipoDocus;
+    }
+    
+    public void setTipoDocus(Set<TipoDocu> tipoDocus) {
+        this.tipoDocus = tipoDocus;
     }
 
 

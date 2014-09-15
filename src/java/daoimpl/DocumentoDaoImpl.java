@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import dao.DocumentoDAO;
+import maping.Usuario;
 import util.HibernateUtil;
 
 /**
@@ -193,6 +194,27 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.close();
         } catch (Exception e) {
             System.out.println("problemasmotivo");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
+    }
+
+    @Override
+    public String getOficina(Usuario usu) {
+        String codigos = "";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select ofic.nombre_oficina\n"
+                    + "from oficina ofic, usuario usu\n"
+                    + "where usu.USU='" + usu.getUsu() + "' \n"
+                    + "and usu.ID_OFICINA=ofic.ID_OFICINA");
+            codigos = (String) query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problem oficina");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
         }

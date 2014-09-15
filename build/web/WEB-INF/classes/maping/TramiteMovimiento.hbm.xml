@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02/09/2014 12:28:11 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 15/09/2014 10:37:30 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
         <id name="idMovi" type="big_decimal">
-            <column name="ID_MOVI" precision="22" scale="0" />
+            <column name="ID_MOVI" precision="38" scale="0" />
             <generator class="assigned" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
@@ -33,7 +33,7 @@
             <column name="MOVI_OBS" length="250" />
         </property>
         <property name="estaNombre" type="string">
-            <column name="ESTA_NOMBRE" length="50" />
+            <column name="ESTA_NOMBRE" length="250" />
         </property>
     </class>
 </hibernate-mapping>

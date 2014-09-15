@@ -39,8 +39,8 @@ public class SeguimientoBean {
     private List docselec;
     private Usuario usu;
     private Date fecha;
-    private String fechadia = "";
-    private String fechahora = "";
+    private String fechadia;
+    private String fechahora;
     private String motivo = "";
     private String usuario = "";
     private final FacesContext faceContext;
@@ -87,9 +87,6 @@ public class SeguimientoBean {
     }
 
     public void RecorrerLista() {
-        /*for(int i=0;i<docselec.size();i++){
-         MostrarSeguimiento(docselec.get(i).toString());            
-         }*/
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
@@ -136,14 +133,18 @@ public class SeguimientoBean {
     }
 
     public void Derivar() {
+        System.out.println("entra a derivar");
         IniciarFecha();
         Motivo();
         UsuarioSelec();
     }
 
     public void IniciarFecha() {
+        System.out.println("entra a fecha");
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
+        fechadia="";
+        fechahora="";
         StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
             if (fechadia.equals("")) {
@@ -156,6 +157,7 @@ public class SeguimientoBean {
     }
 
     public void Motivo() {
+        System.out.println("entra a motivo");
         try {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
             Iterator it = hm.entrySet().iterator();
@@ -176,6 +178,7 @@ public class SeguimientoBean {
     }
 
     public void UsuarioSelec() {
+        System.out.println("entra a usuario");
         try {
             usuario = usu.getUsuNombre();
         } catch (Exception e) {

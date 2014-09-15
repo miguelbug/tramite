@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Usuario;
@@ -30,10 +31,11 @@ import maping.Usuario;
  * @author OGPL
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class DocumentoUsuarioBean {
 
     private List seguimientolista2;
+    private List seguimientolista;
     private List otrosdocus;
     private List docselec;
     private List detalle;
@@ -41,13 +43,15 @@ public class DocumentoUsuarioBean {
     private DocumentoDAO dd;
     private Date fecha;
     private Usuario usu;
-    private String fechadia = "";
-    private String fechahora = "";
+    private String fechadia;
+    private String fechahora;
     private String motivo = "";
     private String usuario = "";
     private final FacesContext faceContext;
     private String codinterno;
     private SeguimientoDAO sgd;
+    private String numtramaux;
+    private String asunto;
     
     public DocumentoUsuarioBean() {
         dd= new DocumentoDaoImpl();
@@ -55,6 +59,7 @@ public class DocumentoUsuarioBean {
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         seguimientolista2 = new ArrayList<Map<String, String>>();
+        seguimientolista = new ArrayList<Map<String, String>>();
         detalle= new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         MostrarParaUsuario();
@@ -114,14 +119,22 @@ public class DocumentoUsuarioBean {
     }
     
     public void Derivar() {
+        numtramaux="";
         IniciarFecha();
         Motivo();
         UsuarioSelec();
+       
+        
     }
-
+    public String getNombOficina(){
+        String oficina=dd.getOficina(usu);
+        return oficina;
+    }
     public void IniciarFecha() {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
+        fechadia = "";
+        fechahora = "";
         StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
             if (fechadia.equals("")) {
@@ -141,10 +154,12 @@ public class DocumentoUsuarioBean {
                 Map.Entry e = (Map.Entry) it.next();
                 if (e.getKey().toString().equals("numerotramite")) {
                     System.out.println(e.getValue().toString());
-                    motivo=dd.getMotivo(hm.get("numerotramite").toString());
+                     numtramaux=e.getValue().toString();
+                     motivo=dd.getMotivo(e.getValue().toString());
                 }
 
             }
+            
             docselec.clear();
         } catch (Exception e) {
             System.out.println("error");
@@ -161,7 +176,47 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-    
+    public void MostrarSeguimiento(String tramnum) {
+        System.out.println("listando documentos");
+        seguimientolista.clear();
+        try {
+            List lista = new ArrayList();
+            lista = sgd.getSeguimiento(tramnum);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                seguimientolista.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void RecorrerLista() {
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            if (e.getKey().toString().equals("numerotramite")) {
+                System.out.println(e.getValue().toString());
+                MostrarSeguimiento(e.getValue().toString());
+            }
+
+        }
+        docselec.clear();
+
+    }
     public List getSeguimientolista2() {
         return seguimientolista2;
     }
@@ -272,6 +327,30 @@ public class DocumentoUsuarioBean {
 
     public void setSgd(SeguimientoDAO sgd) {
         this.sgd = sgd;
+    }
+
+    public List getSeguimientolista() {
+        return seguimientolista;
+    }
+
+    public void setSeguimientolista(List seguimientolista) {
+        this.seguimientolista = seguimientolista;
+    }
+
+    public String getNumtramaux() {
+        return numtramaux;
+    }
+
+    public void setNumtramaux(String numtramaux) {
+        this.numtramaux = numtramaux;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
     
 }

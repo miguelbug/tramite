@@ -58,6 +58,8 @@
                                     </p:commandButton>
                                 </p:column>
                                 <f:facet name="footer">
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog').show()"
+                                                     update=":form:tablaseguim" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
                                                      oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
                                 </f:facet>
@@ -87,35 +89,65 @@
                                     </p:column>
                                 </p:dataTable>
                             </p:dialog>
-                            <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista}" id="tablaseguim" >
+                                    <p:column headerText="Num. Tramite">
+                                        <h:outputText value="#{seg.numerotramite}" />
+                                    </p:column>
+                                    <p:column headerText="Num. Mov.">
+                                        <h:outputText value="#{seg.movimnum}" />
+                                    </p:column>
+                                    <p:column headerText="Origen">
+                                        <h:outputText value="#{seg.origen}" />
+                                    </p:column>
+                                    <p:column headerText="Destino">
+                                        <h:outputText value="#{seg.destino}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Envio">
+                                        <h:outputText value="#{seg.fechaenvio}" />
+                                    </p:column>
+                                    <p:column headerText="Fech. Ing">
+                                        <h:outputText value="#{seg.fechaingr}" />
+                                    </p:column>
+                                    <p:column headerText="Indicador">
+                                        <h:outputText value="#{seg.indicador}" />
+                                    </p:column>
+                                    <p:column headerText="Obs.">
+                                        <h:outputText value="#{seg.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="#{seg.estado}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:dialog>
+                            <p:dialog header="Derivación - #{documentoUsuarioBean.getNombOficina()}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:panelGrid columns="2" id="panelDeriv">
+                                    
+                                    <p:outputLabel value="Tipo de Documento: "/>
+                                    <p:selectOneMenu id="tipodocum">
+                                        <f:selectItem itemLabel="INFORMES" itemValue="01" />
+                                        <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="02"/>
+                                        <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="03" />
+                                        <f:selectItem itemLabel="MEMORANDUM" itemValue="04" />
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel value="N°: "/>
+                                    <p:outputLabel value="001"/>
+                                    
+                                    <p:outputLabel value="Asunto: "/>
+                                    <p:inputText />
+                                    
+                                    <p:outputLabel value="Referencia: "/>
+                                    <p:outputLabel value="#{documentoUsuarioBean.numtramaux}"/>
+                                   
                                     <p:outputLabel value="Oficina Interna: "/>
                                     <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}" >
                                         <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                        <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
-                                        <f:selectItem itemLabel="DGA" itemValue="DGA" />
-                                        <f:selectItem itemLabel="EPG" itemValue="EPG" />
-                                        <f:selectItem itemLabel="FCA" itemValue="FCA" />
-                                        <f:selectItem itemLabel="FCB" itemValue="FCB" />
-                                        <f:selectItem itemLabel="FCC" itemValue="FCC" />
-                                        <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
-                                        <f:selectItem itemLabel="FCE" itemValue="FCE" />
-                                        <f:selectItem itemLabel="FCF" itemValue="FCF" />
-                                        <f:selectItem itemLabel="FCM" itemValue="FCM" />
-                                        <f:selectItem itemLabel="FD" itemValue="FD" />
-                                        <f:selectItem itemLabel="FE" itemValue="FE" />
-                                        <f:selectItem itemLabel="FFB" itemValue="FFB" />
-                                        <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
-                                        <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
-                                        <f:selectItem itemLabel="FII" itemValue="FII" />
-                                        <f:selectItem itemLabel="FISI" itemValue="FISI" />
-                                        <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
-                                        <f:selectItem itemLabel="FMV" itemValue="FMV" />
-                                        <f:selectItem itemLabel="FM" itemValue="FM" />
-                                        <f:selectItem itemLabel="FO" itemValue="FO" />
-                                        <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
-                                        <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
-                                        <f:selectItem itemLabel="OCA" itemValue="OCA" />
+                                        <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
+                                        <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
+                                        <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
+                                        <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
+                                        <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
                                     </p:selectOneMenu>
 
                                     <p:outputLabel value="Fecha: "/>

@@ -33,7 +33,7 @@ import org.primefaces.event.RowEditEvent;
  * @author OGPL
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class DocumentosBean implements Serializable {
 
     private List documentos;
@@ -98,9 +98,6 @@ public class DocumentosBean implements Serializable {
         }
         return seglista;
     }
-    /*public List Detalles2(){
-        
-    }*/
     public void cambiar() {
         mostrar = true;
     }

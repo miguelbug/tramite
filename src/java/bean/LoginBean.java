@@ -84,10 +84,10 @@ public class LoginBean implements Serializable {
     public void getPathRol() {
         if (usu != null) {
             System.out.println("sale de aca");
-            if (usu.getOficina().getIdOficina().equals("10069")) {
+            if (usu.getOficina().getIdOficina().equals("100392")) {
                 direccion = "menu_admin.xhtml";
             }
-            if (!usu.getOficina().getIdOficina().equals("10069")) {
+            if (!usu.getOficina().getIdOficina().equals("100392")) {
                 direccion = "menu_user.xhtml";
             }
         }

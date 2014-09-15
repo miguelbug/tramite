@@ -130,7 +130,7 @@ public class BuscarDocumentosBean implements Serializable{
     }
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
-        //seguimientolista.clear();
+        seguimientolista.clear();
         try {
             System.out.println("entra");
             List lista = new ArrayList();
