@@ -11,5 +11,7 @@ package dao;
  * @author OGPL
  */
 public interface DerivarDAO {
-    
+    public String getIndice();
+    public String getSiglas(String ofi);
+    public int getMovimiento(String tramnum);
 }

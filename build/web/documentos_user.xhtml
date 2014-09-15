@@ -124,7 +124,7 @@
                                 <p:panelGrid columns="2" id="panelDeriv">
                                     
                                     <p:outputLabel value="Tipo de Documento: "/>
-                                    <p:selectOneMenu id="tipodocum">
+                                    <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                         <f:selectItem itemLabel="INFORMES" itemValue="INFORMES" />
                                         <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
                                         <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
@@ -132,10 +132,10 @@
                                     </p:selectOneMenu>
                                     
                                     <p:outputLabel value="N°: "/>
-                                    <p:outputLabel value="001"/>
+                                    <p:outputLabel value="#{documentoUsuarioBean.correlativo}"/>
                                     
                                     <p:outputLabel value="Asunto: "/>
-                                    <p:inputText />
+                                    <p:inputText value="#{documentoUsuarioBean.asunto}"/>
                                     
                                     <p:outputLabel value="Referencia: "/>
                                     <p:outputLabel value="#{documentoUsuarioBean.numtramaux}"/>
@@ -148,6 +148,13 @@
                                         <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
                                         <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
                                         <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel value="Estado: "/>
+                                    <p:selectOneMenu id="estado" value="#{documentoUsuarioBean.estado}">
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="EN PROCESO" itemValue="EN PROCESO" />
+                                        <f:selectItem itemLabel="FINALIZADO" itemValue="FINALIZADO" />
                                     </p:selectOneMenu>
 
                                     <p:outputLabel value="Fecha: "/>

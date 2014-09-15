@@ -5,8 +5,10 @@
  */
 package bean;
 
+import dao.DerivarDAO;
 import dao.DocumentoDAO;
 import dao.SeguimientoDAO;
+import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.text.DateFormat;
@@ -52,6 +54,10 @@ public class DocumentoUsuarioBean {
     private String numtramaux;
     private String asunto;
     private String siglasdocus;
+    private DerivarDAO deriv;
+    private String correlativo;
+    private String docunombre;
+    private String estado;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -62,6 +68,7 @@ public class DocumentoUsuarioBean {
         seguimientolista = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
+        deriv= new DerivarDaoImpl();
         MostrarParaUsuario();
     }
 
@@ -94,9 +101,20 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    public int generarCorrelativo() {
-        int corr = 0;
-        return corr;
+    public String generarCorrelativo() {
+        int corr=0;
+        String aux="";
+        try{
+            System.out.println("lleno");
+            corr=Integer.parseInt(deriv.getIndice());
+            corr=corr+1;
+            aux="0000"+corr;
+        }catch(Exception e){
+            System.out.println("no lleno");
+            corr=corr+1;
+            aux="0000"+corr;
+        }
+        return aux;
     }
 
     public List Detalles() {
@@ -128,21 +146,23 @@ public class DocumentoUsuarioBean {
     public void Derivar() {
         numtramaux = "";
         if (!usu.getOficina().getIdOficina().equals("100392")) {
-            generarCorrelativo();
-            siglasdocus = usu.getOficina().getSiglasofi();
+            correlativo=generarCorrelativo();
+            siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
             IniciarFecha();
             Motivo();
             UsuarioSelec();
         } else {
+            if(usu.getOficina().getIdOficina().equals("100392")){
             IniciarFecha();
             Motivo();
             UsuarioSelec();
+            }
         }
 
     }
 
     public void Guardar() {
-
+        
     }
 
     public String getNombOficina() {
@@ -239,6 +259,22 @@ public class DocumentoUsuarioBean {
 
     }
 
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public String getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(String correlativo) {
+        this.correlativo = correlativo;
+    }
+    
     public List getSeguimientolista2() {
         return seguimientolista2;
     }
@@ -383,4 +419,20 @@ public class DocumentoUsuarioBean {
         this.siglasdocus = siglasdocus;
     }
 
+    public String getDocunombre() {
+        return docunombre;
+    }
+
+    public void setDocunombre(String docunombre) {
+        this.docunombre = docunombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }
