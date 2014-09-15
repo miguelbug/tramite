@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -65,9 +66,11 @@ public class SeguimientoBean {
         try {
             List lista = new ArrayList();
             lista = sgd.getSeguimiento(tramnum);
+            System.out.println(lista.size());
             Iterator ite = lista.iterator();
             Object obj[] = new Object[9];
             while (ite.hasNext()) {
+                System.out.println("ola");
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
@@ -80,6 +83,7 @@ public class SeguimientoBean {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 seguimientolista.add(listaaux);
+                
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -87,13 +91,16 @@ public class SeguimientoBean {
     }
 
     public void RecorrerLista() {
+        System.out.println("entra a recorrer");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry e = (Map.Entry) it.next();
             if (e.getKey().toString().equals("numerotramite")) {
                 System.out.println(e.getValue().toString());
+                System.out.println("------entra---------");
                 MostrarSeguimiento(e.getValue().toString());
+                System.out.println("------sale-----------");
             }
 
         }

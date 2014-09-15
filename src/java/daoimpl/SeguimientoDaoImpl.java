@@ -29,10 +29,10 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
                     + "TM.MOVI_NUM,\n"
-                    + "M1.NOMBRE AS ORIGEN,\n"
-                    + "M2.NOMBRE AS DESTINO,\n"
-                    + "TM.FECHA_ENVIO,\n"
-                    + "DECODE(TM.FECHA_INGR,NULL,' ',TM.FECHA_INGR) AS FECHAINGRESO,\n"
+                    + "M1.NOMBRE,\n"
+                    + "M2.NOMBRE,\n"
+                    + "DECODE(to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
                     + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"
@@ -50,6 +50,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
         }
+        System.out.println("retorna");
         return codigos;
     }
 
@@ -63,8 +64,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "TM.MOVI_NUM,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
-                    + "TM.FECHA_ENVIO,\n"
-                    + "DECODE(TM.FECHA_INGR,NULL,' ',TM.FECHA_INGR) AS FECHAINGRESO,\n"
+                    + "DECODE(to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
                     + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"

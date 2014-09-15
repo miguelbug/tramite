@@ -1,5 +1,5 @@
 package maping;
-// Generated 15/09/2014 10:37:29 AM by Hibernate Tools 3.6.0
+// Generated 15/09/2014 03:43:43 PM by Hibernate Tools 3.6.0
 
 
 
@@ -9,7 +9,7 @@ package maping;
 public class DocusInternos  implements java.io.Serializable {
 
 
-     private int idTipdocint;
+     private String idTipdocint;
      private TramiteDatos tramiteDatos;
      private String docuPricint;
      private String docuNombreint;
@@ -20,12 +20,12 @@ public class DocusInternos  implements java.io.Serializable {
     }
 
 	
-    public DocusInternos(int idTipdocint, String docuPricint, String docuNombreint) {
+    public DocusInternos(String idTipdocint, String docuPricint, String docuNombreint) {
         this.idTipdocint = idTipdocint;
         this.docuPricint = docuPricint;
         this.docuNombreint = docuNombreint;
     }
-    public DocusInternos(int idTipdocint, TramiteDatos tramiteDatos, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint) {
+    public DocusInternos(String idTipdocint, TramiteDatos tramiteDatos, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint) {
        this.idTipdocint = idTipdocint;
        this.tramiteDatos = tramiteDatos;
        this.docuPricint = docuPricint;
@@ -34,11 +34,11 @@ public class DocusInternos  implements java.io.Serializable {
        this.docuAnioint = docuAnioint;
     }
    
-    public int getIdTipdocint() {
+    public String getIdTipdocint() {
         return this.idTipdocint;
     }
     
-    public void setIdTipdocint(int idTipdocint) {
+    public void setIdTipdocint(String idTipdocint) {
         this.idTipdocint = idTipdocint;
     }
     public TramiteDatos getTramiteDatos() {

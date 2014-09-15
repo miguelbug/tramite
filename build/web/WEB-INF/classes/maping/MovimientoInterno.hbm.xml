@@ -1,30 +1,29 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/09/2014 10:37:30 AM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2014 03:43:43 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.MovimientoInterno" table="MOVIMIENTO_INTERNO" schema="MIGUEL">
-        <id name="idMoviint" type="int">
-            <column name="ID_MOVIINT" precision="5" scale="0" />
-            <generator class="assigned" />
-        </id>
-        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
-            <column name="TRAM_NUM" length="42" />
-        </many-to-one>
-        <property name="moviNumint" type="int">
-            <column name="MOVI_NUMINT" precision="5" scale="0" not-null="true" />
-        </property>
-        <property name="fechaEnvint" type="date">
-            <column name="FECHA_ENVINT" length="7" not-null="true" />
-        </property>
-        <property name="fechaIngrint" type="date">
-            <column name="FECHA_INGRINT" length="7" />
-        </property>
-        <property name="obsMovint" type="string">
-            <column name="OBS_MOVINT" length="250" />
-        </property>
-        <property name="estadInt" type="string">
-            <column name="ESTAD_INT" length="50" />
-        </property>
-    </class>
+  <class name="maping.MovimientoInterno" schema="MIGUEL" table="MOVIMIENTO_INTERNO">
+    <id name="idMoviint" type="int">
+      <column name="ID_MOVIINT" precision="5" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="maping.TramiteDatos" fetch="select" name="tramiteDatos">
+      <column length="42" name="TRAM_NUM"/>
+    </many-to-one>
+    <property name="moviNumint" type="int">
+      <column name="MOVI_NUMINT" not-null="true" precision="5" scale="0"/>
+    </property>
+    <property name="fechaEnvint" type="date">
+      <column length="7" name="FECHA_ENVINT" not-null="true"/>
+    </property>
+    <property name="fechaIngrint" type="date">
+      <column length="7" name="FECHA_INGRINT"/>
+    </property>
+    <property name="obsMovint" type="string">
+      <column length="250" name="OBS_MOVINT"/>
+    </property>
+    <property name="estadInt" type="string">
+      <column length="50" name="ESTAD_INT"/>
+    </property>
+  </class>
 </hibernate-mapping>

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bean;
 
 import dao.DocumentoDAO;
@@ -52,18 +51,20 @@ public class DocumentoUsuarioBean {
     private SeguimientoDAO sgd;
     private String numtramaux;
     private String asunto;
-    
+    private String siglasdocus;
+
     public DocumentoUsuarioBean() {
-        dd= new DocumentoDaoImpl();
+        dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         seguimientolista2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
-        detalle= new ArrayList<Map<String, String>>();
+        detalle = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         MostrarParaUsuario();
     }
+
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
@@ -92,6 +93,12 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
+
+    public int generarCorrelativo() {
+        int corr = 0;
+        return corr;
+    }
+
     public List Detalles() {
         System.out.println("listando detalles");
         detalle.clear();
@@ -117,19 +124,32 @@ public class DocumentoUsuarioBean {
         }
         return detalle;
     }
-    
+
     public void Derivar() {
-        numtramaux="";
-        IniciarFecha();
-        Motivo();
-        UsuarioSelec();
-       
-        
+        numtramaux = "";
+        if (!usu.getOficina().getIdOficina().equals("100392")) {
+            generarCorrelativo();
+            siglasdocus = usu.getOficina().getSiglasofi();
+            IniciarFecha();
+            Motivo();
+            UsuarioSelec();
+        } else {
+            IniciarFecha();
+            Motivo();
+            UsuarioSelec();
+        }
+
     }
-    public String getNombOficina(){
-        String oficina=dd.getOficina(usu);
+
+    public void Guardar() {
+
+    }
+
+    public String getNombOficina() {
+        String oficina = dd.getOficina(usu);
         return oficina;
     }
+
     public void IniciarFecha() {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
@@ -154,12 +174,12 @@ public class DocumentoUsuarioBean {
                 Map.Entry e = (Map.Entry) it.next();
                 if (e.getKey().toString().equals("numerotramite")) {
                     System.out.println(e.getValue().toString());
-                     numtramaux=e.getValue().toString();
-                     motivo=dd.getMotivo(e.getValue().toString());
+                    numtramaux = e.getValue().toString();
+                    motivo = dd.getMotivo(e.getValue().toString());
                 }
 
             }
-            
+
             docselec.clear();
         } catch (Exception e) {
             System.out.println("error");
@@ -176,6 +196,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
+
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista.clear();
@@ -217,6 +238,7 @@ public class DocumentoUsuarioBean {
         docselec.clear();
 
     }
+
     public List getSeguimientolista2() {
         return seguimientolista2;
     }
@@ -352,5 +374,13 @@ public class DocumentoUsuarioBean {
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }
-    
+
+    public String getSiglasdocus() {
+        return siglasdocus;
+    }
+
+    public void setSiglasdocus(String siglasdocus) {
+        this.siglasdocus = siglasdocus;
+    }
+
 }

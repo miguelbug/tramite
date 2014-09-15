@@ -30,11 +30,11 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             System.out.println("despues de begin");
             Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,\n"
-                    + "       TD.TRAM_FECHA,\n"
-                    + "       DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,\n"
-                    + "       TD.ESTA_DESCRIP,\n"
-                    + "       DEP.NOMBRE \n"
-                    + "       FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
+                    + "DECODE(to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHA,\n"
+                    + "TD.TRAM_OBS,\n"
+                    + "TD.ESTA_DESCRIP,\n"
+                    + "DEP.NOMBRE \n"
+                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
                     + "order by tram_fecha desc");
             docus = query.list();
             System.out.println("despues de query session");
@@ -116,7 +116,10 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getSQL(String[] a) {
         int i = 0;
-        String comienzo = "SELECT TD.TRAM_NUM,TD.TRAM_FECHA,DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
+        String comienzo = "SELECT TD.TRAM_NUM,"
+                + "DECODE(to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHA,"
+                + "DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE "
+                + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
         while (i < a.length) {
             if (a[i] != null && a[i].length() != 0) {
                 System.out.println(a[i]);
