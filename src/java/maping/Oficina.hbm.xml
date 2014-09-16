@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/09/2014 03:43:43 PM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-  <class name="maping.Oficina" schema="MIGUEL" table="OFICINA">
-    <id name="idOficina" type="string">
-      <column length="20" name="ID_OFICINA"/>
-      <generator class="assigned"/>
-    </id>
-    <property name="nombreOficina" type="string">
-      <column length="100" name="NOMBRE_OFICINA" not-null="true"/>
-    </property>
-    <property name="siglasofi" type="string">
-      <column length="20" name="SIGLASOFI"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="usuarios" table="USUARIO">
-      <key>
-        <column length="20" name="ID_OFICINA"/>
-      </key>
-      <one-to-many class="maping.Usuario"/>
-    </set>
-  </class>
+    <class name="maping.Oficina" table="OFICINA" schema="MIGUEL">
+        <id name="idOficina" type="string">
+            <column name="ID_OFICINA" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreOficina" type="string">
+            <column name="NOMBRE_OFICINA" length="100" not-null="true" />
+        </property>
+        <property name="siglasofi" type="string">
+            <column name="SIGLASOFI" length="20" />
+        </property>
+        <set name="usuarios" table="USUARIO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_OFICINA" length="20" />
+            </key>
+            <one-to-many class="maping.Usuario" />
+        </set>
+    </class>
 </hibernate-mapping>

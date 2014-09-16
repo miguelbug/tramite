@@ -58,6 +58,7 @@ public class DocumentoUsuarioBean {
     private String correlativo;
     private String docunombre;
     private String estado;
+    private boolean confirmar = false;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -68,7 +69,7 @@ public class DocumentoUsuarioBean {
         seguimientolista = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
-        deriv= new DerivarDaoImpl();
+        deriv = new DerivarDaoImpl();
         MostrarParaUsuario();
     }
 
@@ -102,17 +103,17 @@ public class DocumentoUsuarioBean {
     }
 
     public String generarCorrelativo() {
-        int corr=0;
-        String aux="";
-        try{
+        int corr = 0;
+        String aux = "";
+        try {
             System.out.println("lleno");
-            corr=Integer.parseInt(deriv.getIndice());
-            corr=corr+1;
-            aux="0000"+corr;
-        }catch(Exception e){
+            corr = Integer.parseInt(deriv.getIndice());
+            corr = corr + 1;
+            aux = "0000" + corr;
+        } catch (Exception e) {
             System.out.println("no lleno");
-            corr=corr+1;
-            aux="0000"+corr;
+            corr = corr + 1;
+            aux = "0000" + corr;
         }
         return aux;
     }
@@ -146,23 +147,40 @@ public class DocumentoUsuarioBean {
     public void Derivar() {
         numtramaux = "";
         if (!usu.getOficina().getIdOficina().equals("100392")) {
-            correlativo=generarCorrelativo();
+            correlativo = generarCorrelativo();
             siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
             IniciarFecha();
             Motivo();
             UsuarioSelec();
+            confirmar=false;
         } else {
-            if(usu.getOficina().getIdOficina().equals("100392")){
-            IniciarFecha();
-            Motivo();
-            UsuarioSelec();
+            if (usu.getOficina().getIdOficina().equals("100392")) {
+                IniciarFecha();
+                Motivo();
+                UsuarioSelec();
+                confirmar = true;
             }
         }
 
     }
 
     public void Guardar() {
-        
+        try {
+            fecha = new Date();
+            DateFormat d = new SimpleDateFormat("yyyy");
+            System.out.println("entra a guardar");
+            if (confirmar == true) {
+                System.out.println("entra a confirmar true");
+                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+            } else if (confirmar==false) {
+                System.out.println("entra a confirmar false");
+                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+                deriv.InsertarTipoDocus(correlativo,docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getNombOficina() {
@@ -274,7 +292,7 @@ public class DocumentoUsuarioBean {
     public void setCorrelativo(String correlativo) {
         this.correlativo = correlativo;
     }
-    
+
     public List getSeguimientolista2() {
         return seguimientolista2;
     }
@@ -434,5 +452,13 @@ public class DocumentoUsuarioBean {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    public boolean isConfirmar() {
+        return confirmar;
+    }
+
+    public void setConfirmar(boolean confirmar) {
+        this.confirmar = confirmar;
+    }
+
 }

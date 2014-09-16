@@ -143,6 +143,7 @@
                                     <p:outputLabel value="Oficina Interna: "/>
                                     <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}" >
                                         <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
                                         <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
                                         <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
                                         <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
@@ -171,7 +172,9 @@
                                 </p:panelGrid>
                                 <br></br>
                                 <center>
-                                    <p:commandButton value="Guardar"/>
+                                    <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}">
+                                       
+                                    </p:commandButton>
                                 </center>
                             </p:dialog>
                         </p:panel>

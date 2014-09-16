@@ -1,26 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/09/2014 03:43:43 PM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-  <class name="maping.DocusInternos" schema="MIGUEL" table="DOCUS_INTERNOS">
-    <id name="idTipdocint" type="string">
-      <column length="10" name="ID_TIPDOCINT"/>
-      <generator class="assigned"/>
-    </id>
-    <many-to-one class="maping.TramiteDatos" fetch="select" name="tramiteDatos">
-      <column length="42" name="TRAM_NUM"/>
-    </many-to-one>
-    <property name="docuPricint" type="string">
-      <column length="30" name="DOCU_PRICINT" not-null="true"/>
-    </property>
-    <property name="docuNombreint" type="string">
-      <column length="50" name="DOCU_NOMBREINT" not-null="true"/>
-    </property>
-    <property name="docuSiglasint" type="string">
-      <column length="30" name="DOCU_SIGLASINT"/>
-    </property>
-    <property name="docuAnioint" type="string">
-      <column length="30" name="DOCU_ANIOINT"/>
-    </property>
-  </class>
+    <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
+        <id name="idTipdocint" type="string">
+            <column name="ID_TIPDOCINT" length="10" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
+            <column name="TRAM_NUM" length="42" />
+        </many-to-one>
+        <property name="docuPricint" type="string">
+            <column name="DOCU_PRICINT" length="30" not-null="true" />
+        </property>
+        <property name="docuNombreint" type="string">
+            <column name="DOCU_NOMBREINT" length="50" not-null="true" />
+        </property>
+        <property name="docuSiglasint" type="string">
+            <column name="DOCU_SIGLASINT" length="30" />
+        </property>
+        <property name="docuAnioint" type="string">
+            <column name="DOCU_ANIOINT" length="30" />
+        </property>
+    </class>
 </hibernate-mapping>
