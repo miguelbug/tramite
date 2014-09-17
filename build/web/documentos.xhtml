@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>DOCUMENTOS</title>
@@ -105,7 +106,22 @@
                                         <h:outputText value="#{seg.estado}" />
                                     </p:column>
                                 </p:dataTable>
-                            </p:dialog>
+                                
+                <p:panel header="Exportar en PDF y Excel">  
+                <p:commandLink id="pdff" ajax="false">  
+                    <p:graphicImage value="/resources/img/pdf.png"/>  
+                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                    <pe:exporter type="pdf" target="tablaseguim" fileName="Seguimiento"/>  
+                </p:commandLink>  
+                <p:spacer height="20"/>  
+                <p:commandLink id="xlss" ajax="false">  
+                    <p:graphicImage value="/resources/img/excel.png"/>  
+                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                    <pe:exporter type="xlsx" target="tablaseguim" fileName="Seguimiento"/>  
+                </p:commandLink>  
+                </p:panel>
+                                
+                   </p:dialog>
                             <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:panelGrid columns="2" id="panelDeriv">
                                     <p:outputLabel value="Oficina Interna: "/>
@@ -140,6 +156,21 @@
                     </center>
                     <br></br>
                     <br></br>
+                    
+             <p:panel header="Exportar en PDF y Excel">  
+                <p:commandLink id="pdf" ajax="false">  
+                    <p:graphicImage value="/resources/img/pdf.png"/>  
+                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                    <pe:exporter type="pdf" target="tabladocumentos" fileName="CellEditableTable"/>  
+                </p:commandLink>  
+                <p:spacer height="20"/>  
+                <p:commandLink id="xls" ajax="false">  
+                    <p:graphicImage value="/resources/img/excel.png"/>  
+                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                    <pe:exporter type="xlsx" target="cellEditingTable" fileName="CellEditableTable"/>  
+                </p:commandLink>  
+            </p:panel>
+                    
                 </h:form>
             </ui:define>
         </ui:composition>
