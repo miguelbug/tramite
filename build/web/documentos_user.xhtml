@@ -16,6 +16,7 @@
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
                 <h:form id="form" >
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
                     <br></br>
                     <br></br>
                     <center>
@@ -64,6 +65,8 @@
                                                      update=":form:tablaseguim" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
                                                      oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:350px; height:26px" actionListener="#{documentoUsuarioBean.Confirmar()}"
+                                                     update=":form:panelDeriv"/>
                                 </f:facet>
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
@@ -138,7 +141,7 @@
                                 
                                 
                             </p:dialog>
-                            <p:dialog header="Derivación - #{documentoUsuarioBean.getNombOficina()}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:dialog header="Derivación - #{documentoUsuarioBean.getNombOficina()}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" rendered="#{documentoUsuarioBean.aparecer}">
                                 <p:panelGrid columns="2" id="panelDeriv">
                                     
                                     <p:outputLabel value="Tipo de Documento: "/>
@@ -190,8 +193,8 @@
                                 </p:panelGrid>
                                 <br></br>
                                 <center>
-                                    <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}">
-                                       
+                                    <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl">
+                                        <f:ajax event="click" onevent="derivarDialog.hide()"/>
                                     </p:commandButton>
                                 </center>
                             </p:dialog>

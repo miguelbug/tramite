@@ -7,6 +7,7 @@ package daoimpl;
 
 import dao.DerivarDAO;
 import java.util.Date;
+import java.util.List;
 import maping.Dependencia;
 import maping.DocusInternos;
 import maping.MovimientoInterno;
@@ -71,7 +72,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("loginbuscar");
         int movimiento=0;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(moviNumint) from MovimientoInterno WHERE TRAM_NUM='" + tramnum + "'";
+        String sql = "select max(moviNum) from TramiteMovimiento WHERE TRAM_NUM='" + tramnum + "'";
         try {
             session.beginTransaction();
             movimiento = (Integer) session.createQuery(sql).uniqueResult();
@@ -218,6 +219,28 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close(); 
         }
         return ofi;
+    }
+
+    @Override
+    public void ConfirmarTramites(String numtram, Date fecha) {
+        int i=0;
+        System.out.println("entra a confirmar tramites");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "Update MovimientoInterno set fechaIngrint ='" + fecha + "' where tramiteDatos.tramNum='" + numtram + "'";
+        try {
+            System.out.println("entra a begin");
+            session.beginTransaction();
+            i=session.createQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            System.out.println("sale de begin");
+        } catch (Exception e) {
+            System.out.println("mal confirmar");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            }finally {
+            session.close(); 
+        }
+        System.out.println("actualizados: "+i);
     }
 
 }

@@ -29,8 +29,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
                     + "TM.MOVI_NUM,\n"
-                    + "M1.NOMBRE,\n"
-                    + "M2.NOMBRE,\n"
+                    + "M1.NOMBRE as NOMBRE1,\n"
+                    + "M2.NOMBRE as NOMBRE2,\n"
                     + "DECODE(to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAENVIO,\n"
                     + "DECODE(to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
@@ -41,7 +41,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "ORDER BY TM.MOVI_NUM DESC");
+                    + "ORDER BY TM.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -74,7 +74,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "ORDER BY TM.FECHA_ENVIO DESC");
+                    + "ORDER BY TM.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
