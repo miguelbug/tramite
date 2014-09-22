@@ -78,11 +78,11 @@
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
-                                </p:column>
                                 <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
                                     <h:outputText value="#{item.movimnum}"/>
+                                </p:column>
+                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origen}"/>
@@ -96,14 +96,14 @@
                                 <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fechaingr}" />
                                 </p:column>
-                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.indicador}" />
-                                </p:column>
                                 <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                     <h:outputText value="#{item.observacion}" />
                                 </p:column>
                                 <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                     <h:outputText value="#{item.estado}" />
+                                </p:column>
+                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.indicador}" />
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
                                     <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
@@ -116,6 +116,41 @@
                                     <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{derivarBean.Derivar()}"
                                                      oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
                                 </f:facet>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="Derivados Internos">
+                            <p:dataTable value="#{derivarBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
+                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                                
+                                <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.movimnum}"/>
+                                </p:column>
+                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                                <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaenvio}" />
+                                </p:column>
+                                <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaingr}" />
+                                </p:column>
+                                <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.observacion}" />
+                                </p:column>
+                                <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.estado}" />
+                                </p:column>
+                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.indicador}" />
+                                </p:column>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>

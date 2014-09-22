@@ -94,15 +94,15 @@ public class DocumentoUsuarioBean {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("numerotramite", String.valueOf(obj[0]));
-                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("movimnum", String.valueOf(obj[0]));
+                listaaux.put("numerotramite", String.valueOf(obj[1]));
                 listaaux.put("origen", String.valueOf(obj[2]));
                 listaaux.put("destino", String.valueOf(obj[3]));
                 listaaux.put("fechaenvio", String.valueOf(obj[4]));
                 listaaux.put("fechaingr", String.valueOf(obj[5]));
-                listaaux.put("indicador", String.valueOf(obj[6]));
-                listaaux.put("observacion", String.valueOf(obj[7]));
-                listaaux.put("estado", String.valueOf(obj[8]));
+                listaaux.put("observacion", String.valueOf(obj[6]));
+                listaaux.put("estado", String.valueOf(obj[7]));
+                listaaux.put("indicador", String.valueOf(obj[8]));
                 confirmados.add(listaaux);
             }
         } catch (Exception e) {
@@ -299,7 +299,7 @@ public class DocumentoUsuarioBean {
 
     }*/
 
-    public void Guardar() {
+   /* public void Guardar() {
         try {
             fecha = new Date();
             DateFormat d = new SimpleDateFormat("yyyy");
@@ -326,7 +326,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void limpiar() {
         numtramaux = "";

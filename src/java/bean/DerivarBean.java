@@ -26,6 +26,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import maping.Indicador;
 import maping.Usuario;
 
 /**
@@ -39,7 +40,7 @@ public class DerivarBean {
     private List docselec2;
     private String numtramaux;
     private boolean aparecer;
-    private boolean confirmar= false;;
+    private boolean confirmar = false;
     private DerivarDAO deriv;
     private Usuario usu;
     private String correlativo;
@@ -49,7 +50,7 @@ public class DerivarBean {
     private String fechahora;
     private String usuario = "";
     private DocumentoDAO dd;
-    private String motivo="";
+    private String motivo = "";
     private final FacesContext faceContext;
     private String docunombre;
     private String asunto;
@@ -57,6 +58,7 @@ public class DerivarBean {
     private String estado;
     private List seguimientolista2;
     private SeguimientoDAO sgd;
+    public List confirmadosderivados;
 
     public DerivarBean() {
         dd = new DocumentoDaoImpl();
@@ -66,13 +68,15 @@ public class DerivarBean {
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
         seguimientolista2 = new ArrayList<Map<String, String>>();
+        confirmadosderivados= new ArrayList<Map<String, String>>();
+        MostrarConfirmadosDerivados();
     }
-    
+
     public String getNombOficina() {
         String oficina = dd.getOficina(usu);
         return oficina;
     }
-    
+
     public void Derivar() {
         numtramaux = "";
         FacesMessage message = null;
@@ -83,29 +87,38 @@ public class DerivarBean {
                 aparecer = false;
 
             } else {
-                aparecer = true;
-                if (!usu.getOficina().getIdOficina().equals("100392")) {
-                    correlativo = generarCorrelativo();
-                    System.out.println("entra a getsiglas");
-                    siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
-                    System.out.println("entra a iniciar fecha");
-                    IniciarFecha();
-                    System.out.println("entra a motivo");
-                    Motivo();
-                    System.out.println("entra a usuarioselec");
-                    UsuarioSelec();
-                    confirmar = false;
-                } else {
-                    if (usu.getOficina().getIdOficina().equals("100392")) {
-                        System.out.println("entra a iniciar fecha");
-                        IniciarFecha();
-                        System.out.println("entra a motivo");
-                        Motivo();
-                        System.out.println("entra a usuarioselec");
-                        UsuarioSelec();
-                        confirmar = true;
-                    }
-                }
+                /*aparecer = true;
+                 if (!usu.getOficina().getIdOficina().equals("100392")) {
+                 correlativo = generarCorrelativo();
+                 System.out.println("entra a getsiglas");
+                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                 System.out.println("entra a iniciar fecha");
+                 IniciarFecha();
+                 System.out.println("entra a motivo");
+                 Motivo();
+                 System.out.println("entra a usuarioselec");
+                 UsuarioSelec();
+                 confirmar = false;
+                 } else {
+                 if (usu.getOficina().getIdOficina().equals("100392")) {
+                 System.out.println("entra a iniciar fecha");
+                 IniciarFecha();
+                 System.out.println("entra a motivo");
+                 Motivo();
+                 System.out.println("entra a usuarioselec");
+                 UsuarioSelec();
+                 confirmar = true;
+                 }
+                 }*/
+                correlativo = generarCorrelativo();
+                System.out.println("entra a getsiglas");
+                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                System.out.println("entra a iniciar fecha");
+                IniciarFecha();
+                System.out.println("entra a motivo");
+                Motivo();
+                System.out.println("entra a usuarioselec");
+                UsuarioSelec();
             }
         } catch (Exception e) {
             System.out.println("error derivar");
@@ -213,27 +226,28 @@ public class DerivarBean {
             }
         }
     }
+
     public void Guardar() {
         try {
             System.out.println("entra a guardar");
             FacesMessage message = null;
             DateFormat d = new SimpleDateFormat("yyyy");
-            if (confirmar == true) {
+            //if (confirmar == true) {
                 System.out.println("entra a confirmar true");
-                //obtener los datos del documento con el mayor numero de movimiento
-                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+                Indicador in = deriv.getIndic(docunombre);
+                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
                 limpiar();
                 DocumentosBean docu = new DocumentosBean();
                 docu.MostrarDocumentos();
-            } else if (confirmar == false) {
+            /*} else if (confirmar == false) {
                 System.out.println("entra a confirmar false");
-                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+                deriv.InsertarMovimiento2(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
                 deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
                 limpiar();
                 //MostrarParaUsuario();
-            }
+            }*/
 
         } catch (Exception e) {
 
@@ -241,6 +255,7 @@ public class DerivarBean {
             e.printStackTrace();
         }
     }
+
     public void limpiar() {
         numtramaux = "";
         asunto = "";
@@ -250,6 +265,7 @@ public class DerivarBean {
         docunombre = "";
         siglasdocus = "";
     }
+
     public void RecorrerLista() {
         System.out.println(docselec2);
         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
@@ -264,6 +280,34 @@ public class DerivarBean {
         }
         docselec2.clear();
 
+    }
+    public void MostrarConfirmadosDerivados(){
+        System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
+        confirmadosderivados.clear();
+        try {
+            System.out.println("entra a seguimiento3");
+            List lista = new ArrayList();
+            System.out.println(usu.getOficina().getIdOficina());
+            lista = deriv.getConfDeriv(usu.getOficina().getIdOficina());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("movimnum", String.valueOf(obj[0]));
+                listaaux.put("numerotramite", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("observacion", String.valueOf(obj[6]));
+                listaaux.put("estado", String.valueOf(obj[7]));
+                listaaux.put("indicador", String.valueOf(obj[8]));
+                confirmadosderivados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
@@ -291,6 +335,7 @@ public class DerivarBean {
             System.out.println(e.getMessage());
         }
     }
+
     public List getDocselec2() {
         return docselec2;
     }
@@ -450,5 +495,13 @@ public class DerivarBean {
     public void setSgd(SeguimientoDAO sgd) {
         this.sgd = sgd;
     }
-    
+
+    public List getConfirmadosderivados() {
+        return confirmadosderivados;
+    }
+
+    public void setConfirmadosderivados(List confirmadosderivados) {
+        this.confirmadosderivados = confirmadosderivados;
+    }
+
 }
