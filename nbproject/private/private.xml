@@ -12,8 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/TramiteDatos.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/SeguimientoDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/dao/DerivarDAO.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/ConfirmadosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>

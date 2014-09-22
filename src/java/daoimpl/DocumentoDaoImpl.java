@@ -30,11 +30,11 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             System.out.println("despues de begin");
             Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,\n"
-                    + "DECODE(to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHA,\n"
+                    + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss')) AS FECHA,\n"
                     + "TD.TRAM_OBS,\n"
                     + "TD.ESTA_DESCRIP,\n"
                     + "DEP.NOMBRE \n"
-                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO\n"
+                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO "
                     + "order by tram_fecha desc");
             docus = query.list();
             System.out.println("despues de query session");
@@ -117,7 +117,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public String getSQL(String[] a) {
         int i = 0;
         String comienzo = "SELECT TD.TRAM_NUM,"
-                + "DECODE(to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHA,"
+                + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss')) AS FECHA,"
                 + "DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE "
                 + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
         while (i < a.length) {

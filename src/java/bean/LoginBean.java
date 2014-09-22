@@ -46,21 +46,21 @@ public class LoginBean implements Serializable {
 
     public String ActionLogin() {
         System.out.println("entra a login");
-        String url="index";
+        String url = "index";
         FacesMessage message = null;
         if (usuario != null && pass != null) {
             usu = ld.getUsuario(usuario, pass);
-            System.out.println(usuario+" "+pass);
+            System.out.println(usuario + " " + pass);
             try {
                 contex = FacesContext.getCurrentInstance();
                 httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();
                 httpServletRequest.getSession().setAttribute("sesionUsuario", usu);
-                 message= new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsu());
-                 getPathRol();
-                url= "template";
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usu.getUsu());
+                getPathRol();
+                url = "template";
             } catch (Exception e) {
-                 message= new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario/Password Incorrecto");
-                url= "index";
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario/Password Incorrecto");
+                url = "index";
             }
         } else {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe llenar todos los campos");
@@ -68,7 +68,7 @@ public class LoginBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         return url;
     }
-    
+
     public String logout() {
         limpiarlabels();
         httpServletRequest.removeAttribute("sesionUsuario");
@@ -121,7 +121,7 @@ public class LoginBean implements Serializable {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
-    
+
     public HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;
     }
@@ -145,5 +145,5 @@ public class LoginBean implements Serializable {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    
+
 }

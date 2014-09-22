@@ -26,7 +26,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import maping.MovimientoInterno;
 import maping.Usuario;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -38,6 +40,7 @@ public class DocumentoUsuarioBean {
 
     private List seguimientolista2;
     private List seguimientolista;
+    private List confirmados;
     private List otrosdocus;
     private List docselec;
     private List detalle;
@@ -61,6 +64,7 @@ public class DocumentoUsuarioBean {
     private String estado;
     private boolean confirmar = false;
     private boolean aparecer;
+    private List docselec2;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -69,10 +73,41 @@ public class DocumentoUsuarioBean {
         usu = (Usuario) session.getAttribute("sesionUsuario");
         seguimientolista2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
+        confirmados = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         MostrarParaUsuario();
+        MostrarConfirmados();
+    }
+
+    public void MostrarConfirmados() {
+        System.out.println("CONFIRMADOS¡¡¡¡¡");
+        confirmados.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            System.out.println(usu.getOficina().getIdOficina());
+            lista = deriv.getConfirmados(usu.getOficina().getIdOficina());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                confirmados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void MostrarParaUsuario() {
@@ -111,7 +146,22 @@ public class DocumentoUsuarioBean {
             System.out.println("lleno");
             corr = Integer.parseInt(deriv.getIndice());
             corr = corr + 1;
-            aux = "0000" + corr;
+            if (corr < 10) {
+                aux = "0000" + corr;
+            }
+            if (corr > 9 && corr < 100) {
+                aux = "000" + corr;
+            }
+            if (corr > 99 && corr < 1000) {
+                aux = "00" + corr;
+            }
+            if (corr > 999 && corr < 10000) {
+                aux = "0" + corr;
+            }
+            if (corr > 10000) {
+                aux = String.valueOf(corr);
+            }
+
         } catch (Exception e) {
             System.out.println("no lleno");
             corr = corr + 1;
@@ -150,28 +200,57 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("ENTRA A CONFIRMAR");
             String ntram = "";
+            int movi = 0;
+            FacesMessage message = null;
             for (int i = 0; i < docselec.size(); i++) {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
                 Iterator it = hm.entrySet().iterator();
+                MovimientoInterno movimiento = new MovimientoInterno();
                 while (it.hasNext()) {
-
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
-                        System.out.println("entra al bucle while");
                         ntram = e.getValue().toString();
-                        Date nuevaFecha = new Date();
-                        System.out.println(ntram+" "+nuevaFecha);
-                        deriv.ConfirmarTramites(ntram, nuevaFecha);
+                        movimiento.setTramiteDatos(deriv.getTramite(ntram));
                     }
-                    /*if (e.getKey().toString().equals("numerotramite")) {
-                     System.out.println(e.getValue().toString());
-                     numtramaux = e.getValue().toString();
-                     motivo = dd.getMotivo(e.getValue().toString());
-                     }*/
-                    ntram = "";
+                    if (e.getKey().toString().equals("movimnum")) {
+                        movi = Integer.parseInt(e.getValue().toString());
+                        movimiento.setMoviNumint(movi);
+                    }
+                    if (e.getKey().toString().equals("estado")) {
+                        movimiento.setEstadInt(e.getValue().toString());
+                    }
+                    if (e.getKey().toString().equals("origen")) {
+                        movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
+                    }
+                    if (e.getKey().toString().equals("destino")) {
+                        movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                    }
+                    if (e.getKey().toString().equals("fechaenvio")) {
+                        System.out.println("entra a fecha envio");
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date nf = new Date();
+                        nf = formato.parse(e.getValue().toString());
+                        movimiento.setFechaEnvint(nf);
+                        System.out.println("sale fecha envio");
+                    }
+                    if (e.getKey().toString().equals("indicador")) {
+                        System.out.println("entra a indicador");
+                        movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
+                        System.out.println("sle indicador");
+                    }
+                    if (e.getKey().toString().equals("observacion")) {
+                        movimiento.setObsMovint(e.getValue().toString());
+                    }
                 }
+                Date nuevFech = new Date();
+                movimiento.setFechaIngrint(nuevFech);
+                deriv.ConfirmarTramites(ntram, movi, movimiento);
+                ntram = "";
             }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha confirmado el Documento", ntram);
+            MostrarParaUsuario();
+            MostrarConfirmados();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());
@@ -179,45 +258,57 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    public void Derivar() {
+    /*public void Derivar() {
         numtramaux = "";
-        if (getFechaIngr().equals(" ")) {
-            FacesContext context3 = FacesContext.getCurrentInstance();
-            context3.addMessage(null, new FacesMessage("Advertencia", "Primero debe confirmar"));
-            System.out.println("entra a derivr null");
-            aparecer = false;
+        FacesMessage message = null;
+        try {
+            if (getFechaIngr().equals(" ")) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Advertencia", "Primero debe Confirmar");
+                System.out.println("entra a derivar null");
+                aparecer = false;
 
-        } else {
-            aparecer = true;
-            if (!usu.getOficina().getIdOficina().equals("100392")) {
-                correlativo = generarCorrelativo();
-                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
-                IniciarFecha();
-                Motivo();
-                UsuarioSelec();
-                confirmar = false;
             } else {
-                if (usu.getOficina().getIdOficina().equals("100392")) {
+                aparecer = true;
+                if (!usu.getOficina().getIdOficina().equals("100392")) {
+                    correlativo = generarCorrelativo();
+                    System.out.println("entra a getsiglas");
+                    siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                    System.out.println("entra a iniciar fecha");
                     IniciarFecha();
+                    System.out.println("entra a motivo");
                     Motivo();
+                    System.out.println("entra a usuarioselec");
                     UsuarioSelec();
-                    confirmar = true;
+                    confirmar = false;
+                } else {
+                    if (usu.getOficina().getIdOficina().equals("100392")) {
+                        System.out.println("entra a iniciar fecha");
+                        IniciarFecha();
+                        System.out.println("entra a motivo");
+                        Motivo();
+                        System.out.println("entra a usuarioselec");
+                        UsuarioSelec();
+                        confirmar = true;
+                    }
                 }
             }
+        }catch(Exception e){
+            System.out.println("error derivar");
+            System.out.println(e.getMessage());
         }
 
-    }
+    }*/
 
     public void Guardar() {
         try {
             fecha = new Date();
             DateFormat d = new SimpleDateFormat("yyyy");
             System.out.println("entra a guardar");
+            FacesMessage message = null;
             if (confirmar == true) {
                 System.out.println("entra a confirmar true");
                 deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Derivado", "Se ha derivado su trámite"));
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
                 limpiar();
                 DocumentosBean docu = new DocumentosBean();
                 docu.MostrarDocumentos();
@@ -225,13 +316,13 @@ public class DocumentoUsuarioBean {
                 System.out.println("entra a confirmar false");
                 deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
                 deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
-                FacesContext context2 = FacesContext.getCurrentInstance();
-                context2.addMessage(null, new FacesMessage("Derivado", "Se ha derivado su trámite"));
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
                 limpiar();
                 MostrarParaUsuario();
             }
 
         } catch (Exception e) {
+
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -284,7 +375,7 @@ public class DocumentoUsuarioBean {
 
             docselec.clear();
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("errormotivo");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -304,7 +395,7 @@ public class DocumentoUsuarioBean {
                 }
             }
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("errorfecha");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -315,7 +406,7 @@ public class DocumentoUsuarioBean {
         try {
             usuario = usu.getUsuNombre();
         } catch (Exception e) {
-            System.out.println("error2");
+            System.out.println("errorusuario");
             System.out.println(e.getMessage());
         }
     }
@@ -361,7 +452,15 @@ public class DocumentoUsuarioBean {
         docselec.clear();
 
     }
-
+    /*public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getTitle().equals("Confirmados")) {
+            MostrarConfirmados();
+        } else {
+            MostrarParaUsuario();
+        }
+        message = new FacesMessage("Listado de Compras", event.getTab().getTitle() + " actualizado");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }*/
     public DerivarDAO getDeriv() {
         return deriv;
     }
@@ -552,6 +651,22 @@ public class DocumentoUsuarioBean {
 
     public void setAparecer(boolean aparecer) {
         this.aparecer = aparecer;
+    }
+
+    public List getConfirmados() {
+        return confirmados;
+    }
+
+    public void setConfirmados(List confirmados) {
+        this.confirmados = confirmados;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
     }
 
 }

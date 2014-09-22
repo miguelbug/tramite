@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 18/09/2014 04:03:48 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.MovimientoInterno" table="MOVIMIENTO_INTERNO" schema="MIGUEL">
         <id name="idMoviint" type="int">
@@ -16,6 +16,9 @@
         </many-to-one>
         <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="indicador" class="maping.Indicador" fetch="select">
+            <column name="INDI_COD" precision="5" scale="0" />
         </many-to-one>
         <property name="moviNumint" type="int">
             <column name="MOVI_NUMINT" precision="5" scale="0" not-null="true" />
