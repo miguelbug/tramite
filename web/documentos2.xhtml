@@ -100,8 +100,7 @@
              <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  
           </h:outputText>  
           <h:outputText value="  -" /> 
-         
-        
+
           </f:facet>  
                                         
                                         <!-- <f:facet name="footer">
@@ -112,36 +111,17 @@
                                          </f:facet>
                                        -->
                                        <f:facet name="footer">
-                                           <p:dataTable var="segg" value="#{seguimientoBean.seguimientolista}" id="tablaseguimi" >
-                                           <f:facet name="header">
-                                            
-                                                 <h:outputText value="UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS           " /> 
-                                               
-                                            </f:facet>
-                                           <f:facet name="footer">
-                                          
-                                                 <h:outputText value="#{loginBean.usu.usuNombre}" /> 
-                                         </f:facet>
-                                           </p:dataTable>
-                                           
-                                           
+                                                 <h:outputText value="#{seg.numerotramite}" />  
+                                                 <h:outputText value="   -   " />  
+                                                 <h:outputText value="#{loginBean.usu.usuNombre}" />                                    
                                         </f:facet>
-                                       
-                                       
-                                   
                                     <p:column headerText="Num. Tramite" exportable="false"> 
                                        
                                         <h:outputText value="#{seg.numerotramite}"  />
                                    </p:column>
                                     <p:column headerText="Num. Mov.">
-                                         <f:facet name="header" >
-                                            <h:outputText value="#{loginBean.usu.usuNombre}" /> 
-                                        </f:facet>
+                                       
                                         <h:outputText value="#{seg.movimnum}" />
-                                        
-                                         <f:facet name="footer">  
-                                            probando  
-                                         </f:facet>  
                                     </p:column>
                                     <p:column headerText="Origen">
                                         <h:outputText value="#{seg.origen}" />
@@ -167,7 +147,7 @@
                                                                                                                                                     
                                 </p:dataTable>
                                   
-       
+                                <br>  </br>
                                 
                                 
                 <p:panel header="Exportar en PDF y Excel">  
@@ -186,20 +166,7 @@
                            
                                 
                                 
-    <p:panelGrid style="margin-top:20px">
-    <f:facet name="header">
-        <p:row>
-            <p:column colspan="7">1995-96 NBA Playoffs</p:column>
-        </p:row>
-        <p:row>
-            <p:column colspan="2">Conf. Semifinals</p:column>
-            <p:column colspan="2">Conf. Finals</p:column>
-            <p:column colspan="2">NBA Finals</p:column>
-            <p:column>Champion</p:column>
-        </p:row>
- 
-    </f:facet>
-                              </p:panelGrid>
+  
                                 
                                 
                                 
