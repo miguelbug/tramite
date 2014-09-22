@@ -12,6 +12,7 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/IndicadorDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/LoginDaoImpl.java</file>
@@ -20,6 +21,11 @@
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/MovimientoInterno.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
+=======
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/menu_user.xhtml</file>
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/busqParametros.xhtml</file>
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/documentos2.xhtml</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

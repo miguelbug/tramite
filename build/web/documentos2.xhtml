@@ -77,19 +77,50 @@
                                 </p:dataTable>
                             </p:dialog>
                             
+                            
                             <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                
-                                    
-                                
                                     <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
-                                    
-                                    
-                                    
-                         
-                                    <p:column headerText="Num. Tramite">
-                                        <h:outputText value="#{seg.numerotramite}" />
-                                    </p:column>
+                                        <!-- 
+                                            <f:facet name="header"  >
+                                                <style type="text/css">
+                      .ui-header .ui-fullsize .ui-btn-inner, .ui-footer .ui-fullsize .ui-btn-inner {
+                      font-size: 12px; 
+                           }
+                                                  </style> 
+                                                UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS 
+                                                 <h:outputText value="UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS           " /> 
+                                                <HR width="200%"> </HR>
+                                                 <h:outputText style="float:right;margin-top: 4px"  value="UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS" /> 
+                                            </f:facet>
+                                        -->
+           <f:facet name="header" >  
+          <h:outputText value="UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS"/>  
+          <h:outputText value="  - " />  
+          <h:outputText value="#{messageTableController.currentDate}">  
+             <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  
+          </h:outputText>  
+          <h:outputText value="  -" /> 
+
+          </f:facet>  
+                                        
+                                        <!-- <f:facet name="footer">
+                                             <p:row> hola esto </p:row>
+                                              <p:row> hola esto </p:row>
+                                               <p:row> hola esto </p:row>
+                                                 <h:outputText value="#{loginBean.usu.usuNombre}" /> 
+                                         </f:facet>
+                                       -->
+                                       <f:facet name="footer">
+                                                 <h:outputText value="#{seg.numerotramite}" />  
+                                                 <h:outputText value="   -   " />  
+                                                 <h:outputText value="#{loginBean.usu.usuNombre}" />                                    
+                                        </f:facet>
+                                    <p:column headerText="Num. Tramite" exportable="false"> 
+                                       
+                                        <h:outputText value="#{seg.numerotramite}"  />
+                                   </p:column>
                                     <p:column headerText="Num. Mov.">
+                                       
                                         <h:outputText value="#{seg.movimnum}" />
                                     </p:column>
                                     <p:column headerText="Origen">
@@ -113,10 +144,10 @@
                                     <p:column headerText="Estado">
                                         <h:outputText value="#{seg.estado}" />
                                     </p:column>
-                          
+                                                                                                                                                    
                                 </p:dataTable>
                                   
-       
+                                <br>  </br>
                                 
                                 
                 <p:panel header="Exportar en PDF y Excel">  
@@ -132,6 +163,28 @@
                     <pe:exporter type="xlsx" target="tablaseguim" fileName="Seguimiento"/>  
                 </p:commandLink>  
                 </p:panel>
+                           
+                                
+                                
+  
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 
                    </p:dialog>
                             <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
