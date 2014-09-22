@@ -93,6 +93,12 @@
                     <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
                     <pe:exporter type="xlsx" target="cellEditingTable" fileName="CellEditableTable"/>  
                 </p:commandLink>  
+                
+       <p:commandLink id="pdf3" ajax="false">
+        <p:graphicImage value="/resources/img/excel.png" />
+        <p:dataExporter type="pdf" target="cellEditingTable" fileName="cars" preProcessor="#{customizedDocumentsView.preProcessPDF}" />
+      </p:commandLink>
+                
             </p:panel>  
 
             
