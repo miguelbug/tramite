@@ -26,6 +26,12 @@
 	<parameter name="USUARIO" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametro de prueba"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["oficina 1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["escudo_reporte.jpg"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[select * from usuario]]></queryString>
 
 	<field name="USU" class="java.lang.String"/>
@@ -38,13 +44,13 @@
 			</band>
 		</background>
 		<title>
-			<band height="42"  isSplitAllowed="true" >
+			<band height="73"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="50"
+						x="120"
 						y="10"
-						width="280"
-						height="20"
+						width="150"
+						height="60"
 						key="staticText-1"/>
 					<box></box>
 					<textElement>
@@ -54,9 +60,9 @@
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="380"
-						y="10"
-						width="110"
+						x="280"
+						y="30"
+						width="140"
 						height="20"
 						key="textField-2"/>
 					<box></box>
@@ -65,6 +71,30 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{USUARIO}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="420"
+						y="10"
+						width="90"
+						height="20"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{oficina}]]></textFieldExpression>
+				</textField>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="30"
+						y="10"
+						width="49"
+						height="52"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
+				</image>
 			</band>
 		</title>
 		<pageHeader>
@@ -101,7 +131,7 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{USU}+ "  -  "+$F{USU_NOMBRE} ]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{USU}+ "  -  "+$F{USU_NOMBRE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

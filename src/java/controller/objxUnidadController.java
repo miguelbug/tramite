@@ -5,6 +5,8 @@
  */
 
 package controller;
+import bean.*;
+import maping.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +30,20 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.primefaces.model.TreeNode;
+
+
+//
+
+import java.util.HashMap;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import maping.Usuario;
+//
 
 
 @ManagedBean
@@ -40,11 +55,13 @@ private static final long serialVersionUID = 8797816477254175229L;
 FacesContext context;
 ServletContext serveltcontext;
 private int anioActual;
-private int opcionFormato = 1;
+private int opcionFormato;
 private int mesInicio;
 private int mesFin ;
 private int mesActual ;
 
+
+private String USUARIO;
 public void mostrarReporRegModPres(){
 
 context = FacesContext.getCurrentInstance (); 
@@ -93,15 +110,18 @@ FacesMessage message=null;
 boolean rpt=false;	
 
 	
-		
+	
 	/*parametros.put("udid", udIdElegido );
 	parametros.put("udcod", udCodElegido );
 	parametros.put("uddsc", dependenciaService.obtenerDepxUdcod(udCodElegido).getDescripcion() );
 	parametros.put("usuario", obtenerUsuario() );
-	parametros.put("logo", obtenerLogo() );
+	
 	parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
- 
-        parametros.put("usuario","miguel" ); 
+        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("oficina","oficina oli");
+        parametros.put("logo", getLogo());
+        //parametros.put("oficina",getOficina());
+       // parametros.put("USUARIO","miguel" ); 
 	repor.addMapParam(parametros);
 	rpt=repor.ejecutaReporte(context,serveltcontext);	
 		
@@ -175,6 +195,56 @@ public void setAnioActual(int anioActual) {
     public void setMesActual(int mesActual) {
         this.mesActual = mesActual;
     }
+    public String getUSUARIO() {
+        String nombre="";
+        context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
+        nombre=usu.getUsuNombre();
+        return nombre;
+    }
+    
+    public String getOficina()
+    {
+        String nomOfi="";
+        Oficina ofi;
+        context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
+        ofi=(Oficina)usu.getOficina();
+        nomOfi=ofi.getNombreOficina();
+        return nomOfi;
+    }
+    
+    public String getLogo(){	
+	String logo="";	
+	logo=serveltcontext.getRealPath("/resources/img/"+"escudo_reporte"+".jpg");	
+	return logo;
+}
+   /* public String obtenerUsuario(){
+	
+	String nombre="";
+	
+	try{
+		ExternalContext context = 
+		FacesContext.getCurrentInstance().getExternalContext();
+		HttpServletRequest request = 
+    	(HttpServletRequest) context.getRequest();
+		
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");  
+		nombre = usuario.getUsuNombre();
+		
+	}catch(Exception e){
+		
+	}
+	
+	return nombre;
+	
+	
+}*/
 
+    public void setUSUARIO(String USUARIO) {
+        this.USUARIO = USUARIO;
+    }
 
 }

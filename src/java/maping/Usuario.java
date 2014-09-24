@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class Usuario  implements java.io.Serializable {
 
-
+     private static final long serialVersionUID = -6888989356281996206L;
      private String usu;
      private Oficina oficina;
      private String usuNombre;
