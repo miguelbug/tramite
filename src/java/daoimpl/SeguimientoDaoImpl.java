@@ -31,8 +31,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "TM.MOVI_NUM,\n"
                     + "M1.NOMBRE as NOMBRE1,\n"
                     + "M2.NOMBRE as NOMBRE2,\n"
-                    + "DECODE(to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAENVIO,\n"
-                    + "DECODE(to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAINGRESO,\n"
+                    + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
                     + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"
@@ -64,8 +64,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "TM.MOVI_NUM,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
-                    + "DECODE(to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAENVIO,\n"
-                    + "DECODE(to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'Dy DD-Mon-YYYY HH24:MI:SS')) AS FECHAINGRESO,\n"
+                    + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
                     + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE\n"
@@ -74,6 +74,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
+                    + "AND TM.estad_confrirm IS NULL\n"
                     + "ORDER BY TM.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();

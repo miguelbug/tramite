@@ -1,5 +1,5 @@
 package maping;
-// Generated 16/09/2014 10:36:16 AM by Hibernate Tools 3.6.0
+// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -14,6 +14,7 @@ public class Indicador  implements java.io.Serializable {
      private int indiCod;
      private String indiNombre;
      private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
+     private Set<MovimientoInterno> movimientoInternos = new HashSet<MovimientoInterno>(0);
 
     public Indicador() {
     }
@@ -22,10 +23,11 @@ public class Indicador  implements java.io.Serializable {
     public Indicador(int indiCod) {
         this.indiCod = indiCod;
     }
-    public Indicador(int indiCod, String indiNombre, Set<TramiteMovimiento> tramiteMovimientos) {
+    public Indicador(int indiCod, String indiNombre, Set<TramiteMovimiento> tramiteMovimientos, Set<MovimientoInterno> movimientoInternos) {
        this.indiCod = indiCod;
        this.indiNombre = indiNombre;
        this.tramiteMovimientos = tramiteMovimientos;
+       this.movimientoInternos = movimientoInternos;
     }
    
     public int getIndiCod() {
@@ -48,6 +50,13 @@ public class Indicador  implements java.io.Serializable {
     
     public void setTramiteMovimientos(Set<TramiteMovimiento> tramiteMovimientos) {
         this.tramiteMovimientos = tramiteMovimientos;
+    }
+    public Set<MovimientoInterno> getMovimientoInternos() {
+        return this.movimientoInternos;
+    }
+    
+    public void setMovimientoInternos(Set<MovimientoInterno> movimientoInternos) {
+        this.movimientoInternos = movimientoInternos;
     }
 
 

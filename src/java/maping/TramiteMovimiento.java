@@ -1,5 +1,5 @@
 package maping;
-// Generated 16/09/2014 10:36:16 AM by Hibernate Tools 3.6.0
+// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -21,6 +21,7 @@ public class TramiteMovimiento  implements java.io.Serializable {
      private Date fechaIngr;
      private String moviObs;
      private String estaNombre;
+     private String estadConfrirm;
 
     public TramiteMovimiento() {
     }
@@ -29,7 +30,7 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public TramiteMovimiento(BigDecimal idMovi) {
         this.idMovi = idMovi;
     }
-    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, String moviObs, String estaNombre) {
+    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, String moviObs, String estaNombre, String estadConfrirm) {
        this.idMovi = idMovi;
        this.tramiteDatos = tramiteDatos;
        this.dependenciaByCodigo1 = dependenciaByCodigo1;
@@ -40,6 +41,7 @@ public class TramiteMovimiento  implements java.io.Serializable {
        this.fechaIngr = fechaIngr;
        this.moviObs = moviObs;
        this.estaNombre = estaNombre;
+       this.estadConfrirm = estadConfrirm;
     }
    
     public BigDecimal getIdMovi() {
@@ -111,6 +113,13 @@ public class TramiteMovimiento  implements java.io.Serializable {
     
     public void setEstaNombre(String estaNombre) {
         this.estaNombre = estaNombre;
+    }
+    public String getEstadConfrirm() {
+        return this.estadConfrirm;
+    }
+    
+    public void setEstadConfrirm(String estadConfrirm) {
+        this.estadConfrirm = estadConfrirm;
     }
 
 

@@ -1,21 +1,26 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/09/2014 05:15:45 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.Indicador" table="INDICADOR" schema="MIGUEL">
-        <id name="indiCod" type="int">
-            <column name="INDI_COD" precision="5" scale="0" />
-            <generator class="assigned" />
-        </id>
-        <property name="indiNombre" type="string">
-            <column name="INDI_NOMBRE" length="60" />
-        </property>
-        <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="INDI_COD" precision="5" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-    </class>
+  <class name="maping.Indicador" schema="MIGUEL" table="INDICADOR">
+    <id name="indiCod" type="int">
+      <column name="INDI_COD" precision="5" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="indiNombre" type="string">
+      <column length="60" name="INDI_NOMBRE"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO">
+      <key>
+        <column name="INDI_COD" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="maping.TramiteMovimiento"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="movimientoInternos" table="MOVIMIENTO_INTERNO">
+      <key>
+        <column name="INDI_COD" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="maping.MovimientoInterno"/>
+    </set>
+  </class>
 </hibernate-mapping>

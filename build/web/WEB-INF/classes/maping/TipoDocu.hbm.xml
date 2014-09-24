@@ -1,30 +1,29 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/09/2014 05:15:45 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TipoDocu" table="TIPO_DOCU" schema="MIGUEL">
-        <id name="idDocu" type="big_decimal">
-            <column name="ID_DOCU" precision="38" scale="0" />
-            <generator class="assigned" />
-        </id>
-        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
-            <column name="TRAM_NUM" length="42" />
-        </many-to-one>
-        <property name="docuPric" type="string">
-            <column name="DOCU_PRIC" length="30" not-null="true" />
-        </property>
-        <property name="docuNombre" type="string">
-            <column name="DOCU_NOMBRE" length="50" not-null="true" />
-        </property>
-        <property name="docuNum" type="string">
-            <column name="DOCU_NUM" length="10" />
-        </property>
-        <property name="docuSiglas" type="string">
-            <column name="DOCU_SIGLAS" length="30" />
-        </property>
-        <property name="docuAnio" type="string">
-            <column name="DOCU_ANIO" length="30" />
-        </property>
-    </class>
+  <class name="maping.TipoDocu" schema="MIGUEL" table="TIPO_DOCU">
+    <id name="idDocu" type="big_decimal">
+      <column name="ID_DOCU" precision="38" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="maping.TramiteDatos" fetch="select" name="tramiteDatos">
+      <column length="42" name="TRAM_NUM"/>
+    </many-to-one>
+    <property name="docuPric" type="string">
+      <column length="30" name="DOCU_PRIC" not-null="true"/>
+    </property>
+    <property name="docuNombre" type="string">
+      <column length="50" name="DOCU_NOMBRE" not-null="true"/>
+    </property>
+    <property name="docuNum" type="string">
+      <column length="10" name="DOCU_NUM"/>
+    </property>
+    <property name="docuSiglas" type="string">
+      <column length="30" name="DOCU_SIGLAS"/>
+    </property>
+    <property name="docuAnio" type="string">
+      <column length="30" name="DOCU_ANIO"/>
+    </property>
+  </class>
 </hibernate-mapping>

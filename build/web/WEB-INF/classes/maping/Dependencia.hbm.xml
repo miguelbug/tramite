@@ -1,45 +1,44 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/09/2014 10:36:17 AM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/09/2014 05:15:45 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.Dependencia" table="DEPENDENCIA" schema="MIGUEL">
-        <id name="codigo" type="long">
-            <column name="CODIGO" precision="10" scale="0" />
-            <generator class="assigned" />
-        </id>
-        <property name="nombre" type="string">
-            <column name="NOMBRE" length="300" />
-        </property>
-        <set name="tramiteMovimientosForCodigo" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        <set name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO1" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        <set name="movimientoInternosForCodigo1" table="MOVIMIENTO_INTERNO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO1" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.MovimientoInterno" />
-        </set>
-        <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteDatos" />
-        </set>
-        <set name="movimientoInternosForCodigo" table="MOVIMIENTO_INTERNO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.MovimientoInterno" />
-        </set>
-    </class>
+  <class name="maping.Dependencia" schema="MIGUEL" table="DEPENDENCIA">
+    <id name="codigo" type="long">
+      <column name="CODIGO" precision="10" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombre" type="string">
+      <column length="300" name="NOMBRE"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="tramiteMovimientosForCodigo" table="TRAMITE_MOVIMIENTO">
+      <key>
+        <column name="CODIGO" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="maping.TramiteMovimiento"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO">
+      <key>
+        <column name="CODIGO1" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="maping.TramiteMovimiento"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="movimientoInternosForCodigo1" table="MOVIMIENTO_INTERNO">
+      <key>
+        <column name="CODIGO1" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="maping.MovimientoInterno"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="tramiteDatoses" table="TRAMITE_DATOS">
+      <key>
+        <column name="CODIGO" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="maping.TramiteDatos"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="movimientoInternosForCodigo" table="MOVIMIENTO_INTERNO">
+      <key>
+        <column name="CODIGO" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="maping.MovimientoInterno"/>
+    </set>
+  </class>
 </hibernate-mapping>

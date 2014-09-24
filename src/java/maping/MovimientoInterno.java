@@ -1,5 +1,5 @@
 package maping;
-// Generated 16/09/2014 10:36:16 AM by Hibernate Tools 3.6.0
+// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -14,11 +14,13 @@ public class MovimientoInterno  implements java.io.Serializable {
      private TramiteDatos tramiteDatos;
      private Dependencia dependenciaByCodigo1;
      private Dependencia dependenciaByCodigo;
+     private Indicador indicador;
      private int moviNumint;
      private Date fechaEnvint;
      private Date fechaIngrint;
      private String obsMovint;
      private String estadInt;
+     private String estadoConfirmado;
 
     public MovimientoInterno() {
     }
@@ -29,16 +31,18 @@ public class MovimientoInterno  implements java.io.Serializable {
         this.moviNumint = moviNumint;
         this.fechaEnvint = fechaEnvint;
     }
-    public MovimientoInterno(int idMoviint, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, int moviNumint, Date fechaEnvint, Date fechaIngrint, String obsMovint, String estadInt) {
+    public MovimientoInterno(int idMoviint, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, int moviNumint, Date fechaEnvint, Date fechaIngrint, String obsMovint, String estadInt, String estadoConfirmado) {
        this.idMoviint = idMoviint;
        this.tramiteDatos = tramiteDatos;
        this.dependenciaByCodigo1 = dependenciaByCodigo1;
        this.dependenciaByCodigo = dependenciaByCodigo;
+       this.indicador = indicador;
        this.moviNumint = moviNumint;
        this.fechaEnvint = fechaEnvint;
        this.fechaIngrint = fechaIngrint;
        this.obsMovint = obsMovint;
        this.estadInt = estadInt;
+       this.estadoConfirmado = estadoConfirmado;
     }
    
     public int getIdMoviint() {
@@ -68,6 +72,13 @@ public class MovimientoInterno  implements java.io.Serializable {
     
     public void setDependenciaByCodigo(Dependencia dependenciaByCodigo) {
         this.dependenciaByCodigo = dependenciaByCodigo;
+    }
+    public Indicador getIndicador() {
+        return this.indicador;
+    }
+    
+    public void setIndicador(Indicador indicador) {
+        this.indicador = indicador;
     }
     public int getMoviNumint() {
         return this.moviNumint;
@@ -103,6 +114,13 @@ public class MovimientoInterno  implements java.io.Serializable {
     
     public void setEstadInt(String estadInt) {
         this.estadInt = estadInt;
+    }
+    public String getEstadoConfirmado() {
+        return this.estadoConfirmado;
+    }
+    
+    public void setEstadoConfirmado(String estadoConfirmado) {
+        this.estadoConfirmado = estadoConfirmado;
     }
 
 

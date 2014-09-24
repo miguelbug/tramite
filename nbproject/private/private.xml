@@ -5,12 +5,31 @@
             <url>src/java/bean/DerivarBean.java</url>
             <bookmark id="1">
                 <name/>
-                <line>42</line>
+                <line>127</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/IndicadorDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/LoginDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/dao/IndicadorDAO.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/MovimientoInterno.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
+=======
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/menu_user.xhtml</file>
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/busqParametros.xhtml</file>
+            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/documentos2.xhtml</file>
+>>>>>>> origin/master
+        </group>
+>>>>>>> origin/master
     </open-files>
 </project-private>

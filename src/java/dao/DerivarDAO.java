@@ -9,6 +9,8 @@ package dao;
 import java.util.Date;
 import java.util.List;
 import maping.Dependencia;
+import maping.Indicador;
+import maping.MovimientoInterno;
 import maping.TramiteDatos;
 
 /**
@@ -19,11 +21,18 @@ public interface DerivarDAO {
     public String getIndice();
     public String getSiglas(String ofi);
     public int getMovimiento(String tramnum);
-    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino);
+    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i);
+    public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino);
     public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas,String anio, String numtram);
     public TramiteDatos getTramite(String tramite);
     public Dependencia getDependencia(String nombre);
     public Dependencia getDependencia2(String nombre);
     public String getCodOficina(String nombreofi);
-    public void ConfirmarTramites(String numtram, Date fecha);
+    public void ConfirmarTramites(String numtram, int movinum, MovimientoInterno movi);
+    public List getConfirmados(String oficina);
+    public void Confirmar(String numtram, int movimiento);
+    public void GuardarConfirmados(MovimientoInterno movi);
+    public Indicador getIndic(String codigo);
+    public MovimientoInterno getMoviTram(String codigot);
+    public List getConfDeriv(String oficina);
 }
