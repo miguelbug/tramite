@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:head>
+</h:head> 
+<body style="background-color: #D0D0D0;"> 
+	<ui:composition>
+		<h:form id="f1"  >
+			<h:outputText  value="Reporte de Registro de Modificaciones Presupuestales " style="font-size:20px;" /> 
+			<br/>
+			<br/>
+			<h:outputText value="Ver en formato : " style="font-size:12px;" />
+			
+			<h:selectOneMenu id="formatos" style="width:100px"
+				value="#{objxUnidadController.opcionFormato}" styleClass="ui-corner-all ui-widget-content ui-state-hover"  >
+				<f:selectItem itemLabel="PDF"   itemValue="0"/>
+				<f:selectItem itemLabel="Excel" itemValue="1"/>
+								
+			</h:selectOneMenu>
+			
+			<br/>
+  			
+					    <p:outputPanel >
+							
+							<h:outputText value="Rango de meses: " style="font-size:12px;" />
+							<p:spacer width="25" />
+							<p:outputPanel>
+							<h:outputText value="Inicial: " style="font-size:18x;" /> <p:spacer width="10" />
+								
+							<h:selectOneMenu id="rangoMeses1" style="width:100px"
+										value="#{objxUnidadController.mesInicio}"  >
+								    <f:selectItem itemLabel="Enero"    itemValue="1" />
+								    <f:selectItem itemLabel="Febrero"  itemValue="2" />
+									<f:selectItem itemLabel="Marzo"    itemValue="3" />
+									<f:selectItem itemLabel="Abril"    itemValue="4" />
+									
+									<f:selectItem itemLabel="Mayo"     itemValue="5" />
+									<f:selectItem itemLabel="Junio"    itemValue="6" />
+									<f:selectItem itemLabel="Julio"    itemValue="7" />
+									<f:selectItem itemLabel="Agosto"   itemValue="8" />
+									
+									<f:selectItem itemLabel="Septiembre" itemValue="9" />
+									<f:selectItem itemLabel="Octubre"    itemValue="10" />
+									<f:selectItem itemLabel="Noviembre"  itemValue="11" />
+									<f:selectItem itemLabel="Diciembre"  itemValue="12" />
+																		
+							</h:selectOneMenu>
+								
+								<p:spacer width="20" />
+								
+								<h:outputText value="Final: " style="font-size:18x;" /> <p:spacer width="10" />
+								<h:selectOneMenu id="rangoMeses" style="width:100px"
+										value="#{objxUnidadController.mesFin}"  >
+								    <f:selectItem itemLabel="Enero"    itemValue="1" />
+									<f:selectItem itemLabel="Febrero"  itemValue="2" />
+									<f:selectItem itemLabel="Marzo"    itemValue="3" />
+									<f:selectItem itemLabel="Abril"    itemValue="4" />
+									
+									<f:selectItem itemLabel="Mayo"     itemValue="5" />
+									<f:selectItem itemLabel="Junio"    itemValue="6" />
+									<f:selectItem itemLabel="Julio"    itemValue="7" />
+									<f:selectItem itemLabel="Agosto"   itemValue="8" />
+									
+									<f:selectItem itemLabel="Septiembre" itemValue="9" />
+									<f:selectItem itemLabel="Octubre"    itemValue="10" />
+									<f:selectItem itemLabel="Noviembre"  itemValue="11" />
+									<f:selectItem itemLabel="Diciembre"  itemValue="12" />
+									
+								</h:selectOneMenu>
+							</p:outputPanel>
+							
+							<br/>
+				   
+			     		</p:outputPanel>
+			
+			<br/>
+			
+			 <p:tabView>
+
+					<p:tab title="Reporte de Modificaciones Presupuestales ">
+
+						
+						<p:commandButton id="repor5" value="Ver Reporte"  ajax="false" update="msj"
+							action="#{objxUnidadController.mostrarReporRegModPres}" title="Reporte" />	
+					</p:tab>
+	
+			 </p:tabView>
+			 
+			 <br/><br/>
+			 
+		
+		</h:form>	
+	
+	</ui:composition>
+	
+</body> 
+</html>
