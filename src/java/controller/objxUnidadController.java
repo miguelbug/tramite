@@ -5,33 +5,12 @@
  */
 //ESTE ES PARA EL REPORTE
 package controller;
-import bean.*;
+import dao.DocumentoDAO;
+import daoimpl.DocumentoDaoImpl;
 import maping.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.primefaces.model.TreeNode;
 
 
 //
@@ -59,9 +38,15 @@ private int opcionFormato;
 private int mesInicio;
 private int mesFin ;
 private int mesActual ;
+private DocumentoDAO dd;
 
 
 private String USUARIO;
+
+    public objxUnidadController() {
+        dd= new DocumentoDaoImpl();
+    }
+
 public void mostrarReporRegModPres(){
 
 context = FacesContext.getCurrentInstance (); 
@@ -252,10 +237,13 @@ public void setAnioActual(int anioActual) {
         context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
-        ofi=(Oficina)usu.getOficina();
-        nomOfi=ofi.getNombreOficina();
+        System.out.println("acaaaaaaaaaaaaaaa");
+        nomOfi=dd.getOficina(usu);
+        System.out.println(nomOfi);
         return nomOfi;
     }
+    
+    
     
     public String getLogo(){	
 	String logo="";	
