@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+//ESTE ES PARA EL REPORTE
 package controller;
 import bean.*;
 import maping.*;
@@ -133,6 +133,47 @@ if(!rpt && message==null){
 	FacesContext.getCurrentInstance().addMessage(null, message);
 }
 }
+
+
+
+public void mostrarReporteNotasDeriv(){
+
+context = FacesContext.getCurrentInstance (); 
+serveltcontext = (ServletContext) context.getExternalContext().getContext();
+ReporteController repor;
+HashMap<String, Object> parametros = new HashMap<String, Object>();
+parametros.clear();
+FacesContext context = FacesContext.getCurrentInstance (); 
+System.out.println("context"+context);
+ServletContext sc = (ServletContext) context.getExternalContext ().getContext();
+System.out.println("sc = "+sc.getRealPath ("/reportes/"));
+//parametros.put("fuente", getFuenteElegido() );
+repor= ReporteController.getInstance("NotasDerivadas");
+//}
+categoriaServicio categoriaServicio= new categoriaServicio();
+repor.setConexion(categoriaServicio.getConexion() );
+repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+FacesMessage message=null;
+boolean rpt=false;	
+	/*parametros.put("udid", udIdElegido );
+	parametros.put("udcod", udCodElegido );
+	parametros.put("uddsc", dependenciaService.obtenerDepxUdcod(udCodElegido).getDescripcion() );	
+	parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
+        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("oficina","oficina oli");
+        parametros.put("logo", getLogo());
+        //parametros.put("oficina",getOficina());
+       // parametros.put("USUARIO","miguel" ); 
+	repor.addMapParam(parametros);
+	rpt=repor.ejecutaReporte(context,serveltcontext);		  
+if(!rpt && message==null){
+	//no tiene hojas	
+	message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje","No hay datos para generar reporte");
+	FacesContext.getCurrentInstance().addMessage(null, message);
+}
+}
+
+
 
 
 /*
