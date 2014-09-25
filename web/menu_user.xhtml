@@ -18,10 +18,7 @@
             <p:menubar>
                 <p:submenu label="Ver" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos_user?faces-redirect=true"/>
-                </p:submenu>
-                
-                <p:menuitem value="Doc. Derivados" icon="ui-icon-search"/>
-             
+                </p:submenu>             
                <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                      <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                 </p:submenu>            

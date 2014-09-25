@@ -57,15 +57,24 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocumentos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[5];
+            Object obj[] = new Object[9];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                /*listaaux.put("numerotramite", String.valueOf(obj[0]));
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("observacion", String.valueOf(obj[2]));
                 listaaux.put("descripcion", String.valueOf(obj[3]));
-                listaaux.put("depnombre", String.valueOf(obj[4]));
+                listaaux.put("depnombre", String.valueOf(obj[4]));*/
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fenvio", String.valueOf(obj[4]));
+                listaaux.put("fing", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));              
                 documentos.add(listaaux);
             }
         } catch (Exception e) {
@@ -81,16 +90,17 @@ public class DocumentosBean implements Serializable {
             System.out.println(seleccion.get("numerotramite").toString());
             lista = dd.getDetalle(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[6];
+            Object obj[] = new Object[7];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("usuario", String.valueOf(obj[0]));
-                listaaux.put("oficina", String.valueOf(obj[1]));
-                listaaux.put("docunombre", String.valueOf(obj[2]));
-                listaaux.put("docunumero", String.valueOf(obj[3]));
-                listaaux.put("docusiglas", String.valueOf(obj[4]));
-                listaaux.put("docuanio", String.valueOf(obj[5]));
+                listaaux.put("tramnum", String.valueOf(obj[0]));
+                listaaux.put("fecha", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("observacion", String.valueOf(obj[3]));
+                listaaux.put("estado", String.valueOf(obj[4]));
+                listaaux.put("usuario", String.valueOf(obj[5]));
+                listaaux.put("docnomb", String.valueOf(obj[6])+"-"+String.valueOf(obj[7])+"-"+String.valueOf(obj[8])+"-"+String.valueOf(obj[9]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {

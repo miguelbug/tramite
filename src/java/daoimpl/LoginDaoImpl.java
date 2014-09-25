@@ -38,5 +38,24 @@ public class LoginDaoImpl implements LoginDao{
         }
         return nuevoUsu;
     }
+
+    @Override
+    public Usuario getUniqeUsuario(String usu) {
+        System.out.println("loginbuscar2");
+        Usuario nuevoUsu = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "FROM Usuario WHERE USU='" + usu + "'";
+        try {
+            session.beginTransaction();
+            nuevoUsu = (Usuario) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal 2");
+            session.beginTransaction().rollback();
+            session.close();
+        }
+        return nuevoUsu;
+    }
     
 }

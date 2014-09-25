@@ -284,9 +284,9 @@ public class DerivarDaoImpl implements DerivarDAO {
                     + "from movimiento_interno mi, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR IND \n"
                     + "where mi.CODIGO=M1.CODIGO \n"
                     + "AND mi.CODIGO1=M2.CODIGO \n"
-                    + "and mi.CODIGO='" + oficina + "' \n"
+                    + "and mi.CODIGO1='" + oficina + "' \n"
                     + "and mi.INDI_COD=IND.INDI_COD \n"
-                    + "and mi.ESTADO_CONFIRMADO is null \n"
+                    + "and mi.FECHA_INGRINT is not null \n"
                     + "group by mi.MOVI_NUMINT,mi.TRAM_NUM,M1.NOMBRE,M2.NOMBRE,mi.FECHA_ENVINT,mi.FECHA_INGRINT,mi.OBS_MOVINT,mi.ESTAD_INT,IND.INDI_NOMBRE\n "
                     + "ORDER BY mi.FECHA_INGRINT DESC");
             codigos = query.list();

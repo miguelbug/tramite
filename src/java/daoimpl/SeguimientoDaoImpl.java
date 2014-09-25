@@ -8,6 +8,9 @@ package daoimpl;
 import dao.SeguimientoDAO;
 import java.util.ArrayList;
 import java.util.List;
+import maping.TipoDocu;
+import maping.TramiteDatos;
+import maping.TramiteMovimiento;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -19,6 +22,37 @@ import util.HibernateUtil;
 public class SeguimientoDaoImpl implements SeguimientoDAO {
 
     Session session;
+
+    @Override
+    public List getSeguimientoGrande(String tramnum) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("entragetseguimiento grande");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select TRAM_NUM,\n"
+                    + "MOVI_NUM,\n"
+                    + "MOVI_ORIGEN,\n"
+                    + "MOVI_DESTINO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+                    + "INDI_NOMBRE,\n"
+                    + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, \n"
+                    + "ESTA_NOMBRE\n"
+                    + "from vw_ogpl002@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "' \n"
+                    + "order by movi_num desc");
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problemasseguimiento grande");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna grande");
+        return codigos;
+    }
 
     @Override
     public List getSeguimiento(String tramnum) {
@@ -85,6 +119,105 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             System.out.println(e.getMessage());
         }
         return codigos;
+    }
+
+    @Override
+    public void GuadarTramiteDatos(TramiteDatos td,TipoDocu tdocu) {
+        GuardarTD(td);
+        GuardarTDoc(tdocu);
+    }
+
+    @Override
+    public void GuardarTramiteMovimiento(TramiteMovimiento tm) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(tm);
+            session.getTransaction().commit();
+            System.out.println("se ha guardado tramite movimiento");
+        } catch (Exception e) {
+            System.err.println("falló guardado tramitedatos" + e);
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    
+    @Override
+    public void GuardarTD(TramiteDatos td) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(td);
+            session.getTransaction().commit();
+            System.out.println("se ha guardado tramite datos");
+        } catch (Exception e) {
+            System.err.println("falló guardado tramitedatos" + e);
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void GuardarTDoc(TipoDocu tdocu) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(tdocu);
+            session.getTransaction().commit();
+            System.out.println("se ha guardado tramite documentos");
+        } catch (Exception e) {
+            System.err.println("falló guardado tipodocus" + e);
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    
+    @Override
+    public List tramiteDatos(String tramnum) {
+        List td=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TRAM_NUM,TRAM_FECHA,DEPE_COD,TRAM_OBS,ESTA_DESCRIP,USU\n"
+                    + "FROM vw_ogpl001@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "'\n"
+                    + "AND DOCU_PRIC='1'");
+            td=(List)query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problem oficina");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return td;
+    }
+
+    @Override
+    public List TiposDocus(String tramnum) {
+        List td=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TRAM_NUM,DOCU_NOMBRE,DOCU_NUM,DOCU_PRIC,DOCU_SIGLAS,DOCU_ANIO\n"
+                    + "FROM vw_ogpl001@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "'\n"
+                    + "AND DOCU_PRIC='1'");
+            td=(List)query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problem tiposdocus");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return td;
     }
 
 }

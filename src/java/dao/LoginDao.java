@@ -14,4 +14,5 @@ import maping.Usuario;
  */
 public interface LoginDao {
     public Usuario getUsuario(String usu, String pass);
+    public Usuario getUniqeUsuario(String usu);
 }

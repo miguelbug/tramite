@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Indicador;
 import maping.Usuario;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -68,13 +69,19 @@ public class DerivarBean {
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
         seguimientolista2 = new ArrayList<Map<String, String>>();
-        confirmadosderivados= new ArrayList<Map<String, String>>();
+        confirmadosderivados = new ArrayList<Map<String, String>>();
         MostrarConfirmadosDerivados();
     }
 
     public String getNombOficina() {
         String oficina = dd.getOficina(usu);
         return oficina;
+    }
+
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getId().equals("tab3")) {
+            MostrarConfirmadosDerivados();
+        }
     }
 
     public void Derivar() {
@@ -233,21 +240,23 @@ public class DerivarBean {
             FacesMessage message = null;
             DateFormat d = new SimpleDateFormat("yyyy");
             //if (confirmar == true) {
-                System.out.println("entra a confirmar true");
-                Indicador in = deriv.getIndic(docunombre);
-                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
-                limpiar();
-                DocumentosBean docu = new DocumentosBean();
-                docu.MostrarDocumentos();
+            System.out.println("entra a confirmar true");
+            System.out.println(docunombre);
+            Indicador in = deriv.getIndic(docunombre);
+            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
+            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
+            limpiar();
+            DocumentosBean docu = new DocumentosBean();
+            docu.MostrarDocumentos();
             /*} else if (confirmar == false) {
-                System.out.println("entra a confirmar false");
-                deriv.InsertarMovimiento2(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
-                limpiar();
-                //MostrarParaUsuario();
-            }*/
+             System.out.println("entra a confirmar false");
+             deriv.InsertarMovimiento2(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
+             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
+             limpiar();
+             //MostrarParaUsuario();
+             }*/
 
         } catch (Exception e) {
 
@@ -281,7 +290,8 @@ public class DerivarBean {
         docselec2.clear();
 
     }
-    public void MostrarConfirmadosDerivados(){
+
+    public void MostrarConfirmadosDerivados() {
         System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
         confirmadosderivados.clear();
         try {
@@ -309,6 +319,7 @@ public class DerivarBean {
             System.out.println(e.getMessage());
         }
     }
+
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista2.clear();

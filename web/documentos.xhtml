@@ -27,7 +27,7 @@
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                <!--<p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                     <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
                                 <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
@@ -41,7 +41,35 @@
                                 </p:column>
                                 <p:column headerText="Depencencia" width="5" sortBy="#{item.depnombre}" filterBy="#{item.depnombre}" filterMatchMode="contains">
                                     <h:outputText value="#{item.depnombre}" />
+                                </p:column>-->
+                                <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
+                                <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.movimiento}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                                <p:column headerText="F.ENVIO." width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fenvio}" />
+                                </p:column>
+                                <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fing}" />
+                                </p:column>
+                                <p:column headerText="INDIC." width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.indicador}" />
+                                </p:column>
+                                <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.observacion}" />
+                                </p:column>
+                                <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.estado}" />
+                                </p:column>
+
                                 <p:column style="width:32px;text-align: center">
                                     <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                         <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
@@ -49,43 +77,41 @@
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                     update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista()}"/>
-                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" oncomplete="PF('derivarDialog').show()"
-                                                     update=":form:panelDeriv" actionListener="#{seguimientoBean.Derivar()}"/>
+                                                     update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista2()}"/>
+                                    <!--<p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" oncomplete="PF('derivarDialog').show()"
+                                                     update=":form:panelDeriv" actionListener="#{seguimientoBean.Derivar()}"/>-->
+                                    <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
+                                                     update="tabladocumentos" actionListener="#{seguimientoBean.Confirmar()}"/>
                                 </f:facet>
                             </p:dataTable>
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                                 <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
+                                    <p:column headerText="TRAM.">
+                                        <h:outputText value="#{car.tramnum}" />
+                                    </p:column>
+                                    <p:column headerText="fecha">
+                                        <h:outputText value="#{car.fecha}" />
+                                    </p:column>
+                                    <p:column headerText="Origen">
+                                        <h:outputText value="#{car.origen}" />
+                                    </p:column>
+                                    <p:column headerText="Obsv.">
+                                        <h:outputText value="#{car.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="#{car.estado}" />
+                                    </p:column>
                                     <p:column headerText="Usuario">
                                         <h:outputText value="#{car.usuario}" />
                                     </p:column>
-                                    <p:column headerText="Oficina">
-                                        <h:outputText value="#{car.oficina}" />
-                                    </p:column>
-                                    <p:column headerText="Doc. Nombre">
-                                        <h:outputText value="#{car.docunombre}" />
-                                    </p:column>
-                                    <p:column headerText="Doc. Numero">
-                                        <h:outputText value="#{car.docunumero}" />
-                                    </p:column>
-                                    <p:column headerText="Doc. Siglas">
-                                        <h:outputText value="#{car.docusiglas}" />
-                                    </p:column>
-                                    <p:column headerText="Año">
-                                        <h:outputText value="#{car.docuanio}" />
+                                    <p:column headerText="Documento">
+                                        <h:outputText value="#{car.docnomb}" />
                                     </p:column>
                                 </p:dataTable>
                             </p:dialog>
-                            
+
                             <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                
-                                    
-                                
-                                    <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
-                                    
-                                    
-                                    
-                         
+                                <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
                                     <p:column headerText="Num. Tramite">
                                         <h:outputText value="#{seg.numerotramite}" />
                                     </p:column>
@@ -113,27 +139,8 @@
                                     <p:column headerText="Estado">
                                         <h:outputText value="#{seg.estado}" />
                                     </p:column>
-                          
                                 </p:dataTable>
-                                  
-       
-                                
-                                
-                <p:panel header="Exportar en PDF y Excel">  
-                <p:commandLink id="pdff" ajax="false">  
-                    <p:graphicImage value="/resources/img/pdf.png"/>  
-                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                    <pe:exporter type="pdf" target="tablaseguim" fileName="Seguimiento"/>  
-                </p:commandLink>  
-                <p:spacer height="20"/>  
-                <p:commandLink id="xlss" ajax="false">  
-                    <p:graphicImage value="/resources/img/excel.png"/>  
-                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                    <pe:exporter type="xlsx" target="tablaseguim" fileName="Seguimiento"/>  
-                </p:commandLink>  
-                </p:panel>
-                                
-                   </p:dialog>
+                            </p:dialog>
                             <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:panelGrid columns="2" id="panelDeriv">
                                     <p:outputLabel value="Oficina Interna: "/>
@@ -168,21 +175,6 @@
                     </center>
                     <br></br>
                     <br></br>
-                    
-             <p:panel header="Exportar en PDF y Excel">  
-                <p:commandLink id="pdf" ajax="false">  
-                    <p:graphicImage value="/resources/img/pdf.png"/>  
-                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                    <pe:exporter type="pdf" target="tabladocumentos" fileName="CellEditableTable"/>  
-                </p:commandLink>  
-                <p:spacer height="20"/>  
-                <p:commandLink id="xls" ajax="false">  
-                    <p:graphicImage value="/resources/img/excel.png"/>  
-                    <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                    <pe:exporter type="xlsx" target="cellEditingTable" fileName="CellEditableTable"/>  
-                </p:commandLink>  
-            </p:panel>
-                    
                 </h:form>
             </ui:define>
         </ui:composition>

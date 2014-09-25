@@ -29,18 +29,30 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("entró");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,\n"
-                    + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss')) AS FECHA,\n"
-                    + "TD.TRAM_OBS,\n"
-                    + "TD.ESTA_DESCRIP,\n"
-                    + "DEP.NOMBRE \n"
-                    + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO "
-                    + "order by tram_fecha desc");
+            /*Query query = session.createSQLQuery("SELECT TD.TRAM_NUM,\n"
+             + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss')) AS FECHA,\n"
+             + "TD.TRAM_OBS,\n"
+             + "TD.ESTA_DESCRIP,\n"
+             + "DEP.NOMBRE \n"
+             + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO "
+             + "order by tram_fecha desc");
+             docus = query.list();*/
+            Query query = session.createSQLQuery("select TRAM_NUM,"
+                    + "MOVI_NUM,"
+                    + "MOVI_ORIGEN,"
+                    + "MOVI_DESTINO,"
+                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,"
+                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,"
+                    + "INDI_NOMBRE,"
+                    + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, "
+                    + "ESTA_NOMBRE\n"
+                    + "from vw_ogpl002@TRAMITEDBLINK\n"
+                    + "where MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "AND DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
+                    + "and tram_num not in (select tram_num from tramite_datos)"
+                    + "order by MOVI_FEC_ENV DESC");
             docus = query.list();
             System.out.println("despues de query session");
-            if (docus == null) {
-                System.out.println("qué carajos?");
-            }
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -136,16 +148,28 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
-                    + "DOC.DOCU_NOMBRE,\n"
-                    + "DOC.DOCU_NUM,\n"
-                    + "DOC.DOCU_SIGLAS,\n"
-                    + "DOC.DOCU_ANIO\n"
-                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
-                    + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
-                    + "AND TD.USU=U.USU\n"
-                    + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
-                    + "AND U.ID_OFICINA=OFI.ID_OFICINA");
+            /*Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
+             + "DOC.DOCU_NOMBRE,\n"
+             + "DOC.DOCU_NUM,\n"
+             + "DOC.DOCU_SIGLAS,\n"
+             + "DOC.DOCU_ANIO\n"
+             + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
+             + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
+             + "AND TD.USU=U.USU\n"
+             + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
+             + "AND U.ID_OFICINA=OFI.ID_OFICINA");*/
+            Query query = session.createSQLQuery("select TRAM_NUM,"
+                    + "TRAM_FECHA,"
+                    + "DEPE_ORIGEN,"
+                    + "TRAM_OBS,"
+                    + "ESTA_DESCRIP,"
+                    + "USU,"
+                    + "DOCU_NOMBRE,"
+                    + "DOCU_NUM,"
+                    + "DOCU_SIGLAS,"
+                    + "DOCU_ANIO \n"
+                    + "FROM vw_ogpl001@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "'");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();

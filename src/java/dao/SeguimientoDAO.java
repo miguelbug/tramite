@@ -7,6 +7,9 @@
 package dao;
 
 import java.util.List;
+import maping.TipoDocu;
+import maping.TramiteDatos;
+import maping.TramiteMovimiento;
 
 /**
  *
@@ -15,4 +18,12 @@ import java.util.List;
 public interface SeguimientoDAO {
     public List getSeguimiento(String tramnum);
     public List seguimientoUser(String oficina);
+    public List getSeguimientoGrande(String tramnum);
+    public void GuadarTramiteDatos(TramiteDatos td,TipoDocu tdocu);
+    public List tramiteDatos(String tramnum);
+    public List TiposDocus(String tramnum);
+    public void GuardarTD(TramiteDatos td);
+    public void GuardarTDoc(TipoDocu tdocu);
+    public void GuardarTramiteMovimiento(TramiteMovimiento tm);
+    
 }

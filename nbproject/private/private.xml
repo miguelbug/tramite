@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/java/bean/DerivarBean.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>127</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/IndicadorDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/LoginDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/dao/IndicadorDAO.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/SeguimientoDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/SeguimientoBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/MovimientoInterno.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
-=======
-            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/menu_user.xhtml</file>
-            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/busqParametros.xhtml</file>
-            <file>file:/C:/Users/Whily/Documents/GitHub/tramite/web/documentos2.xhtml</file>
->>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

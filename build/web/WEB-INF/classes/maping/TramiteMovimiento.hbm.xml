@@ -5,7 +5,7 @@
   <class name="maping.TramiteMovimiento" schema="MIGUEL" table="TRAMITE_MOVIMIENTO">
     <id name="idMovi" type="big_decimal">
       <column name="ID_MOVI" precision="38" scale="0"/>
-      <generator class="assigned"/>
+      <generator class="increment"/>
     </id>
     <many-to-one class="maping.TramiteDatos" fetch="select" name="tramiteDatos">
       <column length="42" name="TRAM_NUM"/>

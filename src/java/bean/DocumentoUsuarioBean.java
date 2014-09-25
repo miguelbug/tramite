@@ -110,6 +110,17 @@ public class DocumentoUsuarioBean {
         }
     }
 
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getId().equals("tab1")) {
+            MostrarParaUsuario();
+        } else {
+            if (event.getTab().getId().equals("tab2")) {
+                MostrarConfirmados();
+            }
+        }
+
+    }
+
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
@@ -259,75 +270,74 @@ public class DocumentoUsuarioBean {
     }
 
     /*public void Derivar() {
-        numtramaux = "";
-        FacesMessage message = null;
-        try {
-            if (getFechaIngr().equals(" ")) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Advertencia", "Primero debe Confirmar");
-                System.out.println("entra a derivar null");
-                aparecer = false;
+     numtramaux = "";
+     FacesMessage message = null;
+     try {
+     if (getFechaIngr().equals(" ")) {
+     message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Advertencia", "Primero debe Confirmar");
+     System.out.println("entra a derivar null");
+     aparecer = false;
 
-            } else {
-                aparecer = true;
-                if (!usu.getOficina().getIdOficina().equals("100392")) {
-                    correlativo = generarCorrelativo();
-                    System.out.println("entra a getsiglas");
-                    siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
-                    System.out.println("entra a iniciar fecha");
-                    IniciarFecha();
-                    System.out.println("entra a motivo");
-                    Motivo();
-                    System.out.println("entra a usuarioselec");
-                    UsuarioSelec();
-                    confirmar = false;
-                } else {
-                    if (usu.getOficina().getIdOficina().equals("100392")) {
-                        System.out.println("entra a iniciar fecha");
-                        IniciarFecha();
-                        System.out.println("entra a motivo");
-                        Motivo();
-                        System.out.println("entra a usuarioselec");
-                        UsuarioSelec();
-                        confirmar = true;
-                    }
-                }
-            }
-        }catch(Exception e){
-            System.out.println("error derivar");
-            System.out.println(e.getMessage());
-        }
+     } else {
+     aparecer = true;
+     if (!usu.getOficina().getIdOficina().equals("100392")) {
+     correlativo = generarCorrelativo();
+     System.out.println("entra a getsiglas");
+     siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+     System.out.println("entra a iniciar fecha");
+     IniciarFecha();
+     System.out.println("entra a motivo");
+     Motivo();
+     System.out.println("entra a usuarioselec");
+     UsuarioSelec();
+     confirmar = false;
+     } else {
+     if (usu.getOficina().getIdOficina().equals("100392")) {
+     System.out.println("entra a iniciar fecha");
+     IniciarFecha();
+     System.out.println("entra a motivo");
+     Motivo();
+     System.out.println("entra a usuarioselec");
+     UsuarioSelec();
+     confirmar = true;
+     }
+     }
+     }
+     }catch(Exception e){
+     System.out.println("error derivar");
+     System.out.println(e.getMessage());
+     }
 
-    }*/
+     }*/
 
-   /* public void Guardar() {
-        try {
-            fecha = new Date();
-            DateFormat d = new SimpleDateFormat("yyyy");
-            System.out.println("entra a guardar");
-            FacesMessage message = null;
-            if (confirmar == true) {
-                System.out.println("entra a confirmar true");
-                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
-                limpiar();
-                DocumentosBean docu = new DocumentosBean();
-                docu.MostrarDocumentos();
-            } else if (confirmar == false) {
-                System.out.println("entra a confirmar false");
-                deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
-                limpiar();
-                MostrarParaUsuario();
-            }
+    /* public void Guardar() {
+     try {
+     fecha = new Date();
+     DateFormat d = new SimpleDateFormat("yyyy");
+     System.out.println("entra a guardar");
+     FacesMessage message = null;
+     if (confirmar == true) {
+     System.out.println("entra a confirmar true");
+     deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
+     limpiar();
+     DocumentosBean docu = new DocumentosBean();
+     docu.MostrarDocumentos();
+     } else if (confirmar == false) {
+     System.out.println("entra a confirmar false");
+     deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
+     deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
+     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
+     limpiar();
+     MostrarParaUsuario();
+     }
 
-        } catch (Exception e) {
+     } catch (Exception e) {
 
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }*/
-
+     System.out.println(e.getMessage());
+     e.printStackTrace();
+     }
+     }*/
     public void limpiar() {
         numtramaux = "";
         asunto = "";
@@ -453,14 +463,15 @@ public class DocumentoUsuarioBean {
 
     }
     /*public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("Confirmados")) {
-            MostrarConfirmados();
-        } else {
-            MostrarParaUsuario();
-        }
-        message = new FacesMessage("Listado de Compras", event.getTab().getTitle() + " actualizado");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }*/
+     if (event.getTab().getTitle().equals("Confirmados")) {
+     MostrarConfirmados();
+     } else {
+     MostrarParaUsuario();
+     }
+     message = new FacesMessage("Listado de Compras", event.getTab().getTitle() + " actualizado");
+     FacesContext.getCurrentInstance().addMessage(null, message);
+     }*/
+
     public DerivarDAO getDeriv() {
         return deriv;
     }

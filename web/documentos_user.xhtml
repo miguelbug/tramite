@@ -19,9 +19,9 @@
                     <p:growl id="growl" showDetail="true" sticky="true" life="1000"/> 
                     <br></br>
                     <br></br>
-                    <p:tabView id="tabmayor" dynamic="true">
+                    <p:tabView id="tabmayor" dynamic="true" onTabChange="">
 
-                        <p:tab title="Sin Confirmar">
+                        <p:tab title="Sin Confirmar" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -71,7 +71,7 @@
                                 </p:dataTable>
                             </center>
                         </p:tab>
-                        <p:tab title="Confirmados">
+                        <p:tab title="Confirmados" id="tab2">
                             <p:dataTable value="#{documentoUsuarioBean.confirmados}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{derivarBean.docselec2}"
@@ -118,7 +118,7 @@
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
-                        <p:tab title="Derivados Internos">
+                        <p:tab title="Derivados Internos" id="tab3">
                             <p:dataTable value="#{derivarBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
@@ -259,7 +259,8 @@
                         <p:panelGrid columns="2" id="panelDeriv">
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{derivarBean.docunombre}">
-                                <f:selectItem itemLabel="INFORMES" itemValue="INFORMES" />
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
                                 <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
                                 <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
                                 <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
