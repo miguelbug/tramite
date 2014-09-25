@@ -159,7 +159,7 @@ boolean rpt=false;
 	parametros.put("udcod", udCodElegido );
 	parametros.put("uddsc", dependenciaService.obtenerDepxUdcod(udCodElegido).getDescripcion() );	
 	parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
-        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("usuario", getUSUARIO());
         parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
         //parametros.put("oficina",getOficina());
