@@ -403,9 +403,10 @@ public class SeguimientoBean {
                     }
                     if (e.getKey().toString().equals("fecha")) {
                         System.out.println("entra a fecha envio td");
-                        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf = new Date();
-                        nf = formato.parse(e.getValue().toString().substring(0, 19));
+                        System.out.println(e.getValue().toString().substring(0, 19));
+                        nf = formato.parse(e.getValue().toString());
                         nuevo.setTramFecha(nf);
                     }
                     if (e.getKey().toString().equals("codigo")) {
