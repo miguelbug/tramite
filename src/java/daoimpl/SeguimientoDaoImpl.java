@@ -124,9 +124,11 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     @Override
     public void GuadarTramiteDatos(TramiteDatos td, TipoDocu tdocu) {
         if (tdocu != null) {
+            System.out.println("entra aca 1");
             GuardarTD(td);
             GuardarTDoc(tdocu);
         } else {
+            System.out.println("entra aca 2");
             GuardarTD(td);
         }
 

@@ -441,7 +441,7 @@ public class SeguimientoBean {
             System.out.println("ENTRA A CONFIRMAR seguimiento");
             String ntram = "";
             int movi = 0;
-
+            String aux="";
             for (int i = 0; i < docselec.size(); i++) {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
@@ -452,13 +452,15 @@ public class SeguimientoBean {
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
-                        if (e.getValue().toString().indexOf("OGPL") != -1) {
-                            System.out.println("ENTRA A OGPL");
-                            ntram = e.getValue().toString();
-                            td = getTramiteDato(ntram);
-                            tdoc = getTipodocumento(ntram, td);
-                            movimiento.setTramiteDatos(td);
-                        }
+                        aux = e.getValue().toString();
+                    }
+                    if (aux.indexOf("OGPL") != -1) {
+                        System.out.println("ENTRA A OGPL");
+                        ntram = e.getValue().toString();
+                        td = getTramiteDato(ntram);
+                        tdoc = getTipodocumento(ntram, td);
+                        movimiento.setTramiteDatos(td);
+
                         if (e.getKey().toString().equals("movimiento")) {
                             movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
                         }
@@ -500,10 +502,13 @@ public class SeguimientoBean {
                         if (e.getKey().toString().equals("observacion")) {
                             movimiento.setMoviObs(e.getValue().toString());
                         }
+
                     } else {
-                        if (e.getValue().toString().indexOf("OGPL") == -1) {
+                        if (aux.indexOf("OGPL") == -1) {
                             System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
-                            td.setTramNum(e.getValue().toString());
+                            if (e.getKey().toString().equals("numerotramite")) {
+                                td.setTramNum(e.getValue().toString());
+                            }
                             if (e.getKey().toString().equals("fenvio")) {
                                 System.out.println("entra a fecha envio");
                                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -564,7 +569,7 @@ public class SeguimientoBean {
                                 movimiento.setMoviObs(e.getValue().toString());
                             }
                         }
-                        tdoc=null;
+                        tdoc = null;
                     }
 
                 }
