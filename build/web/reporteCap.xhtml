@@ -13,7 +13,7 @@
 <body style="background-color: #D0D0D0;"> 
 	<ui:composition>
 		<h:form id="f1"  >
-			<h:outputText  value="Reporte de Registro de Modificaciones Presupuestales " style="font-size:20px;" /> 
+			<h:outputText  value="PRUEBA EN REPORTES OGPL " style="font-size:20px;" /> 
 			<br/>
 			<br/>
 			<h:outputText value="Ver en formato : " style="font-size:12px;" />
@@ -84,7 +84,7 @@
 			
 			 <p:tabView>
 
-					<p:tab title="Reporte de Modificaciones Presupuestales ">
+					<p:tab title="PRUEBA EN REPORTES OGPL ">
 
 						
 						<p:commandButton id="repor5" value="Ver Reporte"  ajax="false" update="msj"
@@ -96,8 +96,9 @@
                                                  <p:commandButton id="repor7" value="metodo"  ajax="false" update="msj"
 							action="#{objxUnidadController.getOficina}"
                                                         title="Reporte" />
-                                                
-                                                
+                                                  <p:commandButton id="repor8" value="ReporteDocumentos"  ajax="false" update="msj"
+                                                        action="#{objxUnidadController.mostrarReporteDocumentos}"
+                                                        title="Reporte" />
                                                 
 					</p:tab>
 	
