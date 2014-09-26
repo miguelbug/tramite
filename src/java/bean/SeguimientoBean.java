@@ -456,9 +456,9 @@ public class SeguimientoBean {
                     }
                     if (aux.indexOf("OGPL") != -1) {
                         System.out.println("ENTRA A OGPL");
-                        ntram = e.getValue().toString();
-                        td = getTramiteDato(ntram);
-                        tdoc = getTipodocumento(ntram, td);
+                        //ntram = e.getValue().toString();
+                        td = getTramiteDato(aux);
+                        tdoc = getTipodocumento(aux, td);
                         movimiento.setTramiteDatos(td);
 
                         if (e.getKey().toString().equals("movimiento")) {

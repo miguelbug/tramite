@@ -49,7 +49,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "from vw_ogpl002@TRAMITEDBLINK\n"
                     + "where MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
                     + "AND DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
-                    + "and tram_num not in (select tram_num from tramite_datos)"
+                    + "and tram_num not in (select tram_num from tramite_datos)\n"
+                    + "and MOVI_FEC_ING IS NULL\n"
                     + "order by MOVI_FEC_ENV DESC");
             docus = query.list();
             System.out.println("despues de query session");
