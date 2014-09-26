@@ -483,8 +483,6 @@ public class SeguimientoBean {
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-            DocumentosBean docu = new DocumentosBean();
-            docu.MostrarDocumentos();
             //MostrarConfirmados();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
