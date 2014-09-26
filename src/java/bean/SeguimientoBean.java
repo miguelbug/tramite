@@ -60,6 +60,7 @@ public class SeguimientoBean {
     private List tdaux;
     private LoginDao log;
     private List tdaux2;
+    private List docusinternos;
 
     public SeguimientoBean() {
         dd = new DocumentoDaoImpl();
@@ -69,12 +70,41 @@ public class SeguimientoBean {
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         log = new LoginDaoImpl();
+        docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         seguimientolista2 = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarParaUsuario();
+        MostrarDocusInternos();
 
+    }
+
+    public void MostrarDocusInternos() {
+        System.out.println("listando documentos");
+        docusinternos.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.getDocusInternos();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("fenvio", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("fing", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("observacion", String.valueOf(obj[6]));
+                listaaux.put("estado", String.valueOf(obj[7]));
+                listaaux.put("indicador", String.valueOf(obj[8]));
+                docusinternos.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void MostrarSeguimiento2(String tramnum) {
@@ -422,63 +452,130 @@ public class SeguimientoBean {
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
-                        ntram = e.getValue().toString();
-                        td = getTramiteDato(ntram);
-                        tdoc = getTipodocumento(ntram, td);
-                        movimiento.setTramiteDatos(td);
-                    }
-                    if (e.getKey().toString().equals("movimiento")) {
-                        movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("estado")) {
-                        movimiento.setEstaNombre(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("origen")) {
-                        movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("destino")) {
-                        movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("fenvio")) {
-                        System.out.println("entra a fecha envio");
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date nf = new Date();
-                        nf = formato.parse(e.getValue().toString());
-                        movimiento.setFechaEnvio(nf);
-                        System.out.println("sale fecha envio");
-                    }
-                    if (e.getKey().toString().equals("fing")) {
-                        System.out.println("entra a fecha ing");
-                        if (e.getValue().toString().equals(" ")) {
-                            movimiento.setFechaIngr(null);
-                        } else {
+                        if (e.getValue().toString().indexOf("OGPL") != -1) {
+                            System.out.println("ENTRA A OGPL");
+                            ntram = e.getValue().toString();
+                            td = getTramiteDato(ntram);
+                            tdoc = getTipodocumento(ntram, td);
+                            movimiento.setTramiteDatos(td);
+                        }
+                        if (e.getKey().toString().equals("movimiento")) {
+                            movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
+                        }
+                        if (e.getKey().toString().equals("estado")) {
+                            movimiento.setEstaNombre(e.getValue().toString());
+                        }
+                        if (e.getKey().toString().equals("origen")) {
+                            movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
+                        }
+                        if (e.getKey().toString().equals("destino")) {
+                            movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                        }
+                        if (e.getKey().toString().equals("fenvio")) {
+                            System.out.println("entra a fecha envio");
                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                             Date nf = new Date();
                             nf = formato.parse(e.getValue().toString());
-                            movimiento.setFechaIngr(nf);
+                            movimiento.setFechaEnvio(nf);
+                            System.out.println("sale fecha envio");
                         }
+                        if (e.getKey().toString().equals("fing")) {
+                            System.out.println("entra a fecha ing");
+                            if (e.getValue().toString().equals(" ")) {
+                                movimiento.setFechaIngr(null);
+                            } else {
+                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                Date nf = new Date();
+                                nf = formato.parse(e.getValue().toString());
+                                movimiento.setFechaIngr(nf);
+                            }
 
-                        System.out.println("sale fecha fing");
+                            System.out.println("sale fecha fing");
+                        }
+                        if (e.getKey().toString().equals("indicador")) {
+                            System.out.println("entra a indicador");
+                            movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
+                            System.out.println("sle indicador");
+                        }
+                        if (e.getKey().toString().equals("observacion")) {
+                            movimiento.setMoviObs(e.getValue().toString());
+                        }
+                    } else {
+                        if (e.getValue().toString().indexOf("OGPL") == -1) {
+                            System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
+                            td.setTramNum(e.getValue().toString());
+                            if (e.getKey().toString().equals("fenvio")) {
+                                System.out.println("entra a fecha envio");
+                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                Date nf = new Date();
+                                nf = formato.parse(e.getValue().toString());
+                                td.setTramFecha(nf);
+                                System.out.println("sale fecha envio");
+                            }
+                            if (e.getKey().toString().equals("observacion")) {
+                                td.setTramObs(e.getValue().toString());
+                            }
+                            if (e.getKey().toString().equals("estado")) {
+                                td.setEstaDescrip(e.getValue().toString());
+                            }
+                            if (e.getKey().toString().equals("origen")) {
+                                td.setDependencia(deriv.getDependencia(e.getValue().toString()));
+                            }
+                            movimiento.setTramiteDatos(td);
+                            if (e.getKey().toString().equals("movimiento")) {
+                                movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
+                            }
+                            if (e.getKey().toString().equals("estado")) {
+                                movimiento.setEstaNombre(e.getValue().toString());
+                            }
+                            if (e.getKey().toString().equals("origen")) {
+                                movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
+                            }
+                            if (e.getKey().toString().equals("destino")) {
+                                movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                            }
+                            if (e.getKey().toString().equals("fenvio")) {
+                                System.out.println("entra a fecha envio");
+                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                Date nf = new Date();
+                                nf = formato.parse(e.getValue().toString());
+                                movimiento.setFechaEnvio(nf);
+                                System.out.println("sale fecha envio");
+                            }
+                            if (e.getKey().toString().equals("fing")) {
+                                System.out.println("entra a fecha ing");
+                                if (e.getValue().toString().equals(" ")) {
+                                    movimiento.setFechaIngr(null);
+                                } else {
+                                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                    Date nf = new Date();
+                                    nf = formato.parse(e.getValue().toString());
+                                    movimiento.setFechaIngr(nf);
+                                }
+
+                                System.out.println("sale fecha fing");
+                            }
+                            if (e.getKey().toString().equals("indicador")) {
+                                System.out.println("entra a indicador");
+                                movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
+                                System.out.println("sle indicador");
+                            }
+                            if (e.getKey().toString().equals("observacion")) {
+                                movimiento.setMoviObs(e.getValue().toString());
+                            }
+                        }
+                        tdoc=null;
                     }
-                    if (e.getKey().toString().equals("indicador")) {
-                        System.out.println("entra a indicador");
-                        movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
-                        System.out.println("sle indicador");
-                    }
-                    if (e.getKey().toString().equals("observacion")) {
-                        movimiento.setMoviObs(e.getValue().toString());
-                    }
+
                 }
                 System.out.println("---------entra a guardar tramite dato---------");
                 sgd.GuadarTramiteDatos(td, tdoc);
                 System.out.println("---------sale de guardar tramite dato---------");
-
                 System.out.println("---------entra a guardar tramite movimiento---------");
 
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
-                
 
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
@@ -587,6 +684,46 @@ public class SeguimientoBean {
 
     public void setCodinterno(String codinterno) {
         this.codinterno = codinterno;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public List getTdaux() {
+        return tdaux;
+    }
+
+    public void setTdaux(List tdaux) {
+        this.tdaux = tdaux;
+    }
+
+    public LoginDao getLog() {
+        return log;
+    }
+
+    public void setLog(LoginDao log) {
+        this.log = log;
+    }
+
+    public List getTdaux2() {
+        return tdaux2;
+    }
+
+    public void setTdaux2(List tdaux2) {
+        this.tdaux2 = tdaux2;
+    }
+
+    public List getDocusinternos() {
+        return docusinternos;
+    }
+
+    public void setDocusinternos(List docusinternos) {
+        this.docusinternos = docusinternos;
     }
 
 }

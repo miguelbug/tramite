@@ -65,6 +65,41 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
+    public List getDocusInternos() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("getdocusinternos");
+            session.beginTransaction();
+            System.out.println("despues de begin");
+            Query query = session.createSQLQuery("select tm.tram_num,"
+                    + "tm.movi_num,"
+                    + "DECODE(to_char(tm.FECHA_ENVIO,'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(tm.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "D1.NOMBRE AS ORIGEN,"
+                    + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,\n"
+                    + "D2.NOMBRE AS DESTINO,"
+                    + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
+                    + "tm.ESTA_NOMBRE,"
+                    + "I.INDI_NOMBRE\n"
+                    + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE tm.INDI_COD=I.INDI_COD\n"
+                    + "and tm.CODIGO=D1.CODIGO\n"
+                    + "and tm.CODIGO1=D2.CODIGO\n"
+                    + "order by tm.FECHA_ENVIO DESC");
+            docus = query.list();
+            System.out.println("despues de query de getdocusinternos");
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró a getdocusinternos");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna");
+        return docus;
+    }
+    
+    @Override
     public List getBusqueda(String n1, String n2, String n3, String n4, String n5) {
         System.out.println("estoy aca");
         String[] cadena = new String[5];

@@ -122,9 +122,14 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     }
 
     @Override
-    public void GuadarTramiteDatos(TramiteDatos td,TipoDocu tdocu) {
-        GuardarTD(td);
-        GuardarTDoc(tdocu);
+    public void GuadarTramiteDatos(TramiteDatos td, TipoDocu tdocu) {
+        if (tdocu != null) {
+            GuardarTD(td);
+            GuardarTDoc(tdocu);
+        } else {
+            GuardarTD(td);
+        }
+
     }
 
     @Override
@@ -143,7 +148,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.close();
         }
     }
-    
+
     @Override
     public void GuardarTD(TramiteDatos td) {
         try {
@@ -177,10 +182,10 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.close();
         }
     }
-    
+
     @Override
     public List tramiteDatos(String tramnum) {
-        List td=null;
+        List td = null;
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -188,7 +193,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
                     + "where TRAM_NUM='" + tramnum + "'\n"
                     + "AND DOCU_PRIC='1'");
-            td=(List)query.list();
+            td = (List) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -201,7 +206,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
 
     @Override
     public List TiposDocus(String tramnum) {
-        List td=null;
+        List td = null;
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -209,7 +214,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
                     + "where TRAM_NUM='" + tramnum + "'\n"
                     + "AND DOCU_PRIC='1'");
-            td=(List)query.list();
+            td = (List) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {

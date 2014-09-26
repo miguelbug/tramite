@@ -23,4 +23,5 @@ public interface DocumentoDAO {
     public List getDeatalle2(String tramnum);
     public String getMotivo(String tramnum);
     public String getOficina(Usuario usu);
+    public List getDocusInternos();
 }
