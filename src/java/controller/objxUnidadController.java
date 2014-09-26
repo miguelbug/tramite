@@ -103,9 +103,9 @@ boolean rpt=false;
 	
 	parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
         parametros.put("USUARIO", getUSUARIO());
-        parametros.put("oficina","oficina oli");
+       // parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
-        //parametros.put("oficina",getOficina());
+        parametros.put("oficina",getOficina());
        // parametros.put("USUARIO","miguel" ); 
 	repor.addMapParam(parametros);
 	rpt=repor.ejecutaReporte(context,serveltcontext);	
@@ -145,9 +145,9 @@ boolean rpt=false;
 	parametros.put("uddsc", dependenciaService.obtenerDepxUdcod(udCodElegido).getDescripcion() );	
 	parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
         parametros.put("usuario", getUSUARIO());
-        parametros.put("oficina","oficina oli");
+        //parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
-        //parametros.put("oficina",getOficina());
+       parametros.put("oficina",getOficina());
        // parametros.put("USUARIO","miguel" ); 
 	repor.addMapParam(parametros);
 	rpt=repor.ejecutaReporte(context,serveltcontext);		  
