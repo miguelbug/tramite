@@ -1,5 +1,5 @@
 package maping;
-// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
+// Generated 29/09/2014 02:58:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -21,6 +21,7 @@ public class MovimientoInterno  implements java.io.Serializable {
      private String obsMovint;
      private String estadInt;
      private String estadoConfirmado;
+     private String estadoDerivado;
 
     public MovimientoInterno() {
     }
@@ -31,7 +32,7 @@ public class MovimientoInterno  implements java.io.Serializable {
         this.moviNumint = moviNumint;
         this.fechaEnvint = fechaEnvint;
     }
-    public MovimientoInterno(int idMoviint, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, int moviNumint, Date fechaEnvint, Date fechaIngrint, String obsMovint, String estadInt, String estadoConfirmado) {
+    public MovimientoInterno(int idMoviint, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, int moviNumint, Date fechaEnvint, Date fechaIngrint, String obsMovint, String estadInt, String estadoConfirmado, String estadoDerivado) {
        this.idMoviint = idMoviint;
        this.tramiteDatos = tramiteDatos;
        this.dependenciaByCodigo1 = dependenciaByCodigo1;
@@ -43,6 +44,7 @@ public class MovimientoInterno  implements java.io.Serializable {
        this.obsMovint = obsMovint;
        this.estadInt = estadInt;
        this.estadoConfirmado = estadoConfirmado;
+       this.estadoDerivado = estadoDerivado;
     }
    
     public int getIdMoviint() {
@@ -121,6 +123,13 @@ public class MovimientoInterno  implements java.io.Serializable {
     
     public void setEstadoConfirmado(String estadoConfirmado) {
         this.estadoConfirmado = estadoConfirmado;
+    }
+    public String getEstadoDerivado() {
+        return this.estadoDerivado;
+    }
+    
+    public void setEstadoDerivado(String estadoDerivado) {
+        this.estadoDerivado = estadoDerivado;
     }
 
 

@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.MovimientoInterno;
 import maping.Usuario;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 
 /**
@@ -81,6 +82,10 @@ public class DocumentoUsuarioBean {
         MostrarConfirmados();
     }
 
+    public void onTabChange(TabChangeEvent event) {
+        
+    }
+
     public void MostrarConfirmados() {
         System.out.println("CONFIRMADOS¡¡¡¡¡");
         confirmados.clear();
@@ -108,17 +113,6 @@ public class DocumentoUsuarioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getId().equals("tab1")) {
-            MostrarParaUsuario();
-        } else {
-            if (event.getTab().getId().equals("tab2")) {
-                MostrarConfirmados();
-            }
-        }
-
     }
 
     public void MostrarParaUsuario() {
@@ -150,7 +144,7 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    public String generarCorrelativo() {
+   /* public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
         try {
@@ -179,7 +173,7 @@ public class DocumentoUsuarioBean {
             aux = "0000" + corr;
         }
         return aux;
-    }
+    }*/
 
     public List Detalles() {
         System.out.println("listando detalles");
@@ -254,12 +248,15 @@ public class DocumentoUsuarioBean {
                         movimiento.setObsMovint(e.getValue().toString());
                     }
                 }
-                Date nuevFech = new Date();
-                movimiento.setFechaIngrint(nuevFech);
+                Date nuevFech= new Date();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                movimiento.setFechaIngrint(formato2.parse(formato.format(nuevFech)));
                 deriv.ConfirmarTramites(ntram, movi, movimiento);
                 ntram = "";
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha confirmado el Documento", ntram);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado el documento");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             MostrarParaUsuario();
             MostrarConfirmados();
         } catch (Exception e) {

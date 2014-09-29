@@ -2,13 +2,13 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-schema="MIGUEL"/>
-  <table-filter match-name="DEPENDENCIA"/>
-  <table-filter match-name="OFICINA"/>
-  <table-filter match-name="TRAMITE_DATOS"/>
   <table-filter match-name="DOCUS_INTERNOS"/>
-  <table-filter match-name="TIPO_DOCU"/>
+  <table-filter match-name="OFICINA"/>
   <table-filter match-name="TRAMITE_MOVIMIENTO"/>
-  <table-filter match-name="INDICADOR"/>
+  <table-filter match-name="TRAMITE_DATOS"/>
   <table-filter match-name="USUARIO"/>
+  <table-filter match-name="DEPENDENCIA"/>
   <table-filter match-name="MOVIMIENTO_INTERNO"/>
+  <table-filter match-name="TIPO_DOCU"/>
+  <table-filter match-name="INDICADOR"/>
 </hibernate-reverse-engineering>

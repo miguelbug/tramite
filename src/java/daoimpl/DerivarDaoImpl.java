@@ -29,11 +29,11 @@ public class DerivarDaoImpl implements DerivarDAO {
     private Session session;
 
     @Override
-    public String getIndice() {
+    public String getIndice(String tramnum) {
         System.out.println("getindice");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(idTipdocint) from DocusInternos";
+        String sql = "select max(docuCorrela) from DocusInternos where docuSiglasint='" + tramnum + "'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
@@ -94,7 +94,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
+    public void InsertarMovimiento(int movimiento, Date fechaenvio,Date fechaingreso, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
         try {
             System.out.println(movimiento + " " + fechaenvio + " " + asunto + " " + estado + " " + numtram + " " + origen + " " + destino + " " + i);
             System.out.println("entra a guardado insertmovi");
@@ -109,6 +109,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             mi.setDependenciaByCodigo1(getDependencia2(destino));
             mi.setIndicador(i);
             mi.setEstadoConfirmado("confirmado");
+            mi.setFechaIngrint(fechaingreso);
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(mi);
@@ -155,7 +156,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
-            di.setIdTipdocint(aux);
+            di.setDocuCorrela(aux);
             di.setDocuNombreint(nombre);
             di.setDocuPricint(String.valueOf(pric));
             di.setDocuSiglasint(siglas);
@@ -266,6 +267,24 @@ public class DerivarDaoImpl implements DerivarDAO {
         GuardarConfirmados(movi);
     }
 
+    @Override
+    public Date getFecha() {
+        Date fechanueva=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql="select sysdate from sys.dual";
+        try{
+            session.beginTransaction();
+            fechanueva=(Date)session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        }catch(Exception e){
+            System.out.println("mal fecha");
+            System.out.println(e.getMessage());
+        }finally {
+            session.close();
+        }
+        return fechanueva;
+    }
+    
     @Override
     public List getConfirmados(String oficina) {
         List codigos = new ArrayList();

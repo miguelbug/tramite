@@ -1,5 +1,5 @@
 package maping;
-// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
+// Generated 29/09/2014 02:58:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class Usuario  implements java.io.Serializable {
 
-     private static final long serialVersionUID = -6888989356281996206L;
+
      private String usu;
      private Oficina oficina;
      private String usuNombre;

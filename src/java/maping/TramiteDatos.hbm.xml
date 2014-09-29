@@ -1,50 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/09/2014 05:15:45 PM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2014 02:58:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-  <class name="maping.TramiteDatos" schema="MIGUEL" table="TRAMITE_DATOS">
-    <id name="tramNum" type="string">
-      <column length="42" name="TRAM_NUM"/>
-      <generator class="assigned"/>
-    </id>
-    <many-to-one class="maping.Usuario" fetch="select" name="usuario">
-      <column length="30" name="USU"/>
-    </many-to-one>
-    <many-to-one class="maping.Dependencia" fetch="select" name="dependencia">
-      <column name="CODIGO" precision="10" scale="0"/>
-    </many-to-one>
-    <property name="tramFecha" type="date">
-      <column length="7" name="TRAM_FECHA" not-null="true"/>
-    </property>
-    <property name="tramObs" type="string">
-      <column length="250" name="TRAM_OBS"/>
-    </property>
-    <property name="estaDescrip" type="string">
-      <column length="10" name="ESTA_DESCRIP"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="movimientoInternos" table="MOVIMIENTO_INTERNO">
-      <key>
-        <column length="42" name="TRAM_NUM"/>
-      </key>
-      <one-to-many class="maping.MovimientoInterno"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="docusInternoses" table="DOCUS_INTERNOS">
-      <key>
-        <column length="42" name="TRAM_NUM"/>
-      </key>
-      <one-to-many class="maping.DocusInternos"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO">
-      <key>
-        <column length="42" name="TRAM_NUM"/>
-      </key>
-      <one-to-many class="maping.TramiteMovimiento"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="tipoDocus" table="TIPO_DOCU">
-      <key>
-        <column length="42" name="TRAM_NUM"/>
-      </key>
-      <one-to-many class="maping.TipoDocu"/>
-    </set>
-  </class>
+    <class name="maping.TramiteDatos" table="TRAMITE_DATOS" schema="MIGUEL">
+        <id name="tramNum" type="string">
+            <column name="TRAM_NUM" length="42" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="maping.Usuario" fetch="select">
+            <column name="USU" length="30" />
+        </many-to-one>
+        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <property name="tramFecha" type="date">
+            <column name="TRAM_FECHA" length="7" not-null="true" />
+        </property>
+        <property name="tramObs" type="string">
+            <column name="TRAM_OBS" length="250" />
+        </property>
+        <property name="estaDescrip" type="string">
+            <column name="ESTA_DESCRIP" length="10" />
+        </property>
+        <set name="movimientoInternos" table="MOVIMIENTO_INTERNO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+            </key>
+            <one-to-many class="maping.MovimientoInterno" />
+        </set>
+        <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+            </key>
+            <one-to-many class="maping.TramiteMovimiento" />
+        </set>
+        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+            </key>
+            <one-to-many class="maping.DocusInternos" />
+        </set>
+        <set name="tipoDocus" table="TIPO_DOCU" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+            </key>
+            <one-to-many class="maping.TipoDocu" />
+        </set>
+    </class>
 </hibernate-mapping>

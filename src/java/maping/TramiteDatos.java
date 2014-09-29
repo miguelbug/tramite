@@ -1,5 +1,5 @@
 package maping;
-// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
+// Generated 29/09/2014 02:58:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -19,8 +19,8 @@ public class TramiteDatos  implements java.io.Serializable {
      private String tramObs;
      private String estaDescrip;
      private Set<MovimientoInterno> movimientoInternos = new HashSet<MovimientoInterno>(0);
-     private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
      private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
+     private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
      private Set<TipoDocu> tipoDocus = new HashSet<TipoDocu>(0);
 
     public TramiteDatos() {
@@ -31,7 +31,7 @@ public class TramiteDatos  implements java.io.Serializable {
         this.tramNum = tramNum;
         this.tramFecha = tramFecha;
     }
-    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<MovimientoInterno> movimientoInternos, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
+    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<MovimientoInterno> movimientoInternos, Set<TramiteMovimiento> tramiteMovimientos, Set<DocusInternos> docusInternoses, Set<TipoDocu> tipoDocus) {
        this.tramNum = tramNum;
        this.usuario = usuario;
        this.dependencia = dependencia;
@@ -39,8 +39,8 @@ public class TramiteDatos  implements java.io.Serializable {
        this.tramObs = tramObs;
        this.estaDescrip = estaDescrip;
        this.movimientoInternos = movimientoInternos;
-       this.docusInternoses = docusInternoses;
        this.tramiteMovimientos = tramiteMovimientos;
+       this.docusInternoses = docusInternoses;
        this.tipoDocus = tipoDocus;
     }
    
@@ -93,19 +93,19 @@ public class TramiteDatos  implements java.io.Serializable {
     public void setMovimientoInternos(Set<MovimientoInterno> movimientoInternos) {
         this.movimientoInternos = movimientoInternos;
     }
-    public Set<DocusInternos> getDocusInternoses() {
-        return this.docusInternoses;
-    }
-    
-    public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
-        this.docusInternoses = docusInternoses;
-    }
     public Set<TramiteMovimiento> getTramiteMovimientos() {
         return this.tramiteMovimientos;
     }
     
     public void setTramiteMovimientos(Set<TramiteMovimiento> tramiteMovimientos) {
         this.tramiteMovimientos = tramiteMovimientos;
+    }
+    public Set<DocusInternos> getDocusInternoses() {
+        return this.docusInternoses;
+    }
+    
+    public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
+        this.docusInternoses = docusInternoses;
     }
     public Set<TipoDocu> getTipoDocus() {
         return this.tipoDocus;

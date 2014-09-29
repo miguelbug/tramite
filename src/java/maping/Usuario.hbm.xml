@@ -1,26 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/09/2014 05:15:45 PM by Hibernate Tools 3.6.0 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2014 02:58:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-  <class name="maping.Usuario" schema="MIGUEL" table="USUARIO">
-    <id name="usu" type="string">
-      <column length="30" name="USU"/>
-      <generator class="assigned"/>
-    </id>
-    <many-to-one class="maping.Oficina" fetch="select" name="oficina">
-      <column length="20" name="ID_OFICINA"/>
-    </many-to-one>
-    <property name="usuNombre" type="string">
-      <column length="153" name="USU_NOMBRE" not-null="true"/>
-    </property>
-    <property name="clave" type="string">
-      <column length="35" name="CLAVE" not-null="true"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="tramiteDatoses" table="TRAMITE_DATOS">
-      <key>
-        <column length="30" name="USU"/>
-      </key>
-      <one-to-many class="maping.TramiteDatos"/>
-    </set>
-  </class>
+    <class name="maping.Usuario" table="USUARIO" schema="MIGUEL">
+        <id name="usu" type="string">
+            <column name="USU" length="30" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="oficina" class="maping.Oficina" fetch="select">
+            <column name="ID_OFICINA" length="20" />
+        </many-to-one>
+        <property name="usuNombre" type="string">
+            <column name="USU_NOMBRE" length="153" not-null="true" />
+        </property>
+        <property name="clave" type="string">
+            <column name="CLAVE" length="35" not-null="true" />
+        </property>
+        <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU" length="30" />
+            </key>
+            <one-to-many class="maping.TramiteDatos" />
+        </set>
+    </class>
 </hibernate-mapping>

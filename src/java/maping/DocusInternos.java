@@ -1,5 +1,5 @@
 package maping;
-// Generated 22/09/2014 05:15:43 PM by Hibernate Tools 3.6.0
+// Generated 29/09/2014 02:58:25 PM by Hibernate Tools 3.6.0
 
 
 
@@ -9,8 +9,9 @@ package maping;
 public class DocusInternos  implements java.io.Serializable {
 
 
-     private String idTipdocint;
+     private int idtip;
      private TramiteDatos tramiteDatos;
+     private String docuCorrela;
      private String docuPricint;
      private String docuNombreint;
      private String docuSiglasint;
@@ -20,26 +21,28 @@ public class DocusInternos  implements java.io.Serializable {
     }
 
 	
-    public DocusInternos(String idTipdocint, String docuPricint, String docuNombreint) {
-        this.idTipdocint = idTipdocint;
+    public DocusInternos(int idtip, String docuCorrela, String docuPricint, String docuNombreint) {
+        this.idtip = idtip;
+        this.docuCorrela = docuCorrela;
         this.docuPricint = docuPricint;
         this.docuNombreint = docuNombreint;
     }
-    public DocusInternos(String idTipdocint, TramiteDatos tramiteDatos, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint) {
-       this.idTipdocint = idTipdocint;
+    public DocusInternos(int idtip, TramiteDatos tramiteDatos, String docuCorrela, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint) {
+       this.idtip = idtip;
        this.tramiteDatos = tramiteDatos;
+       this.docuCorrela = docuCorrela;
        this.docuPricint = docuPricint;
        this.docuNombreint = docuNombreint;
        this.docuSiglasint = docuSiglasint;
        this.docuAnioint = docuAnioint;
     }
    
-    public String getIdTipdocint() {
-        return this.idTipdocint;
+    public int getIdtip() {
+        return this.idtip;
     }
     
-    public void setIdTipdocint(String idTipdocint) {
-        this.idTipdocint = idTipdocint;
+    public void setIdtip(int idtip) {
+        this.idtip = idtip;
     }
     public TramiteDatos getTramiteDatos() {
         return this.tramiteDatos;
@@ -47,6 +50,13 @@ public class DocusInternos  implements java.io.Serializable {
     
     public void setTramiteDatos(TramiteDatos tramiteDatos) {
         this.tramiteDatos = tramiteDatos;
+    }
+    public String getDocuCorrela() {
+        return this.docuCorrela;
+    }
+    
+    public void setDocuCorrela(String docuCorrela) {
+        this.docuCorrela = docuCorrela;
     }
     public String getDocuPricint() {
         return this.docuPricint;

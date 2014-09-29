@@ -240,20 +240,6 @@
                                 <h:outputText value="#{seg.estado}" />
                             </p:column>
                         </p:dataTable>
-
-                        <p:panel header="Exportar en PDF y Excel">  
-                            <p:commandLink id="pdff" ajax="false">  
-                                <p:graphicImage value="/resources/img/pdf.png"/>  
-                                <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                                <pe:exporter type="pdf" target="tablaseguim" fileName="Seguimiento"/>  
-                            </p:commandLink>  
-                            <p:spacer height="20"/>  
-                            <p:commandLink id="xlss" ajax="false">  
-                                <p:graphicImage value="/resources/img/excel.png"/>  
-                                <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-                                <pe:exporter type="xlsx" target="tablaseguim" fileName="Seguimiento"/>  
-                            </p:commandLink>  
-                        </p:panel>
                     </p:dialog>
                     <p:dialog header="Derivación - #{derivarBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelDeriv">
@@ -264,6 +250,8 @@
                                 <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
                                 <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
                                 <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
+                                <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
+                                <p:ajax event="change" listener="#{derivarBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
 
                             <p:outputLabel value="N°: "/>
@@ -287,11 +275,8 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Estado: "/>
-                            <p:selectOneMenu id="estado" value="#{derivarBean.estado}">
-                                <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                <f:selectItem itemLabel="EN PROCESO" itemValue="EN PROCESO" />
-                                <f:selectItem itemLabel="FINALIZADO" itemValue="FINALIZADO" />
-                            </p:selectOneMenu>
+                            <p:outputLabel id="estado" value="#{derivarBean.estado}"/>
+                            
 
                             <p:outputLabel value="Fecha: "/>
                             <p:outputLabel value="#{derivarBean.fechadia}" />

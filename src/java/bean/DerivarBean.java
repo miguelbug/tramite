@@ -60,12 +60,14 @@ public class DerivarBean {
     private List seguimientolista2;
     private SeguimientoDAO sgd;
     public List confirmadosderivados;
+    public Date fechaIng;
 
     public DerivarBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        this.estado = "EN PROCESO";
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
         seguimientolista2 = new ArrayList<Map<String, String>>();
@@ -117,9 +119,11 @@ public class DerivarBean {
                  confirmar = true;
                  }
                  }*/
-                correlativo = generarCorrelativo();
+
+                
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                correlativo = generarCorrelativo();
                 System.out.println("entra a iniciar fecha");
                 IniciarFecha();
                 System.out.println("entra a motivo");
@@ -132,6 +136,29 @@ public class DerivarBean {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public Date getFechaIng() {
+        Date fecha = null;
+        try {
+            Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+            Iterator it = hm.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry e = (Map.Entry) it.next();
+                if (e.getKey().toString().equals("fechaingr")) {
+                    System.out.println(e.getValue().toString());
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    fecha = formato.parse(e.getValue().toString());
+                }
+
+            }
+
+            docselec2.clear();
+        } catch (Exception e) {
+            System.out.println("error fecha");
+            System.out.println(e.getMessage());
+        }
+        return fecha;
     }
 
     public void Motivo() {
@@ -192,7 +219,7 @@ public class DerivarBean {
         String aux = "";
         try {
             System.out.println("lleno");
-            corr = Integer.parseInt(deriv.getIndice());
+            corr = Integer.parseInt(deriv.getIndice(siglasdocus));
             corr = corr + 1;
             if (corr < 10) {
                 aux = "0000" + corr;
@@ -243,20 +270,12 @@ public class DerivarBean {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
-            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            fechaIng = formato.parse(this.getFechaIngr());
+            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha,fechaIng, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
             limpiar();
-            DocumentosBean docu = new DocumentosBean();
-            docu.MostrarDocumentos();
-            /*} else if (confirmar == false) {
-             System.out.println("entra a confirmar false");
-             deriv.InsertarMovimiento2(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno);
-             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
-             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
-             limpiar();
-             //MostrarParaUsuario();
-             }*/
 
         } catch (Exception e) {
 
@@ -344,6 +363,12 @@ public class DerivarBean {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void RealizarCambio() {
+        if (docunombre.equals("ARCHIVO")) {
+            this.estado = "FINALIZADO";
         }
     }
 
@@ -489,6 +514,7 @@ public class DerivarBean {
 
     public void setEstado(String estado) {
         this.estado = estado;
+
     }
 
     public List getSeguimientolista2() {

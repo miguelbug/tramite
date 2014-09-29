@@ -23,7 +23,7 @@
                             <p:tab title="Doc. Generales">
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{seguimientoBean.docselec}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -77,19 +77,21 @@
                                     </p:column>
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                         update=":form:tablaseguim" actionListener="#{seguimientoBean.RecorrerLista2()}"/>
+                                                         update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
-                                                         update="tabladocumentos" actionListener="#{seguimientoBean.Confirmar()}"/>
-                                        <p:commandButton id="repor6" value="ReporteNotasDerivadas"  ajax="false" update="msj" icon="ui-icon-extlink" style="position:absolute; left:330px; height:26px"
+                                                         update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"/>
+                                        <p:commandButton id="repor6" value="ReporteNotasDerivadas"  ajax="false" update="msj" icon="ui-icon-extlink" style="position:absolute; left:325px; height:26px"
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Proveidos" style="position:absolute; left:560px; height:26px" oncomplete="PF('provDialog').show()"
+                                                         update="tabladocumentos"/>
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
                             <p:tab title="Doc. Confirmados">
-                                <p:dataTable value="#{seguimientoBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
+                                <p:dataTable value="#{documentosBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{seguimientoBean.docselec}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
@@ -122,9 +124,6 @@
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
-
-
-
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                 <p:column headerText="TRAM.">
@@ -150,9 +149,8 @@
                                 </p:column>
                             </p:dataTable>
                         </p:dialog>
-
                         <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:dataTable var="seg" value="#{seguimientoBean.seguimientolista}" id="tablaseguim" >
+                            <p:dataTable var="seg" value="#{documentosBean.seguimientolista}" id="tablaseguim" >
                                 <p:column headerText="Num. Tramite">
                                     <h:outputText value="#{seg.numerotramite}" />
                                 </p:column>
@@ -182,36 +180,42 @@
                                 </p:column>
                             </p:dataTable>
                         </p:dialog>
-                        <p:dialog header="Derivación" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:panelGrid columns="2" id="panelDeriv">
-                                <p:outputLabel value="Oficina Interna: "/>
-                                <p:selectOneMenu id="identif" value="#{seguimientoBean.codinterno}" >
-                                    <f:selectItem itemLabel="Seleccione" />
-                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
-                                    <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
-                                    <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
-                                    <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
-                                    <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
-                                    <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
+                        <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:panelGrid columns="2" id="panelProv">
+                                <p:outputLabel value="Documento: "/>
+                                <p:selectOneMenu id="documentos" value="#{documentosBean.documento}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value="#{documentosBean.documentosprov}"/>                              
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Nro. Doc: "/>
+                                <p:inputText />
+                                
+                                <p:outputLabel value="Asunto: "/>
+                                <p:inputText />
+
+                                <p:outputLabel value="Dep. Origen: "/>
+                                <p:selectOneMenu id="deporigen" value="#{documentosBean.origen}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value="#{documentosBean.dependenciasprov}"/>                              
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel value="#{seguimientoBean.fechadia}" />
+                                <p:outputLabel value="#{documentosBean.fechaactual()}"/>
 
-                                <p:outputLabel value="Hora: " />
-                                <p:outputLabel value="#{seguimientoBean.fechahora}" />
+                                <p:outputLabel value="Observación: "/>
+                                <p:inputTextarea rows="6" cols="33" />
 
-                                <p:outputLabel value="Motivo: " />
-                                <p:outputLabel value="#{seguimientoBean.motivo}" />
-
-                                <p:outputLabel value="Usuario: " />
-                                <p:outputLabel value="#{seguimientoBean.usuario}" />
                             </p:panelGrid>
                             <br></br>
                             <center>
-                                <p:commandButton value="Guardar"/>
+                                <p:commandButton value="Guardar">
+
+                                </p:commandButton>
                             </center>
                         </p:dialog>
+
+
 
                     </center>
                     <br></br>

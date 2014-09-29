@@ -22,6 +22,42 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List getDependencias() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select nombre from Dependencia order by nombre");
+            docus = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró depenencias");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return docus;
+    }
+
+    @Override
+    public List getIndicadores() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select indi_nombre from Indicador order by indi_nombre");
+            docus = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró indicadores");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return docus;
+    }
+
+    @Override
     public List getDocumentos() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -99,7 +135,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         System.out.println("retorna");
         return docus;
     }
-    
+
     @Override
     public List getBusqueda(String n1, String n2, String n3, String n4, String n5) {
         System.out.println("estoy aca");
