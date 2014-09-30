@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Indicador;
 import maping.Usuario;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 
 /**
@@ -120,7 +121,6 @@ public class DerivarBean {
                  }
                  }*/
 
-                
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
                 correlativo = generarCorrelativo();
@@ -262,23 +262,24 @@ public class DerivarBean {
     }
 
     public void Guardar() {
+        FacesMessage message = null;
         try {
             System.out.println("entra a guardar");
-            FacesMessage message = null;
+            
             DateFormat d = new SimpleDateFormat("yyyy");
             //if (confirmar == true) {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            fechaIng = formato.parse(this.getFechaIngr());
-            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha,fechaIng, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha derivado el Documento", numtramaux);
+            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
+            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: "+numtramaux);
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
 
         } catch (Exception e) {
-
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO DERIVAR");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
             e.printStackTrace();
         }

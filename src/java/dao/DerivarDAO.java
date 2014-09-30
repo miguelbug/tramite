@@ -21,9 +21,9 @@ public interface DerivarDAO {
     public String getIndice(String tramnum);
     public String getSiglas(String ofi);
     public int getMovimiento(String tramnum);
-    public void InsertarMovimiento(int movimiento, Date fechaenvio, Date fechaIng, String asunto, String estado, String numtram, String origen, String destino, Indicador i);
+    public void InsertarMovimiento(int movimiento, Date fechaenvio,String asunto, String estado, String numtram, String origen, String destino, Indicador i);
     public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino);
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas,String anio, String numtram);
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas,String anio, String numtram, Date fecharegistro);
     public TramiteDatos getTramite(String tramite);
     public Dependencia getDependencia(String nombre);
     public Dependencia getDependencia2(String nombre);

@@ -94,7 +94,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarMovimiento(int movimiento, Date fechaenvio,Date fechaingreso, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
+    public void InsertarMovimiento(int movimiento, Date fechaenvio,String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
         try {
             System.out.println(movimiento + " " + fechaenvio + " " + asunto + " " + estado + " " + numtram + " " + origen + " " + destino + " " + i);
             System.out.println("entra a guardado insertmovi");
@@ -109,7 +109,6 @@ public class DerivarDaoImpl implements DerivarDAO {
             mi.setDependenciaByCodigo1(getDependencia2(destino));
             mi.setIndicador(i);
             mi.setEstadoConfirmado("confirmado");
-            mi.setFechaIngrint(fechaingreso);
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(mi);
@@ -152,7 +151,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram) {
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro) {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
@@ -162,7 +161,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setDocuSiglasint(siglas);
             di.setDocuAnioint(anio);
             di.setTramiteDatos(getTramite(numtram));
-
+            di.setFecharegistro(fecharegistro);
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(di);

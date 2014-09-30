@@ -1,5 +1,5 @@
 package maping;
-// Generated 29/09/2014 02:58:25 PM by Hibernate Tools 3.6.0
+// Generated 30/09/2014 10:36:39 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;

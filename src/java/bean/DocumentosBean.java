@@ -68,6 +68,7 @@ public class DocumentosBean implements Serializable {
     private List dependenciasprov;
     private String documento;
     private String origen;
+    private Date aux;
 
     ////////
     public DocumentosBean() {
@@ -523,7 +524,7 @@ public class DocumentosBean implements Serializable {
                 sgd.GuadarTramiteDatos(td, tdoc);
                 System.out.println("---------sale de guardar tramite dato---------");
                 System.out.println("---------entra a guardar tramite movimiento---------");
-
+                
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
@@ -705,6 +706,14 @@ public class DocumentosBean implements Serializable {
 
     public void setOrigen(String origen) {
         this.origen = origen;
+    }
+
+    public Date getAux() {
+        return aux;
+    }
+
+    public void setAux(Date aux) {
+        this.aux = aux;
     }
     
 }   
