@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="MIGUEL">
+        <id name="id" type="long">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="numerodoc" type="string">
+            <column name="NUMERODOC" length="60" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="300" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" not-null="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="300" />
+        </property>
+    </class>
+</hibernate-mapping>

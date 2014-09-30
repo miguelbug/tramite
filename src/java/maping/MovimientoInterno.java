@@ -1,5 +1,5 @@
 package maping;
-// Generated 30/09/2014 10:36:39 AM by Hibernate Tools 3.6.0
+// Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;

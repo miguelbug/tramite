@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.Temporal" table="TEMPORAL" schema="MIGUEL">
+        <id name="id" type="long">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="tramNum" type="string">
+            <column name="TRAM_NUM" length="30" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="origen" type="string">
+            <column name="ORIGEN" length="300" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="250" />
+        </property>
+        <property name="impreso" type="big_decimal">
+            <column name="IMPRESO" precision="22" scale="0" />
+        </property>
+        <property name="reimpreso" type="big_decimal">
+            <column name="REIMPRESO" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

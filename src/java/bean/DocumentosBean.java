@@ -31,6 +31,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import maping.Temporal;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -396,10 +397,12 @@ public class DocumentosBean implements Serializable {
                 TramiteMovimiento movimiento = new TramiteMovimiento();
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
+                Temporal t= new Temporal();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
                         aux = e.getValue().toString();
+                        t.setTramNum(e.getValue().toString());
                     }
                     if (aux.indexOf("OGPL") != -1) {
                         System.out.println("ENTRA A OGPL");
