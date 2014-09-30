@@ -10,14 +10,26 @@
 
 <h:head>
 </h:head> 
-<body style="background-color: #D0D0D0;"> 
+    
+<h:body> 
+    
+         <p:calendar  value="#{objxUnidadController.date1}"> </p:calendar>
+         <p:calendar> </p:calendar>
+   
+    <p:calendar id="inline" value="#{objxUnidadController.date1}" mode="inline" />
 	<ui:composition>
 		<h:form id="f1"  >
 			<h:outputText  value="PRUEBA EN REPORTES OGPL " style="font-size:20px;" /> 
 			<br/>
 			<br/>
 			<h:outputText value="Ver en formato : " style="font-size:12px;" />
-			
+			<br/>
+			<br/>
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:calendar id="inline2" value="#{objxUnidadController.date1}" mode="inline" />
+                        
+                        
+                        
 			<h:selectOneMenu id="formatos" style="width:100px"
 				value="#{objxUnidadController.opcionFormato}" styleClass="ui-corner-all ui-widget-content ui-state-hover"  >
 				<f:selectItem itemLabel="PDF"   itemValue="0"/>
@@ -74,6 +86,8 @@
 									<f:selectItem itemLabel="Diciembre"  itemValue="12" />
 									
 								</h:selectOneMenu>
+                                                                
+                                                                <p:calendar id="inline" value="#{objxUnidadController.date1}" mode="inline" />
 							</p:outputPanel>
 							
 							<br/>
@@ -102,6 +116,9 @@
                                                  <p:commandButton id="repor9" value="ReporteProveidos"  ajax="false" update="msj"
                                                                   action="#{objxUnidadController.mostrarRepProveido}"
                                                         title="Reporte" />
+                                                  <p:commandButton id="repor10" value="ReporteProveidos"  ajax="false" update="msj"
+                                                                   action="#{objxUnidadController.mostrarReporteFecha}"
+                                                        title="Reporte" />
 					</p:tab>
 	
 			 </p:tabView>
@@ -113,5 +130,5 @@
 	
 	</ui:composition>
 	
-</body> 
+</h:body> 
 </html>

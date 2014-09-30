@@ -291,6 +291,5 @@ public class ReporteController{
 
 		public int getTipoFormato() {
 			return tipoFormato;
-		}
-	 
+		}	 
 }
