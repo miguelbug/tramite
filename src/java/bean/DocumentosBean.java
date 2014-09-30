@@ -413,12 +413,15 @@ public class DocumentosBean implements Serializable {
 
                         if (e.getKey().toString().equals("movimiento")) {
                             movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
+                            
                         }
                         if (e.getKey().toString().equals("estado")) {
                             movimiento.setEstaNombre(e.getValue().toString());
+                           
                         }
                         if (e.getKey().toString().equals("origen")) {
                             movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
+                            t.setOrigen(e.getValue().toString());
                         }
                         if (e.getKey().toString().equals("destino")) {
                             movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
@@ -429,6 +432,7 @@ public class DocumentosBean implements Serializable {
                             Date nf = new Date();
                             nf = formato.parse(e.getValue().toString());
                             movimiento.setFechaEnvio(nf);
+                            t.setFecha(nf);
                             System.out.println("sale fecha envio");
                         }
                         if (e.getKey().toString().equals("fing")) {
@@ -451,6 +455,7 @@ public class DocumentosBean implements Serializable {
                         }
                         if (e.getKey().toString().equals("observacion")) {
                             movimiento.setMoviObs(e.getValue().toString());
+                            t.setAsunto(e.getValue().toString());
                         }
 
                     } else {
@@ -458,6 +463,7 @@ public class DocumentosBean implements Serializable {
                             System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
                             if (e.getKey().toString().equals("numerotramite")) {
                                 td.setTramNum(e.getValue().toString());
+                                t.setTramNum(e.getValue().toString());
                             }
                             if (e.getKey().toString().equals("fenvio")) {
                                 System.out.println("entra a fecha envio");
@@ -466,15 +472,18 @@ public class DocumentosBean implements Serializable {
                                 nf = formato.parse(e.getValue().toString());
                                 td.setTramFecha(nf);
                                 System.out.println("sale fecha envio");
+                                t.setFecha(nf);
                             }
                             if (e.getKey().toString().equals("observacion")) {
                                 td.setTramObs(e.getValue().toString());
+                                t.setAsunto(e.getValue().toString());
                             }
                             if (e.getKey().toString().equals("estado")) {
                                 td.setEstaDescrip(e.getValue().toString());
                             }
                             if (e.getKey().toString().equals("origen")) {
                                 td.setDependencia(deriv.getDependencia(e.getValue().toString()));
+                                t.setOrigen(e.getValue().toString());
                             }
                             movimiento.setTramiteDatos(td);
                             if (e.getKey().toString().equals("movimiento")) {
@@ -527,7 +536,7 @@ public class DocumentosBean implements Serializable {
                 sgd.GuadarTramiteDatos(td, tdoc);
                 System.out.println("---------sale de guardar tramite dato---------");
                 System.out.println("---------entra a guardar tramite movimiento---------");
-                
+                sgd.temporal(t);
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";

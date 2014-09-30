@@ -8,6 +8,7 @@ package daoimpl;
 import dao.SeguimientoDAO;
 import java.util.ArrayList;
 import java.util.List;
+import maping.Temporal;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -22,6 +23,23 @@ import util.HibernateUtil;
 public class SeguimientoDaoImpl implements SeguimientoDAO {
 
     Session session;
+
+    @Override
+    public void temporal(Temporal t) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(t);
+            session.getTransaction().commit();
+            System.out.println("se ha guardado en el temporal");
+        } catch (Exception e) {
+            System.err.println("falló guardado en temporal" + e);
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
 
     @Override
     public List getSeguimientoGrande(String tramnum) {

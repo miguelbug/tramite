@@ -7,6 +7,7 @@
 package dao;
 
 import java.util.List;
+import maping.Temporal;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -25,5 +26,6 @@ public interface SeguimientoDAO {
     public void GuardarTD(TramiteDatos td);
     public void GuardarTDoc(TipoDocu tdocu);
     public void GuardarTramiteMovimiento(TramiteMovimiento tm);
+    public void temporal(Temporal t);
     
 }
