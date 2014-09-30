@@ -10,6 +10,7 @@ import dao.DocumentoDAO;
 import daoimpl.DocumentoDaoImpl;
 import maping.*;
 import java.io.Serializable;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.servlet.ServletContext;
 
@@ -36,6 +37,7 @@ public class objxUnidadController implements Serializable {
     private int mesFin;
     private int mesActual;
     private DocumentoDAO dd;
+    private Date date1;
 
     private String USUARIO;
 
@@ -172,8 +174,8 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
-      public void mostrarRepProveido() {
+
+    public void mostrarRepProveido() {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -203,6 +205,39 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
+    
+    public void mostrarReporteFecha() {
+
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("prueba3");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        //parametros.put("oficina","oficina oli");
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("fecha", getDate1());
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
     /*
      public int getAnioActual() {
 	
@@ -322,6 +357,14 @@ public class objxUnidadController implements Serializable {
 
     public void setDd(DocumentoDAO dd) {
         this.dd = dd;
+    }
+
+    public Date getDate1() {
+        return date1;
+    }
+
+    public void setDate1(Date date1) {
+        this.date1 = date1;
     }
 
 }
