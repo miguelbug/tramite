@@ -426,6 +426,7 @@ public class DocumentosBean implements Serializable {
                         }
                         if (e.getKey().toString().equals("destino")) {
                             movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                            t.setDestino(e.getValue().toString());
                         }
                         if (e.getKey().toString().equals("fenvio")) {
                             System.out.println("entra a fecha envio");
@@ -498,6 +499,7 @@ public class DocumentosBean implements Serializable {
                             }
                             if (e.getKey().toString().equals("destino")) {
                                 movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                                t.setDestino(e.getValue().toString());
                             }
                             if (e.getKey().toString().equals("fenvio")) {
                                 System.out.println("entra a fecha envio");
@@ -531,6 +533,7 @@ public class DocumentosBean implements Serializable {
                         }
                         tdoc = null;
                     }
+                    t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
 
                 }
                 System.out.println("---------entra a guardar tramite dato---------");
