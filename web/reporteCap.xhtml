@@ -12,11 +12,15 @@
 </h:head> 
     
 <h:body> 
-    
+    <h:form id="form">
+    <h:panelGrid columns="2" cellpadding="5">
+        <p:outputLabel value=" fecha"/>
          <p:calendar  value="#{objxUnidadController.date1}"> </p:calendar>
-         <p:calendar> </p:calendar>
-   
-    <p:calendar id="inline" value="#{objxUnidadController.date1}" mode="inline" />
+    </h:panelGrid>
+    </h:form>  
+    
+    
+        <p:calendar id="inline" value="#{objxUnidadController.date1}" mode="inline" />
 	<ui:composition>
 		<h:form id="f1"  >
 			<h:outputText  value="PRUEBA EN REPORTES OGPL " style="font-size:20px;" /> 
@@ -98,7 +102,7 @@
 			
 			 <p:tabView>
 
-					<p:tab title="PRUEBA EN REPORTES OGPL ">
+					<p:tab title="PRUEBA EN REPORTES OGPL2 ">
 
 						
 						<p:commandButton id="repor5" value="Ver Reporte"  ajax="false" update="msj"
