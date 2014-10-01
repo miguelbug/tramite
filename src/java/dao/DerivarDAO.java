@@ -29,7 +29,7 @@ public interface DerivarDAO {
     public Dependencia getDependencia(String nombre);
     public Dependencia getDependencia2(String nombre);
     public String getCodOficina(String nombreofi);
-    public void ConfirmarTramites(String numtram, int movinum, MovimientoInterno movi);
+    public void ConfirmarTramites(String numtram, int movinum, Date fechaing);
     public List getConfirmados(String oficina);
     public void Confirmar(String numtram, int movimiento);
     public void GuardarConfirmados(MovimientoInterno movi);

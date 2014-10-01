@@ -27,6 +27,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.MovimientoInterno;
+import maping.TramiteMovimiento;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
@@ -212,17 +213,18 @@ public class DocumentoUsuarioBean {
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
                 Iterator it = hm.entrySet().iterator();
                 MovimientoInterno movimiento = new MovimientoInterno();
+                TramiteMovimiento tm= new TramiteMovimiento();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
                         ntram = e.getValue().toString();
-                        movimiento.setTramiteDatos(deriv.getTramite(ntram));
+                        //movimiento.setTramiteDatos(deriv.getTramite(ntram));
                     }
                     if (e.getKey().toString().equals("movimnum")) {
                         movi = Integer.parseInt(e.getValue().toString());
-                        movimiento.setMoviNumint(movi);
+                        //movimiento.setMoviNumint(movi);
                     }
-                    if (e.getKey().toString().equals("estado")) {
+                    /*if (e.getKey().toString().equals("estado")) {
                         movimiento.setEstadInt(e.getValue().toString());
                     }
                     if (e.getKey().toString().equals("origen")) {
@@ -246,13 +248,13 @@ public class DocumentoUsuarioBean {
                     }
                     if (e.getKey().toString().equals("observacion")) {
                         movimiento.setObsMovint(e.getValue().toString());
-                    }
+                    }*/
                 }
                 Date nuevFech= new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                movimiento.setFechaIngrint(formato2.parse(formato.format(nuevFech)));
-                deriv.ConfirmarTramites(ntram, movi, movimiento);
+                //movimiento.setFechaIngrint(formato2.parse(formato.format(nuevFech)));
+                deriv.ConfirmarTramites(ntram, movi,formato2.parse(formato.format(nuevFech)));
                 ntram = "";
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado el documento");

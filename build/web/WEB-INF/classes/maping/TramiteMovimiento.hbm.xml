@@ -38,5 +38,8 @@
         <property name="estadConfrirm" type="string">
             <column name="ESTAD_CONFRIRM" length="30" />
         </property>
+        <property name="estadoDerivado" type="string">
+            <column name="ESTADO_DERIVADO" length="30" />
+        </property>
     </class>
 </hibernate-mapping>

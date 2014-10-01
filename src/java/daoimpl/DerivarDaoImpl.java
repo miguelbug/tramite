@@ -6,15 +6,20 @@
 package daoimpl;
 
 import dao.DerivarDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import maping.Dependencia;
 import maping.DocusInternos;
 import maping.Indicador;
 import maping.MovimientoInterno;
 import maping.TipoDocu;
 import maping.TramiteDatos;
+import maping.TramiteMovimiento;
 import maping.Usuario;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
@@ -91,7 +96,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close();
         }
         return index;
-    
+
     }
 
     @Override
@@ -117,24 +122,35 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarMovimiento(int movimiento, Date fechaenvio,String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
+    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
         try {
             System.out.println(movimiento + " " + fechaenvio + " " + asunto + " " + estado + " " + numtram + " " + origen + " " + destino + " " + i);
             System.out.println("entra a guardado insertmovi");
-            MovimientoInterno mi = new MovimientoInterno();
-            mi.setMoviNumint(movimiento);
-            mi.setFechaEnvint(fechaenvio);
-            mi.setObsMovint(asunto);
-            mi.setEstadInt(estado);
+            /*MovimientoInterno mi = new MovimientoInterno();
+             mi.setMoviNumint(movimiento);
+             mi.setFechaEnvint(fechaenvio);
+             mi.setObsMovint(asunto);
+             mi.setEstadInt(estado);
+             TramiteDatos td = getTramite(numtram);
+             mi.setTramiteDatos(td);
+             mi.setDependenciaByCodigo(getDependencia(origen));
+             mi.setDependenciaByCodigo1(getDependencia2(destino));
+             mi.setIndicador(i);
+             mi.setEstadoConfirmado("confirmado");*/
+            TramiteMovimiento tm = new TramiteMovimiento();
+            tm.setMoviNum(Short.parseShort(String.valueOf(movimiento)));
+            tm.setFechaEnvio(fechaenvio);
+            tm.setMoviObs(asunto);
+            tm.setEstaNombre(estado);
             TramiteDatos td = getTramite(numtram);
-            mi.setTramiteDatos(td);
-            mi.setDependenciaByCodigo(getDependencia(origen));
-            mi.setDependenciaByCodigo1(getDependencia2(destino));
-            mi.setIndicador(i);
-            mi.setEstadoConfirmado("confirmado");
+            tm.setTramiteDatos(td);
+            tm.setDependenciaByCodigo(getDependencia(origen));
+            tm.setDependenciaByCodigo1(getDependencia2(destino));
+            tm.setIndicador(i);
+            tm.setEstadoDerivado("derivado");
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(mi);
+            session.save(tm);
             session.getTransaction().commit();
             System.out.println("terminó movimiento");
         } catch (Exception ex) {
@@ -284,52 +300,52 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void ConfirmarTramites(String numtram, int movimiento, MovimientoInterno movi) {
+    public void ConfirmarTramites(String numtram, int movimiento, Date fechaing) {
         Confirmar(numtram, movimiento);
-        GuardarConfirmados(movi);
+        //GuardarConfirmados(movi);
     }
 
     @Override
     public Date getFecha() {
-        Date fechanueva=null;
+        Date fechanueva = null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql="select sysdate from sys.dual";
-        try{
+        String sql = "select sysdate from sys.dual";
+        try {
             session.beginTransaction();
-            fechanueva=(Date)session.createQuery(sql).uniqueResult();
+            fechanueva = (Date) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("mal fecha");
             System.out.println(e.getMessage());
-        }finally {
+        } finally {
             session.close();
         }
         return fechanueva;
     }
-    
+
     @Override
     public List getConfirmados(String oficina) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select mi.MOVI_NUMINT, \n"
+            Query query = session.createSQLQuery("select mi.MOVI_NUM, \n"
                     + "mi.TRAM_NUM, \n"
                     + "M1.NOMBRE AS ORIGEN, \n"
                     + "M2.NOMBRE AS DESTINO, \n"
-                    + "DECODE(to_char(mi.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO, \n"
-                    + "DECODE(to_char(mi.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO, \n"
-                    + "DECODE(mi.OBS_MOVINT,NULL,' ',mi.OBS_MOVINT) AS MOVI, \n"
-                    + "mi.ESTAD_INT, \n"
+                    + "DECODE(to_char(mi.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO, \n"
+                    + "DECODE(to_char(mi.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO, \n"
+                    + "DECODE(mi.MOVI_OBS,NULL,' ',mi.MOVI_OBS) AS MOVI, \n"
+                    + "mi.ESTA_NOMBRE, \n"
                     + "IND.INDI_NOMBRE \n"
-                    + "from movimiento_interno mi, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR IND \n"
+                    + "from TRAMITE_MOVIMIENTO mi, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR IND \n"
                     + "where mi.CODIGO=M1.CODIGO \n"
                     + "AND mi.CODIGO1=M2.CODIGO \n"
                     + "and mi.CODIGO1='" + oficina + "' \n"
                     + "and mi.INDI_COD=IND.INDI_COD \n"
-                    + "and mi.FECHA_INGRINT is not null \n"
-                    + "group by mi.MOVI_NUMINT,mi.TRAM_NUM,M1.NOMBRE,M2.NOMBRE,mi.FECHA_ENVINT,mi.FECHA_INGRINT,mi.OBS_MOVINT,mi.ESTAD_INT,IND.INDI_NOMBRE\n "
-                    + "ORDER BY mi.FECHA_INGRINT DESC");
+                    + "and mi.FECHA_INGR is not null \n"
+                    + "group by mi.MOVI_NUM,mi.TRAM_NUM,M1.NOMBRE,M2.NOMBRE,mi.FECHA_ENVIO,mi.FECHA_INGR,mi.MOVI_OBS,mi.ESTA_NOMBRE,IND.INDI_NOMBRE\n "
+                    + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -344,9 +360,19 @@ public class DerivarDaoImpl implements DerivarDAO {
     @Override
     public void Confirmar(String numtram, int movimiento) {
         int i = 0;
+        Date nuevFech= new Date();
+        Date nuevo=null;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            nuevo=formato2.parse(formato.format(nuevFech));
+            System.out.println(nuevo);
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+        }
         System.out.println("entra a confirmar tramites");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "Update TramiteMovimiento set estad_confrirm='confirmado' where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + movimiento + "'";
+        String sql = "Update TramiteMovimiento set estadConfrirm='confirmado', fechaIngr='"+nuevo+"' where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
@@ -412,23 +438,23 @@ public class DerivarDaoImpl implements DerivarDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select mi.MOVI_NUMINT, \n"
+            Query query = session.createSQLQuery("select mi.MOVI_NUM, \n"
                     + "mi.TRAM_NUM, \n"
                     + "M1.NOMBRE AS ORIGEN, \n"
                     + "M2.NOMBRE AS DESTINO, \n"
-                    + "DECODE(to_char(mi.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO, \n"
-                    + "DECODE(to_char(mi.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO, \n"
-                    + "DECODE(mi.OBS_MOVINT,NULL,' ',mi.OBS_MOVINT) AS MOVI, \n"
-                    + "mi.ESTAD_INT, \n"
+                    + "DECODE(to_char(mi.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO, \n"
+                    + "DECODE(to_char(mi.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(mi.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO, \n"
+                    + "DECODE(mi.MOVI_OBS,NULL,' ',mi.MOVI_OBS) AS MOVI, \n"
+                    + "mi.ESTA_NOMBRE, \n"
                     + "IND.INDI_NOMBRE \n"
-                    + "from movimiento_interno mi, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR IND \n"
+                    + "from TRAMITE_MOVIMIENTO mi, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR IND \n"
                     + "where mi.CODIGO=M1.CODIGO \n"
                     + "AND mi.CODIGO1=M2.CODIGO \n"
                     + "and mi.CODIGO='" + oficina + "' \n"
                     + "and mi.INDI_COD=IND.INDI_COD \n"
-                    + "and mi.ESTADO_CONFIRMADO='confirmado' \n"
-                    + "group by mi.MOVI_NUMINT,mi.TRAM_NUM,M1.NOMBRE,M2.NOMBRE,mi.FECHA_ENVINT,mi.FECHA_INGRINT,mi.OBS_MOVINT,mi.ESTAD_INT,IND.INDI_NOMBRE\n"
-                    + "ORDER BY mi.FECHA_INGRINT DESC");
+                    + "AND MI.ESTADO_DERIVADO='derivado'\n"
+                    + "group by mi.MOVI_NUM,mi.TRAM_NUM,M1.NOMBRE,M2.NOMBRE,mi.FECHA_ENVIO,mi.FECHA_INGR,mi.MOVI_OBS,mi.ESTA_NOMBRE,IND.INDI_NOMBRE\n"
+                    + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
