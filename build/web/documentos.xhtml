@@ -79,8 +79,9 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
-                                                         update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"/>
-                                        <p:commandButton id="repor6" value="ReporteNotasDerivadas"  ajax="false" update="msj" icon="ui-icon-extlink" style="position:absolute; left:325px; height:26px"
+                                                         update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
+                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"/>
+                                        <p:commandButton id="repor6" value="Rep. Doc. Der"  ajax="false" update="msj" icon="ui-icon-extlink" style="position:absolute; left:325px; height:26px"
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Proveidos" style="position:absolute; left:560px; height:26px" oncomplete="PF('provDialog').show()"
@@ -179,6 +180,21 @@
                                     <h:outputText value="#{seg.estado}" />
                                 </p:column>
                             </p:dataTable>
+                            
+                            
+                            <p:panel header="Exportar Reporte">
+                                
+				  <p:commandLink id="pdff" ajax="false">  
+                    <p:graphicImage value="/resources/img/pdf.png"/>  
+                    
+                                  </p:commandLink>  
+			
+                                 <p:commandButton id="repor10" icon="ui-icon-arrowstop-1-s" value="Reporte de Seguimiento"  ajax="false" update="msj" style="position:absolute; left:500px; height:42px "
+                                                  action="#{objxUnidadController.mostrarReporteSeguimiento}"
+                                                        title="Reporte" />
+				
+	                    </p:panel>    
+			
                         </p:dialog>
                         <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:panelGrid columns="2" id="panelProv">
