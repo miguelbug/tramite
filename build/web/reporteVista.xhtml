@@ -17,17 +17,25 @@
                     <br></br>
                     <br></br>
                     <center>
-                        <p:panel header="REPORTES DE DOCUMENOTS POR OFICINA" id="principal" style="background-color: #D0D0D0;">
+                        <p:panel header="REPORTES DE DOCUMENTOS POR OFICINA" id="principal" style="background-color: #D0D0D0;">
                               
                                  
     <h:form id="form">
-        <p:calendar value="#{objxUnidadController.date1}"> Desde  </p:calendar>
+        <h:outputFormat> Seleccione periodo: </h:outputFormat>
+        <br></br>
+        <br></br>
+        <p:calendar value="#{objxUnidadController.date1}"> Desde:   </p:calendar>
         
-        <p:calendar value="#{objxUnidadController.date2}"> Hasta </p:calendar>
+        <p:calendar value="#{objxUnidadController.date2}"> Hasta:   </p:calendar>
+        <br></br>
+        <br></br>
+    	  <p:commandLink id="pdff" ajax="false">  
+                    <p:graphicImage value="/resources/img/pdf.png"/>  
+                    
+                                  </p:commandLink>  
         
-        
-       <p:commandButton id="repor10" value="ReporteProveidos"  ajax="false" update="msj"
-                                                                   action="#{objxUnidadController.mostrarReporteFecha}"
+       <p:commandButton id="repor11" icon="ui-icon-arrowstop-1-s" value="Descargar Reporte de Doc."  ajax="false" update="msj" style="position:absolute; left:500px; height:40px "
+                        action="#{objxUnidadController.mostrarReporteDocumentos}"
                                                         title="Reporte" />
      </h:form>
            </p:panel>

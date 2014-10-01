@@ -32,6 +32,8 @@
 	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["oficinaParametro"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="fechain" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="fechafin" isForPrompting="false" class="java.util.Date"/>
 	<queryString><![CDATA[select td.tram_num,td.tram_fecha,dep.nombre,td.tram_obs
 from tramite_datos td, Dependencia dep
 where td.codigo=dep.codigo
@@ -173,7 +175,7 @@ order by dep.nombre]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="66"  isSplitAllowed="true" >
+			<band height="84"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="9"
@@ -279,21 +281,73 @@ order by dep.nombre]]></queryString>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="449"
+						x="379"
 						y="9"
-						width="90"
-						height="19"
+						width="160"
+						height="20"
 						key="textField-14"/>
 					<box></box>
 					<textElement>
-						<font/>
+						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{oficina}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="62"
+						width="40"
+						height="15"
+						key="textField-15"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["del " ]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="320"
+						y="62"
+						width="70"
+						height="15"
+						key="textField-16"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{fechain}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="430"
+						y="62"
+						width="70"
+						height="15"
+						key="textField-17"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{fechafin}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="390"
+						y="62"
+						width="40"
+						height="15"
+						key="textField-18"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" al " ]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="8"  isSplitAllowed="true" >
+			<band height="4"  isSplitAllowed="true" >
 			</band>
 		</columnHeader>
 		<detail>
