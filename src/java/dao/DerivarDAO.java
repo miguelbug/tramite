@@ -20,6 +20,7 @@ import maping.TramiteDatos;
 public interface DerivarDAO {
     public String getIndice(String tramnum);
     public String getSiglas(String ofi);
+    public String getSiglas2(String nombofi);
     public int getMovimiento(String tramnum);
     public void InsertarMovimiento(int movimiento, Date fechaenvio,String asunto, String estado, String numtram, String origen, String destino, Indicador i);
     public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino);

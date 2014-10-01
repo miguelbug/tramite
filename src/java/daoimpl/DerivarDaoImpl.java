@@ -72,6 +72,29 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public String getSiglas2(String nombofi) {
+        System.out.println("getssiglas 2");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select ofi.siglasofi\n"
+                + "from Oficina ofi\n"
+                + "where nombreOficina='" + nombofi + "'\n";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal indice");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    
+    }
+
+    @Override
     public int getMovimiento(String tramnum) {
         System.out.println("getmovimiento");
         int movimiento = 0;
