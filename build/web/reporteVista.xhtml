@@ -17,13 +17,19 @@
                     <br></br>
                     <br></br>
                     <center>
-                        <p:panel header="REPORTES" id="principal" style="background-color: #D0D0D0;">
+                        <p:panel header="REPORTES DE DOCUMENOTS POR OFICINA" id="principal" style="background-color: #D0D0D0;">
                               
-        <h:form>
-        <p:growl id="growl" life="2000" />
-        <p:commandButton value="DESCARGAR" id="withIcon" actionListener="#{buttonView.buttonAction}" update="growl" icon="ui-icon-disk" />
-        </h:form>
-
+                                 
+    <h:form id="form">
+        <p:calendar value="#{objxUnidadController.date1}"> Desde  </p:calendar>
+        
+        <p:calendar value="#{objxUnidadController.date2}"> Hasta </p:calendar>
+        
+        
+       <p:commandButton id="repor10" value="ReporteProveidos"  ajax="false" update="msj"
+                                                                   action="#{objxUnidadController.mostrarReporteFecha}"
+                                                        title="Reporte" />
+     </h:form>
            </p:panel>
                     </center>
                     <br></br>
@@ -33,12 +39,6 @@
                             
          </ui:composition>
          
-<p:button outcome="productDetail" value="Descargar" icon="ui-icon-circle-arrow-s">
-    <f:param name="productId" value="20" />
-</p:button>
-        <h:form>
-    <p:growl id="growl" life="2000" />
-        <p:commandButton value="With Icon" id="withIcon" actionListener="#{buttonView.buttonAction}" update="growl" icon="ui-icon-disk" />
-        </h:form>
+
     </h:body>
 </html>

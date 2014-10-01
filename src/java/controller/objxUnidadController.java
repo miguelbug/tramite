@@ -39,7 +39,7 @@ public class objxUnidadController implements Serializable {
     private int mesActual;
     private DocumentoDAO dd;
     private Date date1;
-    
+    private Date date2;
     private String USUARIO;
 
     public objxUnidadController() {
@@ -229,6 +229,8 @@ public class objxUnidadController implements Serializable {
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", getDate1());
+        parametros.put("fechain", getDate1());
+        parametros.put("fechafin", getDate2());
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -406,5 +408,15 @@ public class objxUnidadController implements Serializable {
     public void setDate1(Date date1) {
         this.date1 = date1;
     }
+
+    public Date getDate2() {
+        return date2;
+    }
+
+    public void setDate2(Date date2) {
+        this.date2 = date2;
+    }
+    
+    
 
 }

@@ -17,7 +17,7 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
@@ -29,7 +29,10 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["usuarioParametro"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[ select * from USUARIO where USU='miguel']]></queryString>
+	<parameter name="proveido" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["00254"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from USUARIO where USU='miguel']]></queryString>
 
 	<field name="USU" class="java.lang.String"/>
 	<field name="USU_NOMBRE" class="java.lang.String"/>
@@ -45,15 +48,15 @@
 			</band>
 		</background>
 		<title>
-			<band height="5"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</title>
 		<pageHeader>
-			<band height="65"  isSplitAllowed="true" >
+			<band height="51"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="5"
-						y="9"
+						x="8"
+						y="0"
 						width="45"
 						height="50"
 						key="image-1"/>
@@ -64,7 +67,7 @@
 				<staticText>
 					<reportElement
 						x="60"
-						y="14"
+						y="5"
 						width="260"
 						height="14"
 						key="staticText-1"/>
@@ -76,8 +79,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="59"
-						y="34"
+						x="60"
+						y="25"
 						width="261"
 						height="15"
 						key="staticText-2"/>
@@ -89,8 +92,8 @@
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="425"
-						y="25"
+						x="420"
+						y="13"
 						width="110"
 						height="13"
 						key="textField-1"/>
@@ -102,8 +105,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy   h:mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="425"
-						y="12"
+						x="420"
+						y="0"
 						width="110"
 						height="13"
 						key="textField-2"/>
@@ -115,8 +118,8 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="360"
-						y="12"
+						x="355"
+						y="0"
 						width="65"
 						height="13"
 						key="staticText-3"/>
@@ -128,8 +131,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="360"
-						y="25"
+						x="355"
+						y="13"
 						width="65"
 						height="13"
 						key="staticText-4"/>
@@ -141,21 +144,21 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="360"
-						y="44"
+						x="355"
+						y="30"
 						width="65"
 						height="15"
 						key="staticText-6"/>
 					<box></box>
 					<textElement>
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<text><![CDATA[Proveido: ]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="425"
-						y="44"
+						x="420"
+						y="30"
 						width="110"
 						height="15"
 						key="textField-3"/>
@@ -165,37 +168,37 @@
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 </box>
-					<textElement>
-						<font/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{proveido}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="1"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="282"  isSplitAllowed="true" >
+			<band height="386"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="10"
-						y="5"
+						y="0"
 						width="520"
-						height="18"
+						height="15"
 						key="staticText-5"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DATOS DEL DOCMUMENTO]]></text>
+				<text><![CDATA[DATOS DEL DOCUMENTO]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						mode="Opaque"
 						x="0"
-						y="27"
+						y="12"
 						width="535"
 						height="1"
 						key="line-1"/>
@@ -204,7 +207,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="30"
+						y="29"
 						width="90"
 						height="19"
 						key="staticText-7"/>
@@ -217,7 +220,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="49"
+						y="48"
 						width="90"
 						height="18"
 						key="staticText-8"/>
@@ -230,7 +233,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="68"
+						y="67"
 						width="90"
 						height="19"
 						key="staticText-9"/>
@@ -243,7 +246,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="88"
+						y="87"
 						width="90"
 						height="19"
 						key="staticText-10"/>
@@ -256,7 +259,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="108"
+						y="107"
 						width="90"
 						height="19"
 						key="staticText-11"/>
@@ -269,7 +272,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="128"
+						y="127"
 						width="90"
 						height="18"
 						key="staticText-12"/>
@@ -282,8 +285,8 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="28"
-						width="310"
+						y="27"
+						width="420"
 						height="20"
 						key="textField-4"/>
 					<box></box>
@@ -295,8 +298,8 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="49"
-						width="310"
+						y="48"
+						width="420"
 						height="19"
 						key="textField-5"/>
 					<box></box>
@@ -308,8 +311,8 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="69"
-						width="310"
+						y="68"
+						width="420"
 						height="20"
 						key="textField-6"/>
 					<box></box>
@@ -321,7 +324,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="88"
+						y="87"
 						width="310"
 						height="20"
 						key="textField-7"/>
@@ -334,8 +337,8 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="109"
-						width="310"
+						y="108"
+						width="420"
 						height="19"
 						key="textField-8"/>
 					<box></box>
@@ -347,8 +350,8 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="128"
-						width="310"
+						y="127"
+						width="420"
 						height="20"
 						key="textField-9"/>
 					<box></box>
@@ -360,7 +363,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="0"
-						y="175"
+						y="162"
 						width="529"
 						height="0"
 						key="line-2"/>
@@ -369,20 +372,20 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="158"
+						y="149"
 						width="530"
-						height="18"
+						height="15"
 						key="staticText-13"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[DATOS DEL PROVEIDO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						x="0"
-						y="219"
+						y="209"
 						width="90"
 						height="18"
 						key="staticText-14"/>
@@ -395,7 +398,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="199"
+						y="189"
 						width="90"
 						height="19"
 						key="staticText-15"/>
@@ -408,7 +411,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="179"
+						y="169"
 						width="90"
 						height="19"
 						key="staticText-16"/>
@@ -421,7 +424,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="198"
+						y="188"
 						width="310"
 						height="20"
 						key="textField-10"/>
@@ -434,7 +437,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="179"
+						y="169"
 						width="310"
 						height="19"
 						key="textField-11"/>
@@ -447,7 +450,7 @@
 				<staticText>
 					<reportElement
 						x="100"
-						y="219"
+						y="209"
 						width="430"
 						height="50"
 						key="staticText-17"/>
@@ -460,20 +463,12 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _]]></text>
 				</staticText>
-			</band>
-		</detail>
-		<columnFooter>
-			<band height="5"  isSplitAllowed="true" >
-			</band>
-		</columnFooter>
-		<pageFooter>
-			<band height="82"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
-						y="22"
+						y="299"
 						width="530"
 						height="20"
 						key="staticText-18"/>
@@ -486,7 +481,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
-						y="2"
+						y="279"
 						width="529"
 						height="20"
 						key="textField-12"/>
@@ -499,7 +494,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="52"
+						y="319"
 						width="288"
 						height="10"
 						key="staticText-19"
@@ -511,49 +506,17 @@
 				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL]]></text>
 				</staticText>
 			</band>
+		</detail>
+		<columnFooter>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="69"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="0"
-						y="20"
-						width="530"
-						height="20"
-						key="staticText-20"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font/>
-					</textElement>
-				<text><![CDATA[Jefe de la Oficina General de Planificacion - UNMSM]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="0"
-						y="0"
-						width="529"
-						height="20"
-						key="textField-13"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Mg. JUAN ANICAMA PESCORAN"]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="0"
-						y="50"
-						width="288"
-						height="10"
-						key="staticText-21"
-						positionType="FixRelativeToBottom"/>
-					<box></box>
-					<textElement>
-						<font size="7"/>
-					</textElement>
-				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL]]></text>
-				</staticText>
+			<band height="5"  isSplitAllowed="true" >
 			</band>
 		</lastPageFooter>
 		<summary>

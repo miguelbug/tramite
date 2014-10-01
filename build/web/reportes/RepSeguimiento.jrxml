@@ -30,20 +30,55 @@
 		<defaultValueExpression ><![CDATA["usuarioParametro"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="tramite" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["10330-DGA-PRUEBA"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["02231-FII-2014"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[select TRAM_NUM,
-                    MOVI_NUM,
-                    MOVI_ORIGEN,
-                    MOVI_DESTINO,
-                    DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
-                    DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,
-                    INDI_NOMBRE,
-                    DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, 
-                    ESTA_NOMBRE
-                    from vw_ogpl002@TRAMITEDBLINK
-                    where TRAM_NUM='10330-DGA-2014' 
-                    order by movi_num asc]]></queryString>
+	<queryString><![CDATA[(
+select TRAM_NUM,
+       MOVI_NUM,
+       MOVI_ORIGEN,
+       MOVI_DESTINO,
+       DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
+       DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,
+       INDI_NOMBRE,
+       DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, 
+       ESTA_NOMBRE
+from vw_ogpl002@TRAMITEDBLINK
+where TRAM_NUM=$P{tramite}
+and MOVI_FEC_ING is not null )
+
+/*
+UNION
+SELECT TM.TRAM_NUM AS TRAM_NUM2,
+       TM.MOVI_NUM AS MOVI_NUM2,
+       M1.NOMBRE as NOMBRE1,
+       M2.NOMBRE as NOMBRE2,
+       DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
+       DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,
+       I.INDI_NOMBRE,
+       DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS OBSERVACION,
+       TM.ESTA_NOMBRE
+FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I
+WHERE TM.TRAM_NUM='02231-FII-2014' 
+AND TM.CODIGO=M1.CODIGO
+AND TM.CODIGO1=M2.CODIGO
+AND TM.INDI_COD=I.INDI_COD
+*/
+
+UNION
+(select MI.TRAM_NUM,
+       MI.MOVI_NUMINT,
+       M1.NOMBRE as NOMBRE1,
+       M2.NOMBRE as NOMBRE2,
+       DECODE(to_char(MI.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MI.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
+       DECODE(to_char(MI.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MI.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,
+       I.INDI_NOMBRE,
+       DECODE(MI.OBS_MOVINT,NULL,' ',MI.OBS_MOVINT) AS OBSERVACION,
+       MI.ESTAD_INT
+FROM MOVIMIENTO_INTERNO MI, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I
+WHERE MI.TRAM_NUM=$P{tramite}
+AND MI.CODIGO=M1.CODIGO
+AND MI.CODIGO1=M2.CODIGO
+AND MI.INDI_COD=I.INDI_COD)]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="MOVI_NUM" class="java.math.BigDecimal"/>
