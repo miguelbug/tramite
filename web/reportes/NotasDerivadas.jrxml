@@ -17,7 +17,7 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
@@ -29,16 +29,16 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[select td.tram_num,td.tram_fecha,dep.nombre,td.tram_obs
-from tramite_datos td, Dependencia dep
-where td.codigo=dep.codigo
-group by dep.nombre,td.tram_num,td.tram_fecha,td.tram_obs
-order by dep.nombre]]></queryString>
+	<queryString><![CDATA[select TRAM_NUM,FECHA,ORIGEN,ASUNTO,DESTINO
+from temporal
+where impreso is null
+order by destino]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
-	<field name="TRAM_FECHA" class="java.sql.Timestamp"/>
-	<field name="NOMBRE" class="java.lang.String"/>
-	<field name="TRAM_OBS" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="ORIGEN" class="java.lang.String"/>
+	<field name="ASUNTO" class="java.lang.String"/>
+	<field name="DESTINO" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -46,7 +46,7 @@ order by dep.nombre]]></queryString>
 	</variable>
 
 		<group  name="porOficina" isStartNewPage="true" >
-			<groupExpression><![CDATA[$F{NOMBRE}]]></groupExpression>
+			<groupExpression><![CDATA[$F{DESTINO}]]></groupExpression>
 			<groupHeader>
 			<band height="51"  isSplitAllowed="true" >
 				<staticText>
@@ -152,7 +152,7 @@ order by dep.nombre]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{NOMBRE}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupHeader>
@@ -220,7 +220,7 @@ order by dep.nombre]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE NOTAS DERIVADAS A OFICINAS INTERNAS "]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS DERIVADOS A OFICINAS INTERNAS "]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -316,7 +316,7 @@ order by dep.nombre]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{TRAM_FECHA}.toString()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{FECHA}.toString()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -334,7 +334,7 @@ order by dep.nombre]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{NOMBRE}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{ORIGEN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -353,7 +353,7 @@ order by dep.nombre]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{TRAM_OBS}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{ASUNTO}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

@@ -6,6 +6,7 @@
 //ESTE ES PARA EL REPORTE
 package controller;
 
+import bean.DocumentosBean;
 import dao.DocumentoDAO;
 import daoimpl.DocumentoDaoImpl;
 import maping.*;
@@ -38,7 +39,7 @@ public class objxUnidadController implements Serializable {
     private int mesActual;
     private DocumentoDAO dd;
     private Date date1;
-
+    
     private String USUARIO;
 
     public objxUnidadController() {
@@ -238,6 +239,44 @@ public class objxUnidadController implements Serializable {
         }
     }
     
+    
+    
+    public void mostrarReporteSeguimiento() {
+        String tramite= "";
+        tramite = DocumentosBean.tranum;
+        System.out.println(DocumentosBean.tranum);
+        System.out.printf("PARAMETRO DEL TRAM NUM  %s" , tramite);
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        System.out.println(DocumentosBean.tranum);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("RepSeguimiento");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        //parametros.put("oficina","oficina oli");
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("fecha", getDate1());
+        parametros.put("tramite", tramite);
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
     /*
      public int getAnioActual() {
 	
@@ -325,6 +364,7 @@ public class objxUnidadController implements Serializable {
         logo = serveltcontext.getRealPath("/resources/img/" + "escudo_reporte" + ".jpg");
         return logo;
     }
+    
     /* public String obtenerUsuario(){
 	
      String nombre="";

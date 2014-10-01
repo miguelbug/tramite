@@ -70,7 +70,7 @@ public class DocumentosBean implements Serializable {
     private String documento;
     private String origen;
     private Date aux;
-
+    public static String tranum;
     ////////
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -145,6 +145,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println(e.getValue().toString());
                 System.out.println("------entra---------");
                 MostrarSeguimiento2(e.getValue().toString());
+                tranum=e.getValue().toString();
                 System.out.println("------sale-----------");
             }
 
