@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.Jefatura" table="JEFATURA" schema="MIGUEL">
+        <id name="idJefatura" type="big_decimal">
+            <column name="ID_JEFATURA" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="maping.Usuario" fetch="select">
+            <column name="USU" length="30" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="100" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="APELLIDO" length="100" />
+        </property>
+        <property name="grado" type="string">
+            <column name="GRADO" length="100" />
+        </property>
+        <property name="dni" type="string">
+            <column name="DNI" length="10" />
+        </property>
+        <property name="profesion" type="string">
+            <column name="PROFESION" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

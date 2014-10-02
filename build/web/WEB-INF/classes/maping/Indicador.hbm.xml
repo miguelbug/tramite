@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Indicador" table="INDICADOR" schema="MIGUEL">
         <id name="indiCod" type="int">
@@ -16,12 +16,6 @@
                 <column name="INDI_COD" precision="5" scale="0" />
             </key>
             <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        <set name="movimientoInternos" table="MOVIMIENTO_INTERNO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="INDI_COD" precision="5" scale="0" />
-            </key>
-            <one-to-many class="maping.MovimientoInterno" />
         </set>
     </class>
 </hibernate-mapping>

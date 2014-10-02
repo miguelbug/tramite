@@ -1,13 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="MIGUEL">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
+        <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO1" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="usuario" class="maping.Usuario" fetch="select">
+            <column name="USU" length="30" />
+        </many-to-one>
+        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
         <property name="numerodoc" type="string">
             <column name="NUMERODOC" length="60" />
         </property>
@@ -15,10 +24,13 @@
             <column name="ASUNTO" length="300" />
         </property>
         <property name="fecha" type="date">
-            <column name="FECHA" length="7" not-null="true" />
+            <column name="FECHA" length="7" />
         </property>
-        <property name="observacion" type="string">
-            <column name="OBSERVACION" length="300" />
+        <property name="iddoc" type="java.lang.Long">
+            <column name="IDDOC" precision="10" scale="0" />
+        </property>
+        <property name="siglas" type="string">
+            <column name="SIGLAS" length="30" />
         </property>
     </class>
 </hibernate-mapping>

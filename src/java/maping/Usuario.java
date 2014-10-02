@@ -1,5 +1,5 @@
 package maping;
-// Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0
+// Generated 02/10/2014 12:28:57 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -15,7 +15,11 @@ public class Usuario  implements java.io.Serializable {
      private Oficina oficina;
      private String usuNombre;
      private String clave;
+     private String estado;
+     private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
+     private Set<Jefatura> jefaturas = new HashSet<Jefatura>(0);
      private Set<TramiteDatos> tramiteDatoses = new HashSet<TramiteDatos>(0);
+     private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
 
     public Usuario() {
     }
@@ -26,12 +30,16 @@ public class Usuario  implements java.io.Serializable {
         this.usuNombre = usuNombre;
         this.clave = clave;
     }
-    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, Set<TramiteDatos> tramiteDatoses) {
+    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<DocusExtint> docusExtints, Set<Jefatura> jefaturas, Set<TramiteDatos> tramiteDatoses, Set<DocusInternos> docusInternoses) {
        this.usu = usu;
        this.oficina = oficina;
        this.usuNombre = usuNombre;
        this.clave = clave;
+       this.estado = estado;
+       this.docusExtints = docusExtints;
+       this.jefaturas = jefaturas;
        this.tramiteDatoses = tramiteDatoses;
+       this.docusInternoses = docusInternoses;
     }
    
     public String getUsu() {
@@ -62,12 +70,40 @@ public class Usuario  implements java.io.Serializable {
     public void setClave(String clave) {
         this.clave = clave;
     }
+    public String getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    public Set<DocusExtint> getDocusExtints() {
+        return this.docusExtints;
+    }
+    
+    public void setDocusExtints(Set<DocusExtint> docusExtints) {
+        this.docusExtints = docusExtints;
+    }
+    public Set<Jefatura> getJefaturas() {
+        return this.jefaturas;
+    }
+    
+    public void setJefaturas(Set<Jefatura> jefaturas) {
+        this.jefaturas = jefaturas;
+    }
     public Set<TramiteDatos> getTramiteDatoses() {
         return this.tramiteDatoses;
     }
     
     public void setTramiteDatoses(Set<TramiteDatos> tramiteDatoses) {
         this.tramiteDatoses = tramiteDatoses;
+    }
+    public Set<DocusInternos> getDocusInternoses() {
+        return this.docusInternoses;
+    }
+    
+    public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
+        this.docusInternoses = docusInternoses;
     }
 
 

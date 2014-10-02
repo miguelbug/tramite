@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
         <id name="idMovi" type="big_decimal">
@@ -35,11 +35,11 @@
         <property name="estaNombre" type="string">
             <column name="ESTA_NOMBRE" length="250" />
         </property>
-        <property name="estadConfrirm" type="string">
-            <column name="ESTAD_CONFRIRM" length="30" />
+        <property name="estadoConfirmado" type="string">
+            <column name="ESTADO_CONFIRMADO" length="20" />
         </property>
         <property name="estadoDerivado" type="string">
-            <column name="ESTADO_DERIVADO" length="30" />
+            <column name="ESTADO_DERIVADO" length="20" />
         </property>
     </class>
 </hibernate-mapping>

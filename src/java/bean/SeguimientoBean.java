@@ -28,7 +28,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import maping.MovimientoInterno;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;

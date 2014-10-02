@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TramiteDatos" table="TRAMITE_DATOS" schema="MIGUEL">
         <id name="tramNum" type="string">
@@ -23,23 +23,17 @@
         <property name="estaDescrip" type="string">
             <column name="ESTA_DESCRIP" length="10" />
         </property>
-        <set name="movimientoInternos" table="MOVIMIENTO_INTERNO" inverse="true" lazy="true" fetch="select">
+        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
             </key>
-            <one-to-many class="maping.MovimientoInterno" />
+            <one-to-many class="maping.DocusInternos" />
         </set>
         <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
             </key>
             <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="TRAM_NUM" length="42" />
-            </key>
-            <one-to-many class="maping.DocusInternos" />
         </set>
         <set name="tipoDocus" table="TIPO_DOCU" inverse="true" lazy="true" fetch="select">
             <key>

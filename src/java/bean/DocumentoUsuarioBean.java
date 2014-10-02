@@ -26,7 +26,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import maping.MovimientoInterno;
 import maping.TramiteMovimiento;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
@@ -212,7 +211,6 @@ public class DocumentoUsuarioBean {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
                 Iterator it = hm.entrySet().iterator();
-                MovimientoInterno movimiento = new MovimientoInterno();
                 TramiteMovimiento tm= new TramiteMovimiento();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();

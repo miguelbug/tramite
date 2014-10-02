@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 import maping.Dependencia;
 import maping.Indicador;
-import maping.MovimientoInterno;
 import maping.TramiteDatos;
+import maping.Usuario;
 
 /**
  *
@@ -32,9 +32,8 @@ public interface DerivarDAO {
     public void ConfirmarTramites(String numtram, int movinum, Date fechaing);
     public List getConfirmados(String oficina);
     public void Confirmar(String numtram, int movimiento);
-    public void GuardarConfirmados(MovimientoInterno movi);
     public Indicador getIndic(String codigo);
-    public MovimientoInterno getMoviTram(String codigot);
     public List getConfDeriv(String oficina);
     public Date getFecha();
+    public String getCorre(Usuario usu);
 }

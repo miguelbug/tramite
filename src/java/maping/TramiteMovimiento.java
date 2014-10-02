@@ -1,5 +1,5 @@
 package maping;
-// Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0
+// Generated 02/10/2014 12:28:57 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class TramiteMovimiento  implements java.io.Serializable {
      private Date fechaIngr;
      private String moviObs;
      private String estaNombre;
-     private String estadConfrirm;
+     private String estadoConfirmado;
      private String estadoDerivado;
 
     public TramiteMovimiento() {
@@ -31,20 +31,22 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public TramiteMovimiento(BigDecimal idMovi) {
         this.idMovi = idMovi;
     }
-    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, String moviObs, String estaNombre, String estadConfrirm,String estadoDerivado) {
-       this.idMovi = idMovi;
-       this.tramiteDatos = tramiteDatos;
-       this.dependenciaByCodigo1 = dependenciaByCodigo1;
-       this.dependenciaByCodigo = dependenciaByCodigo;
-       this.indicador = indicador;
-       this.moviNum = moviNum;
-       this.fechaEnvio = fechaEnvio;
-       this.fechaIngr = fechaIngr;
-       this.moviObs = moviObs;
-       this.estaNombre = estaNombre;
-       this.estadConfrirm = estadConfrirm;
-       this.estadoDerivado = estadoDerivado;
+
+    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, String moviObs, String estaNombre, String estadoConfirmado, String estadoDerivado) {
+        this.idMovi = idMovi;
+        this.tramiteDatos = tramiteDatos;
+        this.dependenciaByCodigo1 = dependenciaByCodigo1;
+        this.dependenciaByCodigo = dependenciaByCodigo;
+        this.indicador = indicador;
+        this.moviNum = moviNum;
+        this.fechaEnvio = fechaEnvio;
+        this.fechaIngr = fechaIngr;
+        this.moviObs = moviObs;
+        this.estaNombre = estaNombre;
+        this.estadoConfirmado = estadoConfirmado;
+        this.estadoDerivado = estadoDerivado;
     }
+    
    
     public BigDecimal getIdMovi() {
         return this.idMovi;
@@ -116,12 +118,13 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public void setEstaNombre(String estaNombre) {
         this.estaNombre = estaNombre;
     }
-    public String getEstadConfrirm() {
-        return this.estadConfrirm;
+
+    public String getEstadoConfirmado() {
+        return estadoConfirmado;
     }
-    
-    public void setEstadConfrirm(String estadConfrirm) {
-        this.estadConfrirm = estadConfrirm;
+
+    public void setEstadoConfirmado(String estadoConfirmado) {
+        this.estadoConfirmado = estadoConfirmado;
     }
 
     public String getEstadoDerivado() {
@@ -131,7 +134,7 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public void setEstadoDerivado(String estadoDerivado) {
         this.estadoDerivado = estadoDerivado;
     }
-
+    
 
 
 

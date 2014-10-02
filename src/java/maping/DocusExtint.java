@@ -1,5 +1,5 @@
 package maping;
-// Generated 30/09/2014 04:09:18 PM by Hibernate Tools 3.6.0
+// Generated 02/10/2014 12:28:57 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -11,26 +11,35 @@ public class DocusExtint  implements java.io.Serializable {
 
 
      private long id;
+     private Dependencia dependenciaByCodigo1;
+     private Usuario usuario;
+     private Dependencia dependenciaByCodigo;
      private String numerodoc;
      private String asunto;
      private Date fecha;
-     private String observacion;
+     private Long iddoc;
+     private String siglas;
 
     public DocusExtint() {
     }
 
 	
-    public DocusExtint(long id, Date fecha) {
+    public DocusExtint(long id) {
         this.id = id;
+    }
+
+    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String numerodoc, String asunto, Date fecha, Long iddoc, String siglas) {
+        this.id = id;
+        this.dependenciaByCodigo1 = dependenciaByCodigo1;
+        this.usuario = usuario;
+        this.dependenciaByCodigo = dependenciaByCodigo;
+        this.numerodoc = numerodoc;
+        this.asunto = asunto;
         this.fecha = fecha;
+        this.iddoc = iddoc;
+        this.siglas = siglas;
     }
-    public DocusExtint(long id, String numerodoc, String asunto, Date fecha, String observacion) {
-       this.id = id;
-       this.numerodoc = numerodoc;
-       this.asunto = asunto;
-       this.fecha = fecha;
-       this.observacion = observacion;
-    }
+    
    
     public long getId() {
         return this.id;
@@ -38,6 +47,27 @@ public class DocusExtint  implements java.io.Serializable {
     
     public void setId(long id) {
         this.id = id;
+    }
+    public Dependencia getDependenciaByCodigo1() {
+        return this.dependenciaByCodigo1;
+    }
+    
+    public void setDependenciaByCodigo1(Dependencia dependenciaByCodigo1) {
+        this.dependenciaByCodigo1 = dependenciaByCodigo1;
+    }
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    public Dependencia getDependenciaByCodigo() {
+        return this.dependenciaByCodigo;
+    }
+    
+    public void setDependenciaByCodigo(Dependencia dependenciaByCodigo) {
+        this.dependenciaByCodigo = dependenciaByCodigo;
     }
     public String getNumerodoc() {
         return this.numerodoc;
@@ -60,15 +90,23 @@ public class DocusExtint  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public String getObservacion() {
-        return this.observacion;
+    public Long getIddoc() {
+        return this.iddoc;
     }
     
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setIddoc(Long iddoc) {
+        this.iddoc = iddoc;
     }
 
+    public String getSiglas() {
+        return siglas;
+    }
 
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
+    
 
 
 }

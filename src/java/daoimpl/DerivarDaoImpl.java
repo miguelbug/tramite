@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import maping.Dependencia;
 import maping.DocusInternos;
 import maping.Indicador;
-import maping.MovimientoInterno;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -166,7 +165,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino) {
         try {
             System.out.println("entra a guardado insertmovi");
-            MovimientoInterno mi = new MovimientoInterno();
+            /*MovimientoInterno mi = new MovimientoInterno();
             mi.setMoviNumint(movimiento);
             mi.setFechaEnvint(fechaenvio);
             mi.setObsMovint(asunto);
@@ -179,7 +178,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.beginTransaction();
             session.save(mi);
             session.getTransaction().commit();
-            System.out.println("terminó movimiento");
+            System.out.println("terminó movimiento");*/
         } catch (Exception ex) {
             System.err.println("falló guardado movimiento." + ex);
             System.out.println(ex.getMessage());
@@ -194,7 +193,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
-            di.setDocuCorrela(aux);
+            di.setDocuCorrelaint(aux);
             di.setDocuNombreint(nombre);
             di.setDocuPricint(String.valueOf(pric));
             di.setDocuSiglasint(siglas);
@@ -361,18 +360,12 @@ public class DerivarDaoImpl implements DerivarDAO {
     public void Confirmar(String numtram, int movimiento) {
         int i = 0;
         Date nuevFech= new Date();
-        Date nuevo=null;
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            nuevo=formato2.parse(formato.format(nuevFech));
-            System.out.println(nuevo);
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-        }
+        String fechita=formato.format(nuevFech);
         System.out.println("entra a confirmar tramites");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "Update TramiteMovimiento set estadConfrirm='confirmado', fechaIngr='"+nuevo+"' where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
+        String sql = "Update TramiteMovimiento set estadConfrirm='confirmado',"
+                + " fechaIngr=to_date('"+fechita+"','DD/MM/YYYY HH:MI:SS') where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
@@ -389,7 +382,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("actualizados: " + i);
     }
 
-    @Override
+    /*@Override
     public void GuardarConfirmados(MovimientoInterno movi) {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -404,7 +397,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close();
         }
 
-    }
+    }*/
 
     @Override
     public Indicador getIndic(String nombre) {
@@ -427,10 +420,10 @@ public class DerivarDaoImpl implements DerivarDAO {
         return indi;
     }
 
-    @Override
+    /*@Override
     public MovimientoInterno getMoviTram(String codigot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
     @Override
     public List getConfDeriv(String oficina) {
@@ -466,4 +459,24 @@ public class DerivarDaoImpl implements DerivarDAO {
         return codigos;
     }
 
+    @Override
+    public String getCorre(Usuario usu) {
+        System.out.println("get correlativo");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(numerodoc) from DocusExtint where usuario='" + usu + "'";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal indice");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
 }
