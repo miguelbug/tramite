@@ -200,7 +200,7 @@
                             <p:panelGrid columns="2" id="panelProv">
                                 
                                 <p:outputLabel value="Nro. Doc: "/>
-                                <p:outputLabel />
+                                <p:outputLabel value="#{docusExternosBean.generarCorrelativo()}"/>
                                 
                                 <p:outputLabel value="Documento: "/>
                                 <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
