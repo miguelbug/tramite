@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Jefatura" table="JEFATURA" schema="MIGUEL">
         <id name="idJefatura" type="big_decimal">
             <column name="ID_JEFATURA" precision="22" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />

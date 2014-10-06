@@ -1,5 +1,5 @@
 package maping;
-// Generated 02/10/2014 12:28:57 PM by Hibernate Tools 3.6.0
+// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -18,8 +18,8 @@ public class Temporal  implements java.io.Serializable {
      private String asunto;
      private BigDecimal impreso;
      private BigDecimal reimpreso;
-     private String destino;
      private String siglas;
+     private String destino;
 
     public Temporal() {
     }
@@ -29,7 +29,7 @@ public class Temporal  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Temporal(long id, String tramNum, Date fecha, String origen, String asunto, BigDecimal impreso, BigDecimal reimpreso, String destino, String siglas) {
+    public Temporal(long id, String tramNum, Date fecha, String origen, String asunto, BigDecimal impreso, BigDecimal reimpreso, String siglas, String destino) {
         this.id = id;
         this.tramNum = tramNum;
         this.fecha = fecha;
@@ -37,8 +37,8 @@ public class Temporal  implements java.io.Serializable {
         this.asunto = asunto;
         this.impreso = impreso;
         this.reimpreso = reimpreso;
+        this.siglas = siglas;
         this.destino = destino;
-        this.siglas=siglas;
     }
     
    
@@ -92,6 +92,14 @@ public class Temporal  implements java.io.Serializable {
         this.reimpreso = reimpreso;
     }
 
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
     public String getDestino() {
         return destino;
     }
@@ -100,13 +108,9 @@ public class Temporal  implements java.io.Serializable {
         this.destino = destino;
     }
 
-    public String getSiglas() {
-        return siglas;
-    }
+    
 
-    public void setSiglas(String siglas) {
-        this.siglas = siglas;
-    }
+
 }
 
 

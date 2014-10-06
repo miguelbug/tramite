@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Dependencia" table="DEPENDENCIA" schema="MIGUEL">
         <id name="codigo" type="long">
@@ -11,6 +11,12 @@
         <property name="nombre" type="string">
             <column name="NOMBRE" length="300" />
         </property>
+        <set name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO1" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.TramiteMovimiento" />
+        </set>
         <set name="docusExtintsForCodigo1" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO1" precision="10" scale="0" />
@@ -20,12 +26,6 @@
         <set name="tramiteMovimientosForCodigo" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        <set name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO1" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.TramiteMovimiento" />
         </set>

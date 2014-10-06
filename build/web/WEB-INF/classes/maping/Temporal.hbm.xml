@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Temporal" table="TEMPORAL" schema="MIGUEL">
         <id name="id" type="long">
@@ -17,11 +17,8 @@
         <property name="origen" type="string">
             <column name="ORIGEN" length="300" />
         </property>
-        <property name="destino" type="string">
-            <column name="DESTINO" length="300" />
-        </property>
         <property name="asunto" type="string">
-            <column name="ASUNTO" length="50" />
+            <column name="ASUNTO" length="300" />
         </property>
         <property name="impreso" type="big_decimal">
             <column name="IMPRESO" precision="22" scale="0" />
@@ -30,7 +27,10 @@
             <column name="REIMPRESO" precision="22" scale="0" />
         </property>
         <property name="siglas" type="string">
-            <column name="SIGLAS" length="20" />
+            <column name="SIGLAS" length="30" />
+        </property>
+        <property name="destino" type="string">
+            <column name="DESTINO" length="300" />
         </property>
     </class>
 </hibernate-mapping>

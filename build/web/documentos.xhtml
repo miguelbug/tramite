@@ -215,7 +215,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Asunto: "/>
-                                <p:inputTextarea  rows="6" cols="33" />
+                                <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
 
                                 <p:outputLabel value="Dep. Origen: "/>
                                 <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px">
@@ -237,7 +237,8 @@
                             </p:panelGrid>
                             <br></br>
                             <center>
-                                <p:commandButton value="Guardar">
+                                <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}">
+                                    <f:ajax event="click" onevent="provDialog.hide()"/>
                                 </p:commandButton>
                             </center>
                         </p:dialog>

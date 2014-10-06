@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02/10/2014 12:28:58 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
         <id name="idtip" type="int">
@@ -30,7 +30,7 @@
             <column name="DOCU_ANIOINT" length="30" />
         </property>
         <property name="fecharegistro" type="date">
-            <column name="FECHAREGISTRO" length="7" />
+            <column name="FECHAREGISTRO" length="7"/>
         </property>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,5 @@
 package maping;
-// Generated 02/10/2014 12:28:57 PM by Hibernate Tools 3.6.0
+// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -14,11 +14,10 @@ public class DocusExtint  implements java.io.Serializable {
      private Dependencia dependenciaByCodigo1;
      private Usuario usuario;
      private Dependencia dependenciaByCodigo;
+     private DocusExt docusExt;
      private String numerodoc;
      private String asunto;
      private Date fecha;
-     private Long iddoc;
-     private String siglas;
 
     public DocusExtint() {
     }
@@ -27,19 +26,16 @@ public class DocusExtint  implements java.io.Serializable {
     public DocusExtint(long id) {
         this.id = id;
     }
-
-    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String numerodoc, String asunto, Date fecha, Long iddoc, String siglas) {
-        this.id = id;
-        this.dependenciaByCodigo1 = dependenciaByCodigo1;
-        this.usuario = usuario;
-        this.dependenciaByCodigo = dependenciaByCodigo;
-        this.numerodoc = numerodoc;
-        this.asunto = asunto;
-        this.fecha = fecha;
-        this.iddoc = iddoc;
-        this.siglas = siglas;
+    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, DocusExt docusExt, String numerodoc, String asunto, Date fecha) {
+       this.id = id;
+       this.dependenciaByCodigo1 = dependenciaByCodigo1;
+       this.usuario = usuario;
+       this.dependenciaByCodigo = dependenciaByCodigo;
+       this.docusExt = docusExt;
+       this.numerodoc = numerodoc;
+       this.asunto = asunto;
+       this.fecha = fecha;
     }
-    
    
     public long getId() {
         return this.id;
@@ -69,6 +65,13 @@ public class DocusExtint  implements java.io.Serializable {
     public void setDependenciaByCodigo(Dependencia dependenciaByCodigo) {
         this.dependenciaByCodigo = dependenciaByCodigo;
     }
+    public DocusExt getDocusExt() {
+        return this.docusExt;
+    }
+    
+    public void setDocusExt(DocusExt docusExt) {
+        this.docusExt = docusExt;
+    }
     public String getNumerodoc() {
         return this.numerodoc;
     }
@@ -90,23 +93,8 @@ public class DocusExtint  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public Long getIddoc() {
-        return this.iddoc;
-    }
-    
-    public void setIddoc(Long iddoc) {
-        this.iddoc = iddoc;
-    }
 
-    public String getSiglas() {
-        return siglas;
-    }
 
-    public void setSiglas(String siglas) {
-        this.siglas = siglas;
-    }
-
-    
 
 
 }
