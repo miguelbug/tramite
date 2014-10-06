@@ -20,7 +20,7 @@ import maping.Usuario;
  * @author OGPL
  */
 public interface DerivarDAO {
-    public String getIndice(String tramnum);
+    public String getIndice(String tramnum, String tipodocu);
     public String getSiglas(String ofi);
     public String getSiglas2(String nombofi);
     public int getMovimiento(String tramnum);
@@ -42,4 +42,5 @@ public interface DerivarDAO {
     public void guardarDocusExt(DocusExtint de);
     public Dependencia getDep(String nombre);
     public String getAnio();
+    public String getDocExt(String n);
 }

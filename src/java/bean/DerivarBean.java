@@ -62,6 +62,7 @@ public class DerivarBean {
     private SeguimientoDAO sgd;
     public List confirmadosderivados;
     public Date fechaIng;
+    private Date anio;
 
     public DerivarBean() {
         dd = new DocumentoDaoImpl();
@@ -71,6 +72,7 @@ public class DerivarBean {
         this.estado = "EN PROCESO";
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
+        anio = new Date();
         seguimientolista2 = new ArrayList<Map<String, String>>();
         confirmadosderivados = new ArrayList<Map<String, String>>();
         MostrarConfirmadosDerivados();
@@ -214,29 +216,39 @@ public class DerivarBean {
         }
     }
 
+    public String getAnio() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        return sdf.format(anio);
+    }
+
     public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
         try {
-            System.out.println("lleno");
-            corr = Integer.parseInt(deriv.getIndice(siglasdocus));
-            corr = corr + 1;
-            if (corr < 10) {
+            if (getAnio().equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre));
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
                 aux = "0000" + corr;
             }
-            if (corr > 9 && corr < 100) {
-                aux = "000" + corr;
-            }
-            if (corr > 99 && corr < 1000) {
-                aux = "00" + corr;
-            }
-            if (corr > 999 && corr < 10000) {
-                aux = "0" + corr;
-            }
-            if (corr > 10000) {
-                aux = String.valueOf(corr);
-            }
-
         } catch (Exception e) {
             System.out.println("no lleno");
             corr = corr + 1;
@@ -265,15 +277,15 @@ public class DerivarBean {
         FacesMessage message = null;
         try {
             System.out.println("entra a guardar");
-            
+
             DateFormat d = new SimpleDateFormat("yyyy");
             //if (confirmar == true) {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
             deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha,usu);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: "+numtramaux);
+            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
 
@@ -371,6 +383,7 @@ public class DerivarBean {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
         }
+        correlativo = generarCorrelativo();
     }
 
     public List getDocselec2() {
