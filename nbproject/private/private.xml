@@ -4,14 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/DocusExt.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocusExternosBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/Oficina.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/DocusExt.hbm.xml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/Dependencia.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/Temporal.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocusExternosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/Usuario.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
         </group>
     </open-files>

@@ -57,7 +57,13 @@ public class DocusExternosBean {
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
     }
-
+    public void Limpiar(){
+        documento=" ";
+        asunto=" ";
+        origen=" ";
+        destino= " ";
+        
+    }
     public void ObtenerDepIndic() {
         dependenciasprov = dd.getDependencias();
     }
@@ -127,6 +133,7 @@ public class DocusExternosBean {
             deriv.guardarDocusExt(di);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
+            Limpiar();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");

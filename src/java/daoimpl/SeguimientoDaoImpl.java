@@ -48,24 +48,50 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         try {
             System.out.println("entragetseguimiento grande");
             session.beginTransaction();
-            Query query = session.createSQLQuery("select TRAM_NUM,\n"
+            /*Query query = session.createSQLQuery("select TRAM_NUM,\n"
+             + "MOVI_NUM,\n"
+             + "MOVI_ORIGEN,\n"
+             + "MOVI_DESTINO,\n"
+             + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+             + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+             + "INDI_NOMBRE,\n"
+             + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, \n"
+             + "ESTA_NOMBRE\n"
+             + "from vw_ogpl002@TRAMITEDBLINK\n"
+             + "where TRAM_NUM='" + tramnum + "' \n"
+             + "order by movi_num desc");*/
+            Query query = session.createQuery("select TRAM_NUM,\n"
                     + "MOVI_NUM,\n"
-                    + "MOVI_ORIGEN,\n"
-                    + "MOVI_DESTINO,\n"
-                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
-                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+                    + "MOVI_ORIGEN AS ORIGEN,\n"
+                    + "MOVI_DESTINO AS DESTINO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAING,\n"
                     + "INDI_NOMBRE,\n"
                     + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, \n"
                     + "ESTA_NOMBRE\n"
-                    + "from vw_ogpl002@TRAMITEDBLINK\n"
-                    + "where TRAM_NUM='" + tramnum + "' \n"
-                    + "order by movi_num desc");
+                    + "from VISTA_2\n"
+                    + "where TRAM_NUM='" + tramnum + "'\n"
+                    + "AND MOVI_FEC_ING IS NOT NULL\n"
+                    + "UNION\n"
+                    + "select M.TRAM_NUM,\n"
+                    + "        M.MOVI_NUM,\n"
+                    + "        M1.NOMBRE AS ORIGEN, \n"
+                    + "        M2.NOMBRE AS DESTINO,\n"
+                    + "        DECODE(to_char(FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAENVIO,\n"
+                    + "        DECODE(to_char(FECHA_INGR, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(FECHA_INGR, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAING,\n"
+                    + "        I.INDI_NOMBRE,\n"
+                    + "        DECODE(M.MOVI_OBS,NULL,' ',M.MOVI_OBS) AS OBSERVACION,\n"
+                    + "        ESTA_NOMBRE\n"
+                    + "from tramite_movimiento M, INDICADOR I, DEPENDENCIA M1, DEPENDENCIA M2\n"
+                    + "where M.TRAM_NUM='" + tramnum + "'\n"
+                    + "AND M.CODIGO=M1.CODIGO\n"
+                    + "AND M.CODIGO1=M2.CODIGO\n"
+                    + "AND M.INDI_COD=I.INDI_COD");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
             System.out.println("problemasseguimiento grande");
-            session.beginTransaction().rollback();
             System.out.println(e.getMessage());
         }
         System.out.println("retorna grande");

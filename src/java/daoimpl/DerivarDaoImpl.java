@@ -35,11 +35,31 @@ public class DerivarDaoImpl implements DerivarDAO {
     private Session session;
 
     @Override
-    public String getIndice(String tramnum) {
+    public String getDocExt(String n) {
+        System.out.println("get doc ext");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(docuCorrela) from DocusInternos where docuSiglasint='" + n + "' and docuNombreint='"+ n+"'";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal indice");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
+    @Override
+    public String getIndice(String tramnum, String td) {
         System.out.println("getindice");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(docuCorrela) from DocusInternos where docuSiglasint='" + tramnum + "'";
+        String sql = "select max(docuCorrelaint) from DocusInternos where docuSiglasint='" + tramnum + "' and docuNombreint='"+td+"'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
@@ -59,7 +79,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("getssiglas");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select ofi.siglasofi\n"
+        String sql = "select ofi.siglas\n"
                 + "from Oficina ofi, Usuario usua\n"
                 + "where usua.oficina.idOficina='" + ofi + "'\n"
                 + "and usua.oficina.idOficina=ofi.idOficina";
@@ -388,7 +408,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("entra a confirmar tramites");
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "Update TramiteMovimiento set estadConfrirm='confirmado',"
-                + " fechaIngr=to_date('" + fechita + "','DD/MM/YYYY HH:MI:SS') where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
+                + " fechaIngr=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
