@@ -41,13 +41,13 @@ public class DocusExternosBean {
     private FacesContext faceContext;
     private Usuario usu;
     private DerivarDAO deriv;
-    private String correlativo;
+    private String correlativo = "";
     private String asunto;
     private Date anio;
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
-        anio= new Date();
+        anio = new Date();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
@@ -56,16 +56,17 @@ public class DocusExternosBean {
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
-        generarCorrelativo();
     }
 
     public void ObtenerDepIndic() {
         dependenciasprov = dd.getDependencias();
     }
-    public String getAnio(){
+
+    public String getAnio() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(anio);
     }
+
     public String fechaactual() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
         return sdf.format(fechaprov);
@@ -75,26 +76,29 @@ public class DocusExternosBean {
         int corr = 0;
         String aux = "";
         try {
-            if(fechaactual().equals(deriv.getAnio())){
-                
-            }
-            System.out.println("lleno");
-            corr = Integer.parseInt(deriv.getCorre(usu));
-            corr = corr + 1;
-            if (corr < 10) {
+            if (getAnio().equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorre(usu, documento));
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
                 aux = "0000" + corr;
-            }
-            if (corr > 9 && corr < 100) {
-                aux = "000" + corr;
-            }
-            if (corr > 99 && corr < 1000) {
-                aux = "00" + corr;
-            }
-            if (corr > 999 && corr < 10000) {
-                aux = "0" + corr;
-            }
-            if (corr > 10000) {
-                aux = String.valueOf(corr);
             }
 
         } catch (Exception e) {

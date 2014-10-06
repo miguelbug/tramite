@@ -504,13 +504,13 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("get correlativo");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(numerodoc) from DocusExtint where usu='" + usuario.getUsu() + "'";
+        String sql = "select max(numerodoc) from DocusExtint where usu='" + usuario.getUsu() + "' and docusExt.iddoc='"+Long.parseLong(tipo) +"' ";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
         } catch (Exception e) {
-            System.out.println("mal indice");
+            System.out.println("mal get corre");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
         } finally {
