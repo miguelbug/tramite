@@ -111,9 +111,9 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("despues de begin");
             Query query = session.createSQLQuery("select tm.tram_num,"
                     + "tm.movi_num,"
-                    + "DECODE(to_char(tm.FECHA_ENVIO,'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(tm.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(tm.FECHA_ENVIO,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
                     + "D1.NOMBRE AS ORIGEN,"
-                    + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,\n"
+                    + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "D2.NOMBRE AS DESTINO,"
                     + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
                     + "tm.ESTA_NOMBRE,"

@@ -102,7 +102,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("getssiglas 2");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select ofi.siglasofi\n"
+        String sql = "select ofi.siglas\n"
                 + "from Oficina ofi\n"
                 + "where nombreOficina='" + nombofi + "'\n";
         try {

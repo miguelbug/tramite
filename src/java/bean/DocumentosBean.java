@@ -430,7 +430,7 @@ public class DocumentosBean implements Serializable {
                         }
                         if (e.getKey().toString().equals("fenvio")) {
                             System.out.println("entra a fecha envio");
-                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH24:MI:ss");
                             Date nf = new Date();
                             nf = formato.parse(e.getValue().toString());
                             movimiento.setFechaEnvio(nf);
@@ -442,7 +442,7 @@ public class DocumentosBean implements Serializable {
                             if (e.getValue().toString().equals(" ")) {
                                 movimiento.setFechaIngr(null);
                             } else {
-                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH24:MI:ss");
                                 Date nf = new Date();
                                 nf = formato.parse(e.getValue().toString());
                                 movimiento.setFechaIngr(nf);
