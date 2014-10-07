@@ -32,58 +32,38 @@
 	<parameter name="tramite" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["02231-FII-2014"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[(
-select TRAM_NUM,
-       MOVI_NUM,
-       MOVI_ORIGEN,
-       MOVI_DESTINO,
-       DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
-       DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,
-       INDI_NOMBRE,
-       DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, 
-       ESTA_NOMBRE
-from vw_ogpl002@TRAMITEDBLINK
+	<queryString><![CDATA[(select TRAM_NUM,
+MOVI_NUM,
+MOVI_ORIGEN AS ORIGEN,
+MOVI_DESTINO AS DESTINO,
+DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
+DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,
+INDI_NOMBRE,
+DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, 
+ESTA_NOMBRE
+from VISTA_2
 where TRAM_NUM=$P{tramite}
-and MOVI_FEC_ING is not null )
-
-/*
+AND MOVI_FEC_ING IS NOT NULL)
 UNION
-SELECT TM.TRAM_NUM AS TRAM_NUM2,
-       TM.MOVI_NUM AS MOVI_NUM2,
-       M1.NOMBRE as NOMBRE1,
-       M2.NOMBRE as NOMBRE2,
-       DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
-       DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,
-       I.INDI_NOMBRE,
-       DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS OBSERVACION,
-       TM.ESTA_NOMBRE
-FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I
-WHERE TM.TRAM_NUM='02231-FII-2014' 
-AND TM.CODIGO=M1.CODIGO
-AND TM.CODIGO1=M2.CODIGO
-AND TM.INDI_COD=I.INDI_COD
-*/
-
-UNION
-(select MI.TRAM_NUM,
-       MI.MOVI_NUMINT,
-       M1.NOMBRE as NOMBRE1,
-       M2.NOMBRE as NOMBRE2,
-       DECODE(to_char(MI.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MI.FECHA_ENVINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
-       DECODE(to_char(MI.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MI.FECHA_INGRINT, 'dd/MM/yyyy HH:mm:ss')) AS FECHAINGRESO,
-       I.INDI_NOMBRE,
-       DECODE(MI.OBS_MOVINT,NULL,' ',MI.OBS_MOVINT) AS OBSERVACION,
-       MI.ESTAD_INT
-FROM MOVIMIENTO_INTERNO MI, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I
-WHERE MI.TRAM_NUM=$P{tramite}
-AND MI.CODIGO=M1.CODIGO
-AND MI.CODIGO1=M2.CODIGO
-AND MI.INDI_COD=I.INDI_COD)]]></queryString>
+(select M.TRAM_NUM,
+        M.MOVI_NUM,
+        M1.NOMBRE AS ORIGEN, 
+        M2.NOMBRE AS DESTINO,
+        DECODE(to_char(FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(FECHA_ENVIO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,
+        DECODE(to_char(FECHA_INGR, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(FECHA_INGR, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,
+        I.INDI_NOMBRE,
+        DECODE(M.MOVI_OBS,NULL,' ',M.MOVI_OBS) AS OBSERVACION,
+        ESTA_NOMBRE
+from tramite_movimiento M, INDICADOR I, DEPENDENCIA M1, DEPENDENCIA M2
+where M.TRAM_NUM=$P{tramite}
+AND M.CODIGO=M1.CODIGO
+AND M.CODIGO1=M2.CODIGO
+AND M.INDI_COD=I.INDI_COD)]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="MOVI_NUM" class="java.math.BigDecimal"/>
-	<field name="MOVI_ORIGEN" class="java.lang.String"/>
-	<field name="MOVI_DESTINO" class="java.lang.String"/>
+	<field name="ORIGEN" class="java.lang.String"/>
+	<field name="DESTINO" class="java.lang.String"/>
 	<field name="FECHAENVIO" class="java.lang.String"/>
 	<field name="FECHAING" class="java.lang.String"/>
 	<field name="INDI_NOMBRE" class="java.lang.String"/>
@@ -412,7 +392,7 @@ AND MI.INDI_COD=I.INDI_COD)]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{MOVI_ORIGEN}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ORIGEN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -431,7 +411,7 @@ AND MI.INDI_COD=I.INDI_COD)]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7" isPdfEmbedded ="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{MOVI_DESTINO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESTINO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
