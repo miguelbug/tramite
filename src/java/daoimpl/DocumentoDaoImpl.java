@@ -122,7 +122,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
                     + "and tm.CODIGO1=D2.CODIGO\n"
-                    + "order by tm.FECHA_ENVIO DESC");
+                    + "order by D2.NOMBRE");
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");
             session.beginTransaction().commit();

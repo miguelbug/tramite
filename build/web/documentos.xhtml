@@ -101,17 +101,17 @@
                                     <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
                                         <h:outputText value="#{item.movimiento}"/>
                                     </p:column>
-                                    <p:column headerText="F.ENVIO" width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fenvio}"/>
-                                    </p:column>
                                     <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                         <h:outputText value="#{item.origen}"/>
                                     </p:column>
-                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fing}" />
-                                    </p:column>
                                     <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                         <h:outputText value="#{item.destino}" />
+                                    </p:column>
+                                    <p:column headerText="F.ENVIO" width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fenvio}"/>
+                                    </p:column>
+                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fing}" />
                                     </p:column>
                                     <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
@@ -121,6 +121,11 @@
                                     </p:column>
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
                                         <h:outputText value="#{item.indicador}" />
+                                    </p:column>
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton update=":form:tabladocuresp" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                        </p:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </p:tab>
@@ -243,7 +248,7 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-
+                        
 
 
                     </center>
