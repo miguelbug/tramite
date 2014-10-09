@@ -77,7 +77,7 @@ public class DocumentoUsuarioBean {
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
-        confirmadosderivados= new ArrayList<Map<String, String>>();
+        confirmadosderivados = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         MostrarParaUsuario();
@@ -86,20 +86,11 @@ public class DocumentoUsuarioBean {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if(event.getTab().getId().equals("tab1")){
-            MostrarParaUsuario();
-        }
-        else{
-            if(event.getTab().getId().equals("tab2")){
-                MostrarConfirmados();
-            }
-            else{
-                if(event.getTab().getId().equals("tab3")){
-                    MostrarConfirmadosDerivados();
-                }
-            }
-        }
+        MostrarParaUsuario();
+        MostrarConfirmados();
+        MostrarConfirmadosDerivados();
     }
+
     public void MostrarConfirmadosDerivados() {
         System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
         confirmadosderivados.clear();
@@ -128,7 +119,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void MostrarConfirmados() {
         System.out.println("CONFIRMADOS¡¡¡¡¡");
         confirmados.clear();
@@ -187,37 +178,36 @@ public class DocumentoUsuarioBean {
         }
     }
 
-   /* public String generarCorrelativo() {
-        int corr = 0;
-        String aux = "";
-        try {
-            System.out.println("lleno");
-            corr = Integer.parseInt(deriv.getIndice());
-            corr = corr + 1;
-            if (corr < 10) {
-                aux = "0000" + corr;
-            }
-            if (corr > 9 && corr < 100) {
-                aux = "000" + corr;
-            }
-            if (corr > 99 && corr < 1000) {
-                aux = "00" + corr;
-            }
-            if (corr > 999 && corr < 10000) {
-                aux = "0" + corr;
-            }
-            if (corr > 10000) {
-                aux = String.valueOf(corr);
-            }
+    /* public String generarCorrelativo() {
+     int corr = 0;
+     String aux = "";
+     try {
+     System.out.println("lleno");
+     corr = Integer.parseInt(deriv.getIndice());
+     corr = corr + 1;
+     if (corr < 10) {
+     aux = "0000" + corr;
+     }
+     if (corr > 9 && corr < 100) {
+     aux = "000" + corr;
+     }
+     if (corr > 99 && corr < 1000) {
+     aux = "00" + corr;
+     }
+     if (corr > 999 && corr < 10000) {
+     aux = "0" + corr;
+     }
+     if (corr > 10000) {
+     aux = String.valueOf(corr);
+     }
 
-        } catch (Exception e) {
-            System.out.println("no lleno");
-            corr = corr + 1;
-            aux = "0000" + corr;
-        }
-        return aux;
-    }*/
-
+     } catch (Exception e) {
+     System.out.println("no lleno");
+     corr = corr + 1;
+     aux = "0000" + corr;
+     }
+     return aux;
+     }*/
     public List Detalles() {
         System.out.println("listando detalles");
         detalle.clear();
@@ -254,7 +244,7 @@ public class DocumentoUsuarioBean {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
                 Iterator it = hm.entrySet().iterator();
-                TramiteMovimiento tm= new TramiteMovimiento();
+                TramiteMovimiento tm = new TramiteMovimiento();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
@@ -266,36 +256,36 @@ public class DocumentoUsuarioBean {
                         //movimiento.setMoviNumint(movi);
                     }
                     /*if (e.getKey().toString().equals("estado")) {
-                        movimiento.setEstadInt(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("origen")) {
-                        movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("destino")) {
-                        movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("fechaenvio")) {
-                        System.out.println("entra a fecha envio");
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date nf = new Date();
-                        nf = formato.parse(e.getValue().toString());
-                        movimiento.setFechaEnvint(nf);
-                        System.out.println("sale fecha envio");
-                    }
-                    if (e.getKey().toString().equals("indicador")) {
-                        System.out.println("entra a indicador");
-                        movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
-                        System.out.println("sle indicador");
-                    }
-                    if (e.getKey().toString().equals("observacion")) {
-                        movimiento.setObsMovint(e.getValue().toString());
-                    }*/
+                     movimiento.setEstadInt(e.getValue().toString());
+                     }
+                     if (e.getKey().toString().equals("origen")) {
+                     movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
+                     }
+                     if (e.getKey().toString().equals("destino")) {
+                     movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
+                     }
+                     if (e.getKey().toString().equals("fechaenvio")) {
+                     System.out.println("entra a fecha envio");
+                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                     Date nf = new Date();
+                     nf = formato.parse(e.getValue().toString());
+                     movimiento.setFechaEnvint(nf);
+                     System.out.println("sale fecha envio");
+                     }
+                     if (e.getKey().toString().equals("indicador")) {
+                     System.out.println("entra a indicador");
+                     movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
+                     System.out.println("sle indicador");
+                     }
+                     if (e.getKey().toString().equals("observacion")) {
+                     movimiento.setObsMovint(e.getValue().toString());
+                     }*/
                 }
-                Date nuevFech= new Date();
+                Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 //movimiento.setFechaIngrint(formato2.parse(formato.format(nuevFech)));
-                deriv.ConfirmarTramites(ntram, movi,formato2.parse(formato.format(nuevFech)));
+                deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
                 ntram = "";
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado el documento");
@@ -727,5 +717,5 @@ public class DocumentoUsuarioBean {
     public void setConfirmadosderivados(List confirmadosderivados) {
         this.confirmadosderivados = confirmadosderivados;
     }
-    
+
 }
