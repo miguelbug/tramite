@@ -19,8 +19,8 @@
                     <p:growl id="growl" showDetail="true" sticky="true" life="1000"/> 
                     <br></br>
                     <br></br>
-                    <p:tabView id="tabmayor" dynamic="true" onTabChange="">
-
+                    <p:tabView id="tabmayor" dynamic="true">
+                        <!--<p:ajax event="tabChange" listener="#{documentoUsuarioBean.onTabChange(event)}"/>-->
                         <p:tab title="Sin Confirmar" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
@@ -121,7 +121,7 @@
                             </p:dataTable>
                         </p:tab>
                         <p:tab title="Derivados Internos" id="tab3">
-                            <p:dataTable value="#{derivarBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
+                            <p:dataTable value="#{documentoUsuarioBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
@@ -243,55 +243,58 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:panelGrid columns="2" id="panelProv">
+                    <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:panelGrid columns="2" id="panelProv">
+                                
+                                <p:outputLabel value="Documento: "/>
+                                <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItem itemLabel="Oficio" itemValue="1"/>
+                                    <f:selectItem itemLabel="Informes" itemValue="2"/>
+                                    <f:selectItem itemLabel="Informes Circulares" itemValue="3"/>
+                                    <f:selectItem itemLabel="Proveidos" itemValue="4"/>
+                                    <f:selectItem itemLabel="Memos" itemValue="5"/>
+                                    <f:selectItem itemLabel="Cartas" itemValue="6"/>
+                                    <f:selectItem itemLabel="Otros" itemValue="7"/>
+                                    <p:ajax event="change" listener="#{docusExternosBean.Cambios()}" update="panelProv"/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Nro. Doc: "/>
+                                <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
+                                <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
 
-                            <p:outputLabel value="Nro. Doc: "/>
-                            <p:outputLabel value="#{docusExternosBean.generarCorrelativo()}"/>
+                                <p:outputLabel value="Asunto: "/>
+                                <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
 
-                            <p:outputLabel value="Documento: "/>
-                            <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItem itemLabel="Oficio" itemValue="1"/>
-                                <f:selectItem itemLabel="Informes" itemValue="2"/>
-                                <f:selectItem itemLabel="Informes Circulares" itemValue="3"/>
-                                <f:selectItem itemLabel="Proveidos" itemValue="4"/>
-                                <f:selectItem itemLabel="Memos" itemValue="5"/>
-                                <f:selectItem itemLabel="Cartas" itemValue="6"/>
-                                <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                <p:ajax event="change" listener="#{docusExternosBean.generarCorrelativo()}" update="panelProv"/>
-                            </p:selectOneMenu>
+                                <p:outputLabel value="Dep. Origen: "/>
+                                <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
+                                </p:selectOneMenu>
 
-                            <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
+                                <p:outputLabel value="Dep. Destino: "/>
+                                <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
+                                </p:selectOneMenu>
 
-                            <p:outputLabel value="Dep. Origen: "/>
-                            <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px">
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
-                            </p:selectOneMenu>
+                                <p:outputLabel value="Fecha: "/>
+                                <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
 
-                            <p:outputLabel value="Dep. Destino: "/>
-                            <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
-                            </p:selectOneMenu>
+                                <p:outputLabel value="Usuario: "/>
+                                <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <center>
+                                <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
+                                    <f:ajax event="click" onevent="provDialog.hide()"/>
+                                </p:commandButton>
+                            </center>
+                        </p:dialog>
 
-                            <p:outputLabel value="Fecha: "/>
-                            <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
-
-                            <p:outputLabel value="Usuario: "/>
-                            <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
-                        </p:panelGrid>
-                        <br></br>
-                        <center>
-                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
-                                <f:ajax event="click" onevent="provDialog.hide()"/>
-                            </p:commandButton>
-                        </center>
-                    </p:dialog>
                     <p:dialog header="Derivación - #{derivarBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelDeriv">
+                            
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{derivarBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>

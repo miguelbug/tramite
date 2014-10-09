@@ -27,21 +27,6 @@
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                    <!--<p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fecha}"/>
-                                    </p:column>
-                                    <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.observacion}"/>
-                                    </p:column>
-                                    <p:column headerText="DESCRIPCION" width="5" sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.descripcion}"/>
-                                    </p:column>
-                                    <p:column headerText="Depencencia" width="5" sortBy="#{item.depnombre}" filterBy="#{item.depnombre}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.depnombre}" />
-                                    </p:column>-->
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
@@ -122,11 +107,6 @@
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
                                         <h:outputText value="#{item.indicador}" />
                                     </p:column>
-                                    <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladocuresp" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
-                                        </p:commandButton>
-                                    </p:column>
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
@@ -201,11 +181,8 @@
                             </p:panel>    
 
                         </p:dialog>
-                        <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:panelGrid columns="2" id="panelProv">
-                                
-                                <p:outputLabel value="Nro. Doc: "/>
-                                <p:outputLabel value="#{docusExternosBean.generarCorrelativo()}"/>
                                 
                                 <p:outputLabel value="Documento: "/>
                                 <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
@@ -217,8 +194,12 @@
                                     <f:selectItem itemLabel="Memos" itemValue="5"/>
                                     <f:selectItem itemLabel="Cartas" itemValue="6"/>
                                     <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                    <p:ajax event="change" listener="#{docusExternosBean.generarCorrelativo()}" update="panelProv"/>
+                                    <p:ajax event="change" listener="#{docusExternosBean.Cambios()}" update="panelProv"/>
                                 </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Nro. Doc: "/>
+                                <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
+                                <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
 
                                 <p:outputLabel value="Asunto: "/>
                                 <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
@@ -228,7 +209,7 @@
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
                                 </p:selectOneMenu>
-                                
+
                                 <p:outputLabel value="Dep. Destino: "/>
                                 <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -237,7 +218,7 @@
 
                                 <p:outputLabel value="Fecha: "/>
                                 <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
-                                
+
                                 <p:outputLabel value="Usuario: "/>
                                 <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
                             </p:panelGrid>
@@ -248,7 +229,7 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-                        
+
 
 
                     </center>

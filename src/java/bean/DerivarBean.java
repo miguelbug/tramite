@@ -383,6 +383,9 @@ public class DerivarBean {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
         }
+        else{
+            this.estado="EN PROCESO";
+        }
         correlativo = generarCorrelativo();
     }
 

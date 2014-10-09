@@ -66,6 +66,7 @@ public class DocumentoUsuarioBean {
     private boolean confirmar = false;
     private boolean aparecer;
     private List docselec2;
+    private List confirmadosderivados;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -76,16 +77,58 @@ public class DocumentoUsuarioBean {
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
+        confirmadosderivados= new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         MostrarParaUsuario();
         MostrarConfirmados();
+        MostrarConfirmadosDerivados();
     }
 
     public void onTabChange(TabChangeEvent event) {
-        
+        if(event.getTab().getId().equals("tab1")){
+            MostrarParaUsuario();
+        }
+        else{
+            if(event.getTab().getId().equals("tab2")){
+                MostrarConfirmados();
+            }
+            else{
+                if(event.getTab().getId().equals("tab3")){
+                    MostrarConfirmadosDerivados();
+                }
+            }
+        }
     }
-
+    public void MostrarConfirmadosDerivados() {
+        System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
+        confirmadosderivados.clear();
+        try {
+            System.out.println("entra a seguimiento3");
+            List lista = new ArrayList();
+            System.out.println(usu.getOficina().getIdOficina());
+            lista = deriv.getConfDeriv(usu.getOficina().getIdOficina());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("movimnum", String.valueOf(obj[0]));
+                listaaux.put("numerotramite", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("observacion", String.valueOf(obj[6]));
+                listaaux.put("estado", String.valueOf(obj[7]));
+                listaaux.put("indicador", String.valueOf(obj[8]));
+                confirmadosderivados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public void MostrarConfirmados() {
         System.out.println("CONFIRMADOS¡¡¡¡¡");
         confirmados.clear();
@@ -677,4 +720,12 @@ public class DocumentoUsuarioBean {
         this.docselec2 = docselec2;
     }
 
+    public List getConfirmadosderivados() {
+        return confirmadosderivados;
+    }
+
+    public void setConfirmadosderivados(List confirmadosderivados) {
+        this.confirmadosderivados = confirmadosderivados;
+    }
+    
 }

@@ -44,6 +44,9 @@ public class DocusExternosBean {
     private String correlativo = "";
     private String asunto;
     private Date anio;
+    private String codigoexp;
+    public boolean a1;
+    public boolean a2;
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
@@ -56,14 +59,18 @@ public class DocusExternosBean {
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
+        a1 = true;
+        a2 = false;
     }
-    public void Limpiar(){
-        documento=" ";
-        asunto=" ";
-        origen=" ";
-        destino= " ";
-        
+
+    public void Limpiar() {
+        documento = " ";
+        asunto = " ";
+        origen = " ";
+        destino = " ";
+
     }
+
     public void ObtenerDepIndic() {
         dependenciasprov = dd.getDependencias();
     }
@@ -78,7 +85,23 @@ public class DocusExternosBean {
         return sdf.format(fechaprov);
     }
 
-    public String generarCorrelativo() {
+    public void Cambios() {
+        correlativo=" ";
+        if (documento != null) {
+            if (documento.equals("4")) {
+                a1 = true;
+                a2 = false;
+                generarCorrelativo();
+            } else {
+                if (!documento.equals("4")) {
+                    a1 = false;
+                    a2 = true;
+                }
+            }
+        }
+    }
+
+    public void generarCorrelativo() {
         int corr = 0;
         String aux = "";
         try {
@@ -113,7 +136,21 @@ public class DocusExternosBean {
             aux = "0000" + corr;
         }
         correlativo = aux;
-        return aux;
+    }
+
+    public void realizarCambio() {
+        if (documento != null) {
+            if (this.documento.equals("4")) {
+                a1 = true;
+                a2 = false;
+            } else {
+                if (!this.documento.equals("4")) {
+                    a1 = false;
+                    a2 = true;
+                }
+            }
+        }
+
     }
 
     public void guardar() {
@@ -227,6 +264,34 @@ public class DocusExternosBean {
 
     public void setAsunto(String asunto) {
         this.asunto = asunto;
+    }
+
+    public void setAnio(Date anio) {
+        this.anio = anio;
+    }
+
+    public String getCodigoexp() {
+        return codigoexp;
+    }
+
+    public void setCodigoexp(String codigoexp) {
+        this.codigoexp = codigoexp;
+    }
+
+    public boolean isA1() {
+        return a1;
+    }
+
+    public void setA1(boolean a1) {
+        this.a1 = a1;
+    }
+
+    public boolean isA2() {
+        return a2;
+    }
+
+    public void setA2(boolean a2) {
+        this.a2 = a2;
     }
 
 }
