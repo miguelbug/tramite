@@ -26,4 +26,5 @@ public interface DocumentoDAO {
     public List getDocusInternos();
     public List getDependencias();
     public List getIndicadores();
+    public List getProveidos(String tramnum);
 }

@@ -22,6 +22,32 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List getProveidos(String tramnum) {
+        List proveidos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get proveidos");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select di.DOCU_CORRELAINT,\n"
+                    + "di.DOCU_NOMBREINT,\n"
+                    + "di.DOCU_SIGLASINT,\n"
+                    + "di.DOCU_ANIOINT,\n"
+                    + "usua.usu_nombre,\n"
+                    + "di.FECHAREGISTRO\n"
+                    + "from docus_internos di, USUARIO usua\n"
+                    + "where di.USU=usua.USU\n"
+                    + "and di.tram_num='" + tramnum + "'");
+            proveidos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal getproveidos");
+            System.out.println(e.getMessage());
+        }
+        return proveidos;
+    }
+
+    @Override
     public List getDependencias() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
