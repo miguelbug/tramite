@@ -18,6 +18,7 @@ import maping.DocusExt;
 import maping.DocusExtint;
 import maping.DocusInternos;
 import maping.Indicador;
+import maping.Proveido;
 import maping.TipoDocu;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -517,6 +518,44 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close();
         }
         return anio;
+    }
+
+    @Override
+    public void GuardarProveido(Proveido p) {
+        System.out.println("entra a guardar proevido");
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(p);
+            session.getTransaction().commit();
+            System.out.println("terminó guardar proveido");
+        } catch (Exception e) {
+            System.out.println("mal proveido");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    
+    @Override
+    public String getCorreProv() {
+        System.out.println("get proveido");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(correlativod) from Proveido";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get corre prov");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
     }
     
     @Override

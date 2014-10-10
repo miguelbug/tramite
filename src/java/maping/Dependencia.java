@@ -1,5 +1,5 @@
 package maping;
-// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
+// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -13,6 +13,8 @@ public class Dependencia  implements java.io.Serializable {
 
      private long codigo;
      private String nombre;
+     private Set<Proveido> proveidosForCodigo1 = new HashSet<Proveido>(0);
+     private Set<Proveido> proveidosForCodigo = new HashSet<Proveido>(0);
      private Set<TramiteMovimiento> tramiteMovimientosForCodigo1 = new HashSet<TramiteMovimiento>(0);
      private Set<DocusExtint> docusExtintsForCodigo1 = new HashSet<DocusExtint>(0);
      private Set<TramiteMovimiento> tramiteMovimientosForCodigo = new HashSet<TramiteMovimiento>(0);
@@ -26,9 +28,11 @@ public class Dependencia  implements java.io.Serializable {
     public Dependencia(long codigo) {
         this.codigo = codigo;
     }
-    public Dependencia(long codigo, String nombre, Set<TramiteMovimiento> tramiteMovimientosForCodigo1, Set<DocusExtint> docusExtintsForCodigo1, Set<TramiteMovimiento> tramiteMovimientosForCodigo, Set<DocusExtint> docusExtintsForCodigo, Set<TramiteDatos> tramiteDatoses) {
+    public Dependencia(long codigo, String nombre, Set<Proveido> proveidosForCodigo1, Set<Proveido> proveidosForCodigo, Set<TramiteMovimiento> tramiteMovimientosForCodigo1, Set<DocusExtint> docusExtintsForCodigo1, Set<TramiteMovimiento> tramiteMovimientosForCodigo, Set<DocusExtint> docusExtintsForCodigo, Set<TramiteDatos> tramiteDatoses) {
        this.codigo = codigo;
        this.nombre = nombre;
+       this.proveidosForCodigo1 = proveidosForCodigo1;
+       this.proveidosForCodigo = proveidosForCodigo;
        this.tramiteMovimientosForCodigo1 = tramiteMovimientosForCodigo1;
        this.docusExtintsForCodigo1 = docusExtintsForCodigo1;
        this.tramiteMovimientosForCodigo = tramiteMovimientosForCodigo;
@@ -49,6 +53,20 @@ public class Dependencia  implements java.io.Serializable {
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public Set<Proveido> getProveidosForCodigo1() {
+        return this.proveidosForCodigo1;
+    }
+    
+    public void setProveidosForCodigo1(Set<Proveido> proveidosForCodigo1) {
+        this.proveidosForCodigo1 = proveidosForCodigo1;
+    }
+    public Set<Proveido> getProveidosForCodigo() {
+        return this.proveidosForCodigo;
+    }
+    
+    public void setProveidosForCodigo(Set<Proveido> proveidosForCodigo) {
+        this.proveidosForCodigo = proveidosForCodigo;
     }
     public Set<TramiteMovimiento> getTramiteMovimientosForCodigo1() {
         return this.tramiteMovimientosForCodigo1;

@@ -27,21 +27,6 @@
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                    <!--<p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fecha}"/>
-                                    </p:column>
-                                    <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.observacion}"/>
-                                    </p:column>
-                                    <p:column headerText="DESCRIPCION" width="5" sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.descripcion}"/>
-                                    </p:column>
-                                    <p:column headerText="Depencencia" width="5" sortBy="#{item.depnombre}" filterBy="#{item.depnombre}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.depnombre}" />
-                                    </p:column>-->
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
@@ -85,7 +70,8 @@
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Doc. Externos" style="position:absolute; left:485px; height:26px" oncomplete="PF('provDialog').show()"
-                                                         update="tabladocumentos"/>
+                                                         update="tabladocumentos, :form:panelProv, :form:docextpanel" actionListener="#{docusExternosBean.Proveidoo()}">
+                                        </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
@@ -101,17 +87,17 @@
                                     <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
                                         <h:outputText value="#{item.movimiento}"/>
                                     </p:column>
-                                    <p:column headerText="F.ENVIO" width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fenvio}"/>
-                                    </p:column>
                                     <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                         <h:outputText value="#{item.origen}"/>
                                     </p:column>
-                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fing}" />
-                                    </p:column>
                                     <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                         <h:outputText value="#{item.destino}" />
+                                    </p:column>
+                                    <p:column headerText="F.ENVIO" width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fenvio}"/>
+                                    </p:column>
+                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fing}" />
                                     </p:column>
                                     <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
@@ -122,9 +108,36 @@
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
                                         <h:outputText value="#{item.indicador}" />
                                     </p:column>
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton update=":form:tabladetallesProv" oncomplete="PF('itemDetallProv').show()" icon="ui-icon-search" title="Detalle Proveido">
+                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                        </p:commandButton>
+                                    </p:column>
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
+                        <p:dialog header="Detalle Proveido" widgetVar="itemDetallProv" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesProv" >
+                                <p:column headerText="Correlativo">
+                                    <h:outputText value="#{car.correlativo}" />
+                                </p:column>
+                                <p:column headerText="Nombre Doc.">
+                                    <h:outputText value="#{car.nombredoc}" />
+                                </p:column>
+                                <p:column headerText="Siglas">
+                                    <h:outputText value="#{car.siglas}" />
+                                </p:column>
+                                <p:column headerText="Año">
+                                    <h:outputText value="#{car.anio}" />
+                                </p:column>
+                                <p:column headerText="Usuario">
+                                    <h:outputText value="#{car.usuario}" />
+                                </p:column>
+                                <p:column headerText="Fecha Registro">
+                                    <h:outputText value="#{car.fecha}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:dialog>
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                 <p:column headerText="TRAM.">
@@ -196,24 +209,22 @@
                             </p:panel>    
 
                         </p:dialog>
-                        <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
                             <p:panelGrid columns="2" id="panelProv">
-                                
-                                <p:outputLabel value="Nro. Doc: "/>
-                                <p:outputLabel value="#{docusExternosBean.generarCorrelativo()}"/>
-                                
+
                                 <p:outputLabel value="Documento: "/>
                                 <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItem itemLabel="Oficio" itemValue="1"/>
                                     <f:selectItem itemLabel="Informes" itemValue="2"/>
                                     <f:selectItem itemLabel="Informes Circulares" itemValue="3"/>
-                                    <f:selectItem itemLabel="Proveidos" itemValue="4"/>
-                                    <f:selectItem itemLabel="Memos" itemValue="5"/>
-                                    <f:selectItem itemLabel="Cartas" itemValue="6"/>
-                                    <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                    <p:ajax event="change" listener="#{docusExternosBean.generarCorrelativo()}" update="panelProv"/>
+                                    <f:selectItem itemLabel="Memos" itemValue="4"/>
+                                    <f:selectItem itemLabel="Cartas" itemValue="5"/>
+                                    <f:selectItem itemLabel="Otros" itemValue="6"/>
                                 </p:selectOneMenu>
+
+                                <p:outputLabel value="Nro. Doc: "/>
+                                <p:inputText value="#{docusExternosBean.codigoexp}"/>
 
                                 <p:outputLabel value="Asunto: "/>
                                 <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
@@ -223,7 +234,7 @@
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
                                 </p:selectOneMenu>
-                                
+
                                 <p:outputLabel value="Dep. Destino: "/>
                                 <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -231,8 +242,8 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
-                                
+                                <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
+
                                 <p:outputLabel value="Usuario: "/>
                                 <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
                             </p:panelGrid>

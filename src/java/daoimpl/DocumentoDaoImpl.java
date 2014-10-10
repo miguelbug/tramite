@@ -22,6 +22,32 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List getProveidos(String tramnum) {
+        List proveidos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get proveidos");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select di.DOCU_CORRELAINT,\n"
+                    + "di.DOCU_NOMBREINT,\n"
+                    + "di.DOCU_SIGLASINT,\n"
+                    + "di.DOCU_ANIOINT,\n"
+                    + "usua.usu_nombre,\n"
+                    + "di.FECHAREGISTRO\n"
+                    + "from docus_internos di, USUARIO usua\n"
+                    + "where di.USU=usua.USU\n"
+                    + "and di.tram_num='" + tramnum + "'");
+            proveidos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal getproveidos");
+            System.out.println(e.getMessage());
+        }
+        return proveidos;
+    }
+
+    @Override
     public List getDependencias() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -122,7 +148,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
                     + "and tm.CODIGO1=D2.CODIGO\n"
-                    + "order by tm.FECHA_ENVIO DESC");
+                    + "order by D2.NOMBRE");
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");
             session.beginTransaction().commit();

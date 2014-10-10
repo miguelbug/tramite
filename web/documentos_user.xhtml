@@ -19,8 +19,7 @@
                     <p:growl id="growl" showDetail="true" sticky="true" life="1000"/> 
                     <br></br>
                     <br></br>
-                    <p:tabView id="tabmayor" dynamic="true" onTabChange="">
-
+                    <p:tabView id="tabmayor" dynamic="true">
                         <p:tab title="Sin Confirmar" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
@@ -121,7 +120,7 @@
                             </p:dataTable>
                         </p:tab>
                         <p:tab title="Derivados Internos" id="tab3">
-                            <p:dataTable value="#{derivarBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
+                            <p:dataTable value="#{documentoUsuarioBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
@@ -243,11 +242,8 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Proveído" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelProv">
-
-                            <p:outputLabel value="Nro. Doc: "/>
-                            <p:outputLabel value="#{docusExternosBean.generarCorrelativo()}"/>
 
                             <p:outputLabel value="Documento: "/>
                             <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
@@ -259,8 +255,12 @@
                                 <f:selectItem itemLabel="Memos" itemValue="5"/>
                                 <f:selectItem itemLabel="Cartas" itemValue="6"/>
                                 <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                <p:ajax event="change" listener="#{docusExternosBean.generarCorrelativo()}" update="panelProv"/>
+                                <p:ajax event="change" listener="#{docusExternosBean.Cambios()}" update="panelProv"/>
                             </p:selectOneMenu>
+
+                            <p:outputLabel value="Nro. Doc: "/>
+                            <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
+                            <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
 
                             <p:outputLabel value="Asunto: "/>
                             <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
@@ -290,8 +290,10 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
+
                     <p:dialog header="Derivación - #{derivarBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelDeriv">
+
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{derivarBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -307,7 +309,7 @@
                             <p:outputLabel value="#{derivarBean.correlativo}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputText value="#{derivarBean.asunto}"/>
+                            <p:inputTextarea  rows="6" cols="33" value="#{derivarBean.asunto}"/>
 
                             <p:outputLabel value="Referencia: "/>
                             <p:outputLabel value="#{derivarBean.numtramaux}"/>

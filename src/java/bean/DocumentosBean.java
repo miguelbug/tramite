@@ -71,6 +71,9 @@ public class DocumentosBean implements Serializable {
     private String origen;
     private Date aux;
     public static String tranum;
+    private List detalprov;
+    
+    
     ////////
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -87,6 +90,7 @@ public class DocumentosBean implements Serializable {
         dependenciasprov=new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
+        detalprov= new ArrayList<Map<String,String>>();
         //seguimientolista2 = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
@@ -192,11 +196,6 @@ public class DocumentosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                /*listaaux.put("numerotramite", String.valueOf(obj[0]));
-                 listaaux.put("fecha", String.valueOf(obj[1]));
-                 listaaux.put("observacion", String.valueOf(obj[2]));
-                 listaaux.put("descripcion", String.valueOf(obj[3]));
-                 listaaux.put("depnombre", String.valueOf(obj[4]));*/
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
                 listaaux.put("movimiento", String.valueOf(obj[1]));
                 listaaux.put("origen", String.valueOf(obj[2]));
@@ -212,7 +211,31 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
+    public List DetProv(){
+        System.out.println("listando detalles");
+        detalprov.clear();
+        try {
+            List lista = new ArrayList();
+            System.out.println(seleccion.get("numerotramite").toString());
+            lista = dd.getProveidos(seleccion.get("numerotramite").toString());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[6];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("nombredoc", String.valueOf(obj[1]));
+                listaaux.put("siglas", String.valueOf(obj[2]));
+                listaaux.put("anio", String.valueOf(obj[3]));
+                listaaux.put("usuario", String.valueOf(obj[4]));
+                listaaux.put("fecha", String.valueOf(obj[5]));
+                detalprov.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return detalprov;
+    }
     public List Detalles() {
         System.out.println("listando detalles");
         seglista.clear();
@@ -430,7 +453,7 @@ public class DocumentosBean implements Serializable {
                         }
                         if (e.getKey().toString().equals("fenvio")) {
                             System.out.println("entra a fecha envio");
-                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH24:MI:ss");
+                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                             Date nf = new Date();
                             nf = formato.parse(e.getValue().toString());
                             movimiento.setFechaEnvio(nf);
@@ -442,7 +465,7 @@ public class DocumentosBean implements Serializable {
                             if (e.getValue().toString().equals(" ")) {
                                 movimiento.setFechaIngr(null);
                             } else {
-                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH24:MI:ss");
+                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 Date nf = new Date();
                                 nf = formato.parse(e.getValue().toString());
                                 movimiento.setFechaIngr(nf);
@@ -548,7 +571,7 @@ public class DocumentosBean implements Serializable {
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-            //MostrarConfirmados();
+            MostrarDocusInternos();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());
@@ -730,6 +753,22 @@ public class DocumentosBean implements Serializable {
 
     public void setAux(Date aux) {
         this.aux = aux;
+    }
+
+    public static String getTranum() {
+        return tranum;
+    }
+
+    public static void setTranum(String tranum) {
+        DocumentosBean.tranum = tranum;
+    }
+
+    public List getDetalprov() {
+        return detalprov;
+    }
+
+    public void setDetalprov(List detalprov) {
+        this.detalprov = detalprov;
     }
     
 }   

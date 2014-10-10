@@ -1,5 +1,5 @@
 package maping;
-// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
+// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -28,19 +28,17 @@ public class Temporal  implements java.io.Serializable {
     public Temporal(long id) {
         this.id = id;
     }
-
     public Temporal(long id, String tramNum, Date fecha, String origen, String asunto, BigDecimal impreso, BigDecimal reimpreso, String siglas, String destino) {
-        this.id = id;
-        this.tramNum = tramNum;
-        this.fecha = fecha;
-        this.origen = origen;
-        this.asunto = asunto;
-        this.impreso = impreso;
-        this.reimpreso = reimpreso;
-        this.siglas = siglas;
-        this.destino = destino;
+       this.id = id;
+       this.tramNum = tramNum;
+       this.fecha = fecha;
+       this.origen = origen;
+       this.asunto = asunto;
+       this.impreso = impreso;
+       this.reimpreso = reimpreso;
+       this.siglas = siglas;
+       this.destino = destino;
     }
-    
    
     public long getId() {
         return this.id;
@@ -91,24 +89,22 @@ public class Temporal  implements java.io.Serializable {
     public void setReimpreso(BigDecimal reimpreso) {
         this.reimpreso = reimpreso;
     }
-
     public String getSiglas() {
-        return siglas;
+        return this.siglas;
     }
-
+    
     public void setSiglas(String siglas) {
         this.siglas = siglas;
     }
-
     public String getDestino() {
-        return destino;
+        return this.destino;
     }
-
+    
     public void setDestino(String destino) {
         this.destino = destino;
     }
 
-    
+
 
 
 }
