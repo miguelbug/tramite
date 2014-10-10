@@ -1,5 +1,5 @@
 package maping;
-// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
+// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -24,13 +24,12 @@ public class Oficina  implements java.io.Serializable {
         this.idOficina = idOficina;
         this.nombreOficina = nombreOficina;
     }
-
-    public Oficina(String idOficina, String nombreOficina, String siglas) {
-        this.idOficina = idOficina;
-        this.nombreOficina = nombreOficina;
-        this.siglas = siglas;
+    public Oficina(String idOficina, String nombreOficina, String siglas, Set<Usuario> usuarios) {
+       this.idOficina = idOficina;
+       this.nombreOficina = nombreOficina;
+       this.siglas = siglas;
+       this.usuarios = usuarios;
     }
-    
    
     public String getIdOficina() {
         return this.idOficina;
@@ -46,6 +45,13 @@ public class Oficina  implements java.io.Serializable {
     public void setNombreOficina(String nombreOficina) {
         this.nombreOficina = nombreOficina;
     }
+    public String getSiglas() {
+        return this.siglas;
+    }
+    
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
     public Set<Usuario> getUsuarios() {
         return this.usuarios;
     }
@@ -54,15 +60,7 @@ public class Oficina  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
-    public String getSiglas() {
-        return siglas;
-    }
 
-    public void setSiglas(String siglas) {
-        this.siglas = siglas;
-    }
-    
-    
 
 
 }

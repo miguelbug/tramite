@@ -12,6 +12,7 @@ import maping.Dependencia;
 import maping.DocusExt;
 import maping.DocusExtint;
 import maping.Indicador;
+import maping.Proveido;
 import maping.TramiteDatos;
 import maping.Usuario;
 
@@ -43,4 +44,6 @@ public interface DerivarDAO {
     public Dependencia getDep(String nombre);
     public String getAnio();
     public String getDocExt(String n);
+    public String getCorreProv();
+    public void GuardarProveido(Proveido p);
 }

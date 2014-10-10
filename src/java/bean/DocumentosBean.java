@@ -550,7 +550,7 @@ public class DocumentosBean implements Serializable {
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-            //MostrarConfirmados();
+            MostrarDocusInternos();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());

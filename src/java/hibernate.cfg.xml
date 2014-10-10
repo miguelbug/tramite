@@ -11,6 +11,7 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="maping/Dependencia.hbm.xml"/>
     <mapping resource="maping/TipoDocu.hbm.xml"/>
+    <mapping resource="maping/Proveido.hbm.xml"/>
     <mapping resource="maping/DocusExt.hbm.xml"/>
     <mapping resource="maping/TramiteDatos.hbm.xml"/>
     <mapping resource="maping/Jefatura.hbm.xml"/>

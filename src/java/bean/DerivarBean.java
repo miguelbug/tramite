@@ -83,11 +83,6 @@ public class DerivarBean {
         return oficina;
     }
 
-    public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getId().equals("tab3")) {
-            MostrarConfirmadosDerivados();
-        }
-    }
 
     public void Derivar() {
         numtramaux = "";
@@ -288,7 +283,7 @@ public class DerivarBean {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
-
+            MostrarConfirmadosDerivados();
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO DERIVAR");
             RequestContext.getCurrentInstance().showMessageInDialog(message);

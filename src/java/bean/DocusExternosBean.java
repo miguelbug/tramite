@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.DocusExt;
 import maping.DocusExtint;
+import maping.Proveido;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 
@@ -47,20 +48,22 @@ public class DocusExternosBean {
     private String codigoexp;
     public boolean a1;
     public boolean a2;
+    public String auxfecha;
+    public String auxanio;
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
-        anio = new Date();
+        
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         dependenciasprov = new ArrayList<Map<String, String>>();
-        fechaprov = new Date();
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
         a1 = true;
         a2 = false;
+        
     }
 
     public void Limpiar() {
@@ -70,23 +73,36 @@ public class DocusExternosBean {
         destino = " ";
 
     }
-
+    public void Proveidoo(){
+        System.out.println("entra aca 1");
+        fechaactual();
+        System.out.println("entra aca 2");
+        getAnio();
+        System.out.println("entra aca 3");
+        generarCorrelativo();
+    }
     public void ObtenerDepIndic() {
         dependenciasprov = dd.getDependencias();
     }
 
-    public String getAnio() {
+    public void getAnio() {
+        System.out.println("entra getanio");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        return sdf.format(anio);
+        anio = new Date();
+        auxanio= sdf.format(anio);
+        System.out.println(auxanio);
     }
 
-    public String fechaactual() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
-        return sdf.format(fechaprov);
+    public void fechaactual() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fechaprov = new Date();
+        auxfecha= sdf.format(fechaprov);
+        System.out.println(auxfecha);
     }
 
     public void Cambios() {
-        correlativo=" ";
+        correlativo = " ";
         if (documento != null) {
             if (documento.equals("4")) {
                 a1 = true;
@@ -105,9 +121,10 @@ public class DocusExternosBean {
         int corr = 0;
         String aux = "";
         try {
-            if (getAnio().equals(deriv.getAnio())) {
+            if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorre(usu, documento));
+                corr = Integer.parseInt(deriv.getCorreProv());
+                System.out.println("aumentando el correlativo: "+corr);
                 corr = corr + 1;
                 if (corr < 10) {
                     aux = "0000" + corr;
@@ -134,6 +151,8 @@ public class DocusExternosBean {
             System.out.println("no lleno");
             corr = corr + 1;
             aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
         }
         correlativo = aux;
     }
@@ -156,18 +175,27 @@ public class DocusExternosBean {
     public void guardar() {
         DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
+        Proveido p = new Proveido();
         FacesMessage message = null;
         try {
-
-            di.setNumerodoc(correlativo);
-            de = deriv.getDocuExt(documento);
-            di.setDocusExt(de);
+            di.setNumerodoc(codigoexp);
             di.setAsunto(asunto);
+            di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));
-            di.setFecha(fechaprov);
+            de = deriv.getDocuExt(documento);
+            di.setDocusExt(de);
             di.setUsuario(usu);
+            
+            p.setCorrelativod(correlativo);
+            p.setDependenciaByCodigo(deriv.getDep(origen));
+            p.setDependenciaByCodigo1(deriv.getDep(destino));
+            p.setDocusExtint(di);
+            p.setFechaenvio(fechaprov);
+            p.setFechareg(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
+            
             deriv.guardarDocusExt(di);
+            deriv.GuardarProveido(p);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
@@ -292,6 +320,22 @@ public class DocusExternosBean {
 
     public void setA2(boolean a2) {
         this.a2 = a2;
+    }
+
+    public String getAuxfecha() {
+        return auxfecha;
+    }
+
+    public void setAuxfecha(String auxfecha) {
+        this.auxfecha = auxfecha;
+    }
+
+    public String getAuxanio() {
+        return auxanio;
+    }
+
+    public void setAuxanio(String auxanio) {
+        this.auxanio = auxanio;
     }
 
 }

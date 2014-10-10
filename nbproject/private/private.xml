@@ -7,6 +7,8 @@
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocusExternosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/TipoDocu.hbm.xml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
         </group>

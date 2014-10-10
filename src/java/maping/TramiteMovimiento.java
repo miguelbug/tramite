@@ -1,5 +1,5 @@
 package maping;
-// Generated 06/10/2014 08:55:07 AM by Hibernate Tools 3.6.0
+// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -31,24 +31,20 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public TramiteMovimiento(BigDecimal idMovi) {
         this.idMovi = idMovi;
     }
-
     public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, String moviObs, String estaNombre, String estadDerivado, String estadConfrirm) {
-        this.idMovi = idMovi;
-        this.tramiteDatos = tramiteDatos;
-        this.dependenciaByCodigo1 = dependenciaByCodigo1;
-        this.dependenciaByCodigo = dependenciaByCodigo;
-        this.indicador = indicador;
-        this.moviNum = moviNum;
-        this.fechaEnvio = fechaEnvio;
-        this.fechaIngr = fechaIngr;
-        this.moviObs = moviObs;
-        this.estaNombre = estaNombre;
-        this.estadDerivado = estadDerivado;
-        this.estadConfrirm = estadConfrirm;
+       this.idMovi = idMovi;
+       this.tramiteDatos = tramiteDatos;
+       this.dependenciaByCodigo1 = dependenciaByCodigo1;
+       this.dependenciaByCodigo = dependenciaByCodigo;
+       this.indicador = indicador;
+       this.moviNum = moviNum;
+       this.fechaEnvio = fechaEnvio;
+       this.fechaIngr = fechaIngr;
+       this.moviObs = moviObs;
+       this.estaNombre = estaNombre;
+       this.estadDerivado = estadDerivado;
+       this.estadConfrirm = estadConfrirm;
     }
-
-    
-    
    
     public BigDecimal getIdMovi() {
         return this.idMovi;
@@ -120,24 +116,22 @@ public class TramiteMovimiento  implements java.io.Serializable {
     public void setEstaNombre(String estaNombre) {
         this.estaNombre = estaNombre;
     }
-
     public String getEstadDerivado() {
-        return estadDerivado;
+        return this.estadDerivado;
     }
-
+    
     public void setEstadDerivado(String estadDerivado) {
         this.estadDerivado = estadDerivado;
     }
-
     public String getEstadConfrirm() {
-        return estadConfrirm;
+        return this.estadConfrirm;
     }
-
+    
     public void setEstadConfrirm(String estadConfrirm) {
         this.estadConfrirm = estadConfrirm;
     }
 
-        
+
 
 
 }

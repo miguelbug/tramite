@@ -70,7 +70,8 @@
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Doc. Externos" style="position:absolute; left:485px; height:26px" oncomplete="PF('provDialog').show()"
-                                                         update="tabladocumentos"/>
+                                                         update="tabladocumentos, :form:panelProv, :form:docextpanel" actionListener="#{docusExternosBean.Proveidoo()}">
+                                        </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
@@ -181,7 +182,7 @@
                             </p:panel>    
 
                         </p:dialog>
-                        <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
                             <p:panelGrid columns="2" id="panelProv">
                                 
                                 <p:outputLabel value="Documento: "/>
@@ -190,16 +191,13 @@
                                     <f:selectItem itemLabel="Oficio" itemValue="1"/>
                                     <f:selectItem itemLabel="Informes" itemValue="2"/>
                                     <f:selectItem itemLabel="Informes Circulares" itemValue="3"/>
-                                    <f:selectItem itemLabel="Proveidos" itemValue="4"/>
-                                    <f:selectItem itemLabel="Memos" itemValue="5"/>
-                                    <f:selectItem itemLabel="Cartas" itemValue="6"/>
-                                    <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                    <p:ajax event="change" listener="#{docusExternosBean.Cambios()}" update="panelProv"/>
+                                    <f:selectItem itemLabel="Memos" itemValue="4"/>
+                                    <f:selectItem itemLabel="Cartas" itemValue="5"/>
+                                    <f:selectItem itemLabel="Otros" itemValue="6"/>
                                 </p:selectOneMenu>
                                 
                                 <p:outputLabel value="Nro. Doc: "/>
-                                <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
-                                <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
+                                <p:inputText value="#{docusExternosBean.codigoexp}"/>
 
                                 <p:outputLabel value="Asunto: "/>
                                 <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
@@ -217,7 +215,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
+                                <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
 
                                 <p:outputLabel value="Usuario: "/>
                                 <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
