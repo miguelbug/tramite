@@ -325,10 +325,29 @@ public class DocumentoUsuarioBean {
         System.out.println("listando documentos");
         seguimientolista.clear();
         try {
-            List lista = new ArrayList();
-            lista = sgd.getSeguimiento(tramnum);
-            Iterator ite = lista.iterator();
+            List lista1 = new ArrayList();
+            List lista2 = new ArrayList();
+            lista1 = sgd.getSeguimientoGrande1(tramnum);
+            lista2 = sgd.getSeguimientoGrande2(tramnum);
+            Iterator ite = lista1.iterator();
+            Iterator ite2 = lista2.iterator();
             Object obj[] = new Object[9];
+            Object obj2[] = new Object[9];
+            while (ite2.hasNext()) {
+                System.out.println("ola");
+                obj2 = (Object[]) ite2.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                seguimientolista.add(listaaux);
+            }
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -343,6 +362,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("estado", String.valueOf(obj[8]));
                 seguimientolista.add(listaaux);
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

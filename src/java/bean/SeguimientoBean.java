@@ -111,10 +111,14 @@ public class SeguimientoBean {
         seguimientolista.clear();
         try {
             List lista = new ArrayList();
-            lista = sgd.getSeguimientoGrande(tramnum);
+            List lista1 = new ArrayList();
+            lista = sgd.getSeguimientoGrande1(tramnum);
+            lista1= sgd.getSeguimientoGrande2(tramnum);
             System.out.println(lista.size());
             Iterator ite = lista.iterator();
+            Iterator ite2= lista1.iterator();
             Object obj[] = new Object[9];
+            Object obj1[] = new Object[9];
             while (ite.hasNext()) {
                 System.out.println("ola");
                 obj = (Object[]) ite.next();
@@ -129,7 +133,21 @@ public class SeguimientoBean {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 seguimientolista.add(listaaux);
-
+            }
+            while (ite2.hasNext()) {
+                System.out.println("ola");
+                obj1 = (Object[]) ite2.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimnum", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fechaenvio", String.valueOf(obj[4]));
+                listaaux.put("fechaingr", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("estado", String.valueOf(obj[8]));
+                seguimientolista.add(listaaux);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

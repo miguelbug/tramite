@@ -20,6 +20,8 @@ public interface SeguimientoDAO {
     public List getSeguimiento(String tramnum);
     public List seguimientoUser(String oficina);
     public List getSeguimientoGrande(String tramnum);
+    public List getSeguimientoGrande1(String tramnum);
+    public List getSeguimientoGrande2(String tramnum);
     public void GuadarTramiteDatos(TramiteDatos td,TipoDocu tdocu);
     public List tramiteDatos(String tramnum);
     public List TiposDocus(String tramnum);

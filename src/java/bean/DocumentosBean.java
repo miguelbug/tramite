@@ -72,8 +72,7 @@ public class DocumentosBean implements Serializable {
     private Date aux;
     public static String tranum;
     private List detalprov;
-    
-    
+
     ////////
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -85,36 +84,77 @@ public class DocumentosBean implements Serializable {
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         log = new LoginDaoImpl();
-        fechaprov= new Date();
-        documentosprov=new ArrayList<Map<String, String>>();
-        dependenciasprov=new ArrayList<Map<String, String>>();
+        fechaprov = new Date();
+        documentosprov = new ArrayList<Map<String, String>>();
+        dependenciasprov = new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
-        detalprov= new ArrayList<Map<String,String>>();
+        detalprov = new ArrayList<Map<String, String>>();
         //seguimientolista2 = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
         ObtenerDepIndic();
-        
+
     }
-    public void ObtenerDepIndic(){
-        documentosprov=dd.getIndicadores();
-        dependenciasprov=dd.getDependencias();
+
+    public void ObtenerDepIndic() {
+        documentosprov = dd.getIndicadores();
+        dependenciasprov = dd.getDependencias();
     }
-    public String fechaactual(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+
+    public String fechaactual() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return sdf.format(fechaprov);
-        
+
     }
+
     public void MostrarSeguimiento2(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista.clear();
         try {
+            /*List lista = new ArrayList();
+             List lista2= new ArrayList();
+             lista = sgd.getSeguimientoGrande1(tramnum);
+             lista2= sgd.getSeguimientoGrande2(tramnum);
+             System.out.println(lista.size());
+             Iterator ite = lista.iterator();
+             Iterator ite2= lista2.iterator();
+             Object obj[] = new Object[9];
+             Object obj2[]= new Object[9];
+             while (ite.hasNext()) {
+             System.out.println("ola");
+             obj = (Object[]) ite.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("numerotramite", String.valueOf(obj[0]));
+             listaaux.put("movimnum", String.valueOf(obj[1]));
+             listaaux.put("origen", String.valueOf(obj[2]));
+             listaaux.put("destino", String.valueOf(obj[3]));
+             listaaux.put("fechaenvio", String.valueOf(obj[4]));
+             listaaux.put("fechaingr", String.valueOf(obj[5]));
+             listaaux.put("indicador", String.valueOf(obj[6]));
+             listaaux.put("observacion", String.valueOf(obj[7]));
+             listaaux.put("estado", String.valueOf(obj[8]));
+             seguimientolista.add(listaaux);
+             }
+             while (ite2.hasNext()) {
+             System.out.println("ola");
+             obj2 = (Object[]) ite2.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("numerotramite", String.valueOf(obj[0]));
+             listaaux.put("movimnum", String.valueOf(obj[1]));
+             listaaux.put("origen", String.valueOf(obj[2]));
+             listaaux.put("destino", String.valueOf(obj[3]));
+             listaaux.put("fechaenvio", String.valueOf(obj[4]));
+             listaaux.put("fechaingr", String.valueOf(obj[5]));
+             listaaux.put("indicador", String.valueOf(obj[6]));
+             listaaux.put("observacion", String.valueOf(obj[7]));
+             listaaux.put("estado", String.valueOf(obj[8]));
+             seguimientolista.add(listaaux);
+             }*/
             List lista = new ArrayList();
             lista = sgd.getSeguimientoGrande(tramnum);
-            System.out.println(lista.size());
             Iterator ite = lista.iterator();
             Object obj[] = new Object[9];
             while (ite.hasNext()) {
@@ -131,8 +171,8 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 seguimientolista.add(listaaux);
-
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -149,7 +189,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println(e.getValue().toString());
                 System.out.println("------entra---------");
                 MostrarSeguimiento2(e.getValue().toString());
-                tranum=e.getValue().toString();
+                tranum = e.getValue().toString();
                 System.out.println("------sale-----------");
             }
 
@@ -211,7 +251,8 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    public List DetProv(){
+
+    public List DetProv() {
         System.out.println("listando detalles");
         detalprov.clear();
         try {
@@ -236,6 +277,7 @@ public class DocumentosBean implements Serializable {
         }
         return detalprov;
     }
+
     public List Detalles() {
         System.out.println("listando detalles");
         seglista.clear();
@@ -421,7 +463,7 @@ public class DocumentosBean implements Serializable {
                 TramiteMovimiento movimiento = new TramiteMovimiento();
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
-                Temporal t= new Temporal();
+                Temporal t = new Temporal();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
@@ -437,11 +479,11 @@ public class DocumentosBean implements Serializable {
 
                         if (e.getKey().toString().equals("movimiento")) {
                             movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
-                            
+
                         }
                         if (e.getKey().toString().equals("estado")) {
                             movimiento.setEstaNombre(e.getValue().toString());
-                           
+
                         }
                         if (e.getKey().toString().equals("origen")) {
                             movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
@@ -770,5 +812,5 @@ public class DocumentosBean implements Serializable {
     public void setDetalprov(List detalprov) {
         this.detalprov = detalprov;
     }
-    
-}   
+
+}

@@ -42,25 +42,94 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     }
 
     @Override
+    public List getSeguimientoGrande1(String tramnum) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String sql = "select TRAM_NUM,\n"
+                    + "MOVI_NUM,\n"
+                    + "MOVI_ORIGEN AS ORIGEN,\n"
+                    + "MOVI_DESTINO AS DESTINO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAENVIO,\n"
+                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAING,\n"
+                    + "INDI_NOMBRE,\n"
+                    + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, \n"
+                    + "ESTA_NOMBRE\n"
+                    + "from vw_ogpl002@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "'\n"
+                    + "AND MOVI_FEC_ING IS NOT NULL\n"
+                    + "AND MOVI_DESTINO NOT LIKE '%OGPL-%'\n"
+                    + "order by MOVI_NUM DESC";
+            System.out.println("entragetseguimiento grande");
+            session.beginTransaction();
+            codigos = (List) session.createSQLQuery(sql).list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problemasseguimiento grande 1");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna grande");
+        return codigos;
+    }
+
+    @Override
+    public List getSeguimientoGrande2(String tramnum) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        /*String sql = "select M.tramiteDatos.tramNum,\n"
+         + "M.moviNum,\n"
+         + "M1.nombre AS ORIGEN, \n"
+         + "M2.nombre AS DESTINO,\n"
+         + "DECODE(to_char(M.fechaEnvio, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(M.fechaEnvio, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAENVIO,\n"
+         + "DECODE(to_char(M.fechaIngr, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(M.fechaIngr, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAING,\n"
+         + "I.indiNombre,\n"
+         + "DECODE(M.moviObs,NULL,' ',M.moviObs) AS OBSERVACION,\n"
+         + "M.estaNombre\n"
+         + "from TramiteMovimiento M, Indicador I, Dependencia M1, Dependencia M2\n"
+         + "where M.tramiteDatos.tramNum='" + tramnum + "'\n"
+         + "AND M.dependenciaByCodigo.codigo=M1.codigo\n"
+         + "AND M.dependenciaByCodigo1.codigo=M2.codigo\n"
+         + "AND M.indicador.indiCod=I.indiCod";*/
+        String sql = "select M.TRAM_NUM,\n"
+                + "M.MOVI_NUM,\n"
+                + "M1.NOMBRE AS ORIGEN, \n"
+                + "M2.NOMBRE AS DESTINO,\n"
+                + "DECODE(to_char(M.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(M.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAENVIO,\n"
+                + "DECODE(to_char(M.FECHA_INGR, 'dd/MM/yyyy HH24:MI:ss'),NULL,' ',to_char(M.FECHA_INGR, 'dd/MM/yyyy HH24:MI:ss')) AS FECHAING,\n"
+                + "I.INDI_NOMBRE,\n"
+                + "DECODE(M.MOVI_OBS,NULL,' ',M.MOVI_OBS) AS OBSERVACION,\n"
+                + "ESTA_NOMBRE\n"
+                + "from TRAMITE_MOVIMIENTO M, INDICADOR I, DEPENDENCIA M1, DEPENDENCIA M2\n"
+                + "where M.TRAM_NUM='" + tramnum + "'\n"
+                + "AND M.CODIGO=M1.CODIGO\n"
+                + "AND M.CODIGO1=M2.CODIGO\n"
+                + "AND M.INDI_COD=I.INDI_COD\n"
+                + "AND M2.NOMBRE NOT LIKE '%OFICINA GENERAL DE PLANIFICACION%'";
+        try {
+
+            System.out.println("entragetseguimiento grande");
+            session.beginTransaction();
+            codigos = (List) session.createSQLQuery(sql).list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problemasseguimiento grande 2");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println("retorna grande");
+        return codigos;
+    }
+
+    @Override
     public List getSeguimientoGrande(String tramnum) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             System.out.println("entragetseguimiento grande");
             session.beginTransaction();
-            /*Query query = session.createSQLQuery("select TRAM_NUM,\n"
-             + "MOVI_NUM,\n"
-             + "MOVI_ORIGEN,\n"
-             + "MOVI_DESTINO,\n"
-             + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
-             + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
-             + "INDI_NOMBRE,\n"
-             + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, \n"
-             + "ESTA_NOMBRE\n"
-             + "from vw_ogpl002@TRAMITEDBLINK\n"
-             + "where TRAM_NUM='" + tramnum + "' \n"
-             + "order by movi_num desc");*/
-            Query query = session.createQuery("select TRAM_NUM,\n"
+            Query query = session.createSQLQuery("select TRAM_NUM,\n"
                     + "MOVI_NUM,\n"
                     + "MOVI_ORIGEN AS ORIGEN,\n"
                     + "MOVI_DESTINO AS DESTINO,\n"
