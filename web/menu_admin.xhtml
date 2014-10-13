@@ -42,11 +42,12 @@
 
                     <p:outputLabel value="Nueva Contraseña:"/>
                     <p:inputText value="#{gestionUsuarioBean.nuevapass}"/>
-
+                </p:panelGrid>
+                <center>
                     <p:commandButton value="Guardar Cambios" actionListener="#{gestionUsuarioBean.Guardar()}" update="panelgu">
                         <f:ajax event="click" onevent="GUdialog.hide()"/>
                     </p:commandButton>
-                </p:panelGrid>
+                </center>
             </p:dialog>
         </h:form>
     </h:body>
