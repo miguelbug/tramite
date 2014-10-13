@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>DOCUMENTOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
+                        <p:panelGrid columns="2" id="panelgu">
+                            <p:outputLabel value="Contraseña Antigua:"/>
+                            <p:inputText value=""/>
+
+                            <p:outputLabel value="Nueva Contraseña:"/>
+                            <p:inputText value=""/>
+                            
+                            <p:commandButton value="Guardar Cambios" actionListener="" update="panelgu">
+                                <f:ajax event="click" onevent="GUdialog.hide()"/>
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
