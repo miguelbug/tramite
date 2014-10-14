@@ -246,22 +246,10 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            /*Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
-             + "DOC.DOCU_NOMBRE,\n"
-             + "DOC.DOCU_NUM,\n"
-             + "DOC.DOCU_SIGLAS,\n"
-             + "DOC.DOCU_ANIO\n"
-             + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
-             + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
-             + "AND TD.USU=U.USU\n"
-             + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
-             + "AND U.ID_OFICINA=OFI.ID_OFICINA");*/
-            Query query = session.createSQLQuery("select TRAM_NUM,"
-                    + "TRAM_FECHA,"
+            Query query = session.createSQLQuery("select TRAM_FECHA,"
                     + "DEPE_ORIGEN,"
                     + "TRAM_OBS,"
                     + "ESTA_DESCRIP,"
-                    + "USU,"
                     + "DOCU_NOMBRE,"
                     + "DOCU_NUM,"
                     + "DOCU_SIGLAS,"

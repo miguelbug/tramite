@@ -20,6 +20,7 @@
                     <br></br>
                     <center>
                         <p:tabView>
+                            <p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>
                             <p:tab title="Doc. Generales">
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

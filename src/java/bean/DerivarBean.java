@@ -83,7 +83,6 @@ public class DerivarBean {
         return oficina;
     }
 
-
     public void Derivar() {
         numtramaux = "";
         FacesMessage message = null;
@@ -94,30 +93,6 @@ public class DerivarBean {
                 aparecer = false;
 
             } else {
-                /*aparecer = true;
-                 if (!usu.getOficina().getIdOficina().equals("100392")) {
-                 correlativo = generarCorrelativo();
-                 System.out.println("entra a getsiglas");
-                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
-                 System.out.println("entra a iniciar fecha");
-                 IniciarFecha();
-                 System.out.println("entra a motivo");
-                 Motivo();
-                 System.out.println("entra a usuarioselec");
-                 UsuarioSelec();
-                 confirmar = false;
-                 } else {
-                 if (usu.getOficina().getIdOficina().equals("100392")) {
-                 System.out.println("entra a iniciar fecha");
-                 IniciarFecha();
-                 System.out.println("entra a motivo");
-                 Motivo();
-                 System.out.println("entra a usuarioselec");
-                 UsuarioSelec();
-                 confirmar = true;
-                 }
-                 }*/
-
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
                 correlativo = generarCorrelativo();
@@ -274,7 +249,6 @@ public class DerivarBean {
             System.out.println("entra a guardar");
 
             DateFormat d = new SimpleDateFormat("yyyy");
-            //if (confirmar == true) {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
@@ -377,9 +351,8 @@ public class DerivarBean {
     public void RealizarCambio() {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
-        }
-        else{
-            this.estado="EN PROCESO";
+        } else {
+            this.estado = "EN PROCESO";
         }
         correlativo = generarCorrelativo();
     }
