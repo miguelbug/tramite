@@ -183,7 +183,7 @@ public class DocumentoUsuarioBean {
             System.out.println(usu.getOficina().getIdOficina());
             lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[9];
+            Object obj[] = new Object[11];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -196,6 +196,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("indicador", String.valueOf(obj[6]));
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
+                listaaux.put("estadDoc",String.valueOf(obj[9])+"/"+String.valueOf(obj[10]));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {

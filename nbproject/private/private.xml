@@ -6,9 +6,9 @@
         <group/>
 =======
         <group>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DerivarBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/SeguimientoDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
         </group>
 >>>>>>> origin/master

@@ -56,6 +56,9 @@
                                     <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estado}" />
                                     </p:column>
+                                    <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.estadDoc}" />
+                                    </p:column>
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                             <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}"/>
@@ -122,7 +125,7 @@
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>-->
-                        <p:tab title="Derivados Internos" id="tab3">
+                        <!--<p:tab title="Derivados Internos" id="tab3">
                             <p:dataTable value="#{documentoUsuarioBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
@@ -156,7 +159,7 @@
                                     <h:outputText value="#{item.indicador}" />
                                 </p:column>
                             </p:dataTable>
-                        </p:tab>
+                        </p:tab>-->
                     </p:tabView>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
