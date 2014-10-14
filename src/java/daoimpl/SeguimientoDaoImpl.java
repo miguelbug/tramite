@@ -141,6 +141,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "from VISTA_2\n"
                     + "where TRAM_NUM='" + tramnum + "'\n"
                     + "AND MOVI_FEC_ING IS NOT NULL\n"
+                    + "AND MOVI_DESTINO NOT LIKE '%OGPL -%'"
                     + "UNION\n"
                     + "select M.TRAM_NUM,\n"
                     + "        M.MOVI_NUM,\n"
@@ -221,7 +222,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "AND TM.estad_confrirm IS NULL\n"
+                    + "AND TM.ESTAD_DERIVADO IS NULL\n"
                     + "ORDER BY TM.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();

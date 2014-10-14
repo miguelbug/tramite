@@ -19,12 +19,13 @@
                     <p:growl id="growl" showDetail="true" sticky="true" life="1000"/> 
                     <br></br>
                     <br></br>
-                    <p:tabView id="tabmayor" dynamic="true">
-                        <p:tab title="Sin Confirmar" id="tab1">
+                    <p:tabView>
+                        <p:ajax event="tabChange" listener="#{documentoUsuarioBean.onTabChange}" update=":form"/>
+                        <p:tab title="Documentos" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec2}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -61,21 +62,23 @@
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog').show()"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
 
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Confirmar()}"
                                                          update=":form:growl,tabladocumentos" />
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Proveidos" style="position:absolute; left:325px; height:26px" oncomplete="PF('provDialog').show()"
-                                                         update="tabladocumentos"/>
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
+                                                         oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
+                                        <!--<p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Proveidos" style="position:absolute; left:325px; height:26px" oncomplete="PF('provDialog').show()"
+                                                         update="tabladocumentos"/>-->
                                     </f:facet>
                                 </p:dataTable>
                             </center>
                         </p:tab>
-                        <p:tab title="Confirmados" id="tab2">
+                        <!--<p:tab title="Confirmados" id="tab2">
                             <p:dataTable value="#{documentoUsuarioBean.confirmados}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{derivarBean.docselec2}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec2}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -113,12 +116,12 @@
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="tablaconfirmados" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog2').show()"
-                                                     update=":form:tablaseguim2" actionListener="#{derivarBean.RecorrerLista()}"/>
-                                    <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{derivarBean.Derivar()}"
+                                                     update=":form:tablaseguim2" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
+                                    <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
                                                      oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
                                 </f:facet>
                             </p:dataTable>
-                        </p:tab>
+                        </p:tab>-->
                         <p:tab title="Derivados Internos" id="tab3">
                             <p:dataTable value="#{documentoUsuarioBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -157,31 +160,25 @@
                     </p:tabView>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
-                            <p:column headerText="Usuario">
-                                <h:outputText value="#{car.usuario}" />
+                            <p:column headerText="FECHA REGISTRO">
+                                <h:outputText value="#{car.FECHA}" />
                             </p:column>
-                            <p:column headerText="Nombre User">
-                                <h:outputText value="#{car.usunombre}" />
+                            <p:column headerText="ORIGEN">
+                                <h:outputText value="#{car.ORIGEN}" />
                             </p:column>
-                            <p:column headerText="Oficina">
-                                <h:outputText value="#{car.oficina}" />
+                            <p:column headerText="OBSERVACION">
+                                <h:outputText value="#{car.OBSV}" />
                             </p:column>
-                            <p:column headerText="Doc. Nombre">
-                                <h:outputText value="#{car.docunombre}" />
+                            <p:column headerText="DESCRIPCION">
+                                <h:outputText value="#{car.DESCRIP}" />
                             </p:column>
-                            <p:column headerText="Doc. Numero">
-                                <h:outputText value="#{car.docunumero}" />
-                            </p:column>
-                            <p:column headerText="Doc. Siglas">
-                                <h:outputText value="#{car.docusiglas}" />
-                            </p:column>
-                            <p:column headerText="Año">
-                                <h:outputText value="#{car.docuanio}" />
+                            <p:column headerText="DOCUMENTO">
+                                <h:outputText value="#{car.DOCUMENTO}" />
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial2">
-                        <p:dataTable var="seg" value="#{derivarBean.seguimientolista2}" id="tablaseguim2" >
+                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
                             </p:column>
@@ -212,7 +209,7 @@
                         </p:dataTable>
                     </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial">
-                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista}" id="tablaseguim" >
+                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
                             </p:column>
@@ -291,31 +288,31 @@
                         </center>
                     </p:dialog>
 
-                    <p:dialog header="Derivación - #{derivarBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelDeriv">
 
                             <p:outputLabel value="Tipo de Documento: "/>
-                            <p:selectOneMenu id="tipodocum" value="#{derivarBean.docunombre}">
+                            <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
                                 <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
                                 <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
                                 <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
                                 <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
-                                <p:ajax event="change" listener="#{derivarBean.RealizarCambio()}" update="panelDeriv" />                                
+                                <p:ajax event="change" listener="#{documentoUsuarioBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
 
                             <p:outputLabel value="N°: "/>
-                            <p:outputLabel value="#{derivarBean.correlativo}"/>
+                            <p:outputLabel value="#{documentoUsuarioBean.correlativo}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="6" cols="33" value="#{derivarBean.asunto}"/>
+                            <p:inputTextarea  rows="6" cols="33" value="#{documentoUsuarioBean.asunto}"/>
 
                             <p:outputLabel value="Referencia: "/>
-                            <p:outputLabel value="#{derivarBean.numtramaux}"/>
+                            <p:outputLabel value="#{documentoUsuarioBean.numtramaux}"/>
 
                             <p:outputLabel value="Oficina Interna: "/>
-                            <p:selectOneMenu id="identif" value="#{derivarBean.codinterno}" >
+                            <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}" >
                                 <f:selectItem itemLabel="Seleccione" itemValue="" />
                                 <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
                                 <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
@@ -326,24 +323,24 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Estado: "/>
-                            <p:outputLabel id="estado" value="#{derivarBean.estado}"/>
+                            <p:outputLabel id="estado" value="#{documentoUsuarioBean.estado}"/>
 
 
                             <p:outputLabel value="Fecha: "/>
-                            <p:outputLabel value="#{derivarBean.fechadia}" />
+                            <p:outputLabel value="#{documentoUsuarioBean.fechadia}" />
 
                             <p:outputLabel value="Hora: " />
-                            <p:outputLabel value="#{derivarBean.fechahora}" />
+                            <p:outputLabel value="#{documentoUsuarioBean.fechahora}" />
 
                             <p:outputLabel value="Motivo: " />
-                            <p:outputLabel value="#{derivarBean.motivo}" />
+                            <p:outputLabel value="#{documentoUsuarioBean.motivo}" />
 
                             <p:outputLabel value="Usuario: " />
-                            <p:outputLabel value="#{derivarBean.usuario}" />
+                            <p:outputLabel value="#{documentoUsuarioBean.usuario}" />
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{derivarBean.Guardar()}" update="growl">
+                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl">
                                 <f:ajax event="click" onevent="derivarDialog.hide()"/>
                             </p:commandButton>
                         </center>

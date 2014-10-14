@@ -29,6 +29,7 @@ public class GestionUsuarioBean implements Serializable {
     private GestionUsuarioDAO gu;
     private String antiguapass;
     private String nuevapass;
+    private String confirmarcontra;
 
     public GestionUsuarioBean() {
         gu = new GestionUsuarioDaoImpl();
@@ -45,15 +46,20 @@ public class GestionUsuarioBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
         } else {
-            try {
-                aux.setClave(nuevapass);
-                gu.Cambiar(aux);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha actualizado sus datos");
+            if (nuevapass.equals(confirmarcontra)) {
+                try {
+                    aux.setClave(nuevapass);
+                    gu.Cambiar(aux);
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha actualizado sus datos");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                } catch (Exception e) {
+                    message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Mal", "no se ha guardado");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Contraseñas no coinciden");
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
-            } catch (Exception e) {
-                message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Mal", "no se ha guardado");
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
-                System.out.println(e.getMessage());
             }
         }
     }
@@ -93,6 +99,14 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setNuevapass(String nuevapass) {
         this.nuevapass = nuevapass;
+    }
+
+    public String getConfirmarcontra() {
+        return confirmarcontra;
+    }
+
+    public void setConfirmarcontra(String confirmarcontra) {
+        this.confirmarcontra = confirmarcontra;
     }
 
 }

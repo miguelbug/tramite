@@ -38,6 +38,7 @@ import maping.TramiteMovimiento;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -97,6 +98,17 @@ public class DocumentosBean implements Serializable {
         MostrarDocusInternos();
         ObtenerDepIndic();
 
+    }
+    
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getTitle().equals("Doc. Generales")) {
+            MostrarDocumentos();
+        } else {
+            if(event.getTab().getTitle().equals("Doc. Confirmados")){
+                MostrarDocusInternos();
+            }
+        }
+       
     }
 
     public void ObtenerDepIndic() {
