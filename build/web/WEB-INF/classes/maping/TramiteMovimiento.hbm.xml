@@ -35,9 +35,6 @@
         <property name="estaNombre" type="string">
             <column name="ESTA_NOMBRE" length="250" />
         </property>
-        <property name="estadDerivado" type="string">
-            <column name="ESTAD_DERIVADO" length="30" />
-        </property>
         <property name="estadConfrirm" type="string">
             <column name="ESTAD_CONFRIRM" length="30" />
         </property>

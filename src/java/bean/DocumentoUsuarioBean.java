@@ -183,7 +183,7 @@ public class DocumentoUsuarioBean {
             System.out.println(usu.getOficina().getIdOficina());
             lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[11];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -196,7 +196,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("indicador", String.valueOf(obj[6]));
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
-                listaaux.put("estadDoc",String.valueOf(obj[9])+"/"+String.valueOf(obj[10]));
+                listaaux.put("estadDoc",String.valueOf(obj[9]));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {
@@ -522,6 +522,8 @@ public class DocumentoUsuarioBean {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
+            /////actualizarmovimiento
+            deriv.ActualizarTramite(numtramaux, String.valueOf(deriv.getMovimiento(numtramaux)));
             deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);

@@ -17,13 +17,13 @@ body{
 }
 
 .container{
-    width: 350px;
+    width: 340px;
     margin: 10% auto 0 auto;
 }
 
 .ui-widget-header{
     color: #fff;
-    height: 23px;
+    height: 35px;
     padding-top: 30px;
     background-color: #16a085   
 }

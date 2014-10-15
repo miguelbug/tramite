@@ -14,6 +14,7 @@ import maping.DocusExtint;
 import maping.Indicador;
 import maping.Proveido;
 import maping.TramiteDatos;
+import maping.TramiteMovimiento;
 import maping.Usuario;
 
 /**
@@ -46,4 +47,5 @@ public interface DerivarDAO {
     public String getDocExt(String n);
     public String getCorreProv();
     public void GuardarProveido(Proveido p);
+    public void ActualizarTramite(String tramaux, String movimiento);
 }
