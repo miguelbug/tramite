@@ -7,11 +7,16 @@ package bean;
 
 import dao.DerivarDAO;
 import dao.DocumentoDAO;
+import dao.DocusExtDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
+import daoimpl.DocusExtDaoImpl;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -31,7 +36,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @ViewScoped
-public class DocusExternosBean {
+public class DocusExternosBean implements Serializable{
 
     private String documento;
     private String origen;
@@ -50,28 +55,82 @@ public class DocusExternosBean {
     public boolean a2;
     public String auxfecha;
     public String auxanio;
+    public List documentosext;
+    private DocusExtDAO ded;
+    private List otrosdocus;
+    private List docselec;
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
-        
+        ded= new DocusExtDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         dependenciasprov = new ArrayList<Map<String, String>>();
+        documentosext= new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
         a1 = true;
         a2 = false;
-        
+        MostrarDocusExt();
     }
+    public void MostrarDocusExt(){
+        System.out.println("mostrar docus extint");
+        documentosext.clear();
+        try{
+            List lista = new ArrayList();
+            lista=ded.getDocusExt();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", getCadenaCorr(String.valueOf(obj[0])));
+                listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6])+" - "+ obj[1]));
+                listaaux.put("movimiento", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("destino", String.valueOf(obj[4]));
+                listaaux.put("fecha", String.valueOf(obj[5]));
+                listaaux.put("usuario", String.valueOf(obj[7]));
+                documentosext.add(listaaux);
+            }
 
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
     public void Limpiar() {
         documento = " ";
         asunto = " ";
         origen = " ";
         destino = " ";
 
+    }
+    public String getCadenaCorr(String c){
+        String cadena=" ";
+        if(c.length()==1){
+            cadena= "0000"+c;
+        }
+        else
+        if(c.length()==2){
+            cadena= "000"+c;
+        }
+        else
+        if(c.length()==3){
+            cadena= "00"+c;
+        }
+        else
+        if(c.length()==4){
+            cadena="0"+c;
+        }
+        else
+        cadena=c;
+        
+        return cadena;
+    }
+    public void Derivar(){
+        
     }
     public void Proveidoo(){
         System.out.println("entra aca 1");
@@ -338,4 +397,36 @@ public class DocusExternosBean {
         this.auxanio = auxanio;
     }
 
+    public List getDocumentosext() {
+        return documentosext;
+    }
+
+    public void setDocumentosext(List documentosext) {
+        this.documentosext = documentosext;
+    }
+
+    public DocusExtDAO getDed() {
+        return ded;
+    }
+
+    public void setDed(DocusExtDAO ded) {
+        this.ded = ded;
+    }
+
+    public List getOtrosdocus() {
+        return otrosdocus;
+    }
+
+    public void setOtrosdocus(List otrosdocus) {
+        this.otrosdocus = otrosdocus;
+    }
+
+    public List getDocselec() {
+        return docselec;
+    }
+
+    public void setDocselec(List docselec) {
+        this.docselec = docselec;
+    }
+    
 }
