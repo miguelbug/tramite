@@ -20,19 +20,19 @@
                     <br></br>
                     <center>
                         <p:tabView>
-                            <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
+
                             <p:tab title="OFICIOS CIRCULARES">
-                                <!--<p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
+                                <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
-                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}" selection="#{oficioBean.docselec}"
+                                             rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                    <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
+                                    <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.correlativo}"/>
                                     </p:column>
-                                    <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.movimiento}"/>
+                                    <p:column headerText="ASUNTO" width="3" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asunto}"/>
                                     </p:column>
                                     <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                         <h:outputText value="#{item.origen}"/>
@@ -40,281 +40,43 @@
                                     <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                         <h:outputText value="#{item.destino}"/>
                                     </p:column>
-                                    <p:column headerText="F.ENVIO." width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fenvio}" />
-                                    </p:column>
-                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fing}" />
-                                    </p:column>
-                                    <p:column headerText="INDIC." width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.indicador}" />
-                                    </p:column>
-                                    <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.estado}" />
-                                    </p:column>
-
-                                    <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
-                                        </p:commandButton>
+                                    <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}" />
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                         update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
-                                                         update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
-                                                         />
-
-
+                                        <p:commandButton process="tablaoficios" icon="ui-icon-arrowstop-1-s" value="Crear Oficios Circ." style="position:absolute; left:25px; height:26px " oncomplete="PF('oficioCdialog').show()"
+                                                         update=":form:oficiocircD" actionListener="#{oficioBean.crearOficio()}"/>
                                     </f:facet>
-                                </p:dataTable>-->
+                                </p:dataTable>
                             </p:tab>
                             <p:tab title="OFICIOS">
-                               <<!-- <p:dataTable value="#{documentosBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
-                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                    <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.movimiento}"/>
-                                    </p:column>
-                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.origen}"/>
-                                    </p:column>
-                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.destino}" />
-                                    </p:column>
-                                    <p:column headerText="F.ENVIO" width="5" sortBy="#{item.fenvio}" filterBy="#{item.fenvio}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fenvio}"/>
-                                    </p:column>
-                                    <p:column headerText="F.ING." width="5" sortBy="#{item.fing}" filterBy="#{item.fing}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fing}" />
-                                    </p:column>
-                                    <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.estado}" />
-                                    </p:column>
-                                    <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.indicador}" />
-                                    </p:column>
-                                    <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetallesProv" oncomplete="PF('itemDetallProv').show()" icon="ui-icon-search" title="Detalle Proveido">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
-                                        </p:commandButton>
-                                    </p:column>
-                                    <f:facet name="footer">
-                                        <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:30px; height:27px"
-                                                         action="#{objxUnidadController.mostrarReporteNotasDeriv}"
-                                                         title="Reporte" />
-                                    </f:facet>
-                                </p:dataTable>-->
                             </p:tab>
                         </p:tabView>
-                       <!-- <p:dialog header="Detalle Proveido" widgetVar="itemDetallProv" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                            <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesProv" >
-                                <p:column headerText="Correlativo">
-                                    <h:outputText value="#{car.correlativo}" />
-                                </p:column>
-                                <p:column headerText="Nombre Doc.">
-                                    <h:outputText value="#{car.nombredoc}" />
-                                </p:column>
-                                <p:column headerText="Siglas">
-                                    <h:outputText value="#{car.siglas}" />
-                                </p:column>
-                                <p:column headerText="Año">
-                                    <h:outputText value="#{car.anio}" />
-                                </p:column>
-                                <p:column headerText="Usuario">
-                                    <h:outputText value="#{car.usuario}" />
-                                </p:column>
-                                <p:column headerText="Fecha Registro">
-                                    <h:outputText value="#{car.fecha}" />
-                                </p:column>
-                            </p:dataTable>
-                        </p:dialog>
-                        <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                            <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
-                                <p:column headerText="TRAM.">
-                                    <h:outputText value="#{car.tramnum}" />
-                                </p:column>
-                                <p:column headerText="fecha">
-                                    <h:outputText value="#{car.fecha}" />
-                                </p:column>
-                                <p:column headerText="Origen">
-                                    <h:outputText value="#{car.origen}" />
-                                </p:column>
-                                <p:column headerText="Obsv.">
-                                    <h:outputText value="#{car.observacion}" />
-                                </p:column>
-                                <p:column headerText="Estado">
-                                    <h:outputText value="#{car.estado}" />
-                                </p:column>
-                                <p:column headerText="Usuario">
-                                    <h:outputText value="#{car.usuario}" />
-                                </p:column>
-                                <p:column headerText="Documento">
-                                    <h:outputText value="#{car.docnomb}" />
-                                </p:column>
-                            </p:dataTable>
-                        </p:dialog>
-                        <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:dataTable var="seg" value="#{documentosBean.seguimientolista}" id="tablaseguim" >
-                                <p:column headerText="Num. Tramite">
-                                    <h:outputText value="#{seg.numerotramite}" />
-                                </p:column>
-                                <p:column headerText="Num. Mov.">
-                                    <h:outputText value="#{seg.movimnum}" />
-                                </p:column>
-                                <p:column headerText="Origen">
-                                    <h:outputText value="#{seg.origen}" />
-                                </p:column>
-                                <p:column headerText="Destino">
-                                    <h:outputText value="#{seg.destino}" />
-                                </p:column>
-                                <p:column headerText="Fech. Envio">
-                                    <h:outputText value="#{seg.fechaenvio}" />
-                                </p:column>
-                                <p:column headerText="Fech. Ing">
-                                    <h:outputText value="#{seg.fechaingr}" />
-                                </p:column>
-                                <p:column headerText="Indicador">
-                                    <h:outputText value="#{seg.indicador}" />
-                                </p:column>
-                                <p:column headerText="Obs.">
-                                    <h:outputText value="#{seg.observacion}" />
-                                </p:column>
-                                <p:column headerText="Estado">
-                                    <h:outputText value="#{seg.estado}" />
-                                </p:column>
-                            </p:dataTable>
+                        <p:dialog header="Oficio Circular - #{oficioBean.correlativo}" widgetVar="oficioCdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="oficiocircD">
+                            <p:panelGrid columns="2" id="panelOficioCirc" >
 
-
-                            <p:panel header="Exportar Reporte">
-
-                                <p:commandLink id="pdff" ajax="false">  
-                                    <p:graphicImage value="/resources/img/pdf.png"/>  
-
-                                </p:commandLink>  
-
-                                <p:commandButton id="repor10" icon="ui-icon-arrowstop-1-s" value="Reporte de Seguimiento"  ajax="false" update="msj" style="position:absolute; left:300px; height:42px "
-                                                 action="#{objxUnidadController.mostrarReporteSeguimiento}"
-                                                 title="Reporte" />
-
-                            </p:panel>    
-
-                        </p:dialog>
-                        <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
-                            <p:panelGrid columns="2" id="panelProv">
-
-                                <p:outputLabel value="Documento: "/>
-                                <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
+                                <p:outputLabel for="tipodestino" value="Escoja Tipo de Dependencia: "/>
+                                <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodepe}" style="width:150px">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItem itemLabel="OFICIOS" itemValue="119"/>
-                                    <f:selectItem itemLabel="INFORME" itemValue="2"/>
-                                    <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="117"/>
-                                    <f:selectItem itemLabel="MEMORANDUM MULTIPLE" itemValue="120"/>
-                                    <f:selectItem itemLabel="MEMORANDUM" itemValue="118"/>
-                                    <f:selectItem itemLabel="DIRECTIVA" itemValue="121"/>
-                                    <f:selectItem itemLabel="OTROS" itemValue="122"/>
+                                    <f:selectItem itemLabel="Facultades" itemValue="facultad"/>
+                                    <f:selectItem itemLabel="Dependencia Interna" itemValue="depeInterna"/>
+                                    <f:selectItem itemLabel="Dependencia Externa" itemValue="depeExterna"/>
+                                    <p:ajax event="change" listener="#{oficioBean.obtenerDepes(e)}" update=":form:menu"/>
                                 </p:selectOneMenu>
 
-                                <p:outputLabel value="Nro. Doc: "/>
-                                <p:inputText value="#{docusExternosBean.codigoexp}"/>
-
-                                <p:outputLabel value="Asunto: "/>
-                                <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
-
-                                <p:outputLabel value="Dep. Origen: "/>
-                                <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:150px">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="Dep. Destino: "/>
-                                <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
-
-                                <p:outputLabel value="Usuario: "/>
-                                <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
+                                <p:outputLabel for="menu" value="Escoja Dependencia: "/>
+                                <p:selectCheckboxMenu id="menu" value="#{oficioBean.escojidos}" label="Escoja" filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
+                                    <f:selectItems value="#{oficioBean.depe}"/>
+                                </p:selectCheckboxMenu>
                             </p:panelGrid>
                             <br></br>
                             <center>
-                                <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
-                                    <f:ajax event="click" onevent="provDialog.hide()"/>
+                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="oficiocircD">
+                                    <f:ajax event="click" onevent="oficioCdialog.hide()"/>
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-
-                        <p:dialog header="Derivación -" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:panelGrid columns="2" id="panelDeriv">
-
-                                <p:outputLabel value="Tipo de Documento: "/>
-                                <p:selectOneMenu id="tipodocum">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
-                                    <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
-                                    <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
-                                    <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
-                                    <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
-                                    <p:ajax event="change" update="panelDeriv" />                                
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="N°: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Asunto: "/>
-                                <p:inputTextarea  rows="6" cols="33" />
-
-                                <p:outputLabel value="Referencia: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Oficina Interna: "/>
-                                <p:selectOneMenu id="identif"  >
-                                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
-                                    <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
-                                    <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
-                                    <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
-                                    <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
-                                    <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="Estado: "/>
-                                <p:outputLabel id="estado" />
-
-
-                                <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Hora: " />
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Motivo: " />
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Usuario: " />
-                                <p:outputLabel  />
-                            </p:panelGrid>
-                            <br></br>
-                            <center>
-                                <p:commandButton value="Guardar">
-                                    <f:ajax event="click" onevent="derivarDialog.hide()"/>
-                                </p:commandButton>
-                            </center>
-                        </p:dialog>-->
 
                     </center>
                     <br></br>

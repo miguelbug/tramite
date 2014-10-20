@@ -258,7 +258,6 @@
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItem itemLabel="OFICIOS" itemValue="119"/>
                                     <f:selectItem itemLabel="INFORME" itemValue="2"/>
-                                    <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="117"/>
                                     <f:selectItem itemLabel="MEMORANDUM MULTIPLE" itemValue="120"/>
                                     <f:selectItem itemLabel="MEMORANDUM" itemValue="118"/>
                                     <f:selectItem itemLabel="DIRECTIVA" itemValue="121"/>
@@ -296,65 +295,7 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-
-                        <p:dialog header="Derivación -" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:panelGrid columns="2" id="panelDeriv">
-
-                                <p:outputLabel value="Tipo de Documento: "/>
-                                <p:selectOneMenu id="tipodocum">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
-                                    <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
-                                    <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
-                                    <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
-                                    <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
-                                    <p:ajax event="change" update="panelDeriv" />                                
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="N°: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Asunto: "/>
-                                <p:inputTextarea  rows="6" cols="33" />
-
-                                <p:outputLabel value="Referencia: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Oficina Interna: "/>
-                                <p:selectOneMenu id="identif"  >
-                                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
-                                    <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
-                                    <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
-                                    <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
-                                    <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
-                                    <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="Estado: "/>
-                                <p:outputLabel id="estado" />
-
-
-                                <p:outputLabel value="Fecha: "/>
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Hora: " />
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Motivo: " />
-                                <p:outputLabel />
-
-                                <p:outputLabel value="Usuario: " />
-                                <p:outputLabel  />
-                            </p:panelGrid>
-                            <br></br>
-                            <center>
-                                <p:commandButton value="Guardar">
-                                    <f:ajax event="click" onevent="derivarDialog.hide()"/>
-                                </p:commandButton>
-                            </center>
-                        </p:dialog>
-
+                        
                     </center>
                     <br></br>
                     <br></br>
