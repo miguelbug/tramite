@@ -6,7 +6,7 @@
     <class name="maping.Anios" table="ANIOS" schema="MIGUEL">
         <id name="idanios" type="long">
             <column name="IDANIOS" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="anio" type="string">
             <column name="ANIO" length="5" />

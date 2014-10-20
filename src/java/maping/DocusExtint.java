@@ -20,6 +20,7 @@ public class DocusExtint  implements java.io.Serializable {
      private String numerodoc;
      private String asunto;
      private Date fecha;
+     private Short movimientoDext;
      private Set<Proveido> proveidos = new HashSet<Proveido>(0);
 
     public DocusExtint() {
@@ -29,17 +30,19 @@ public class DocusExtint  implements java.io.Serializable {
     public DocusExtint(long id) {
         this.id = id;
     }
-    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Usuario usuario, DocusExt docusExt, String numerodoc, String asunto, Date fecha, Set<Proveido> proveidos) {
-       this.id = id;
-       this.dependenciaByCodigo1 = dependenciaByCodigo1;
-       this.dependenciaByCodigo = dependenciaByCodigo;
-       this.usuario = usuario;
-       this.docusExt = docusExt;
-       this.numerodoc = numerodoc;
-       this.asunto = asunto;
-       this.fecha = fecha;
-       this.proveidos = proveidos;
+
+    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Usuario usuario, DocusExt docusExt, String numerodoc, String asunto, Date fecha, Short movimientoDext) {
+        this.id = id;
+        this.dependenciaByCodigo1 = dependenciaByCodigo1;
+        this.dependenciaByCodigo = dependenciaByCodigo;
+        this.usuario = usuario;
+        this.docusExt = docusExt;
+        this.numerodoc = numerodoc;
+        this.asunto = asunto;
+        this.fecha = fecha;
+        this.movimientoDext = movimientoDext;
     }
+    
    
     public long getId() {
         return this.id;
@@ -103,6 +106,14 @@ public class DocusExtint  implements java.io.Serializable {
     
     public void setProveidos(Set<Proveido> proveidos) {
         this.proveidos = proveidos;
+    }
+
+    public Short getMovimientoDext() {
+        return movimientoDext;
+    }
+
+    public void setMovimientoDext(Short movimientoDext) {
+        this.movimientoDext = movimientoDext;
     }
 
 

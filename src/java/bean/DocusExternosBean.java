@@ -29,6 +29,7 @@ import maping.DocusExtint;
 import maping.Proveido;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -75,6 +76,7 @@ public class DocusExternosBean implements Serializable{
         a2 = false;
         MostrarDocusExt();
     }
+    
     public void MostrarDocusExt(){
         System.out.println("mostrar docus extint");
         documentosext.clear();
@@ -242,6 +244,7 @@ public class DocusExternosBean implements Serializable{
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));
+            di.setMovimientoDext(Short.parseShort("1"));
             de = deriv.getDocuExt(documento);
             di.setDocusExt(de);
             di.setUsuario(usu);
@@ -258,6 +261,7 @@ public class DocusExternosBean implements Serializable{
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
+            MostrarDocusExt();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");

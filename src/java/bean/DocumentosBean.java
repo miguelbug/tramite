@@ -101,10 +101,10 @@ public class DocumentosBean implements Serializable {
     }
     
     public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("Doc. Generales")) {
+        if (event.getTab().getTitle().equals("SISG")) {
             MostrarDocumentos();
         } else {
-            if(event.getTab().getTitle().equals("Doc. Confirmados")){
+            if(event.getTab().getTitle().equals("SIS-OGPL")){
                 MostrarDocusInternos();
             }
         }
