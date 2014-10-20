@@ -1,5 +1,5 @@
 package maping;
-// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
+// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -14,9 +14,9 @@ public class Proveido  implements java.io.Serializable {
      private Dependencia dependenciaByCodigo1;
      private DocusExtint docusExtint;
      private Dependencia dependenciaByCodigo;
-     private Date fechareg;
-     private Date fechaenvio;
      private String correlativod;
+     private Date fecharegistro;
+     private Date fechaenvio;
 
     public Proveido() {
     }
@@ -25,14 +25,14 @@ public class Proveido  implements java.io.Serializable {
     public Proveido(long correla) {
         this.correla = correla;
     }
-    public Proveido(long correla, Dependencia dependenciaByCodigo1, DocusExtint docusExtint, Dependencia dependenciaByCodigo, Date fechareg, Date fechaenvio, String correlativod) {
+    public Proveido(long correla, Dependencia dependenciaByCodigo1, DocusExtint docusExtint, Dependencia dependenciaByCodigo, String correlativod, Date fecharegistro, Date fechaenvio) {
        this.correla = correla;
        this.dependenciaByCodigo1 = dependenciaByCodigo1;
        this.docusExtint = docusExtint;
        this.dependenciaByCodigo = dependenciaByCodigo;
-       this.fechareg = fechareg;
+       this.correlativod = correlativod;
+       this.fecharegistro = fecharegistro;
        this.fechaenvio = fechaenvio;
-       this.correlativod=correlativod;
     }
    
     public long getCorrela() {
@@ -63,12 +63,19 @@ public class Proveido  implements java.io.Serializable {
     public void setDependenciaByCodigo(Dependencia dependenciaByCodigo) {
         this.dependenciaByCodigo = dependenciaByCodigo;
     }
-    public Date getFechareg() {
-        return this.fechareg;
+    public String getCorrelativod() {
+        return this.correlativod;
     }
     
-    public void setFechareg(Date fechareg) {
-        this.fechareg = fechareg;
+    public void setCorrelativod(String correlativod) {
+        this.correlativod = correlativod;
+    }
+    public Date getFecharegistro() {
+        return this.fecharegistro;
+    }
+    
+    public void setFecharegistro(Date fecharegistro) {
+        this.fecharegistro = fecharegistro;
     }
     public Date getFechaenvio() {
         return this.fechaenvio;
@@ -76,14 +83,6 @@ public class Proveido  implements java.io.Serializable {
     
     public void setFechaenvio(Date fechaenvio) {
         this.fechaenvio = fechaenvio;
-    }
-
-    public String getCorrelativod() {
-        return correlativod;
-    }
-
-    public void setCorrelativod(String correlativod) {
-        this.correlativod = correlativod;
     }
 
 

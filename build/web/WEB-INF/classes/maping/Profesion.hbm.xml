@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.Profesion" table="PROFESION" schema="MIGUEL">
+        <id name="idProfesion" type="big_decimal">
+            <column name="ID_PROFESION" precision="30" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="profesionNombre" type="string">
+            <column name="PROFESION_NOMBRE" length="60" />
+        </property>
+        <property name="profesionSiglas" type="string">
+            <column name="PROFESION_SIGLAS" length="15" />
+        </property>
+        <set name="jefaturas" table="JEFATURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PROFESION" precision="30" scale="0" />
+            </key>
+            <one-to-many class="maping.Jefatura" />
+        </set>
+    </class>
+</hibernate-mapping>

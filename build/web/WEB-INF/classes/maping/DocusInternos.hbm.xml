@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 09/10/2014 03:11:59 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
         <id name="idtip" type="int">
             <column name="IDTIP" precision="5" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />

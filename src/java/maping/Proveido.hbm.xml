@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 09/10/2014 03:11:59 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Proveido" table="PROVEIDO" schema="MIGUEL">
         <id name="correla" type="long">
             <column name="CORRELA" precision="10" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
@@ -17,14 +17,14 @@
         <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
-        <property name="fechareg" type="date">
-            <column name="FECHAREG" length="7" />
+        <property name="correlativod" type="string">
+            <column name="CORRELATIVOD" length="30" />
+        </property>
+        <property name="fecharegistro" type="date">
+            <column name="FECHAREGISTRO" length="7" />
         </property>
         <property name="fechaenvio" type="date">
             <column name="FECHAENVIO" length="7" />
-        </property>
-        <property name="correlativod" type="string">
-            <column name="CORRELATIVOD" length="30" />
         </property>
     </class>
 </hibernate-mapping>

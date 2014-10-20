@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.OficCirc" table="OFIC_CIRC" schema="MIGUEL">
+        <id name="idOfcirc" type="long">
+            <column name="ID_OFCIRC" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <property name="correlaOficic" type="string">
+            <column name="CORRELA_OFICIC" length="30" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="300" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" />
+        </property>
+        <set name="detallOficcircs" table="DETALL_OFICCIRC" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_OFCIRC" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.DetallOficcirc" />
+        </set>
+    </class>
+</hibernate-mapping>

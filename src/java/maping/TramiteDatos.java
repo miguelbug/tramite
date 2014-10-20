@@ -1,5 +1,5 @@
 package maping;
-// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
+// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -13,8 +13,8 @@ public class TramiteDatos  implements java.io.Serializable {
 
 
      private String tramNum;
-     private Usuario usuario;
      private Dependencia dependencia;
+     private Usuario usuario;
      private Date tramFecha;
      private String tramObs;
      private String estaDescrip;
@@ -30,10 +30,10 @@ public class TramiteDatos  implements java.io.Serializable {
         this.tramNum = tramNum;
         this.tramFecha = tramFecha;
     }
-    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
+    public TramiteDatos(String tramNum, Dependencia dependencia, Usuario usuario, Date tramFecha, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
        this.tramNum = tramNum;
-       this.usuario = usuario;
        this.dependencia = dependencia;
+       this.usuario = usuario;
        this.tramFecha = tramFecha;
        this.tramObs = tramObs;
        this.estaDescrip = estaDescrip;
@@ -49,19 +49,19 @@ public class TramiteDatos  implements java.io.Serializable {
     public void setTramNum(String tramNum) {
         this.tramNum = tramNum;
     }
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
     public Dependencia getDependencia() {
         return this.dependencia;
     }
     
     public void setDependencia(Dependencia dependencia) {
         this.dependencia = dependencia;
+    }
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     public Date getTramFecha() {
         return this.tramFecha;

@@ -9,10 +9,12 @@
     <property name="hibernate.connection.password">miguelon</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="maping/OficCirc.hbm.xml"/>
     <mapping resource="maping/Dependencia.hbm.xml"/>
     <mapping resource="maping/TipoDocu.hbm.xml"/>
     <mapping resource="maping/Proveido.hbm.xml"/>
     <mapping resource="maping/DocusExt.hbm.xml"/>
+    <mapping resource="maping/DetallOficcirc.hbm.xml"/>
     <mapping resource="maping/TramiteDatos.hbm.xml"/>
     <mapping resource="maping/Jefatura.hbm.xml"/>
     <mapping resource="maping/DocusInternos.hbm.xml"/>
@@ -20,6 +22,7 @@
     <mapping resource="maping/Anios.hbm.xml"/>
     <mapping resource="maping/DocusExtint.hbm.xml"/>
     <mapping resource="maping/Usuario.hbm.xml"/>
+    <mapping resource="maping/Profesion.hbm.xml"/>
     <mapping resource="maping/Indicador.hbm.xml"/>
     <mapping resource="maping/Oficina.hbm.xml"/>
     <mapping resource="maping/Temporal.hbm.xml"/>

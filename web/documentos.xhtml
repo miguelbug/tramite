@@ -62,7 +62,7 @@
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
                                                          update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
@@ -151,9 +151,6 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tablaproveidos" icon="ui-icon-extlink" value="Doc. Externos" style="position:absolute; left:30px; height:26px" oncomplete="PF('provDialog').show()"
                                                          update=":form:panelProv, :form:docextpanel" actionListener="#{docusExternosBean.Proveidoo()}">
-                                        </p:commandButton>
-                                        <p:commandButton process="tablaproveidos" icon="ui-icon-extlink" value="Doc. Externos" style="position:absolute; left:30px; height:26px" oncomplete="PF('provDialog').show()"
-                                                         update=":form:panelProv, :form:docextpanel" actionListener="#{docusExternosBean.Derivar()}">
                                         </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
@@ -274,7 +271,7 @@
                                 <p:inputTextarea  rows="6" cols="33" value="#{docusExternosBean.asunto}"/>
 
                                 <p:outputLabel value="Dep. Origen: "/>
-                                <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px">
+                                <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:150px">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
                                 </p:selectOneMenu>
@@ -303,7 +300,7 @@
                             <p:panelGrid columns="2" id="panelDeriv">
 
                                 <p:outputLabel value="Tipo de Documento: "/>
-                                <p:selectOneMenu id="tipodocum" ">
+                                <p:selectOneMenu id="tipodocum">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
                                     <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
@@ -351,7 +348,7 @@
                             </p:panelGrid>
                             <br></br>
                             <center>
-                                <p:commandButton value="Guardar" update="growl">
+                                <p:commandButton value="Guardar">
                                     <f:ajax event="click" onevent="derivarDialog.hide()"/>
                                 </p:commandButton>
                             </center>

@@ -1,5 +1,5 @@
 package maping;
-// Generated 09/10/2014 03:11:57 PM by Hibernate Tools 3.6.0
+// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -14,13 +14,12 @@ public class DocusExtint  implements java.io.Serializable {
 
      private long id;
      private Dependencia dependenciaByCodigo1;
-     private Usuario usuario;
      private Dependencia dependenciaByCodigo;
+     private Usuario usuario;
      private DocusExt docusExt;
      private String numerodoc;
      private String asunto;
      private Date fecha;
-     private short movimientoDext;
      private Set<Proveido> proveidos = new HashSet<Proveido>(0);
 
     public DocusExtint() {
@@ -30,19 +29,17 @@ public class DocusExtint  implements java.io.Serializable {
     public DocusExtint(long id) {
         this.id = id;
     }
-
-    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, DocusExt docusExt, String numerodoc, String asunto, Date fecha, short movimientoDext) {
-        this.id = id;
-        this.dependenciaByCodigo1 = dependenciaByCodigo1;
-        this.usuario = usuario;
-        this.dependenciaByCodigo = dependenciaByCodigo;
-        this.docusExt = docusExt;
-        this.numerodoc = numerodoc;
-        this.asunto = asunto;
-        this.fecha = fecha;
-        this.movimientoDext = movimientoDext;
+    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Dependencia dependenciaByCodigo, Usuario usuario, DocusExt docusExt, String numerodoc, String asunto, Date fecha, Set<Proveido> proveidos) {
+       this.id = id;
+       this.dependenciaByCodigo1 = dependenciaByCodigo1;
+       this.dependenciaByCodigo = dependenciaByCodigo;
+       this.usuario = usuario;
+       this.docusExt = docusExt;
+       this.numerodoc = numerodoc;
+       this.asunto = asunto;
+       this.fecha = fecha;
+       this.proveidos = proveidos;
     }
-    
    
     public long getId() {
         return this.id;
@@ -58,19 +55,19 @@ public class DocusExtint  implements java.io.Serializable {
     public void setDependenciaByCodigo1(Dependencia dependenciaByCodigo1) {
         this.dependenciaByCodigo1 = dependenciaByCodigo1;
     }
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
     public Dependencia getDependenciaByCodigo() {
         return this.dependenciaByCodigo;
     }
     
     public void setDependenciaByCodigo(Dependencia dependenciaByCodigo) {
         this.dependenciaByCodigo = dependenciaByCodigo;
+    }
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     public DocusExt getDocusExt() {
         return this.docusExt;
@@ -108,13 +105,8 @@ public class DocusExtint  implements java.io.Serializable {
         this.proveidos = proveidos;
     }
 
-    public short getMovimientoDext() {
-        return movimientoDext;
-    }
 
-    public void setMovimientoDext(short movimientoDext) {
-        this.movimientoDext = movimientoDext;
-    }
+
 
 }
 

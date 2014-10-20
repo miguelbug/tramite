@@ -251,7 +251,7 @@ public class DocusExternosBean implements Serializable{
             p.setDependenciaByCodigo1(deriv.getDep(destino));
             p.setDocusExtint(di);
             p.setFechaenvio(fechaprov);
-            p.setFechareg(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
+            p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
             
             deriv.guardarDocusExt(di);
             deriv.GuardarProveido(p);
