@@ -47,16 +47,15 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
-    public List<String> getDependencias(String tipo) {
-        List<String> depes = new ArrayList<String>();
+    public List<String> getDependencias() {
+        List<String> depes =new ArrayList<String>();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get dependencias");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select NOMBRE \n"
-                    + "from DEPENDENCIA\n"
-                    + "WHERE TIPODEPE='"+tipo+"'");
-            depes = (List<String>)query.list();
+            Query query = session.createSQLQuery("select NOMBRE,TIPODEPE\n"
+                    + "from DEPENDENCIA");
+            depes =(List<String>)query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {

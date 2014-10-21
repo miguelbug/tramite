@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -25,7 +25,7 @@ import javax.faces.event.ActionEvent;
  * @author OGPL
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class OficioBean {
 
     private String tipodepe;
@@ -37,56 +37,79 @@ public class OficioBean {
     private String correlativo = "";
     private List otrosdocus;
     private List docselec;
-    private List<String> depe;
+    public List depe2;
+    private List depe;
     private String[] escojidos;
-    
+    private String asunto;
+    private Date fecha;
+    private String firma;
+    private String responsable;
+    private String arearesponsable;
+
     public OficioBean() {
         od = new OficioDaoImpl();
         oficioscirculares = new ArrayList<Map<String, String>>();
-        depe= new ArrayList<String>();
+        depe2 = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
+        depe = new ArrayList<Map<String, String>>();
         mostrarofCirc();
+        llenardepes();
     }
-    public void obtenerDepes(ActionEvent e){
-        try{
-            System.out.println("entra a obtener depes");
-            List<String> aux=od.getDependencias(tipodepe);
-            for(int i=0;i<aux.size();i++){
-                depe.add(aux.get(i));
-            }
-            for(int i=0;i<depe.size();i++){
-                System.out.println(depe.get(i).toString());
-            }
-            
-        }
-        catch(Exception ex){
-            System.out.println("esta mal obtener depes u.u");
-            System.out.println(ex.getMessage());
-        }
-        
-        /*System.out.println("listando dependencias");
+
+    public void llenardepes() {
+        System.out.println("listando depes");
         depe.clear();
         try {
             List lista = new ArrayList();
-            lista = od.getDependencias(tipodepe);
+            lista = od.getDependencias();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[1];
+            Object obj[] = new Object[2];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", String.valueOf(obj[0]));
+                listaaux.put("tipo", String.valueOf(obj[1]));
+                depe.add(listaaux);
             }
         } catch (Exception e) {
-            System.out.println("mal");
             System.out.println(e.getMessage());
-        }*/
-    }
-    public void guardar(){
-        for(int i=0;i<escojidos.length;i++){
-            System.out.println(escojidos[i]);
         }
-        
     }
+
+    public void llenar(ActionEvent ex) {
+        System.out.println(tipodepe);
+        boolean valor=false;
+        String tipo="";
+        String nombre="";
+        for (int i = 0; i < depe.size(); i++) {
+            HashMap hashMap = (HashMap) depe.get(i);
+            Iterator it = hashMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry e = (Map.Entry) it.next();
+                System.out.println("key: "+e.getKey().toString()+"----"+"Value: "+e.getValue().toString());
+                if(e.getKey().toString().equals("nombre")){
+                    nombre=e.getValue().toString();
+                }
+                if(e.getKey().toString().equals("tipo")){
+                    tipo=e.getValue().toString();
+                }
+            }
+            System.out.println("\n");
+            if(tipodepe.equals(tipo)){
+                System.out.println("ENTRA A GUARDAR EN DEPE2");
+                Map<String, String> listaaux=new HashMap<String,String>();
+                listaaux.put("nombre",nombre);
+                depe2.add(listaaux);
+            }
+            valor=false;
+        }
+    }
+    
+
+    public void guardar() {
+
+    }
+
     public void mostrarofCirc() {
         System.out.println("listando documentos");
         oficioscirculares.clear();
@@ -109,10 +132,15 @@ public class OficioBean {
             System.out.println(e.getMessage());
         }
     }
-    public void crearOficio(){
+    public void generarFecha(){
+        fecha= new Date();
+    }
+    public void crearOficio() {
+        generarFecha();
         getAnio();
         generarCorrelativo();
     }
+
     public void getAnio() {
         System.out.println("entra getanio");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -229,8 +257,20 @@ public class OficioBean {
         this.docselec = docselec;
     }
 
+    public List getDepe2() {
+        return depe2;
+    }
+
+    public void setDepe2(List depe2) {
+        this.depe2 = depe2;
+    }
+
     public List<String> getDepe() {
         return depe;
+    }
+
+    public void setDepe(List<String> depe) {
+        this.depe = depe;
     }
 
     public String[] getEscojidos() {
@@ -240,5 +280,45 @@ public class OficioBean {
     public void setEscojidos(String[] escojidos) {
         this.escojidos = escojidos;
     }
-    
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getArearesponsable() {
+        return arearesponsable;
+    }
+
+    public void setArearesponsable(String arearesponsable) {
+        this.arearesponsable = arearesponsable;
+    }
+
 }

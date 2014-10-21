@@ -16,11 +16,8 @@
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
                 <h:form id="form" >
-                    <br></br>
-                    <br></br>
-                    <center>
-                        <p:tabView>
-
+                    <p:tabView>
+                        <center>
                             <p:tab title="OFICIOS CIRCULARES">
                                 <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -49,38 +46,50 @@
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
-                            <p:tab title="OFICIOS">
+                        </center>
+                    </p:tabView>
+                    
 
-                            </p:tab>
-                        </p:tabView>
-                        <p:dialog header="Oficio Circular - #{oficioBean.correlativo}" widgetVar="oficioCdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="oficiocircD">
-                            <p:panelGrid columns="2" id="panelOficioCirc" >
+                    <p:dialog header="Oficio Circular - #{oficioBean.correlativo}" widgetVar="oficioCdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" id="oficiocircD">
+                        <p:panelGrid columns="2">
+                            <p:selectOneMenu id="documentos" value="#{oficioBean.tipodepe}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItem itemLabel="FACULTAD" itemValue="facultad"/>
+                                <f:selectItem itemLabel="DEPENDENCIA INTERNA" itemValue="DependenciaInterna"/>
+                                <f:selectItem itemLabel="DEPENDENCIA EXTERNA" itemValue="DependenciaExterna"/>
+                                <p:ajax event="change" listener="#{oficioBean.llenar(ex)}" update=":form:tablaoficioscirculares" />
+                            </p:selectOneMenu>
+                            <p:dataTable var="item" value="#{oficioBean.depe2}" scrollable="true" id="tablaoficioscirculares" style="width:250px;">
+                                <p:column headerText="Nombre" width="5" sortBy="#{item.nombre}" filterBy="#{item.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.nombre}"/>
+                                </p:column>
+                            </p:dataTable>
 
-                                <p:outputLabel for="tipodestino" value="Escoja Tipo de Dependencia: "/>
-                                <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodepe}" style="width:150px">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItem itemLabel="Facultades" itemValue="facultad"/>
-                                    <f:selectItem itemLabel="Dependencia Interna" itemValue="depeInterna"/>
-                                    <f:selectItem itemLabel="Dependencia Externa" itemValue="depeExterna"/>
-                                    <p:ajax event="change" listener="#{oficioBean.obtenerDepes(e)}" update=":form:menu"/>
-                                </p:selectOneMenu>
+                            <p:outputLabel value="Asunto:"/>
+                            <p:inputTextarea value="#{oficioBean.asunto}" rows="6" cols="33"/>
 
-                                <p:outputLabel for="menu" value="Escoja Dependencia: "/>
-                                <p:selectCheckboxMenu id="menu" value="#{oficioBean.escojidos}" label="Escoja" filter="true" filterMatchMode="startsWith" panelStyle="width:250px" >
-                                    <f:selectItems value="#{oficioBean.depe}"/>
-                                </p:selectCheckboxMenu>
-                            </p:panelGrid>
-                            <br></br>
-                            <center>
-                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="oficiocircD">
-                                    <f:ajax event="click" onevent="oficioCdialog.hide()"/>
-                                </p:commandButton>
-                            </center>
-                        </p:dialog>
+                            <p:outputLabel value="Fecha:"/>
+                            <p:inputText value="#{oficioBean.fecha}"/>
 
-                    </center>
+                            <p:outputLabel value="Firma:"/>
+                            <p:outputLabel value="#{oficioBean.firma}"/>
+
+                            <p:outputLabel value="Responsable:"/>
+                            <p:inputText value="#{oficioBean.responsable}"/>
+
+                            <p:outputLabel value="Área Responsable:"/>
+                            <p:inputText value="#{oficioBean.arearesponsable}"/>
+                        </p:panelGrid>
+
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="oficiocircD">
+                                <f:ajax event="click" onevent="oficioCdialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
                     <br></br>
-                    <br></br>
+                    <br></br>	
                 </h:form>
             </ui:define>
         </ui:composition>

@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface OficioDAO {
     public List getOficiosCirculares();
-    public List<String> getDependencias(String tipo);
+    public List getDependencias();
 }
