@@ -17,41 +17,69 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <p:tabView>
-                        <center>
-                            <p:tab title="OFICIOS CIRCULARES">
-                                <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}" selection="#{oficioBean.docselec}"
-                                             rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                        <p:tab title="OFICIOS CIRCULARES">
+                            <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}" selection="#{oficioBean.docselec}"
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                    <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.correlativo}"/>
-                                    </p:column>
-                                    <p:column headerText="ASUNTO" width="3" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.asunto}"/>
-                                    </p:column>
-                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.origen}"/>
-                                    </p:column>
-                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.destino}"/>
-                                    </p:column>
-                                    <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.fecha}" />
-                                    </p:column>
-                                    <f:facet name="footer">
-                                        <p:commandButton process="tablaoficios" icon="ui-icon-arrowstop-1-s" value="Crear Oficios Circ." style="position:absolute; left:25px; height:26px " oncomplete="PF('oficioCdialog').show()"
-                                                         update=":form:oficiocircD" actionListener="#{oficioBean.crearOficio()}"/>
-                                    </f:facet>
-                                </p:dataTable>
-                            </p:tab>
-                        </center>
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.correlativo}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="3" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asunto}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                                <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="tablaoficios" icon="ui-icon-arrowstop-1-s" value="Crear Oficios Circ." style="position:absolute; left:25px; height:26px " oncomplete="PF('oficioCdialog').show()"
+                                                     update=":form:oficiocircD" actionListener="#{oficioBean.crearOficio()}"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="GENERAR OFICIOS CIRCULARES">
+                            <center>
+                                <p:panelGrid columns="2" style="width: 40%">
+                                    <p:outputLabel value="Escoja Destino(s):"/>
+                                    <p:dataTable var="car" value="#{oficioBean.depe}" scrollable="true" scrollHeight="300" id="tablaoficioscirculares" selection="#{oficioBean.docselec}"
+                                                 rowKey="#{car.nombre}" style="width: 80%">
+                                        <p:column selectionMode="multiple" style="width:20px;text-align:center"/>
+                                        <p:column headerText="Nombre" style="width:40%;text-align:center; padding-top: 1">
+                                            <h:outputText value="#{car.nombre}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                    <p:outputLabel value="Asunto:"/>
+                                    <p:inputTextarea value="#{oficioBean.asunto}" rows="6" cols="33"/>
+
+                                    <p:outputLabel value="Fecha:"/>
+                                    <p:inputText value="#{oficioBean.fecha}"/>
+
+                                    <p:outputLabel value="Firma:"/>
+                                    <p:outputLabel value="#{oficioBean.firma}"/>
+
+                                    <p:outputLabel value="Responsable:"/>
+                                    <p:inputText value="#{oficioBean.responsable}"/>
+
+                                    <p:outputLabel value="Área Responsable:"/>
+                                    <p:inputText value="#{oficioBean.arearesponsable}"/>
+                                </p:panelGrid>
+
+                                <p:commandButton icon="ui-icon-arrowstop-1-s" value="Guardar" update=":form:oficiocircD" actionListener="#{oficioBean.guardar()}"/>
+                            </center>
+                        </p:tab>
                     </p:tabView>
-                    
 
-                    <p:dialog header="Oficio Circular - #{oficioBean.correlativo}" widgetVar="oficioCdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" id="oficiocircD">
-                        <p:panelGrid columns="2">
+
+                    <p:dialog header="Oficio Circular - #{oficioBean.correlativo}" widgetVar="oficioCdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="oficiocircD" width="60%">
+                        <p:panelGrid columns="2" style="width: 80%;height: 60%">
                             <p:selectOneMenu id="documentos" value="#{oficioBean.tipodepe}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="FACULTAD" itemValue="facultad"/>
@@ -59,8 +87,10 @@
                                 <f:selectItem itemLabel="DEPENDENCIA EXTERNA" itemValue="DependenciaExterna"/>
                                 <p:ajax event="change" listener="#{oficioBean.llenar(ex)}" update=":form:tablaoficioscirculares" />
                             </p:selectOneMenu>
-                            <p:dataTable var="item" value="#{oficioBean.depe2}" scrollable="true" id="tablaoficioscirculares" style="width:250px;">
-                                <p:column headerText="Nombre" width="5" sortBy="#{item.nombre}" filterBy="#{item.nombre}" filterMatchMode="contains">
+                            <p:dataTable var="item" value="#{oficioBean.depe2}" scrollable="true" id="tablaoficioscirculares" style="width:80%;margin-bottom: 0" scrollHeight="200"
+                                         selection="#{oficioBean.seleccionados}" rowKey="#{item.nombre}" >
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="Nombre" width="5"  sortBy="#{item.nombre}" filterBy="#{item.nombre}" filterMatchMode="contains">
                                     <h:outputText value="#{item.nombre}"/>
                                 </p:column>
                             </p:dataTable>

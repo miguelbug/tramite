@@ -21,6 +21,21 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public String getFirma() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getResponsable(String usuario) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getAreaResponsable(String usuario) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public List getOficiosCirculares() {
         List oficioscirc = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();

@@ -15,4 +15,7 @@ import java.util.List;
 public interface OficioDAO {
     public List getOficiosCirculares();
     public List getDependencias();
+    public String getFirma();
+    public String getResponsable(String usuario);
+    public String getAreaResponsable(String usuario);
 }

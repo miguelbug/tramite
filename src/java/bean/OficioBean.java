@@ -5,6 +5,7 @@
  */
 package bean;
 
+import static bean.DocumentosBean.tranum;
 import dao.DerivarDAO;
 import dao.OficioDAO;
 import daoimpl.DerivarDaoImpl;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -25,7 +27,7 @@ import javax.faces.event.ActionEvent;
  * @author OGPL
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class OficioBean {
 
     private String tipodepe;
@@ -45,6 +47,9 @@ public class OficioBean {
     private String firma;
     private String responsable;
     private String arearesponsable;
+    private List seleccionados;
+    private boolean aparece;
+    private String auxfecha;
 
     public OficioBean() {
         od = new OficioDaoImpl();
@@ -76,37 +81,51 @@ public class OficioBean {
         }
     }
 
-    public void llenar(ActionEvent ex) {
+    public void mostrar() {
+        System.out.println("entra a mostrar");
+        System.out.println(docselec);
+        for (int i = 0; i < docselec.size(); i++) {
+            System.out.println("entra aca");
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+            Iterator it = hm.entrySet().iterator();
+            while (it.hasNext()) {
+                System.out.println("entra otra aca");
+                Map.Entry e = (Map.Entry) it.next();
+                System.out.println(e.getKey().toString()+"--"+e.getValue().toString());
+
+            }
+        }
+    }
+
+    public void llenar() {
         System.out.println(tipodepe);
-        boolean valor=false;
-        String tipo="";
-        String nombre="";
+        boolean valor = false;
+        String tipo = "";
+        String nombre = "";
         for (int i = 0; i < depe.size(); i++) {
             HashMap hashMap = (HashMap) depe.get(i);
             Iterator it = hashMap.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry e = (Map.Entry) it.next();
-                System.out.println("key: "+e.getKey().toString()+"----"+"Value: "+e.getValue().toString());
-                if(e.getKey().toString().equals("nombre")){
-                    nombre=e.getValue().toString();
+                if (e.getKey().toString().equals("nombre")) {
+                    nombre = e.getValue().toString();
                 }
-                if(e.getKey().toString().equals("tipo")){
-                    tipo=e.getValue().toString();
+                if (e.getKey().toString().equals("tipo")) {
+                    tipo = e.getValue().toString();
                 }
             }
-            System.out.println("\n");
-            if(tipodepe.equals(tipo)){
+            if (tipodepe.equals(tipo)) {
                 System.out.println("ENTRA A GUARDAR EN DEPE2");
-                Map<String, String> listaaux=new HashMap<String,String>();
-                listaaux.put("nombre",nombre);
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("nombre", nombre);
                 depe2.add(listaaux);
             }
-            valor=false;
+            valor = false;
         }
     }
-    
 
     public void guardar() {
+        aparece = false;
 
     }
 
@@ -132,13 +151,22 @@ public class OficioBean {
             System.out.println(e.getMessage());
         }
     }
-    public void generarFecha(){
-        fecha= new Date();
+
+    public void generarFecha() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        auxfecha= sdf.format(fecha);
+        System.out.println(auxfecha);
+        
     }
+
     public void crearOficio() {
         generarFecha();
         getAnio();
         generarCorrelativo();
+        System.out.println("CAMBIA");
+        aparece = true;
     }
 
     public void getAnio() {
@@ -319,6 +347,30 @@ public class OficioBean {
 
     public void setArearesponsable(String arearesponsable) {
         this.arearesponsable = arearesponsable;
+    }
+
+    public List getSeleccionados() {
+        return seleccionados;
+    }
+
+    public void setSeleccionados(List seleccionados) {
+        this.seleccionados = seleccionados;
+    }
+
+    public boolean isAparece() {
+        return aparece;
+    }
+
+    public void setAparece(boolean aparece) {
+        this.aparece = aparece;
+    }
+
+    public String getAuxfecha() {
+        return auxfecha;
+    }
+
+    public void setAuxfecha(String auxfecha) {
+        this.auxfecha = auxfecha;
     }
 
 }
