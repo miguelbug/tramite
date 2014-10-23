@@ -23,8 +23,6 @@ public class Jefatura  implements java.io.Serializable {
      private String grado;
      private String correo;
      private String dni;
-     private String apellido;
-     private String profesion_1;
      private Set<Dependencia> dependencias = new HashSet<Dependencia>(0);
 
     public Jefatura() {
@@ -34,7 +32,7 @@ public class Jefatura  implements java.io.Serializable {
     public Jefatura(BigDecimal idJefatura) {
         this.idJefatura = idJefatura;
     }
-    public Jefatura(BigDecimal idJefatura, Usuario usuario, Profesion profesion, String nombre, String apellidos, String telefono, String anexo, String cargo, String grado, String correo, String dni, String apellido, String profesion_1, Set<Dependencia> dependencias) {
+    public Jefatura(BigDecimal idJefatura, Usuario usuario, Profesion profesion, String nombre, String apellidos, String telefono, String anexo, String cargo, String grado, String correo, String dni, Set<Dependencia> dependencias) {
        this.idJefatura = idJefatura;
        this.usuario = usuario;
        this.profesion = profesion;
@@ -46,8 +44,6 @@ public class Jefatura  implements java.io.Serializable {
        this.grado = grado;
        this.correo = correo;
        this.dni = dni;
-       this.apellido = apellido;
-       this.profesion_1 = profesion_1;
        this.dependencias = dependencias;
     }
    
@@ -128,20 +124,7 @@ public class Jefatura  implements java.io.Serializable {
     public void setDni(String dni) {
         this.dni = dni;
     }
-    public String getApellido() {
-        return this.apellido;
-    }
     
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-    public String getProfesion_1() {
-        return this.profesion_1;
-    }
-    
-    public void setProfesion_1(String profesion_1) {
-        this.profesion_1 = profesion_1;
-    }
     public Set<Dependencia> getDependencias() {
         return this.dependencias;
     }

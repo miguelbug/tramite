@@ -17,6 +17,8 @@ public class OficCirc  implements java.io.Serializable {
      private String correlaOficic;
      private String asunto;
      private Date fecha;
+     private String firma;
+     private String responsable;
      private Set<DetallOficcirc> detallOficcircs = new HashSet<DetallOficcirc>(0);
 
     public OficCirc() {
@@ -26,14 +28,17 @@ public class OficCirc  implements java.io.Serializable {
     public OficCirc(long idOfcirc) {
         this.idOfcirc = idOfcirc;
     }
-    public OficCirc(long idOfcirc, Dependencia dependencia, String correlaOficic, String asunto, Date fecha, Set<DetallOficcirc> detallOficcircs) {
-       this.idOfcirc = idOfcirc;
-       this.dependencia = dependencia;
-       this.correlaOficic = correlaOficic;
-       this.asunto = asunto;
-       this.fecha = fecha;
-       this.detallOficcircs = detallOficcircs;
+
+    public OficCirc(long idOfcirc, Dependencia dependencia, String correlaOficic, String asunto, Date fecha, String firma, String responsable) {
+        this.idOfcirc = idOfcirc;
+        this.dependencia = dependencia;
+        this.correlaOficic = correlaOficic;
+        this.asunto = asunto;
+        this.fecha = fecha;
+        this.firma = firma;
+        this.responsable = responsable;
     }
+    
    
     public long getIdOfcirc() {
         return this.idOfcirc;
@@ -78,8 +83,21 @@ public class OficCirc  implements java.io.Serializable {
         this.detallOficcircs = detallOficcircs;
     }
 
+    public String getFirma() {
+        return firma;
+    }
 
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
 
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
 
 }
 

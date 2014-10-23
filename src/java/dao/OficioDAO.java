@@ -7,6 +7,10 @@
 package dao;
 
 import java.util.List;
+import maping.Dependencia;
+import maping.DetallOficcirc;
+import maping.OficCirc;
+import maping.Oficina;
 
 /**
  *
@@ -15,7 +19,15 @@ import java.util.List;
 public interface OficioDAO {
     public List getOficiosCirculares();
     public List getDependencias();
-    public String getFirma();
+    public Dependencia getDependencia(String nombre);
+    public List getFirma();
     public String getResponsable(String usuario);
     public String getAreaResponsable(String usuario);
+    public void guardarOficioCircular(OficCirc ofi);
+    public Dependencia getDependencias2(String nombre);
+    public Long getIndice(String correlativo);
+    public void guardarDetalleOfCirc(DetallOficcirc deofi);
+    public OficCirc getOficioCircular(String correla);
+    public String getCorrelativo();
+    public Long getCodigo(String nombre);
 }

@@ -38,12 +38,6 @@
         <property name="dni" type="string">
             <column name="DNI" length="10" />
         </property>
-        <property name="apellido" type="string">
-            <column name="APELLIDO" length="100" />
-        </property>
-        <property name="profesion_1" type="string">
-            <column name="PROFESION" length="100" />
-        </property>
         <set name="dependencias" table="DEPENDENCIA" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_JEFATURA" precision="22" scale="0" />

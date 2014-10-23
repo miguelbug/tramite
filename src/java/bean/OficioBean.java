@@ -17,10 +17,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
+import maping.DetallOficcirc;
+import maping.DetallOficcircId;
+import maping.OficCirc;
+import maping.Usuario;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -50,15 +59,59 @@ public class OficioBean {
     private List seleccionados;
     private boolean aparece;
     private String auxfecha;
+    private FacesContext faceContext;
+    private Usuario usu;
 
     public OficioBean() {
+        faceContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
+        usu = (Usuario) session.getAttribute("sesionUsuario");
         od = new OficioDaoImpl();
         oficioscirculares = new ArrayList<Map<String, String>>();
         depe2 = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         depe = new ArrayList<Map<String, String>>();
+        getAnio();
         mostrarofCirc();
         llenardepes();
+        generarFecha();
+        generarCorrelativo();
+        responsable();
+        arearesponsable();
+        firma();
+
+    }
+
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getTitle().equals("OFICIOS CIRCULARES")) {
+            mostrarofCirc();
+        }
+
+    }
+
+    public void firma() {
+        System.out.println("firma");
+        try {
+            List lista = new ArrayList();
+            lista = od.getFirma();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[2];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                firma = String.valueOf(obj[0]) + " " + String.valueOf(obj[1]);
+            }
+        } catch (Exception e) {
+            System.out.println("mal firma");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void responsable() {
+        responsable = usu.getUsuNombre();
+    }
+
+    public void arearesponsable() {
+        arearesponsable = od.getAreaResponsable(usu.getOficina().getIdOficina());
     }
 
     public void llenardepes() {
@@ -81,25 +134,9 @@ public class OficioBean {
         }
     }
 
-    public void mostrar() {
-        System.out.println("entra a mostrar");
-        System.out.println(docselec);
-        for (int i = 0; i < docselec.size(); i++) {
-            System.out.println("entra aca");
-            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-            Iterator it = hm.entrySet().iterator();
-            while (it.hasNext()) {
-                System.out.println("entra otra aca");
-                Map.Entry e = (Map.Entry) it.next();
-                System.out.println(e.getKey().toString()+"--"+e.getValue().toString());
-
-            }
-        }
-    }
-
-    public void llenar() {
+    public void llenar(ActionEvent ex) {
+        depe2.clear();
         System.out.println(tipodepe);
-        boolean valor = false;
         String tipo = "";
         String nombre = "";
         for (int i = 0; i < depe.size(); i++) {
@@ -115,18 +152,77 @@ public class OficioBean {
                 }
             }
             if (tipodepe.equals(tipo)) {
-                System.out.println("ENTRA A GUARDAR EN DEPE2");
+                //System.out.println("ENTRA A GUARDAR EN DEPE2");
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", nombre);
                 depe2.add(listaaux);
             }
-            valor = false;
+        }
+
+    }
+
+    public void mostrar() {
+        Long indice = od.getIndice(correlativo);
+        System.out.println("entra a mostrar");
+        System.out.println(docselec);
+        for (int i = 0; i < docselec.size(); i++) {
+            System.out.println("entra aca");
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+            Iterator it = hm.entrySet().iterator();
+            while (it.hasNext()) {
+                System.out.println("entra otra aca");
+                Map.Entry e = (Map.Entry) it.next();
+                try {
+                    DetallOficcircId dofi = new DetallOficcircId();
+                    System.out.println("GUARDAR DEPENDENCIA");
+                    dofi.setCodigo(od.getCodigo(e.getValue().toString()));
+                    System.out.println("GUARDAR INDICE");
+                    dofi.setIdOfcirc(indice);
+                    DetallOficcirc dof = new DetallOficcirc();
+                    System.out.println("CREAR DETALLE OFICIO CIRCULAR");
+                    dof.setDependencia(od.getDependencias2(e.getValue().toString()));
+                    dof.setId(dofi);
+                    dof.setOficCirc(od.getOficioCircular(correlativo));
+                    od.guardarDetalleOfCirc(dof);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
         }
     }
 
     public void guardar() {
-        aparece = false;
+        FacesMessage message = null;
+        try {
+            OficCirc ofi = new OficCirc();
+            ofi.setCorrelaOficic(correlativo);
+            ofi.setAsunto(asunto);
+            ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
+            ofi.setFecha(fecha);
+            ofi.setFirma(firma);
+            ofi.setResponsable(responsable);
+            od.guardarOficioCircular(ofi);
+            mostrar();
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println(e.getMessage());
+        }
+        getAnio();
+        generarFecha();
+        generarCorrelativo();
+        responsable();
+        arearesponsable();
+        limpiar();
+        depe2.clear();
 
+    }
+
+    public void limpiar() {
+        asunto = "";
+        tipodepe = " ";
     }
 
     public void mostrarofCirc() {
@@ -136,7 +232,7 @@ public class OficioBean {
             List lista = new ArrayList();
             lista = od.getOficiosCirculares();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[5];
+            Object obj[] = new Object[7];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -145,6 +241,8 @@ public class OficioBean {
                 listaaux.put("origen", String.valueOf(obj[2]));
                 listaaux.put("destino", String.valueOf(obj[3]));
                 listaaux.put("fecha", String.valueOf(obj[4]));
+                listaaux.put("firma", String.valueOf(obj[5]));
+                listaaux.put("resp", String.valueOf(obj[6]));
                 oficioscirculares.add(listaaux);
             }
         } catch (Exception e) {
@@ -156,9 +254,9 @@ public class OficioBean {
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
-        auxfecha= sdf.format(fecha);
+        auxfecha = sdf.format(fecha);
         System.out.println(auxfecha);
-        
+
     }
 
     public void crearOficio() {
@@ -183,7 +281,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorreProv());
+                corr = Integer.parseInt(od.getCorrelativo());
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -371,6 +469,22 @@ public class OficioBean {
 
     public void setAuxfecha(String auxfecha) {
         this.auxfecha = auxfecha;
+    }
+
+    public FacesContext getFaceContext() {
+        return faceContext;
+    }
+
+    public void setFaceContext(FacesContext faceContext) {
+        this.faceContext = faceContext;
+    }
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
     }
 
 }

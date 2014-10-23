@@ -20,6 +20,12 @@
         <property name="fecha" type="date">
             <column name="FECHA" length="7" />
         </property>
+        <property name="firma" type="string">
+            <column name="FIRMA" length="70" />
+        </property>
+        <property name="responsable" type="string">
+            <column name="RESPONSABLE" length="70" />
+        </property>
         <set name="detallOficcircs" table="DETALL_OFICCIRC" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_OFCIRC" precision="10" scale="0" />
