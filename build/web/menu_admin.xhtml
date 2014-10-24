@@ -64,34 +64,34 @@
                 </center>
             </p:dialog>
 
-            <p:dialog header="Constancia - " widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog">
+            <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog">
                 <p:panelGrid columns="2" id="panelconst">
                     <p:outputLabel value="N° Correlativo:"/>
-                    <p:password value=""/>
+                    <p:password value="#{constanciaBean.correlativo}"/>
 
                     <p:outputLabel value="Origen:"/>
-                    <p:outputLabel value=""/>
+                    <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
 
                     <p:outputLabel value="Dirigido a:"/>
-                    <p:selectOneMenu id="constpersona" value="" >
+                    <p:selectOneMenu id="constpersona" value="#{constanciaBean.escogido}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value=""/>
+                        <f:selectItems value="#{constanciaBean.empleados}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Tipo de Contrato:"/>
-                    <p:outputLabel value=""/>
+                    <p:outputLabel value="#{constanciaBean.tipocontrato}"/>
 
                     <p:outputLabel value="Desde:"/>
-                    <p:calendar id="mask" value="" pattern="dd-MM-yyyy"/>
+                    <p:calendar id="mask" value="#{constanciaBean.desde}" pattern="dd-MM-yyyy"/>
 
                     <p:outputLabel value="Hasta:"/>
-                    <p:calendar id="mask1" value="" pattern="dd-MM-yyyy"/>
+                    <p:calendar id="mask1" value="#{constanciaBean.hasta}" pattern="dd-MM-yyyy"/>
 
                     <p:outputLabel value="Fecha de emision:"/>
-                    <p:calendar id="mask2" value="" pattern="dd-MM-yyyy"/>
+                    <p:calendar id="mask2" value="#{constanciaBean.fechaemision}" pattern="dd-MM-yyyy"/>
                 </p:panelGrid>
                 <center>
-                    <p:commandButton value="Guardar" actionListener="" update="panelconst">
+                    <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">
                         <f:ajax event="click" onevent="ConstDialog.hide()"/>
                     </p:commandButton>
                 </center>

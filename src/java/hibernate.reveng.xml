@@ -18,6 +18,7 @@
   <table-filter match-name="TEMPORAL"/>
   <table-filter match-name="CONSTANCIAS"/>
   <table-filter match-name="INDICADOR"/>
+  <table-filter match-name="TIPO_CONTRATO"/>
   <table-filter match-name="TRAMITE_DATOS"/>
   <table-filter match-name="TIPO_DOCU"/>
   <table-filter match-name="DOCUS_EXT"/>

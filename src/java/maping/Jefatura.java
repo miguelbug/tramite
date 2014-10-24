@@ -14,6 +14,7 @@ public class Jefatura  implements java.io.Serializable {
      private Usuario usuario;
      private Dependencia dependencia;
      private Profesion profesion;
+     private TipoContrato tipoContrato;
      private String nombre;
      private String apellidos;
      private String telefono;
