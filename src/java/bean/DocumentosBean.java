@@ -31,6 +31,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import maping.Oficios;
 import maping.Temporal;
 import maping.TipoDocu;
 import maping.TramiteDatos;
@@ -80,6 +81,7 @@ public class DocumentosBean implements Serializable {
     private String fechaaux;
     private String destino_ofic;
     private String correlativo_oficio;
+    private String referencia;
     
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -116,12 +118,44 @@ public class DocumentosBean implements Serializable {
         }
        
     }
+    public void guardaroficio(){
+        FacesMessage message = null;
+        System.out.println("guardar oficio");
+        try{
+            Oficios ofi= new Oficios();
+            ofi.setAsuntoOficio(asunto);
+            ofi.setFechaOficio(fecha);
+            ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
+            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
+            ofi.setCorrelativoOficio(correlativo_oficio);
+            ofi.setReferenciaOficio(dd.getMotivo(tramnum));
+            ofi.setTramiteDatos(deriv.getTramite(tramnum));
+            dd.guardarOficio(ofi);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            limpiar();
+        }catch(Exception e){
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println("mal guardar oficio");
+            System.out.println(e.getMessage());           
+        }
+        
+    }
+    public void limpiar(){
+        this.tramnum="";
+        this.referencia="";
+        this.asunto="";
+        this.fechaaux="";
+        this.destino_ofic="";
+    }
     public void mostrarOficio(){
         fecha= new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fechaaux=sdf.format(fecha);
         tramnum=obtenerNumeroTramite();
         correlativo_oficio=generarCorrelativo();
+        referencia=dd.getMotivo(tramnum);
     }
     public String getAnio() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -897,6 +931,14 @@ public class DocumentosBean implements Serializable {
 
     public void setCorrelativo_oficio(String correlativo_oficio) {
         this.correlativo_oficio = correlativo_oficio;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
 }

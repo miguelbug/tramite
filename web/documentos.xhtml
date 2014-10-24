@@ -167,6 +167,9 @@
 
                                     <p:outputLabel value="Expediente:"/>
                                     <p:outputLabel value="#{documentosBean.tramnum}"/>
+                                    
+                                    <p:outputLabel value="Referencia:"/>
+                                    <p:outputLabel value="#{documentosBean.referencia}"/>
 
                                     <p:outputLabel value="Asunto:"/>
                                     <p:inputTextarea  rows="6" cols="33" value="#{documentosBean.asunto}"/>
@@ -178,13 +181,13 @@
                                     <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
 
                                     <p:outputLabel value="Destino:"/>
-                                    <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}">
+                                    <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}" filter="true" filterMatchMode="contains">
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                         <f:selectItems value="#{documentosBean.dependenciasprov}"/>
                                     </p:selectOneMenu>
                                 </p:panelGrid>
                                 <br></br>
-                                <p:commandButton value="Guardar">
+                                <p:commandButton value="Guardar" actionListener="#{documentosBean.guardaroficio()}">
                                     <f:ajax event="click" onevent="oficiounicodialog.hide()"/>
                                 </p:commandButton>
                             </center>

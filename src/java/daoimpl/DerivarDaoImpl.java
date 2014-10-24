@@ -94,7 +94,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         }
         return index;
     }
-    
+
     @Override
     public String getSiglas(String ofi) {
         System.out.println("getssiglas");
@@ -166,12 +166,12 @@ public class DerivarDaoImpl implements DerivarDAO {
     @Override
     public void ActualizarTramite(String tramaux, String movimiento) {
         System.out.println("actualizar tramite movimiento");
-        String sql="Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' WHERE TRAM_NUM='"+tramaux+"' AND MOVI_NUM='"+Integer.parseInt(movimiento)+"'";
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
         session = HibernateUtil.getSessionFactory().openSession();
-        int i=0;
+        int i = 0;
         try {
             session.beginTransaction();
-            i=session.createSQLQuery(sql).executeUpdate();
+            i = session.createSQLQuery(sql).executeUpdate();
             session.getTransaction().commit();
             System.out.println("terminó actualizar tramite");
         } catch (Exception e) {
@@ -181,11 +181,11 @@ public class DerivarDaoImpl implements DerivarDAO {
         } finally {
             session.close();
         }
-        System.out.println("se ha actualizado: "+i);
+        System.out.println("se ha actualizado: " + i);
     }
 
-@Override
-        public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
+    @Override
+    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
         try {
             System.out.println(movimiento + " " + fechaenvio + " " + asunto + " " + estado + " " + numtram + " " + origen + " " + destino + " " + i);
             System.out.println("entra a guardado insertmovi");
@@ -215,23 +215,9 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino) {
+    public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino) {
         try {
             System.out.println("entra a guardado insertmovi");
-            /*MovimientoInterno mi = new MovimientoInterno();
-             mi.setMoviNumint(movimiento);
-             mi.setFechaEnvint(fechaenvio);
-             mi.setObsMovint(asunto);
-             mi.setEstadInt(estado);
-             TramiteDatos td = getTramite(numtram);
-             mi.setTramiteDatos(td);
-             mi.setDependenciaByCodigo(getDependencia(origen));
-             mi.setDependenciaByCodigo1(getDependencia2(destino));
-             session = HibernateUtil.getSessionFactory().openSession();
-             session.beginTransaction();
-             session.save(mi);
-             session.getTransaction().commit();
-             System.out.println("terminó movimiento");*/
         } catch (Exception ex) {
             System.err.println("falló guardado movimiento." + ex);
             System.out.println(ex.getMessage());
@@ -242,7 +228,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu) {
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu) {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
@@ -269,7 +255,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public TramiteDatos getTramite(String tramite) {
+    public TramiteDatos getTramite(String tramite) {
         System.out.println("gettramite");
         TramiteDatos td = null;
         session = HibernateUtil.getSessionFactory().openSession();
@@ -289,8 +275,8 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public Dependencia getDep(String nombre) {
-        Dependencia dep=null;
+    public Dependencia getDep(String nombre) {
+        Dependencia dep = null;
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "FROM Dependencia WHERE nombre='" + nombre + "'";
         try {
@@ -306,9 +292,9 @@ public class DerivarDaoImpl implements DerivarDAO {
         }
         return dep;
     }
-    
+
     @Override
-        public Dependencia getDependencia(String nombre) {
+    public Dependencia getDependencia(String nombre) {
         Dependencia dep = null;
         String nombre2 = getCodOficina(nombre);
         System.out.println(nombre2);
@@ -330,7 +316,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public Dependencia getDependencia2(String codigo) {
+    public Dependencia getDependencia2(String codigo) {
         System.out.println("depende2");
         Dependencia dep = null;
         session = HibernateUtil.getSessionFactory().openSession();
@@ -351,7 +337,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public String getCodOficina(String nombreofi) {
+    public String getCodOficina(String nombreofi) {
         System.out.println("oficina");
         String ofi = null;
         session = HibernateUtil.getSessionFactory().openSession();
@@ -372,13 +358,13 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void ConfirmarTramites(String numtram, int movimiento, Date fechaing) {
+    public void ConfirmarTramites(String numtram, int movimiento, Date fechaing) {
         Confirmar(numtram, movimiento);
         //GuardarConfirmados(movi);
     }
 
     @Override
-        public Date getFecha() {
+    public Date getFecha() {
         Date fechanueva = null;
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "select sysdate from sys.dual";
@@ -396,7 +382,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public List getConfirmados(String oficina) {
+    public List getConfirmados(String oficina) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -430,7 +416,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void Confirmar(String numtram, int movimiento) {
+    public void Confirmar(String numtram, int movimiento) {
         int i = 0;
         Date nuevFech = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -457,7 +443,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public Indicador getIndic(String nombre) {
+    public Indicador getIndic(String nombre) {
         System.out.println("indicador");
         Indicador indi = null;
         session = HibernateUtil.getSessionFactory().openSession();
@@ -478,7 +464,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public List getConfDeriv(String oficina) {
+    public List getConfDeriv(String oficina) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -512,15 +498,15 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public String getAnio() {
-        String anio="";
+    public String getAnio() {
+        String anio = "";
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "select max(anio) from Anios";
-        try{
+        try {
             session.beginTransaction();
-            anio=(String)session.createQuery(sql).uniqueResult();
+            anio = (String) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("mal indice get anio");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
@@ -531,7 +517,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void GuardarProveido(Proveido p) {
+    public void GuardarProveido(Proveido p) {
         System.out.println("entra a guardar proevido");
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -547,9 +533,9 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close();
         }
     }
-    
+
     @Override
-        public String getCorreProv() {
+    public String getCorreProv() {
         System.out.println("get proveido");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
@@ -567,13 +553,13 @@ public class DerivarDaoImpl implements DerivarDAO {
         }
         return index;
     }
-    
+
     @Override
-        public String getCorre(Usuario usuario, String tipo) {
+    public String getCorre(Usuario usuario, String tipo) {
         System.out.println("get correlativo");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(numerodoc) from DocusExtint where usu='" + usuario.getUsu() + "' and docusExt.iddoc='"+Long.parseLong(tipo) +"' ";
+        String sql = "select max(numerodoc) from DocusExtint where usu='" + usuario.getUsu() + "' and docusExt.iddoc='" + Long.parseLong(tipo) + "' ";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
@@ -589,7 +575,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public DocusExt getDocuExt(String codigo) {
+    public DocusExt getDocuExt(String codigo) {
         System.out.println("get docu ext");
         DocusExt index = null;
         session = HibernateUtil.getSessionFactory().openSession();
@@ -609,7 +595,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-        public void guardarDocusExt(DocusExtint de) {
+    public void guardarDocusExt(DocusExtint de) {
         System.out.println("entra a guardardocusext");
         try {
             session = HibernateUtil.getSessionFactory().openSession();

@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import dao.DocumentoDAO;
+import maping.Oficios;
 import maping.Usuario;
 import util.HibernateUtil;
 
@@ -20,6 +21,21 @@ import util.HibernateUtil;
 public class DocumentoDaoImpl implements DocumentoDAO {
 
     Session session;
+
+    @Override
+    public void guardarOficio(Oficios ofi) {
+        System.out.println("guardar oficio");
+        session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            session.beginTransaction();
+            session.save(ofi);
+            session.beginTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            System.out.println("mal guardar oficio");
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public List getProveidos(String tramnum) {

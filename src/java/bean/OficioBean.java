@@ -7,8 +7,10 @@ package bean;
 
 import static bean.DocumentosBean.tranum;
 import dao.DerivarDAO;
+import dao.DocumentoDAO;
 import dao.OficioDAO;
 import daoimpl.DerivarDaoImpl;
+import daoimpl.DocumentoDaoImpl;
 import daoimpl.OficioDaoImpl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpSession;
 import maping.DetallOficcirc;
 import maping.DetallOficcircId;
 import maping.OficCirc;
+import maping.Oficios;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
@@ -63,8 +66,13 @@ public class OficioBean {
     private FacesContext faceContext;
     private Usuario usu;
     private String destino;
+    private List destinos;
+    private DocumentoDAO dd;
+    ///
+    
     
     public OficioBean() {
+        dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
@@ -73,6 +81,7 @@ public class OficioBean {
         depe2 = new ArrayList<Map<String, String>>();
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
+        destinos=dd.getDependencias();
         getAnio();
         mostrarofCirc();
         llenardepes();
@@ -234,7 +243,31 @@ public class OficioBean {
             }
         }
     }
-
+    public void guardar_oficiounico(){
+        FacesMessage message = null;
+        try{
+            Oficios ofi= new Oficios();
+            ofi.setAsuntoOficio(asunto);
+            ofi.setCorrelativoOficio(correlativo2);
+            ofi.setFechaOficio(fecha);
+            ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
+            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
+            ofi.setReferenciaOficio(null);
+            ofi.setTramiteDatos(null);
+            dd.guardarOficio(ofi);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }catch(Exception e){
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println("mal guardar oficiounico");
+            System.out.println(e.getMessage());
+        }
+        getAnio();
+        generarFecha();
+        generarCorrelativo2();
+        this.asunto="";
+    }
     public void guardar() {
         FacesMessage message = null;
         try {
@@ -545,6 +578,22 @@ public class OficioBean {
 
     public void setDestino(String destino) {
         this.destino = destino;
+    }
+
+    public List getDestinos() {
+        return destinos;
+    }
+
+    public void setDestinos(List destinos) {
+        this.destinos = destinos;
+    }
+
+    public DocumentoDAO getDd() {
+        return dd;
+    }
+
+    public void setDd(DocumentoDAO dd) {
+        this.dd = dd;
     }
 
 }

@@ -7,6 +7,7 @@
 package dao;
 
 import java.util.List;
+import maping.Oficios;
 import maping.Usuario;
 
 /**
@@ -27,4 +28,5 @@ public interface DocumentoDAO {
     public List getDependencias();
     public List getIndicadores();
     public List getProveidos(String tramnum);
+    public void guardarOficio(Oficios ofi);
 }
