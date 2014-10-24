@@ -11,5 +11,5 @@ package dao;
  * @author OGPL
  */
 public interface ConstanciaDAO {
-    
+    public String getIndice();
 }

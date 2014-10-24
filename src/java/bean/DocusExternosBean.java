@@ -37,7 +37,7 @@ import org.primefaces.event.TabChangeEvent;
  */
 @ManagedBean
 @ViewScoped
-public class DocusExternosBean implements Serializable{
+public class DocusExternosBean implements Serializable {
 
     private String documento;
     private String origen;
@@ -63,12 +63,12 @@ public class DocusExternosBean implements Serializable{
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
-        ded= new DocusExtDaoImpl();
+        ded = new DocusExtDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         dependenciasprov = new ArrayList<Map<String, String>>();
-        documentosext= new ArrayList<Map<String, String>>();
+        documentosext = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         ObtenerDepIndic();
@@ -76,20 +76,20 @@ public class DocusExternosBean implements Serializable{
         a2 = false;
         MostrarDocusExt();
     }
-    
-    public void MostrarDocusExt(){
+
+    public void MostrarDocusExt() {
         System.out.println("mostrar docus extint");
         documentosext.clear();
-        try{
+        try {
             List lista = new ArrayList();
-            lista=ded.getDocusExt();
+            lista = ded.getDocusExt();
             Iterator ite = lista.iterator();
             Object obj[] = new Object[8];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("correlativo", getCadenaCorr(String.valueOf(obj[0])));
-                listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6])+" - "+ obj[1]));
+                listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + " - " + obj[1]));
                 listaaux.put("movimiento", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
                 listaaux.put("destino", String.valueOf(obj[4]));
@@ -98,10 +98,11 @@ public class DocusExternosBean implements Serializable{
                 documentosext.add(listaaux);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
     public void Limpiar() {
         documento = " ";
         asunto = " ";
@@ -109,32 +110,29 @@ public class DocusExternosBean implements Serializable{
         destino = " ";
 
     }
-    public String getCadenaCorr(String c){
-        String cadena=" ";
-        if(c.length()==1){
-            cadena= "0000"+c;
+
+    public String getCadenaCorr(String c) {
+        String cadena = " ";
+        if (c.length() == 1) {
+            cadena = "0000" + c;
+        } else if (c.length() == 2) {
+            cadena = "000" + c;
+        } else if (c.length() == 3) {
+            cadena = "00" + c;
+        } else if (c.length() == 4) {
+            cadena = "0" + c;
+        } else {
+            cadena = c;
         }
-        else
-        if(c.length()==2){
-            cadena= "000"+c;
-        }
-        else
-        if(c.length()==3){
-            cadena= "00"+c;
-        }
-        else
-        if(c.length()==4){
-            cadena="0"+c;
-        }
-        else
-        cadena=c;
-        
+
         return cadena;
     }
-    public void Derivar(){
-        
+
+    public void Derivar() {
+
     }
-    public void Proveidoo(){
+
+    public void Proveidoo() {
         System.out.println("entra aca 1");
         fechaactual();
         System.out.println("entra aca 2");
@@ -142,6 +140,7 @@ public class DocusExternosBean implements Serializable{
         System.out.println("entra aca 3");
         generarCorrelativo();
     }
+
     public void ObtenerDepIndic() {
         dependenciasprov = dd.getDependencias();
     }
@@ -150,7 +149,7 @@ public class DocusExternosBean implements Serializable{
         System.out.println("entra getanio");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         anio = new Date();
-        auxanio= sdf.format(anio);
+        auxanio = sdf.format(anio);
         System.out.println(auxanio);
     }
 
@@ -158,7 +157,7 @@ public class DocusExternosBean implements Serializable{
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fechaprov = new Date();
-        auxfecha= sdf.format(fechaprov);
+        auxfecha = sdf.format(fechaprov);
         System.out.println(auxfecha);
     }
 
@@ -185,7 +184,7 @@ public class DocusExternosBean implements Serializable{
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
                 corr = Integer.parseInt(deriv.getCorreProv());
-                System.out.println("aumentando el correlativo: "+corr);
+                System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
                     aux = "0000" + corr;
@@ -248,14 +247,14 @@ public class DocusExternosBean implements Serializable{
             de = deriv.getDocuExt(documento);
             di.setDocusExt(de);
             di.setUsuario(usu);
-            
+
             p.setCorrelativod(correlativo);
             p.setDependenciaByCodigo(deriv.getDep(origen));
             p.setDependenciaByCodigo1(deriv.getDep(destino));
             p.setDocusExtint(di);
             p.setFechaenvio(fechaprov);
             p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
-            
+
             deriv.guardarDocusExt(di);
             deriv.GuardarProveido(p);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
@@ -432,5 +431,5 @@ public class DocusExternosBean implements Serializable{
     public void setDocselec(List docselec) {
         this.docselec = docselec;
     }
-    
+
 }

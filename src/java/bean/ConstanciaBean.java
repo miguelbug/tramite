@@ -6,6 +6,9 @@
 
 package bean;
 
+import dao.DerivarDAO;
+import daoimpl.DerivarDaoImpl;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -26,8 +29,71 @@ public class ConstanciaBean {
     private Date desde;
     private Date hasta;
     private Date fechaemision;
+    private String auxanio;
+    private DerivarDAO deriv;
+    private Date fecha;
+    private String fechaemisionaux;
     
     public ConstanciaBean() {
+        deriv = new DerivarDaoImpl();
+    }
+    public void abrirconstancia(){
+        getAnio();
+        fechaactual();
+        generarCorrelativo2();
+    }
+    public void getAnio() {
+        System.out.println("entra getanio");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        fechaemision = new Date();
+        auxanio = sdf.format(fechaemision);
+        System.out.println(auxanio);
+    }
+    public void fechaactual() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fechaemision = new Date();
+        fechaemisionaux = sdf.format(fechaemision);
+        System.out.println(fechaemisionaux);
+    }
+    public void generarCorrelativo2() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (auxanio.equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                System.out.println("aumentando el correlativo: " + corr);
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
+
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
+        }
+        correlativo = aux;
     }
     public void guardarconstancia(){
         
@@ -86,6 +152,38 @@ public class ConstanciaBean {
 
     public void setFechaemision(Date fechaemision) {
         this.fechaemision = fechaemision;
+    }
+
+    public String getAuxanio() {
+        return auxanio;
+    }
+
+    public void setAuxanio(String auxanio) {
+        this.auxanio = auxanio;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFechaemisionaux() {
+        return fechaemisionaux;
+    }
+
+    public void setFechaemisionaux(String fechaemisionaux) {
+        this.fechaemisionaux = fechaemisionaux;
     }
     
 }

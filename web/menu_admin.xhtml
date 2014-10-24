@@ -34,7 +34,7 @@
                 </p:submenu>
 
                 <p:submenu label="Constancias" icon="ui-icon-document" styleClass="conf">
-                    <p:menuitem value="Generar Constancias" actionListener="" oncomplete="PF('ConstDialog').show()"/>
+                    <p:menuitem value="Generar Constancias" actionListener="#{constanciaBean}" oncomplete="PF('ConstDialog').show()"/>
                 </p:submenu>
 
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">

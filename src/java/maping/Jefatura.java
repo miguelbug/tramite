@@ -31,20 +31,23 @@ public class Jefatura  implements java.io.Serializable {
     public Jefatura(BigDecimal idJefatura) {
         this.idJefatura = idJefatura;
     }
-    public Jefatura(BigDecimal idJefatura, Usuario usuario, Dependencia dependencia, Profesion profesion, String nombre, String apellidos, String telefono, String anexo, String cargo, String grado, String correo, String dni) {
-       this.idJefatura = idJefatura;
-       this.usuario = usuario;
-       this.dependencia = dependencia;
-       this.profesion = profesion;
-       this.nombre = nombre;
-       this.apellidos = apellidos;
-       this.telefono = telefono;
-       this.anexo = anexo;
-       this.cargo = cargo;
-       this.grado = grado;
-       this.correo = correo;
-       this.dni = dni;
+
+    public Jefatura(BigDecimal idJefatura, Usuario usuario, Dependencia dependencia, Profesion profesion, TipoContrato tipoContrato, String nombre, String apellidos, String telefono, String anexo, String cargo, String grado, String correo, String dni) {
+        this.idJefatura = idJefatura;
+        this.usuario = usuario;
+        this.dependencia = dependencia;
+        this.profesion = profesion;
+        this.tipoContrato = tipoContrato;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.anexo = anexo;
+        this.cargo = cargo;
+        this.grado = grado;
+        this.correo = correo;
+        this.dni = dni;
     }
+    
    
     public BigDecimal getIdJefatura() {
         return this.idJefatura;
@@ -129,6 +132,14 @@ public class Jefatura  implements java.io.Serializable {
     
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public TipoContrato getTipoContrato() {
+        return tipoContrato;
+    }
+
+    public void setTipoContrato(TipoContrato tipoContrato) {
+        this.tipoContrato = tipoContrato;
     }
 
 
