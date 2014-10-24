@@ -33,10 +33,16 @@
                     <p:menuitem value="Rep. de Documentos" action="reporteVista?faces-redirect=true" />
                 </p:submenu>
 
+                <p:submenu label="Constancias" icon="ui-icon-document" styleClass="conf">
+                    <p:menuitem value="Generar Constancias" actionListener="" oncomplete="PF('ConstDialog').show()"/>
+                </p:submenu>
+
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                     <p:menuitem value="Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
-                </p:submenu>            
+                </p:submenu>
+
+
             </p:menubar>
 
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
@@ -46,7 +52,7 @@
 
                     <p:outputLabel value="Nueva Contraseña:"/>
                     <p:password value="#{gestionUsuarioBean.nuevapass}"/>
-                    
+
                     <p:outputLabel value="Confirmar Contraseña:"/>
                     <p:password value="#{gestionUsuarioBean.confirmarcontra}" />
                 </p:panelGrid>
@@ -54,6 +60,39 @@
                 <center>
                     <p:commandButton value="Guardar Cambios" actionListener="#{gestionUsuarioBean.Guardar()}" update="panelgu">
                         <f:ajax event="click" onevent="GUdialog.hide()"/>
+                    </p:commandButton>
+                </center>
+            </p:dialog>
+
+            <p:dialog header="Constancia - " widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog">
+                <p:panelGrid columns="2" id="panelconst">
+                    <p:outputLabel value="N° Correlativo:"/>
+                    <p:password value=""/>
+
+                    <p:outputLabel value="Origen:"/>
+                    <p:outputLabel value=""/>
+
+                    <p:outputLabel value="Dirigido a:"/>
+                    <p:selectOneMenu id="constpersona" value="" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value=""/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Tipo de Contrato:"/>
+                    <p:outputLabel value=""/>
+
+                    <p:outputLabel value="Desde:"/>
+                    <p:calendar id="mask" value="" pattern="dd-MM-yyyy"/>
+
+                    <p:outputLabel value="Hasta:"/>
+                    <p:calendar id="mask1" value="" pattern="dd-MM-yyyy"/>
+
+                    <p:outputLabel value="Fecha de emision:"/>
+                    <p:calendar id="mask2" value="" pattern="dd-MM-yyyy"/>
+                </p:panelGrid>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="" update="panelconst">
+                        <f:ajax event="click" onevent="ConstDialog.hide()"/>
                     </p:commandButton>
                 </center>
             </p:dialog>

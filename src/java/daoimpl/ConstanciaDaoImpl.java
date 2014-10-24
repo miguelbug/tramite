@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package dao;
+package daoimpl;
 
 /**
  *
  * @author OGPL
  */
-public interface Oficio_OficioUnicoDAO {
+public class ConstanciaDaoImpl {
     
 }
