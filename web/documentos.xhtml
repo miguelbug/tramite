@@ -117,8 +117,8 @@
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
 
-                                        <p:commandButton id="OfUn" value="Oficio Unico" update=":form:panelOfUn" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:190px; height:26px"
-                                                         actionListener="" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
+                                        <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form:panelOfUn,:form:dialogOficioUnico" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:190px; height:26px"
+                                                         actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
@@ -161,23 +161,33 @@
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
-                        <p:dialog header="Oficio Único - " widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                            <p:panelGrid columns="2" id="panelOfUn">
-                                <p:outputLabel value="Asunto:"/>
-                                <p:inputTextarea  rows="6" cols="33" value=""/>
+                        <p:dialog header="Oficio - #{documentosBean.correlativo_oficio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dialogOficioUnico">
+                            <center>
+                                <p:panelGrid columns="2" id="panelOfUn">
 
-                                <p:outputLabel value="Fecha:"/>
-                                <p:outputLabel value=""/>
+                                    <p:outputLabel value="Expediente:"/>
+                                    <p:outputLabel value="#{documentosBean.tramnum}"/>
 
-                                <p:outputLabel value="Origen:"/>
-                                <p:outputLabel value=""/>
+                                    <p:outputLabel value="Asunto:"/>
+                                    <p:inputTextarea  rows="6" cols="33" value="#{documentosBean.asunto}"/>
 
-                                <p:outputLabel value="Destino:"/>
-                                <p:selectOneMenu id="documentos" value="">
-                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                    <f:selectItems value=""/>
-                                </p:selectOneMenu>
-                            </p:panelGrid>
+                                    <p:outputLabel value="Fecha:"/>
+                                    <p:outputLabel value="#{documentosBean.fechaaux}"/>
+
+                                    <p:outputLabel value="Origen:"/>
+                                    <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
+
+                                    <p:outputLabel value="Destino:"/>
+                                    <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}">
+                                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                        <f:selectItems value="#{documentosBean.dependenciasprov}"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                                <br></br>
+                                <p:commandButton value="Guardar">
+                                    <f:ajax event="click" onevent="oficiounicodialog.hide()"/>
+                                </p:commandButton>
+                            </center>
                         </p:dialog>
                         <p:dialog header="Detalle Proveido" widgetVar="itemDetallProv" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesProv" >

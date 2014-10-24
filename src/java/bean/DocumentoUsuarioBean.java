@@ -299,48 +299,7 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    /*public void Motivo() {
-     try {
-     Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-     Iterator it = hm.entrySet().iterator();
-     while (it.hasNext()) {
-     Map.Entry e = (Map.Entry) it.next();
-     if (e.getKey().toString().equals("numerotramite")) {
-     System.out.println(e.getValue().toString());
-     numtramaux = e.getValue().toString();
-     motivo = dd.getMotivo(e.getValue().toString());
-     }
-
-     }
-
-     docselec.clear();
-     } catch (Exception e) {
-     System.out.println("errormotivo");
-     System.out.println(e.getMessage());
-     e.printStackTrace();
-     }
-     }
-
-     public String getFechaIngr() {
-     String fecha = "";
-     try {
-     Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-     Iterator it = hm.entrySet().iterator();
-     while (it.hasNext()) {
-     Map.Entry e = (Map.Entry) it.next();
-     if (e.getKey().toString().equals("fechaingr")) {
-     System.out.println("fecha aca");
-     System.out.println(e.getValue().toString());
-     fecha = e.getValue().toString();
-     }
-     }
-     } catch (Exception e) {
-     System.out.println("errorfecha");
-     System.out.println(e.getMessage());
-     e.printStackTrace();
-     }
-     return fecha;
-     }*/
+    
     public void UsuarioSelec() {
         try {
             usuario = usu.getUsuNombre();
@@ -350,48 +309,7 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    /*public void MostrarSeguimiento(String tramnum) {
-     System.out.println("listando documentos");
-     seguimientolista.clear();
-     try {
-     List lista1 = new ArrayList();
-     lista1 = sgd.getSeguimientoGrande(tramnum);
-     Iterator ite = lista1.iterator();
-     Object obj[] = new Object[9];
-     while (ite.hasNext()) {
-     obj = (Object[]) ite.next();
-     Map<String, String> listaaux = new HashMap<String, String>();
-     listaaux.put("numerotramite", String.valueOf(obj[0]));
-     listaaux.put("movimnum", String.valueOf(obj[1]));
-     listaaux.put("origen", String.valueOf(obj[2]));
-     listaaux.put("destino", String.valueOf(obj[3]));
-     listaaux.put("fechaenvio", String.valueOf(obj[4]));
-     listaaux.put("fechaingr", String.valueOf(obj[5]));
-     listaaux.put("indicador", String.valueOf(obj[6]));
-     listaaux.put("observacion", String.valueOf(obj[7]));
-     listaaux.put("estado", String.valueOf(obj[8]));
-     seguimientolista.add(listaaux);
-     }
-
-     } catch (Exception e) {
-     System.out.println(e.getMessage());
-     }
-     }*/
-
-    /*public void RecorrerLista() {
-     Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-     Iterator it = hm.entrySet().iterator();
-     while (it.hasNext()) {
-     Map.Entry e = (Map.Entry) it.next();
-     if (e.getKey().toString().equals("numerotramite")) {
-     System.out.println(e.getValue().toString());
-     MostrarSeguimiento(e.getValue().toString());
-     }
-
-     }
-     docselec.clear();
-
-     }*/
+    
     /*----DERIVACION---------*/
     public void RecorrerLista() {
         System.out.println(docselec2);

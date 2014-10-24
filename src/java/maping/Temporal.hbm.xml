@@ -6,7 +6,7 @@
     <class name="maping.Temporal" table="TEMPORAL" schema="MIGUEL">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="tramNum" type="string">
             <column name="TRAM_NUM" length="30" />

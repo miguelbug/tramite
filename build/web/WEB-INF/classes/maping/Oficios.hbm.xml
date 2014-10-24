@@ -6,7 +6,7 @@
     <class name="maping.Oficios" table="OFICIOS" schema="MIGUEL">
         <id name="idOficio" type="long">
             <column name="ID_OFICIO" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />

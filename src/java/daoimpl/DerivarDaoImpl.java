@@ -76,6 +76,26 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public String getCorrelativoOficio() {
+        System.out.println("getCorreOficio");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(correlativoOficio) from Oficios";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal getCorreOficio");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
+    @Override
     public String getSiglas(String ofi) {
         System.out.println("getssiglas");
         String index = " ";

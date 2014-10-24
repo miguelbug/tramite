@@ -23,6 +23,7 @@
                                 <p:panelGrid columns="2" style="width: 40%" id="formuloficCirc">
                                     <p:outputLabel value="Código:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo}"/>
+                                    
                                     <p:selectOneMenu id="documentos" value="#{oficioBean.tipodepe}">
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                         <f:selectItem itemLabel="FACULTAD" itemValue="facultad"/>
@@ -86,29 +87,30 @@
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
-                        <p:tab title="OFICIOS UNICOS">
+                        <p:tab title="GENERAR OFICIOS UNICOS">
                             <center>
                                 <p:panelGrid columns="2" style="width: 40%" id="formulOficUnic">
                                     <p:outputLabel value="Código:"/>
-                                    <p:outputLabel value=""/>
+                                    <p:outputLabel value="#{oficioBean.correlativo2}"/>
 
                                     <p:outputLabel value="Asunto:"/>
-                                    <p:inputTextarea  rows="6" cols="33" value=""/>
+                                    <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>
 
                                     <p:outputLabel value="Fecha:"/>
-                                    <p:outputLabel value=""/>
+                                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
 
                                     <p:outputLabel value="Origen:"/>
-                                    <p:outputLabel value=""/>
+                                    <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
 
                                     <p:outputLabel value="Destino:"/>
-                                    <p:selectOneMenu id="docunicos" value="">
+                                    <p:selectOneMenu id="docunicos" value="#{oficioBean.destino}">
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                        <f:selectItems value=""/>
+                                        <f:selectItems value="#{oficioBean.depe}"/>
                                     </p:selectOneMenu>
                                 </p:panelGrid>
 
-                                <p:commandButton value="Guardar" actionListener="" update="formulOficUnic">
+                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardaroficiosunicos()}" update="formulOficUnic">
+                                    <f:ajax event="click" onevent="provDialog.hide()"/>
                                 </p:commandButton>
                             </center>
                         </p:tab>

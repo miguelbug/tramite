@@ -6,7 +6,7 @@
     <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
         <id name="idtip" type="int">
             <column name="IDTIP" precision="5" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />

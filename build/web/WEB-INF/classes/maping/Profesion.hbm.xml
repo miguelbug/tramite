@@ -6,7 +6,7 @@
     <class name="maping.Profesion" table="PROFESION" schema="MIGUEL">
         <id name="idProfesion" type="big_decimal">
             <column name="ID_PROFESION" precision="30" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="profesionNombre" type="string">
             <column name="PROFESION_NOMBRE" length="60" />

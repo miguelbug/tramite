@@ -6,7 +6,7 @@
     <class name="maping.Constancias" table="CONSTANCIAS" schema="MIGUEL">
         <id name="idConst" type="long">
             <column name="ID_CONST" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />

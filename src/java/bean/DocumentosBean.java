@@ -73,8 +73,14 @@ public class DocumentosBean implements Serializable {
     private Date aux;
     public static String tranum;
     private List detalprov;
-
     ////////
+    private String asunto;
+    private String tramnum;
+    private Date fecha;
+    private String fechaaux;
+    private String destino_ofic;
+    private String correlativo_oficio;
+    
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
@@ -110,7 +116,55 @@ public class DocumentosBean implements Serializable {
         }
        
     }
-
+    public void mostrarOficio(){
+        fecha= new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fechaaux=sdf.format(fecha);
+        tramnum=obtenerNumeroTramite();
+        correlativo_oficio=generarCorrelativo();
+    }
+    public String getAnio() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        return sdf.format(fecha);
+    }
+    public String generarCorrelativo() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (getAnio().equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+        }
+        return aux;
+    }
+    public void getDependencias(){
+        dependenciasprov = dd.getDependencias();
+    }
     public void ObtenerDepIndic() {
         documentosprov = dd.getIndicadores();
         dependenciasprov = dd.getDependencias();
@@ -126,45 +180,6 @@ public class DocumentosBean implements Serializable {
         System.out.println("listando documentos");
         seguimientolista.clear();
         try {
-            /*List lista = new ArrayList();
-             List lista2= new ArrayList();
-             lista = sgd.getSeguimientoGrande1(tramnum);
-             lista2= sgd.getSeguimientoGrande2(tramnum);
-             System.out.println(lista.size());
-             Iterator ite = lista.iterator();
-             Iterator ite2= lista2.iterator();
-             Object obj[] = new Object[9];
-             Object obj2[]= new Object[9];
-             while (ite.hasNext()) {
-             System.out.println("ola");
-             obj = (Object[]) ite.next();
-             Map<String, String> listaaux = new HashMap<String, String>();
-             listaaux.put("numerotramite", String.valueOf(obj[0]));
-             listaaux.put("movimnum", String.valueOf(obj[1]));
-             listaaux.put("origen", String.valueOf(obj[2]));
-             listaaux.put("destino", String.valueOf(obj[3]));
-             listaaux.put("fechaenvio", String.valueOf(obj[4]));
-             listaaux.put("fechaingr", String.valueOf(obj[5]));
-             listaaux.put("indicador", String.valueOf(obj[6]));
-             listaaux.put("observacion", String.valueOf(obj[7]));
-             listaaux.put("estado", String.valueOf(obj[8]));
-             seguimientolista.add(listaaux);
-             }
-             while (ite2.hasNext()) {
-             System.out.println("ola");
-             obj2 = (Object[]) ite2.next();
-             Map<String, String> listaaux = new HashMap<String, String>();
-             listaaux.put("numerotramite", String.valueOf(obj[0]));
-             listaaux.put("movimnum", String.valueOf(obj[1]));
-             listaaux.put("origen", String.valueOf(obj[2]));
-             listaaux.put("destino", String.valueOf(obj[3]));
-             listaaux.put("fechaenvio", String.valueOf(obj[4]));
-             listaaux.put("fechaingr", String.valueOf(obj[5]));
-             listaaux.put("indicador", String.valueOf(obj[6]));
-             listaaux.put("observacion", String.valueOf(obj[7]));
-             listaaux.put("estado", String.valueOf(obj[8]));
-             seguimientolista.add(listaaux);
-             }*/
             List lista = new ArrayList();
             lista = sgd.getSeguimientoGrande(tramnum);
             Iterator ite = lista.iterator();
@@ -190,7 +205,18 @@ public class DocumentosBean implements Serializable {
         }
 
     }
-
+    public String obtenerNumeroTramite(){
+        String numerotramite="";
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            if (e.getKey().toString().equals("numerotramite")) {
+                numerotramite=e.getValue().toString();
+            }
+        }
+        return numerotramite;
+    }
     public void RecorrerLista2() {
         System.out.println("entra a recorrer lista 2");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
@@ -823,6 +849,54 @@ public class DocumentosBean implements Serializable {
 
     public void setDetalprov(List detalprov) {
         this.detalprov = detalprov;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public String getTramnum() {
+        return tramnum;
+    }
+
+    public void setTramnum(String tramnum) {
+        this.tramnum = tramnum;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getFechaaux() {
+        return fechaaux;
+    }
+
+    public void setFechaaux(String fechaaux) {
+        this.fechaaux = fechaaux;
+    }
+
+    public String getDestino_ofic() {
+        return destino_ofic;
+    }
+
+    public void setDestino_ofic(String destino_ofic) {
+        this.destino_ofic = destino_ofic;
+    }
+
+    public String getCorrelativo_oficio() {
+        return correlativo_oficio;
+    }
+
+    public void setCorrelativo_oficio(String correlativo_oficio) {
+        this.correlativo_oficio = correlativo_oficio;
     }
 
 }

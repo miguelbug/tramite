@@ -46,6 +46,7 @@ public class OficioBean {
     private String auxanio;
     private DerivarDAO deriv;
     private String correlativo = "";
+    private String correlativo2 = "";
     private List otrosdocus;
     private List docselec;
     public List depe2;
@@ -61,7 +62,8 @@ public class OficioBean {
     private String auxfecha;
     private FacesContext faceContext;
     private Usuario usu;
-
+    private String destino;
+    
     public OficioBean() {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
@@ -69,13 +71,14 @@ public class OficioBean {
         od = new OficioDaoImpl();
         oficioscirculares = new ArrayList<Map<String, String>>();
         depe2 = new ArrayList<Map<String, String>>();
-        deriv = new DerivarDaoImpl();
         depe = new ArrayList<Map<String, String>>();
+        deriv = new DerivarDaoImpl();
         getAnio();
         mostrarofCirc();
         llenardepes();
         generarFecha();
         generarCorrelativo();
+        generarCorrelativo2();
         responsable();
         arearesponsable();
         firma();
@@ -88,7 +91,48 @@ public class OficioBean {
         }
 
     }
+    public void guardaroficiosunicos(){
+        
+    }
+    public void generarCorrelativo2() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (auxanio.equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                System.out.println("aumentando el correlativo: " + corr);
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
 
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
+        }
+        correlativo2 = aux;
+    }
     public void firma() {
         System.out.println("firma");
         try {
@@ -485,6 +529,22 @@ public class OficioBean {
 
     public void setUsu(Usuario usu) {
         this.usu = usu;
+    }
+
+    public String getCorrelativo2() {
+        return correlativo2;
+    }
+
+    public void setCorrelativo2(String correlativo2) {
+        this.correlativo2 = correlativo2;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 
 }

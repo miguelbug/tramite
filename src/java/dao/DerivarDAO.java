@@ -48,4 +48,5 @@ public interface DerivarDAO {
     public String getCorreProv();
     public void GuardarProveido(Proveido p);
     public void ActualizarTramite(String tramaux, String movimiento);
+    public String getCorrelativoOficio();
 }

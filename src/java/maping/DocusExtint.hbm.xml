@@ -6,7 +6,7 @@
     <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="MIGUEL">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
