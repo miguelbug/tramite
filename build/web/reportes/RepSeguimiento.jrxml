@@ -95,7 +95,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="112"  isSplitAllowed="true" >
+			<band height="126"  isSplitAllowed="true" >
 				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
@@ -188,7 +188,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="92"
+						y="106"
 						width="20"
 						height="20"
 						key="staticText-22"/>
@@ -206,7 +206,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="20"
-						y="92"
+						y="106"
 						width="100"
 						height="20"
 						key="staticText-23"/>
@@ -224,7 +224,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="120"
-						y="92"
+						y="106"
 						width="100"
 						height="20"
 						key="staticText-24"/>
@@ -242,7 +242,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="220"
-						y="92"
+						y="106"
 						width="65"
 						height="20"
 						key="staticText-25"/>
@@ -260,7 +260,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="285"
-						y="92"
+						y="106"
 						width="65"
 						height="20"
 						forecolor="#000000"
@@ -280,7 +280,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="-1"
-						y="64"
+						y="76"
 						width="535"
 						height="20"
 						key="textField-14"/>
@@ -293,7 +293,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="400"
-						y="92"
+						y="106"
 						width="80"
 						height="20"
 						forecolor="#000000"
@@ -313,7 +313,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="480"
-						y="92"
+						y="106"
 						width="55"
 						height="20"
 						forecolor="#000000"
@@ -333,7 +333,7 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 				<staticText>
 					<reportElement
 						x="350"
-						y="92"
+						y="106"
 						width="50"
 						height="20"
 						forecolor="#000000"
@@ -349,6 +349,19 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
 						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[INDICACION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="60"
+						y="45"
+						width="441"
+						height="20"
+						key="staticText-30"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[REPORTE DE SEGUIMIENTO DOCUMENTARIO]]></text>
 				</staticText>
 			</band>
 		</pageHeader>
