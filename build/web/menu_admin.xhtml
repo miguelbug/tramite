@@ -16,7 +16,7 @@
              onmouseover="this.style.opacity = 1;
                      this.filters.alpha.opacity = '50';" onmouseout="this.style.opacity = 0.5;
                              this.filters.alpha.opacity = '50';"> </img>
-        <h:form>            
+        <h:form id="f2">            
             <p:growl id="messages"/>
             <br></br>
 
@@ -34,7 +34,7 @@
                 </p:submenu>
 
                 <p:submenu label="Constancias" icon="ui-icon-document" styleClass="conf">
-                    <p:menuitem value="Generar Constancias" actionListener="#{constanciaBean}" oncomplete="PF('ConstDialog').show()"/>
+                    <p:menuitem value="Generar Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
                 </p:submenu>
 
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
@@ -67,7 +67,7 @@
             <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog">
                 <p:panelGrid columns="2" id="panelconst">
                     <p:outputLabel value="N° Correlativo:"/>
-                    <p:password value="#{constanciaBean.correlativo}"/>
+                    <p:outputLabel value="#{constanciaBean.correlativo}"/>
 
                     <p:outputLabel value="Origen:"/>
                     <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
@@ -76,19 +76,20 @@
                     <p:selectOneMenu id="constpersona" value="#{constanciaBean.escogido}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{constanciaBean.empleados}"/>
+                        <p:ajax event="change" listener="#{constanciaBean.cambio()}" update="panelconst"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Tipo de Contrato:"/>
                     <p:outputLabel value="#{constanciaBean.tipocontrato}"/>
 
                     <p:outputLabel value="Desde:"/>
-                    <p:calendar id="mask" value="#{constanciaBean.desde}" pattern="dd-MM-yyyy"/>
+                    <p:calendar id="mask" value="#{constanciaBean.desde}" mode="inline" navigator="true" pattern="dd-MM-yyyy"/>
 
                     <p:outputLabel value="Hasta:"/>
-                    <p:calendar id="mask1" value="#{constanciaBean.hasta}" pattern="dd-MM-yyyy"/>
+                    <p:calendar id="mask1" value="#{constanciaBean.hasta}" mode="inline" navigator="true" pattern="dd-MM-yyyy"/>
 
                     <p:outputLabel value="Fecha de emision:"/>
-                    <p:calendar id="mask2" value="#{constanciaBean.fechaemision}" pattern="dd-MM-yyyy"/>
+                    <p:outputLabel id="mask2" value="#{constanciaBean.fechaemisionaux}" />
                 </p:panelGrid>
                 <center>
                     <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">

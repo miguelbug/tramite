@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package daoimpl;
 
 import dao.ConstanciaDAO;
+import java.util.ArrayList;
+import java.util.List;
+import maping.Constancias;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -15,6 +18,7 @@ import util.HibernateUtil;
  * @author OGPL
  */
 public class ConstanciaDaoImpl implements ConstanciaDAO {
+
     Session session;
 
     @Override
@@ -36,5 +40,62 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
         }
         return index;
     }
-    
+
+    @Override
+    public List getJefatura() {
+        List jefatura = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT NOMBRE, APELLIDOS FROM JEFATURA");
+            jefatura = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            System.out.println(e.getMessage());
+        }
+        return jefatura;
+
+    }
+
+    @Override
+    public String getContrato(String nombre) {
+        System.out.println("get contrato");
+        String contrato = "";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select tc.NOMBRE_CONTRATO\n"
+                    + "from jefatura j, tipo_contrato tc\n"
+                    + "where j.nombre||' '||j.apellidos = '"+nombre+"'\n"
+                    + "and j.id_contrato=tc.ID_CONTRATO");
+            contrato = (String) query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no get contrato");
+            System.out.println(e.getMessage());
+        }
+        return contrato;
+    }
+
+    @Override
+    public void guardarConstancia(Constancias c) {
+        System.out.println("entra a guardar constancias");
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(c);
+            session.getTransaction().commit();
+            System.out.println("terminó guardar constancias");
+        } catch (Exception e) {
+            System.out.println("mal guardar constancias");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
 }

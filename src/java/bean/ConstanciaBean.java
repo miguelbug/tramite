@@ -3,16 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bean;
 
+import dao.ConstanciaDAO;
 import dao.DerivarDAO;
+import daoimpl.ConstanciaDaoImpl;
 import daoimpl.DerivarDaoImpl;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import maping.Constancias;
+import maping.Usuario;
 
 /**
  *
@@ -25,7 +32,7 @@ public class ConstanciaBean {
     private String correlativo;
     private String escogido;
     private List empleados;
-    private String tipocontrato;
+    private String tipocontrato = "";
     private Date desde;
     private Date hasta;
     private Date fechaemision;
@@ -33,15 +40,51 @@ public class ConstanciaBean {
     private DerivarDAO deriv;
     private Date fecha;
     private String fechaemisionaux;
-    
+    private ConstanciaDAO cons;
+    private FacesContext faceContext;
+    private Usuario usu;
+
     public ConstanciaBean() {
         deriv = new DerivarDaoImpl();
+        cons = new ConstanciaDaoImpl();
+        empleados = new ArrayList<String>();
+        faceContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
+        usu = (Usuario) session.getAttribute("sesionUsuario");
     }
-    public void abrirconstancia(){
+
+    public void abrirconstancia() {
         getAnio();
         fechaactual();
         generarCorrelativo2();
+        mostrarJefatura();
     }
+
+    public void cambio() {
+        tipocontrato = cons.getContrato(escogido);
+    }
+
+    public void mostrarJefatura() {
+        empleados.clear();
+        try {
+            System.out.println("entra a seguimiento3");
+            List lista = new ArrayList();
+            lista = cons.getJefatura();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[2];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                //Map<String, String> listaaux = new HashMap<String, String>();
+                //listaaux.put("nombre", String.valueOf(obj[0])+" "+String.valueOf(obj[1]));
+                empleados.add(String.valueOf(obj[0]) + " " + String.valueOf(obj[1]));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        //empleados=cons.getJefatura();
+    }
+
     public void getAnio() {
         System.out.println("entra getanio");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -49,6 +92,7 @@ public class ConstanciaBean {
         auxanio = sdf.format(fechaemision);
         System.out.println(auxanio);
     }
+
     public void fechaactual() {
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -56,13 +100,14 @@ public class ConstanciaBean {
         fechaemisionaux = sdf.format(fechaemision);
         System.out.println(fechaemisionaux);
     }
+
     public void generarCorrelativo2() {
         int corr = 0;
         String aux = "";
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                corr = Integer.parseInt(cons.getIndice());
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -95,9 +140,23 @@ public class ConstanciaBean {
         }
         correlativo = aux;
     }
-    public void guardarconstancia(){
-        
+
+    public void guardarconstancia() {
+        Constancias c = new Constancias();
+        c.setCorrelativo(correlativo);
+        c.setDesde(desde);
+        c.setHasta(hasta);
+        c.setFechaEmision(fechaemision);
+        c.setDrigidoA(escogido);
+        c.setTipoContrato(tipocontrato);
+        try {
+            cons.guardarConstancia(c);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
+
     public String getCorrelativo() {
         return correlativo;
     }
@@ -185,5 +244,29 @@ public class ConstanciaBean {
     public void setFechaemisionaux(String fechaemisionaux) {
         this.fechaemisionaux = fechaemisionaux;
     }
-    
+
+    public ConstanciaDAO getCons() {
+        return cons;
+    }
+
+    public void setCons(ConstanciaDAO cons) {
+        this.cons = cons;
+    }
+
+    public FacesContext getFaceContext() {
+        return faceContext;
+    }
+
+    public void setFaceContext(FacesContext faceContext) {
+        this.faceContext = faceContext;
+    }
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
 }

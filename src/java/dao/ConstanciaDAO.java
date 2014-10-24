@@ -6,10 +6,16 @@
 
 package dao;
 
+import java.util.List;
+import maping.Constancias;
+
 /**
  *
  * @author OGPL
  */
 public interface ConstanciaDAO {
     public String getIndice();
+    public List getJefatura();
+    public String getContrato(String nombre);
+    public void guardarConstancia(Constancias c);
 }
