@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Jefatura" table="JEFATURA" schema="MIGUEL">
         <id name="idJefatura" type="big_decimal">
             <column name="ID_JEFATURA" precision="22" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
+        </many-to-one>
+        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
         <many-to-one name="profesion" class="maping.Profesion" fetch="select">
             <column name="ID_PROFESION" precision="30" scale="0" />
@@ -38,11 +41,5 @@
         <property name="dni" type="string">
             <column name="DNI" length="10" />
         </property>
-        <set name="dependencias" table="DEPENDENCIA" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_JEFATURA" precision="22" scale="0" />
-            </key>
-            <one-to-many class="maping.Dependencia" />
-        </set>
     </class>
 </hibernate-mapping>

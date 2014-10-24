@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.OficCirc" table="OFIC_CIRC" schema="MIGUEL">
         <id name="idOfcirc" type="long">
             <column name="ID_OFCIRC" precision="10" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />

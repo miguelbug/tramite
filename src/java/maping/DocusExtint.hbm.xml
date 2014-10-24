@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="MIGUEL">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
         </many-to-one>
-        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
-            <column name="CODIGO" precision="10" scale="0" />
-        </many-to-one>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
+        </many-to-one>
+        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
         <many-to-one name="docusExt" class="maping.DocusExt" fetch="select">
             <column name="IDDOC" precision="10" scale="0" />
@@ -29,7 +29,7 @@
         <property name="fecha" type="date">
             <column name="FECHA" length="7" />
         </property>
-        <property name="movimientoDext" type="java.lang.Short">
+        <property name="movimientoDext" type="java.lang.Long">
             <column name="MOVIMIENTO_DEXT" precision="10" scale="0" />
         </property>
         <set name="proveidos" table="PROVEIDO" inverse="true" lazy="true" fetch="select">

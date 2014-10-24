@@ -244,7 +244,7 @@ public class DocusExternosBean implements Serializable{
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));
-            di.setMovimientoDext(Short.parseShort("1"));
+            di.setMovimientoDext(Long.parseLong("1"));
             de = deriv.getDocuExt(documento);
             di.setDocusExt(de);
             di.setUsuario(usu);

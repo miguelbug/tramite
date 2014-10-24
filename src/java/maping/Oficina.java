@@ -1,5 +1,5 @@
 package maping;
-// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
+// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;

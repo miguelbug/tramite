@@ -1,5 +1,5 @@
 package maping;
-// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
+// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -18,6 +18,7 @@ public class Usuario  implements java.io.Serializable {
      private String estado;
      private Set<TramiteDatos> tramiteDatoses = new HashSet<TramiteDatos>(0);
      private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
+     private Set<Constancias> constanciases = new HashSet<Constancias>(0);
      private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
      private Set<Jefatura> jefaturas = new HashSet<Jefatura>(0);
 
@@ -30,7 +31,7 @@ public class Usuario  implements java.io.Serializable {
         this.usuNombre = usuNombre;
         this.clave = clave;
     }
-    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteDatos> tramiteDatoses, Set<DocusExtint> docusExtints, Set<DocusInternos> docusInternoses, Set<Jefatura> jefaturas) {
+    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteDatos> tramiteDatoses, Set<DocusExtint> docusExtints, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Jefatura> jefaturas) {
        this.usu = usu;
        this.oficina = oficina;
        this.usuNombre = usuNombre;
@@ -38,6 +39,7 @@ public class Usuario  implements java.io.Serializable {
        this.estado = estado;
        this.tramiteDatoses = tramiteDatoses;
        this.docusExtints = docusExtints;
+       this.constanciases = constanciases;
        this.docusInternoses = docusInternoses;
        this.jefaturas = jefaturas;
     }
@@ -90,6 +92,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setDocusExtints(Set<DocusExtint> docusExtints) {
         this.docusExtints = docusExtints;
+    }
+    public Set<Constancias> getConstanciases() {
+        return this.constanciases;
+    }
+    
+    public void setConstanciases(Set<Constancias> constanciases) {
+        this.constanciases = constanciases;
     }
     public Set<DocusInternos> getDocusInternoses() {
         return this.docusInternoses;

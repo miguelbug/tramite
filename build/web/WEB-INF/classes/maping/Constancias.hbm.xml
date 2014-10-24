@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.Constancias" table="CONSTANCIAS" schema="MIGUEL">
+        <id name="idConst" type="long">
+            <column name="ID_CONST" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="maping.Usuario" fetch="select">
+            <column name="USU" length="30" />
+        </many-to-one>
+        <property name="correlativo" type="string">
+            <column name="CORRELATIVO" length="30" />
+        </property>
+        <property name="fechaEmision" type="date">
+            <column name="FECHA_EMISION" length="7" />
+        </property>
+        <property name="drigidoA" type="string">
+            <column name="DRIGIDO_A" length="300" />
+        </property>
+        <property name="tipoContrato" type="string">
+            <column name="TIPO_CONTRATO" length="50" />
+        </property>
+        <property name="desde" type="date">
+            <column name="DESDE" length="7" />
+        </property>
+        <property name="hasta" type="date">
+            <column name="HASTA" length="7" />
+        </property>
+        <property name="fechaRegistro" type="date">
+            <column name="FECHA_REGISTRO" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

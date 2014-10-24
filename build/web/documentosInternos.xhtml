@@ -86,7 +86,35 @@
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
-                        
+                        <p:tab title="OFICIOS UNICOS">
+                            <center>
+                                <p:panelGrid columns="2" style="width: 40%" id="formulOficUnic">
+                                    <p:outputLabel value="Código:"/>
+                                    <p:outputLabel value=""/>
+
+                                    <p:outputLabel value="Asunto:"/>
+                                    <p:inputTextarea  rows="6" cols="33" value=""/>
+
+                                    <p:outputLabel value="Fecha:"/>
+                                    <p:outputLabel value=""/>
+
+                                    <p:outputLabel value="Origen:"/>
+                                    <p:outputLabel value=""/>
+
+                                    <p:outputLabel value="Destino:"/>
+                                    <p:selectOneMenu id="docunicos" value="">
+                                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                        <f:selectItems value=""/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+
+                                <p:commandButton value="Guardar" actionListener="" update="formulOficUnic">
+                                </p:commandButton>
+                            </center>
+                        </p:tab>
+                        <p:tab title="MOSTRAR OFICIOS UNICOS">
+
+                        </p:tab>
                     </p:tabView>
 
 

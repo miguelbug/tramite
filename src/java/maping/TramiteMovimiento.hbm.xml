@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
         <id name="idMovi" type="big_decimal">
             <column name="ID_MOVI" precision="38" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />

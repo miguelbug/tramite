@@ -1,5 +1,5 @@
 package maping;
-// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
+// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -28,17 +28,16 @@ public class OficCirc  implements java.io.Serializable {
     public OficCirc(long idOfcirc) {
         this.idOfcirc = idOfcirc;
     }
-
-    public OficCirc(long idOfcirc, Dependencia dependencia, String correlaOficic, String asunto, Date fecha, String firma, String responsable) {
-        this.idOfcirc = idOfcirc;
-        this.dependencia = dependencia;
-        this.correlaOficic = correlaOficic;
-        this.asunto = asunto;
-        this.fecha = fecha;
-        this.firma = firma;
-        this.responsable = responsable;
+    public OficCirc(long idOfcirc, Dependencia dependencia, String correlaOficic, String asunto, Date fecha, String firma, String responsable, Set<DetallOficcirc> detallOficcircs) {
+       this.idOfcirc = idOfcirc;
+       this.dependencia = dependencia;
+       this.correlaOficic = correlaOficic;
+       this.asunto = asunto;
+       this.fecha = fecha;
+       this.firma = firma;
+       this.responsable = responsable;
+       this.detallOficcircs = detallOficcircs;
     }
-    
    
     public long getIdOfcirc() {
         return this.idOfcirc;
@@ -75,6 +74,20 @@ public class OficCirc  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+    public String getFirma() {
+        return this.firma;
+    }
+    
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+    public String getResponsable() {
+        return this.responsable;
+    }
+    
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
     public Set<DetallOficcirc> getDetallOficcircs() {
         return this.detallOficcircs;
     }
@@ -83,21 +96,8 @@ public class OficCirc  implements java.io.Serializable {
         this.detallOficcircs = detallOficcircs;
     }
 
-    public String getFirma() {
-        return firma;
-    }
 
-    public void setFirma(String firma) {
-        this.firma = firma;
-    }
 
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
 
 }
 

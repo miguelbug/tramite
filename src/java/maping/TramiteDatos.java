@@ -1,5 +1,5 @@
 package maping;
-// Generated 20/10/2014 11:41:07 AM by Hibernate Tools 3.6.0
+// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -13,12 +13,13 @@ public class TramiteDatos  implements java.io.Serializable {
 
 
      private String tramNum;
-     private Dependencia dependencia;
      private Usuario usuario;
+     private Dependencia dependencia;
      private Date tramFecha;
      private String tramObs;
      private String estaDescrip;
      private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
+     private Set<Oficios> oficioses = new HashSet<Oficios>(0);
      private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
      private Set<TipoDocu> tipoDocus = new HashSet<TipoDocu>(0);
 
@@ -30,14 +31,15 @@ public class TramiteDatos  implements java.io.Serializable {
         this.tramNum = tramNum;
         this.tramFecha = tramFecha;
     }
-    public TramiteDatos(String tramNum, Dependencia dependencia, Usuario usuario, Date tramFecha, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
+    public TramiteDatos(String tramNum, Usuario usuario, Dependencia dependencia, Date tramFecha, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<Oficios> oficioses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
        this.tramNum = tramNum;
-       this.dependencia = dependencia;
        this.usuario = usuario;
+       this.dependencia = dependencia;
        this.tramFecha = tramFecha;
        this.tramObs = tramObs;
        this.estaDescrip = estaDescrip;
        this.docusInternoses = docusInternoses;
+       this.oficioses = oficioses;
        this.tramiteMovimientos = tramiteMovimientos;
        this.tipoDocus = tipoDocus;
     }
@@ -49,19 +51,19 @@ public class TramiteDatos  implements java.io.Serializable {
     public void setTramNum(String tramNum) {
         this.tramNum = tramNum;
     }
-    public Dependencia getDependencia() {
-        return this.dependencia;
-    }
-    
-    public void setDependencia(Dependencia dependencia) {
-        this.dependencia = dependencia;
-    }
     public Usuario getUsuario() {
         return this.usuario;
     }
     
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    public Dependencia getDependencia() {
+        return this.dependencia;
+    }
+    
+    public void setDependencia(Dependencia dependencia) {
+        this.dependencia = dependencia;
     }
     public Date getTramFecha() {
         return this.tramFecha;
@@ -90,6 +92,13 @@ public class TramiteDatos  implements java.io.Serializable {
     
     public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
         this.docusInternoses = docusInternoses;
+    }
+    public Set<Oficios> getOficioses() {
+        return this.oficioses;
+    }
+    
+    public void setOficioses(Set<Oficios> oficioses) {
+        this.oficioses = oficioses;
     }
     public Set<TramiteMovimiento> getTramiteMovimientos() {
         return this.tramiteMovimientos;

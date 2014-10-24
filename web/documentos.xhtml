@@ -21,7 +21,7 @@
                     <center>
                         <p:tabView>
                             <p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>
-                            
+
                             <p:tab title="SISG">
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -78,7 +78,7 @@
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-                                    
+
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
@@ -113,9 +113,12 @@
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:30px; height:27px"
+                                        <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:30px; height:26px"
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
+
+                                        <p:commandButton id="OfUn" value="Oficio Unico" update=":form:panelOfUn" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:190px; height:26px"
+                                                         actionListener="" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
@@ -158,6 +161,24 @@
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
+                        <p:dialog header="Oficio Único - " widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:panelGrid columns="2" id="panelOfUn">
+                                <p:outputLabel value="Asunto:"/>
+                                <p:inputTextarea  rows="6" cols="33" value=""/>
+
+                                <p:outputLabel value="Fecha:"/>
+                                <p:outputLabel value=""/>
+
+                                <p:outputLabel value="Origen:"/>
+                                <p:outputLabel value=""/>
+
+                                <p:outputLabel value="Destino:"/>
+                                <p:selectOneMenu id="documentos" value="">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:dialog>
                         <p:dialog header="Detalle Proveido" widgetVar="itemDetallProv" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesProv" >
                                 <p:column headerText="Correlativo">
@@ -296,7 +317,7 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-                        
+
                     </center>
                     <br></br>
                     <br></br>

@@ -17,6 +17,8 @@
     <mapping resource="maping/DetallOficcirc.hbm.xml"/>
     <mapping resource="maping/TramiteDatos.hbm.xml"/>
     <mapping resource="maping/Jefatura.hbm.xml"/>
+    <mapping resource="maping/Constancias.hbm.xml"/>
+    <mapping resource="maping/Oficios.hbm.xml"/>
     <mapping resource="maping/DocusInternos.hbm.xml"/>
     <mapping resource="maping/TramiteMovimiento.hbm.xml"/>
     <mapping resource="maping/Anios.hbm.xml"/>
