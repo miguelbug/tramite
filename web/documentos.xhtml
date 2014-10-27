@@ -65,7 +65,7 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px"
                                                          update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
                                                          />
 
@@ -117,7 +117,7 @@
                                                          action="#{objxUnidadController.mostrarReporteNotasDeriv}"
                                                          title="Reporte" />
 
-                                        <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form:panelOfUn,:form:dialogOficioUnico" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:190px; height:26px"
+                                        <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form:panelOfUn,:form:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:215px; height:26px"
                                                          actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
                                     </f:facet>
                                 </p:dataTable>

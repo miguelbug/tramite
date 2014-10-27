@@ -243,7 +243,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public String getSQL(String[] a) {
         int i = 0;
         String comienzo = "SELECT TD.TRAM_NUM,"
-                + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:mm:ss')) AS FECHA,"
+                + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS')) AS FECHA,"
                 + "DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE "
                 + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO ";
         while (i < a.length) {

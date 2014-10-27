@@ -69,8 +69,9 @@ public class OficioBean {
     private List destinos;
     private DocumentoDAO dd;
     ///
-    
-    
+    private String[] selectedCities;
+    private List<String> cities;
+
     public OficioBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
@@ -81,7 +82,8 @@ public class OficioBean {
         depe2 = new ArrayList<Map<String, String>>();
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
-        destinos=dd.getDependencias();
+        destinos = dd.getDependencias();
+        cities = new ArrayList<String>();
         getAnio();
         mostrarofCirc();
         llenardepes();
@@ -91,6 +93,7 @@ public class OficioBean {
         responsable();
         arearesponsable();
         firma();
+        //////////////////////
 
     }
 
@@ -100,9 +103,7 @@ public class OficioBean {
         }
 
     }
-    public void guardaroficiosunicos(){
-        
-    }
+
     public void generarCorrelativo2() {
         int corr = 0;
         String aux = "";
@@ -142,6 +143,7 @@ public class OficioBean {
         }
         correlativo2 = aux;
     }
+
     public void firma() {
         System.out.println("firma");
         try {
@@ -188,6 +190,7 @@ public class OficioBean {
     }
 
     public void llenar(ActionEvent ex) {
+        System.out.println(cities);
         depe2.clear();
         System.out.println(tipodepe);
         String tipo = "";
@@ -205,12 +208,14 @@ public class OficioBean {
                 }
             }
             if (tipodepe.equals(tipo)) {
+                cities.add(nombre.toString());
                 //System.out.println("ENTRA A GUARDAR EN DEPE2");
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", nombre);
                 depe2.add(listaaux);
             }
         }
+        System.out.println(cities);
 
     }
 
@@ -243,10 +248,11 @@ public class OficioBean {
             }
         }
     }
-    public void guardar_oficiounico(){
+
+    public void guardar_oficiounico() {
         FacesMessage message = null;
-        try{
-            Oficios ofi= new Oficios();
+        try {
+            Oficios ofi = new Oficios();
             ofi.setAsuntoOficio(asunto);
             ofi.setCorrelativoOficio(correlativo2);
             ofi.setFechaOficio(fecha);
@@ -257,7 +263,7 @@ public class OficioBean {
             dd.guardarOficio(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }catch(Exception e){
+        } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficiounico");
@@ -266,8 +272,9 @@ public class OficioBean {
         getAnio();
         generarFecha();
         generarCorrelativo2();
-        this.asunto="";
+        this.asunto = "";
     }
+
     public void guardar() {
         FacesMessage message = null;
         try {
@@ -596,4 +603,16 @@ public class OficioBean {
         this.dd = dd;
     }
 
+    /////////////////////////////
+    public String[] getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(String[] selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+
+    public List<String> getCities() {
+        return cities;
+    }
 }

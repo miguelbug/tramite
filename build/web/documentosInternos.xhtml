@@ -52,6 +52,11 @@
 
                                     <p:outputLabel value="Área Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.arearesponsable}"/>
+                                    
+                                    <p:outputLabel value="prueba:"/>
+                                    <p:selectCheckboxMenu value="#{oficioBean.selectedCities}" label="Depes" filter="true" filterMatchMode="startsWith">
+                                        <f:selectItems value="#{oficioBean.cities}"/>
+                                    </p:selectCheckboxMenu>
                                 </p:panelGrid>
                                 <br></br>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,documentos">
@@ -110,13 +115,14 @@
                                         <f:selectItems value="#{oficioBean.destinos}"/>
                                     </p:selectOneMenu>
                                 </p:panelGrid>
+                                <br></br>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
                                 </p:commandButton>
 
                             </center>
                         </p:tab>
                         <p:tab title="MOSTRAR OFICIOS UNICOS">
-
+                            
                         </p:tab>
                     </p:tabView>
 

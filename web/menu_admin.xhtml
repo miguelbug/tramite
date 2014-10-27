@@ -91,6 +91,7 @@
                     <p:outputLabel value="Fecha de emision:"/>
                     <p:outputLabel id="mask2" value="#{constanciaBean.fechaemisionaux}" />
                 </p:panelGrid>
+                <br></br>
                 <center>
                     <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">
                         <f:ajax event="click" onevent="ConstDialog.hide()"/>

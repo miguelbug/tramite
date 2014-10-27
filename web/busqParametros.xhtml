@@ -20,139 +20,136 @@ and open the template in the editor.
                     <br></br>
                     <center>
                         <p:panel header="BUSQUEDA" id="principal" style="background-color: #D0D0D0;">
-                            <p:panelGrid style="margin-bottom:10px" id="panelpadre" >
+                            <p:panelGrid style="margin-bottom:10px" id="panelpadre" columns="4" >
                                 <f:facet name="header">
                                     <p:outputLabel value="Busqueda Avanzada"/>
                                 </f:facet>
-                                <p:row>
-                                    <p:column>
-                                        <h:outputLabel value="Numero de Trámite: "/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText id="numtramite" value="#{buscarDocumentosBean.numerotramite}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputLabel value="Código: "/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:selectOneMenu id="identif" value="#{buscarDocumentosBean.codigosdepe}" >
-                                            <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                            <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
-                                            <f:selectItem itemLabel="DGA" itemValue="DGA" />
-                                            <f:selectItem itemLabel="EPG" itemValue="EPG" />
-                                            <f:selectItem itemLabel="FCA" itemValue="FCA" />
-                                            <f:selectItem itemLabel="FCB" itemValue="FCB" />
-                                            <f:selectItem itemLabel="FCC" itemValue="FCC" />
-                                            <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
-                                            <f:selectItem itemLabel="FCE" itemValue="FCE" />
-                                            <f:selectItem itemLabel="FCF" itemValue="FCF" />
-                                            <f:selectItem itemLabel="FCM" itemValue="FCM" />
-                                            <f:selectItem itemLabel="FD" itemValue="FD" />
-                                            <f:selectItem itemLabel="FE" itemValue="FE" />
-                                            <f:selectItem itemLabel="FFB" itemValue="FFB" />
-                                            <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
-                                            <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
-                                            <f:selectItem itemLabel="FII" itemValue="FII" />
-                                            <f:selectItem itemLabel="FISI" itemValue="FISI" />
-                                            <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
-                                            <f:selectItem itemLabel="FMV" itemValue="FMV" />
-                                            <f:selectItem itemLabel="FM" itemValue="FM" />
-                                            <f:selectItem itemLabel="FO" itemValue="FO" />
-                                            <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
-                                            <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
-                                            <f:selectItem itemLabel="OCA" itemValue="OCA" />
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputLabel value="Año: "/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:selectOneMenu id="idanio" value="#{buscarDocumentosBean.anio}" >
-                                            <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                            <f:selectItem itemLabel="2014" itemValue="2014" />
-                                            <f:selectItem itemLabel="2013" itemValue="2013" />
-                                            <f:selectItem itemLabel="2012" itemValue="2012" />
-                                            <f:selectItem itemLabel="2011" itemValue="2011" />
-                                            <f:selectItem itemLabel="2010" itemValue="2010" />
-                                            <f:selectItem itemLabel="2009" itemValue="2009" />
-                                            <f:selectItem itemLabel="2008" itemValue="2008" />
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>
-                                        <h:outputLabel value="Asunto: "/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText id="asunto"  value="#{buscarDocumentosBean.asunto}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputLabel value="Mes: " />
-                                    </p:column>
-                                    <p:column>
-                                        <p:selectOneMenu id="mes" value="#{buscarDocumentosBean.mes}" >
-                                            <f:selectItem itemLabel="Seleccione" itemValue="" />
-                                            <f:selectItem itemLabel="Enero" itemValue="1" />
-                                            <f:selectItem itemLabel="Febrero" itemValue="2" />
-                                            <f:selectItem itemLabel="Marzo" itemValue="3" />
-                                            <f:selectItem itemLabel="Abril" itemValue="4" />
-                                            <f:selectItem itemLabel="Mayo" itemValue="5" />
-                                            <f:selectItem itemLabel="Junio" itemValue="6" />
-                                            <f:selectItem itemLabel="Julio" itemValue="7" />
-                                            <f:selectItem itemLabel="Agosto" itemValue="8" />
-                                            <f:selectItem itemLabel="Septiembre" itemValue="9" />
-                                            <f:selectItem itemLabel="Octubre" itemValue="10" />
-                                            <f:selectItem itemLabel="Noviembre" itemValue="11" />
-                                            <f:selectItem itemLabel="Diciembre" itemValue="12" />
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                    <p:column>
-                                        <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.Buscar()}" update="tabladocus"/>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="5">
-                                        <p:dataTable value="#{buscarDocumentosBean.docus}" var="item" paginator="true" rows="20" id="tabladocus"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}"
-                                                     selection="#{buscarDocumentosBean.docselec}"
-                                                     rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-
-                                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                            <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                                <h:outputText value="#{item.numerotramite}"/>
-                                            </p:column>
-
-                                            <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                                <h:outputText value="#{item.fecha}"/>
-                                            </p:column>
-
-                                            <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                                <h:outputText value="#{item.observacion}"/>
-                                            </p:column>
-
-                                            <p:column headerText="DESCRIPCION" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
-                                                <h:outputText value="#{item.descripcion}"/>
-                                            </p:column>
-
-                                            <p:column headerText="DEP. ORIGEN" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
-                                                <h:outputText value="#{item.departorigen}"/>
-                                            </p:column>
-
-                                            <p:column style="width:32px;text-align: center">
-                                                <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                                    <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion}"/>
-                                                </p:commandButton>
-                                            </p:column>
-                                            <f:facet name="footer">
-                                                <p:commandButton process="tabladocus" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                                 update=":form:tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
-                                                <p:commandButton process="tabladocus" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
-                                            </f:facet>
-                                        </p:dataTable>
-                                    </p:column>
-                                </p:row>
+                                <p:column>
+                                    <h:outputLabel value="Numero de Trámite: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="numtramite" value="#{buscarDocumentosBean.numerotramite}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Siglas(Origen) "/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="identif" value="#{buscarDocumentosBean.codigosdepe}" >
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="OGPL" itemValue="OGPL" />
+                                        <f:selectItem itemLabel="DGA" itemValue="DGA" />
+                                        <f:selectItem itemLabel="EPG" itemValue="EPG" />
+                                        <f:selectItem itemLabel="FCA" itemValue="FCA" />
+                                        <f:selectItem itemLabel="FCB" itemValue="FCB" />
+                                        <f:selectItem itemLabel="FCC" itemValue="FCC" />
+                                        <f:selectItem itemLabel="FCCS" itemValue="FCCS" />
+                                        <f:selectItem itemLabel="FCE" itemValue="FCE" />
+                                        <f:selectItem itemLabel="FCF" itemValue="FCF" />
+                                        <f:selectItem itemLabel="FCM" itemValue="FCM" />
+                                        <f:selectItem itemLabel="FD" itemValue="FD" />
+                                        <f:selectItem itemLabel="FE" itemValue="FE" />
+                                        <f:selectItem itemLabel="FFB" itemValue="FFB" />
+                                        <f:selectItem itemLabel="FIEE" itemValue="FIEE" />
+                                        <f:selectItem itemLabel="FIGM" itemValue="FIGM" />
+                                        <f:selectItem itemLabel="FII" itemValue="FII" />
+                                        <f:selectItem itemLabel="FISI" itemValue="FISI" />
+                                        <f:selectItem itemLabel="FLCH" itemValue="FLCH" />
+                                        <f:selectItem itemLabel="FMV" itemValue="FMV" />
+                                        <f:selectItem itemLabel="FM" itemValue="FM" />
+                                        <f:selectItem itemLabel="FO" itemValue="FO" />
+                                        <f:selectItem itemLabel="FPSI" itemValue="FPSI" />
+                                        <f:selectItem itemLabel="FQIQ" itemValue="FQIQ" />
+                                        <f:selectItem itemLabel="OCA" itemValue="OCA" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Año: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="idanio" value="#{buscarDocumentosBean.anio}" >
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="2014" itemValue="2014" />
+                                        <f:selectItem itemLabel="2013" itemValue="2013" />
+                                        <f:selectItem itemLabel="2012" itemValue="2012" />
+                                        <f:selectItem itemLabel="2011" itemValue="2011" />
+                                        <f:selectItem itemLabel="2010" itemValue="2010" />
+                                        <f:selectItem itemLabel="2009" itemValue="2009" />
+                                        <f:selectItem itemLabel="2008" itemValue="2008" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Asunto: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="asunto"  value="#{buscarDocumentosBean.asunto}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Mes: " />
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="mes" value="#{buscarDocumentosBean.mes}" >
+                                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                        <f:selectItem itemLabel="Enero" itemValue="1" />
+                                        <f:selectItem itemLabel="Febrero" itemValue="2" />
+                                        <f:selectItem itemLabel="Marzo" itemValue="3" />
+                                        <f:selectItem itemLabel="Abril" itemValue="4" />
+                                        <f:selectItem itemLabel="Mayo" itemValue="5" />
+                                        <f:selectItem itemLabel="Junio" itemValue="6" />
+                                        <f:selectItem itemLabel="Julio" itemValue="7" />
+                                        <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                        <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                                        <f:selectItem itemLabel="Octubre" itemValue="10" />
+                                        <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                                        <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <center>
+                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.Buscar()}" update="tabladocus"/>
+                                    </center>
+                                </f:facet>
                             </p:panelGrid>
+                            <p:column colspan="5">
+                                <p:dataTable value="#{buscarDocumentosBean.docus}" var="item" paginator="true" rows="20" id="tabladocus"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}"
+                                             selection="#{buscarDocumentosBean.docselec}"
+                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+
+                                    <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}"/>
+                                    </p:column>
+
+                                    <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.observacion}"/>
+                                    </p:column>
+
+                                    <p:column headerText="DESCRIPCION" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column headerText="DEP. ORIGEN" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.departorigen}"/>
+                                    </p:column>
+
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                            <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion}"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton process="tabladocus" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
+                                                         update=":form:tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
+                                        <p:commandButton process="tabladocus" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:column>
+
                             <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                 <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles()}" id="tabladetalles" >
                                     <p:column headerText="Usuario">
