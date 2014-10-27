@@ -20,24 +20,21 @@
                         <p:ajax event="tabChange" listener="#{oficioBean.onTabChange}" update=":form"/>
                         <p:tab title="GENERAR OFICIOS CIRCULARES">
                             <center>
-                                <p:panelGrid columns="2" style="width: 40%" id="formuloficCirc">
+                                <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
                                     <p:outputLabel value="Código:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo}"/>
 
-                                    <p:selectOneMenu id="documentos" value="#{oficioBean.tipodepe}">
-                                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                        <f:selectItem itemLabel="FACULTAD" itemValue="facultad"/>
-                                        <f:selectItem itemLabel="DEPENDENCIA INTERNA" itemValue="DependenciaInterna"/>
-                                        <f:selectItem itemLabel="DEPENDENCIA EXTERNA" itemValue="DependenciaExterna"/>
-                                        <p:ajax event="change" listener="#{oficioBean.llenar(ex)}" update="tablaoficioscirculares" />
-                                    </p:selectOneMenu>
-                                    <p:dataTable var="car" value="#{oficioBean.depe2}" scrollable="true" scrollHeight="300" id="tablaoficioscirculares" selection="#{oficioBean.docselec}"
-                                                 rowKey="#{car.nombre}" style="width: 80%">
-                                        <p:column selectionMode="multiple" style="width:20px;text-align:center"/>
-                                        <p:column headerText="Nombre" style="width:40%;text-align: left; padding-top: 0">
-                                            <h:outputText value="#{car.nombre}" />
+                                    <p:outputLabel value="Seleccione:" />
+
+                                    <p:pickList id="picklist1" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" 
+                                                showCheckbox="true" showSourceFilter="true" filterMatchMode="contains">
+                                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Escogidos</f:facet>
+                                        <p:column style="width:85%;">
+                                            <h:outputText value="#{cities}" />
                                         </p:column>
-                                    </p:dataTable>
+                                    </p:pickList>
+
                                     <p:outputLabel value="Asunto:"/>
                                     <p:inputTextarea value="#{oficioBean.asunto}" rows="6" cols="33"/>
 
@@ -52,14 +49,11 @@
 
                                     <p:outputLabel value="Área Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.arearesponsable}"/>
-                                    
-                                    <p:outputLabel value="prueba:"/>
-                                    <p:selectCheckboxMenu value="#{oficioBean.selectedCities}" label="Depes" filter="true" filterMatchMode="startsWith">
-                                        <f:selectItems value="#{oficioBean.cities}"/>
-                                    </p:selectCheckboxMenu>
+
+
                                 </p:panelGrid>
                                 <br></br>
-                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,documentos">
+                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
                                 </p:commandButton>
                             </center>
                         </p:tab>
@@ -122,7 +116,58 @@
                             </center>
                         </p:tab>
                         <p:tab title="MOSTRAR OFICIOS UNICOS">
-                            
+                            <p:panelGrid id="OficiosConExp">
+                                <p:outputLabel value="OFICIOS CON EXPEDIENTES"/>
+                                <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+
+                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="REFERENCIA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panelGrid>
+
+                            <p:panelGrid id="OficiosSinExp">
+                                <p:outputLabel value="OFICIOS SIN EXPEDIENTES"/>
+                                <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficConExp" var="item" paginator="true" rows="10" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+
+                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panelGrid>
                         </p:tab>
                     </p:tabView>
 

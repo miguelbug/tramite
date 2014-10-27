@@ -30,4 +30,6 @@ public interface OficioDAO {
     public OficCirc getOficioCircular(String correla);
     public String getCorrelativo();
     public Long getCodigo(String nombre);
+    public List getOficioUnicoExpediente();
+    public List getOficioUnicoNoExp();
 }

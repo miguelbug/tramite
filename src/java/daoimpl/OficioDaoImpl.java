@@ -25,16 +25,70 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public List getOficioUnicoExpediente() {
+        List depes = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get firma");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select ofi.CORRELATIVO_OFICIO,\n"
+                    + "ofi.TRAM_NUM,\n"
+                    + "ofi.FECHA_OFICIO,\n"
+                    + "ofi.REFERENCIA_OFICIO,\n"
+                    + "ofi.ASUNTO_OFICIO,\n"
+                    + "d1.nombre,\n"
+                    + "d2.nombre\n"
+                    + "\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is not null");
+            depes = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal firma");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
+
+    @Override
+    public List getOficioUnicoNoExp() {
+        List depes = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get firma");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select ofi.CORRELATIVO_OFICIO,\n"
+                    + "ofi.FECHA_OFICIO,\n"
+                    + "ofi.ASUNTO_OFICIO,\n"
+                    + "d1.nombre\n"
+                    + "\n"
+                    + "from OFICIOS ofi, Dependencia d1\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and tram_num is null");
+            depes = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal firma");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
+
+    @Override
     public Long getCodigo(String nombre) {
-        Long depe=12321L;
+        Long depe = 12321L;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get codigo");
         try {
             session.beginTransaction();
             Query query = session.createQuery("select codigo\n"
                     + "from Dependencia\n"
-                    + "WHERE nombre='"+nombre+"'");
-            depe =(Long)query.uniqueResult();
+                    + "WHERE nombre='" + nombre + "'");
+            depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -66,15 +120,15 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public OficCirc getOficioCircular(String correla) {
-        OficCirc ofi=null;
+        OficCirc ofi = null;
         session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             session.beginTransaction();
-            Query query = session.createQuery("From OficCirc where correlaOficic='"+correla+"'");
-            ofi=(OficCirc)query.uniqueResult();
+            Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "'");
+            ofi = (OficCirc) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("mal get oficio circular");
             System.out.println(e.getMessage());
         }
@@ -83,15 +137,15 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public Long getIndice(String correlativo) {
-        Long depe=12321L;
+        Long depe = 12321L;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get indice");
         try {
             session.beginTransaction();
             Query query = session.createQuery("select idOfcirc\n"
                     + "from OficCirc\n"
-                    + "WHERE correlaOficic='"+correlativo+"'");
-            depe =(Long)query.uniqueResult();
+                    + "WHERE correlaOficic='" + correlativo + "'");
+            depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -103,14 +157,14 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public Dependencia getDependencias2(String nombre) {
-        Dependencia depe=null;
+        Dependencia depe = null;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get dependencia 2");
         try {
             session.beginTransaction();
             Query query = session.createQuery("from Dependencia\n"
-                    + "WHERE nombre='"+nombre+"'");
-            depe =(Dependencia)query.uniqueResult();
+                    + "WHERE nombre='" + nombre + "'");
+            depe = (Dependencia) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -122,14 +176,14 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public Dependencia getDependencia(String nombre) {
-        Dependencia depe=null;
+        Dependencia depe = null;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get dependencia");
         try {
             session.beginTransaction();
             Query query = session.createQuery("from Dependencia\n"
-                    + "WHERE codigo='"+nombre+"'");
-            depe =(Dependencia)query.uniqueResult();
+                    + "WHERE codigo='" + nombre + "'");
+            depe = (Dependencia) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -142,11 +196,11 @@ public class OficioDaoImpl implements OficioDAO {
     @Override
     public void guardarOficioCircular(OficCirc ofi) {
         session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             session.beginTransaction();
             session.save(ofi);
             session.getTransaction().commit();
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.err.println("falló guardado oficiocircular." + ex);
             System.out.println(ex.getMessage());
             session.getTransaction().rollback();
@@ -157,7 +211,7 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public List getFirma() {
-        List depes =new ArrayList();
+        List depes = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get firma");
         try {
@@ -167,7 +221,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "where J.CARGO='JEFATURA'\n"
                     + "and U.ESTADO='activo'\n"
                     + "and J.USU=U.USU");
-            depes =(List)query.list();
+            depes = (List) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -179,16 +233,16 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public String getResponsable(String usuario) {
-        String depes ="";
+        String depes = "";
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get responsable");
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("select USU_NOMBRE\n"
                     + "from USUARIO\n"
-                    + "where USU='"+usuario+"'\n"
+                    + "where USU='" + usuario + "'\n"
                     + "and ESTADO='activo'");
-            depes =(String)query.uniqueResult();
+            depes = (String) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -200,15 +254,15 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public String getAreaResponsable(String usuario) {
-        String depes ="";
+        String depes = "";
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get responsable");
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("select NOMBRE_OFICINA\n"
                     + "from OFICINA\n"
-                    + "where ID_OFICINA='"+usuario+"'");
-            depes =(String)query.uniqueResult();
+                    + "where ID_OFICINA='" + usuario + "'");
+            depes = (String) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -249,14 +303,14 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public List<String> getDependencias() {
-        List<String> depes =new ArrayList<String>();
+        List<String> depes = new ArrayList<String>();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get dependencias");
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("select NOMBRE,TIPODEPE\n"
                     + "from DEPENDENCIA");
-            depes =(List<String>)query.list();
+            depes = (List<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -269,11 +323,11 @@ public class OficioDaoImpl implements OficioDAO {
     @Override
     public void guardarDetalleOfCirc(DetallOficcirc deofi) {
         session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             session.beginTransaction();
             session.save(deofi);
             session.getTransaction().commit();
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.err.println("falló guardado detalleoficio." + ex);
             System.out.println(ex.getMessage());
             session.getTransaction().rollback();

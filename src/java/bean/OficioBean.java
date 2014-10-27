@@ -33,6 +33,7 @@ import maping.Oficios;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -68,9 +69,14 @@ public class OficioBean {
     private String destino;
     private List destinos;
     private DocumentoDAO dd;
+    public List oficiosSinExp;
+    public List oficiosConExp;
     ///
+    private String seleccionado;
     private String[] selectedCities;
-    private List<String> cities;
+    private DualListModel<String> cities;
+    List<String> citiesSource = new ArrayList<String>();
+    List<String> citiesTarget = new ArrayList<String>();
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -83,16 +89,21 @@ public class OficioBean {
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         destinos = dd.getDependencias();
-        cities = new ArrayList<String>();
+        oficiosSinExp= new ArrayList<Map<String, String>>();
+        oficiosConExp= new ArrayList<Map<String, String>>();
         getAnio();
         mostrarofCirc();
         llenardepes();
+        llenar2();
+        cities = new DualListModel<String>(citiesSource, citiesTarget);
         generarFecha();
         generarCorrelativo();
         generarCorrelativo2();
         responsable();
         arearesponsable();
         firma();
+        mostrarOficiosSinExp();
+        mostrarOficioConExp();
         //////////////////////
 
     }
@@ -103,6 +114,54 @@ public class OficioBean {
         }
 
     }
+
+    public void mostrarOficiosSinExp() {
+        System.out.println("listando oficios");
+        oficiosSinExp.clear();
+        try {
+            List lista = new ArrayList();
+            lista = od.getOficioUnicoNoExp();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[4];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("fecha", String.valueOf(obj[1]));
+                listaaux.put("asunto", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                oficiosSinExp.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void mostrarOficioConExp() {
+        System.out.println("listando oficios");
+        oficiosConExp.clear();
+        try {
+            List lista = new ArrayList();
+            lista = od.getOficioUnicoExpediente();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("tramnum", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("referencia", String.valueOf(obj[3]));
+                listaaux.put("asunto", String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                oficiosConExp.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+   
 
     public void generarCorrelativo2() {
         int corr = 0;
@@ -189,7 +248,28 @@ public class OficioBean {
         }
     }
 
+    public void llenar2() {
+        String tipo = "";
+        String nombre = "";
+        for (int i = 0; i < depe.size(); i++) {
+            HashMap hashMap = (HashMap) depe.get(i);
+            Iterator it = hashMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry e = (Map.Entry) it.next();
+                if (e.getKey().toString().equals("nombre")) {
+                    nombre = e.getValue().toString();
+                }
+                if (e.getKey().toString().equals("tipo")) {
+                    tipo = e.getValue().toString();
+                }
+            }
+            citiesSource.add(nombre);
+        }
+
+    }
+
     public void llenar(ActionEvent ex) {
+
         System.out.println(cities);
         depe2.clear();
         System.out.println(tipodepe);
@@ -208,44 +288,61 @@ public class OficioBean {
                 }
             }
             if (tipodepe.equals(tipo)) {
-                cities.add(nombre.toString());
+                citiesSource.add(nombre);
                 //System.out.println("ENTRA A GUARDAR EN DEPE2");
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", nombre);
                 depe2.add(listaaux);
             }
         }
+
         System.out.println(cities);
 
     }
 
     public void mostrar() {
-        Long indice = od.getIndice(correlativo);
-        System.out.println("entra a mostrar");
-        System.out.println(docselec);
-        for (int i = 0; i < docselec.size(); i++) {
-            System.out.println("entra aca");
-            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-            Iterator it = hm.entrySet().iterator();
-            while (it.hasNext()) {
-                System.out.println("entra otra aca");
-                Map.Entry e = (Map.Entry) it.next();
-                try {
-                    DetallOficcircId dofi = new DetallOficcircId();
-                    System.out.println("GUARDAR DEPENDENCIA");
-                    dofi.setCodigo(od.getCodigo(e.getValue().toString()));
-                    System.out.println("GUARDAR INDICE");
-                    dofi.setIdOfcirc(indice);
-                    DetallOficcirc dof = new DetallOficcirc();
-                    System.out.println("CREAR DETALLE OFICIO CIRCULAR");
-                    dof.setDependencia(od.getDependencias2(e.getValue().toString()));
-                    dof.setId(dofi);
-                    dof.setOficCirc(od.getOficioCircular(correlativo));
-                    od.guardarDetalleOfCirc(dof);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
+        /*Long indice = od.getIndice(correlativo);
+         System.out.println("entra a mostrar");
+         System.out.println(docselec);
+         for (int i = 0; i < docselec.size(); i++) {
+         System.out.println("entra aca");
+         Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+         Iterator it = hm.entrySet().iterator();
+         while (it.hasNext()) {
+         System.out.println("entra otra aca");
+         Map.Entry e = (Map.Entry) it.next();
+         try {
+         DetallOficcircId dofi = new DetallOficcircId();
+         System.out.println("GUARDAR DEPENDENCIA");
+         dofi.setCodigo(od.getCodigo(e.getValue().toString()));
+         System.out.println("GUARDAR INDICE");
+         dofi.setIdOfcirc(indice);
+         DetallOficcirc dof = new DetallOficcirc();
+         System.out.println("CREAR DETALLE OFICIO CIRCULAR");
+         dof.setDependencia(od.getDependencias2(e.getValue().toString()));
+         dof.setId(dofi);
+         dof.setOficCirc(od.getOficioCircular(correlativo));
+         od.guardarDetalleOfCirc(dof);
+         } catch (Exception ex) {
+         System.out.println(ex.getMessage());
+         }
+         }
+         }*/
+        try {
+            Long indice = od.getIndice(correlativo);
+            System.out.println("entra a mostrar");
+            for (String string : citiesTarget) {
+                DetallOficcircId dofi = new DetallOficcircId();
+                dofi.setCodigo(od.getCodigo(string));
+                dofi.setIdOfcirc(indice);
+                DetallOficcirc dof = new DetallOficcirc();
+                dof.setDependencia(od.getDependencias2(string));
+                dof.setId(dofi);
+                dof.setOficCirc(od.getOficioCircular(correlativo));
+                od.guardarDetalleOfCirc(dof);
             }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -285,6 +382,7 @@ public class OficioBean {
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
+
             od.guardarOficioCircular(ofi);
             mostrar();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
@@ -612,7 +710,52 @@ public class OficioBean {
         this.selectedCities = selectedCities;
     }
 
-    public List<String> getCities() {
+    public String getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(String seleccionado) {
+        this.seleccionado = seleccionado;
+    }
+
+    public DualListModel<String> getCities() {
         return cities;
     }
+
+    public void setCities(DualListModel<String> cities) {
+        this.cities = cities;
+    }
+
+    public List<String> getCitiesSource() {
+        return citiesSource;
+    }
+
+    public void setCitiesSource(List<String> citiesSource) {
+        this.citiesSource = citiesSource;
+    }
+
+    public List<String> getCitiesTarget() {
+        return citiesTarget;
+    }
+
+    public void setCitiesTarget(List<String> citiesTarget) {
+        this.citiesTarget = citiesTarget;
+    }
+
+    public List getOficiosSinExp() {
+        return oficiosSinExp;
+    }
+
+    public void setOficiosSinExp(List oficiosSinExp) {
+        this.oficiosSinExp = oficiosSinExp;
+    }
+
+    public List getOficiosConExp() {
+        return oficiosConExp;
+    }
+
+    public void setOficiosConExp(List oficiosConExp) {
+        this.oficiosConExp = oficiosConExp;
+    }
+
 }
