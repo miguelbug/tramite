@@ -4,9 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>DOCUMENTOS INTERNOS</title>
         <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
@@ -36,7 +34,7 @@
                                     </p:pickList>
 
                                     <p:outputLabel value="Asunto:"/>
-                                    <p:inputTextarea value="#{oficioBean.asunto}" rows="6" cols="33"/>
+                                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
 
                                     <p:outputLabel value="Fecha:"/>
                                     <p:outputLabel value="#{oficioBean.auxfecha}"/>
@@ -49,8 +47,6 @@
 
                                     <p:outputLabel value="Área Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.arearesponsable}"/>
-
-
                                 </p:panelGrid>
                                 <br></br>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
@@ -61,7 +57,7 @@
                             <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                                         rowKey="#{item.correlativo}">
 
                                 <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                     <h:outputText value="#{item.correlativo}"/>
@@ -72,9 +68,6 @@
                                 <p:column headerText="AREA RESP." width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origen}"/>
                                 </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
-                                </p:column>
                                 <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
                                 </p:column>
@@ -84,10 +77,13 @@
                                 <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.resp}" filterBy="#{item.resp}" filterMatchMode="contains">
                                     <h:outputText value="#{item.resp}" />
                                 </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <p:commandButton update=":form:tabladetalloficcirc" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
+                                        <f:setPropertyActionListener value="#{item}" target="#{oficioBean.seleccion}"/>
+                                    </p:commandButton>
+                                </p:column>
                             </p:dataTable>
                         </p:tab>
-
-
                         <p:tab title="GENERAR OFICIOS UNICOS">
                             <center>
                                 <p:panelGrid columns="2" id="panelOfUn">
@@ -112,65 +108,66 @@
                                 <br></br>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
                                 </p:commandButton>
-
                             </center>
                         </p:tab>
                         <p:tab title="MOSTRAR OFICIOS UNICOS">
-                            <p:panelGrid id="OficiosConExp">
-                                <p:outputLabel value="OFICIOS CON EXPEDIENTES"/>
-                                <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                            <p:outputLabel value="OFICIOS CON EXPEDIENTES"/>
+                            <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="REFERENCIA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:panelGrid>
+                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="REFERENCIA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numerotramite}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <br></br>
+                            <p:outputLabel value="OFICIOS SIN EXPEDIENTES"/>
+                            <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficSinExp" var="item" paginator="true" rows="10" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                            <p:panelGrid id="OficiosSinExp">
-                                <p:outputLabel value="OFICIOS SIN EXPEDIENTES"/>
-                                <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficConExp" var="item" paginator="true" rows="10" 
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-
-                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.numerotramite}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:panelGrid>
+                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.correlativo}"/>
+                                </p:column>
+                                <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asunto}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                            </p:dataTable>
                         </p:tab>
                     </p:tabView>
-
+                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc" >
+                            <p:column headerText="DESTINO">
+                                <h:outputText value="#{car.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
 
 
                     <br></br>

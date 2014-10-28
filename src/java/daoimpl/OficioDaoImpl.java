@@ -279,18 +279,37 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficioscirculares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select OFI.CORRELA_OFICIC AS CORRELATIVO, \n"
-                    + "OFI.ASUNTO,\n"
-                    + "DEP1.NOMBRE AS ORIGEN,\n"
-                    + "DEP2.NOMBRE AS DESTINO,\n"
-                    + "OFI.FECHA,\n"
-                    + "OFI.FIRMA,\n"
-                    + "OFI.RESPONSABLE\n"
-                    + "from OFIC_CIRC OFI, DETALL_OFICCIRC DET, DEPENDENCIA DEP1, DEPENDENCIA DEP2\n"
-                    + "WHERE OFI.ID_OFCIRC=DET.ID_OFCIRC\n"
-                    + "AND OFI.CODIGO=DEP1.CODIGO\n"
-                    + "AND DET.CODIGO=DEP2.CODIGO\n"
-                    + "order by OFI.CORRELA_OFICIC DESC");
+            Query query = session.createSQLQuery("SELECT CORRELA_OFICIC,\n"
+                    + "ASUNTO,\n"
+                    + "FECHA,\n"
+                    + "D1.NOMBRE,\n"
+                    + "FIRMA,\n"
+                    + "RESPONSABLE\n"
+                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1\n"
+                    + "WHERE OFI.CODIGO=D1.CODIGO\n"
+                    + "ORDER BY OFI.CORRELA_OFICIC DESC");
+            oficioscirc = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal oficioscirculares");
+            System.out.println(e.getMessage());
+        }
+        return oficioscirc;
+    }
+
+    @Override
+    public List getOficoCircDetal(String correla) {
+        List oficioscirc = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get oficioscirculares");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT D.NOMBRE\n"
+                    + "FROM DETALL_OFICCIRC  DO, DEPENDENCIA D, OFIC_CIRC OFI\n"
+                    + "WHERE DO.CODIGO=D.CODIGO\n"
+                    + "AND DO.ID_OFCIRC=OFI.ID_OFCIRC\n"
+                    + "AND OFI.CORRELA_OFICIC='"+correla+"'");
             oficioscirc = query.list();
             session.beginTransaction().commit();
             session.close();

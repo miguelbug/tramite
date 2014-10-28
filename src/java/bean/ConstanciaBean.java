@@ -149,6 +149,7 @@ public class ConstanciaBean {
         c.setFechaEmision(fechaemision);
         c.setDrigidoA(escogido);
         c.setTipoContrato(tipocontrato);
+        c.setUsuario(usu);
         try {
             cons.guardarConstancia(c);
         } catch (Exception e) {

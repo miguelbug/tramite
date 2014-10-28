@@ -71,7 +71,10 @@ public class OficioBean {
     private DocumentoDAO dd;
     public List oficiosSinExp;
     public List oficiosConExp;
+    private String asunto2;
+    private List detallecirc;
     ///
+    private Map<String, String> seleccion;
     private String seleccionado;
     private String[] selectedCities;
     private DualListModel<String> cities;
@@ -89,8 +92,9 @@ public class OficioBean {
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         destinos = dd.getDependencias();
-        oficiosSinExp= new ArrayList<Map<String, String>>();
-        oficiosConExp= new ArrayList<Map<String, String>>();
+        oficiosSinExp = new ArrayList<Map<String, String>>();
+        oficiosConExp = new ArrayList<Map<String, String>>();
+        detallecirc = new ArrayList<Map<String, String>>();
         getAnio();
         mostrarofCirc();
         llenardepes();
@@ -113,6 +117,38 @@ public class OficioBean {
             mostrarofCirc();
         }
 
+    }
+
+    public List Detalles() {
+        System.out.println("listando detalles");
+        detallecirc.clear();
+        try {
+            /*List lista = new ArrayList<String>();
+             System.out.println(seleccion.get("correlativo").toString());
+             lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo")));
+             System.out.println("sigue 1");
+             String obj[] = new String[1];
+             while (ite.hasNext()) {
+             System.out.println("sigue 2");
+             obj = (String[]) ite.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("nombre", obj[0]);
+             detallecirc.add(listaaux);
+             }*/
+            List lista = new ArrayList<String>();
+            System.out.println(seleccion.get("correlativo").toString());
+            lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo")));
+            for (int i = 0; i < lista.size(); i++) {
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("nombre", lista.get(i).toString());
+                detallecirc.add(listaaux);
+            }
+            System.out.println("entra aca >.<");
+        } catch (Exception e) {
+            System.out.println("error aca");
+            System.out.println(e.getMessage());
+        }
+        return detallecirc;
     }
 
     public void mostrarOficiosSinExp() {
@@ -161,7 +197,6 @@ public class OficioBean {
             System.out.println(e.getMessage());
         }
     }
-   
 
     public void generarCorrelativo2() {
         int corr = 0;
@@ -331,16 +366,19 @@ public class OficioBean {
         try {
             Long indice = od.getIndice(correlativo);
             System.out.println("entra a mostrar");
-            for (String string : citiesTarget) {
+            for (int i = 0; i < cities.getTarget().size(); i++) {
                 DetallOficcircId dofi = new DetallOficcircId();
-                dofi.setCodigo(od.getCodigo(string));
+                dofi.setCodigo(od.getCodigo(cities.getTarget().get(i)));
                 dofi.setIdOfcirc(indice);
+
                 DetallOficcirc dof = new DetallOficcirc();
-                dof.setDependencia(od.getDependencias2(string));
+                dof.setDependencia(od.getDependencias2(cities.getTarget().get(i)));
                 dof.setId(dofi);
                 dof.setOficCirc(od.getOficioCircular(correlativo));
+
                 od.guardarDetalleOfCirc(dof);
             }
+            this.cities.getTarget().clear();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -377,12 +415,11 @@ public class OficioBean {
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
-            ofi.setAsunto(asunto);
+            ofi.setAsunto(asunto2);
             ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
-
             od.guardarOficioCircular(ofi);
             mostrar();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
@@ -414,17 +451,16 @@ public class OficioBean {
             List lista = new ArrayList();
             lista = od.getOficiosCirculares();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[6];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("asunto", String.valueOf(obj[1]));
-                listaaux.put("origen", String.valueOf(obj[2]));
-                listaaux.put("destino", String.valueOf(obj[3]));
-                listaaux.put("fecha", String.valueOf(obj[4]));
-                listaaux.put("firma", String.valueOf(obj[5]));
-                listaaux.put("resp", String.valueOf(obj[6]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("firma", String.valueOf(obj[4]));
+                listaaux.put("resp", String.valueOf(obj[5]));
                 oficioscirculares.add(listaaux);
             }
         } catch (Exception e) {
@@ -756,6 +792,30 @@ public class OficioBean {
 
     public void setOficiosConExp(List oficiosConExp) {
         this.oficiosConExp = oficiosConExp;
+    }
+
+    public String getAsunto2() {
+        return asunto2;
+    }
+
+    public void setAsunto2(String asunto2) {
+        this.asunto2 = asunto2;
+    }
+
+    public Map<String, String> getSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(Map<String, String> seleccion) {
+        this.seleccion = seleccion;
+    }
+
+    public List getDetallecirc() {
+        return detallecirc;
+    }
+
+    public void setDetallecirc(List detallecirc) {
+        this.detallecirc = detallecirc;
     }
 
 }
