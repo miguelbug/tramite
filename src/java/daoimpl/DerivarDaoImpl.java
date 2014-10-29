@@ -166,7 +166,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     @Override
     public void ActualizarTramite(String tramaux, String movimiento) {
         System.out.println("actualizar tramite movimiento");
-        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' , ESTA_NOMBRE='FINALIZADO' WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {

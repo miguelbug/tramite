@@ -68,8 +68,6 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px"
                                                          update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
                                                          />
-
-
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
@@ -269,16 +267,10 @@
                                     <h:outputText value="#{seg.estado}" />
                                 </p:column>
                             </p:dataTable>
-
-
-                            <p:panel header="Exportar Reporte">
-                                <center>
-                                    <p:commandButton id="repor10" icon="ui-icon-arrowstop-1-s" value="Reporte de Seguimiento"  ajax="false" update="msj" style="position:absolute; left:300px; height:42px "
-                                                     action="#{objxUnidadController.mostrarReporteSeguimiento}"
-                                                     title="Reporte" />
-                                </center>
-                            </p:panel>    
-
+                            <br></br>
+                            <center>
+                                <p:commandButton id="repor10" value="Reporte de Seguimiento"  action="#{objxUnidadController.mostrarReporteSeguimiento}" title="REPORTE" />
+                            </center>
                         </p:dialog>
                         <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
                             <p:panelGrid columns="2" id="panelProv">

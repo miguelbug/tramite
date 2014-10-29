@@ -222,22 +222,6 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "WHERE TM.CODIGO1='" + oficina + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
-                    + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "UNION\n"
-                    + "SELECT TM.TRAM_NUM,\n"
-                    + "TM.MOVI_NUM,\n"
-                    + "M1.NOMBRE AS ORIGEN,\n"
-                    + "M2.NOMBRE AS DESTINO,\n"
-                    + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
-                    + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
-                    + "I.INDI_NOMBRE,\n"
-                    + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
-                    + "TM.ESTA_NOMBRE,\n"
-                    + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO\n"
-                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I\n"
-                    + "WHERE TM.CODIGO='" + oficina + "' \n"
-                    + "AND TM.CODIGO=M1.CODIGO\n"
-                    + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD");
             codigos = query.list();
             session.beginTransaction().commit();
