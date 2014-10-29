@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bean;
 
 /**
  *
  * @author USUARIO
  */
-
-
-
 import java.io.Serializable;
 import java.lang.Boolean;
 import java.math.BigDecimal;
@@ -21,26 +17,24 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
 
 //import org.primefaces.extensions.showcase.model.Distance;
-
 /**
  * ExporterController
  *
- * @author  Sudheer Jonna / last modified by $Author$
+ * @author Sudheer Jonna / last modified by $Author$
  * @version $Revision$
- * @since   1.0
+ * @since 1.0
  */
 @ManagedBean
 @ApplicationScoped
 public class exporterController implements Serializable {
 
-	private static final long serialVersionUID = 20120316L;
+    private static final long serialVersionUID = 20120316L;
 
     private Boolean customExporter;
 
-
-	public exporterController() {
-             customExporter=false;
-	}
+    public exporterController() {
+        customExporter = false;
+    }
 
     public Boolean getCustomExporter() {
         return customExporter;

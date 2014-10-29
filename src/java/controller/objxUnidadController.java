@@ -53,57 +53,21 @@ public class objxUnidadController implements Serializable {
         ReporteController repor;
         HashMap<String, Object> parametros = new HashMap<String, Object>();
         parametros.clear();
-//parametros.put("anio", 2014/*getAnioActual()*/);
-/*
-         Calendar fecha = new GregorianCalendar();
-         int mes = fecha.get(Calendar.MONTH);
 
-         int año = fecha.get(Calendar.YEAR);
-         mes++;
-         int dia = fecha.get(Calendar.DAY_OF_MONTH);
-         int hora = fecha.get(Calendar.HOUR_OF_DAY);
-         int minuto = fecha.get(Calendar.MINUTE);
-         int segundo = fecha.get(Calendar.SECOND);
-         System.out.println("Fecha Actual: "
-         + dia + "/" + (mes+1) + "/" + año);
-         System.out.printf("Hora Actual: %02d:%02d:%02d %n",
-         hora, minuto, segundo);
-         */
 
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
-//System.out.println("sc = "+sc.getRealPath ("escudo.jpg"));
-//String imagen=sc.getRealPath ("/pages/images/escudo.jpg");
-//String subreport=sc.getRealPath ("/reportes/planes_presupuesto/");
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-//parametros.put("SUBREPORT_DIR", subreport);
-//parametros.put("logo", imagen);
-//parametros.put("subrep3", true);
-
-        /*if( fuenteElegido.equals("99") ){
-         repor= ReporteController.getInstance("reporteCN_TF");
-         }else{*/
-//parametros.put("fuente", getFuenteElegido() );
         repor = ReporteController.getInstance("prueba3");
-//}
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
-        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        repor.setTipoFormato(opcionFormato);
         FacesMessage message = null;
         boolean rpt = false;
-
-        /*parametros.put("udid", udIdElegido );
-         parametros.put("udcod", udCodElegido );
-         parametros.put("uddsc", dependenciaService.obtenerDepxUdcod(udCodElegido).getDescripcion() );
-         parametros.put("usuario", obtenerUsuario() );
-	
-         parametros.put("SUBREPORT_DIR", obtenerReporteDir() );	*/
         parametros.put("USUARIO", getUSUARIO());
-        // parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
-        // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
 
@@ -281,14 +245,6 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    /*
-     public int getAnioActual() {
-	
-     anioEstado = (AnioEstadoPresupuestal) Util.obtenerObjetoSession("anioGlobal");
-     anioActual= anioEstado.getAnio();
-
-     return anioActual;
-     }*/
 
     public void setAnioActual(int anioActual) {
         this.anioActual = anioActual;
