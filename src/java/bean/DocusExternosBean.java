@@ -162,11 +162,13 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void Cambios() {
+        
         correlativo = " ";
         if (documento != null) {
             if (documento.equals("4")) {
                 a1 = true;
                 a2 = false;
+                System.out.println("cambia correlativo");
                 generarCorrelativo();
             } else {
                 if (!documento.equals("4")) {

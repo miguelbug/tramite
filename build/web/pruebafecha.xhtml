@@ -6,24 +6,28 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-       
-
+        <title>RESPUESTAS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
 
-    <h:body>
-
-        <h:form id="form">
-        <p:calendar value="#{objxUnidadController.date1}"> cal1 </p:calendar>
-        
-        <p:calendar value="#{objxUnidadController.date2}"> cal fin </p:calendar>
-        
-        
-       <p:commandButton id="repor10" value="ReporteProveidos"  ajax="false" update="msj"
-                                                                   action="#{objxUnidadController.mostrarReporteFecha}"
-                                                        title="Reporte" />
-       </h:form>
+    <h:body style="background-color: #D0D0D0;">
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form">
+                    <br></br>
+                    <center>
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Desde:"/>
+                            <p:calendar value="#{objxUnidadController.date1}"/>
+                            <p:outputLabel value="Hasta:"/>
+                            <p:calendar value="#{objxUnidadController.date2}"/>
+                        </p:panelGrid>
+                        <br></br>
+                        <p:commandButton id="repor10" value="Reporte Respuestas"  ajax="false" action="#{objxUnidadController.mostrarReporteFecha}" title="Reporte" />
+                    </center>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
-
-
-
 </html>

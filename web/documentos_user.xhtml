@@ -29,7 +29,7 @@
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                    <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                    <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
                                     <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
@@ -44,7 +44,7 @@
                                     <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
                                         <h:outputText value="#{item.fechaenvio}" />
                                     </p:column>
-                                    <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
+                                    <p:column headerText="FECH. ING." width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
                                         <h:outputText value="#{item.fechaingr}" />
                                     </p:column>
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
@@ -343,7 +343,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl">
+                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl,:form:">
                                 <f:ajax event="click" onevent="derivarDialog.hide()"/>
                             </p:commandButton>
                         </center>

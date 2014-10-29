@@ -96,22 +96,12 @@ public class DocumentoUsuarioBean {
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         MostrarParaUsuario();
-        MostrarConfirmados();
-        MostrarConfirmadosDerivados();
     }
 
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getTitle().equals("Sin Confirmar")) {
             MostrarParaUsuario();
-        } else {
-            if (event.getTab().getTitle().equals("Confirmados")) {
-                MostrarConfirmados();
-            }
-            else{
-                if(event.getTab().getTitle().equals("Derivados Internos")){
-                    MostrarConfirmadosDerivados();
-                }
-            }
+
         }
 
     }
@@ -196,7 +186,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("indicador", String.valueOf(obj[6]));
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
-                listaaux.put("estadDoc",String.valueOf(obj[9]));
+                listaaux.put("estadDoc", String.valueOf(obj[9]));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {
@@ -220,7 +210,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("ORIGEN", String.valueOf(obj[1]));
                 listaaux.put("OBSV", String.valueOf(obj[2]));
                 listaaux.put("DESCRIP", String.valueOf(obj[3]));
-                listaaux.put("DOCUMENTO", String.valueOf(obj[4])+" - "+String.valueOf(obj[5])+" - "+String.valueOf(obj[6])+" - "+String.valueOf(obj[7]));
+                listaaux.put("DOCUMENTO", String.valueOf(obj[4]) + " - " + String.valueOf(obj[5]) + " - " + String.valueOf(obj[6]) + " - " + String.valueOf(obj[7]));
                 detalle.add(listaaux);
             }
         } catch (Exception e) {
@@ -299,7 +289,6 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    
     public void UsuarioSelec() {
         try {
             usuario = usu.getUsuNombre();
@@ -309,7 +298,6 @@ public class DocumentoUsuarioBean {
         }
     }
 
-    
     /*----DERIVACION---------*/
     public void RecorrerLista() {
         System.out.println(docselec2);
@@ -384,10 +372,12 @@ public class DocumentoUsuarioBean {
     public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
+        anio = new Date();
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
                 corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre));
+                System.out.println("numerocorrelativo:" + corr);
                 corr = corr + 1;
                 if (corr < 10) {
                     aux = "0000" + corr;
@@ -447,7 +437,7 @@ public class DocumentoUsuarioBean {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
-            MostrarConfirmadosDerivados();
+            MostrarParaUsuario();
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO DERIVAR");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
