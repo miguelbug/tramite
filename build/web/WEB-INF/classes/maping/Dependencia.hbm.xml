@@ -14,6 +14,9 @@
         <property name="tipodepe" type="string">
             <column name="TIPODEPE" length="30" />
         </property>
+        <property name="flac" type="string">
+            <column name="FLAC" length="5" />
+        </property>
         <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />

@@ -74,6 +74,7 @@ public class OficioBean {
     private String asunto2;
     private List detallecirc;
     ///
+    private String origen;
     private Map<String, String> seleccion;
     private String seleccionado;
     private String[] selectedCities;
@@ -95,6 +96,7 @@ public class OficioBean {
         oficiosSinExp = new ArrayList<Map<String, String>>();
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
+        origen=dd.getOficina(usu);
         getAnio();
         mostrarofCirc();
         llenardepes();
@@ -108,7 +110,6 @@ public class OficioBean {
         firma();
         mostrarOficiosSinExp();
         mostrarOficioConExp();
-        //////////////////////
 
     }
 
@@ -123,18 +124,6 @@ public class OficioBean {
         System.out.println("listando detalles");
         detallecirc.clear();
         try {
-            /*List lista = new ArrayList<String>();
-             System.out.println(seleccion.get("correlativo").toString());
-             lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo")));
-             System.out.println("sigue 1");
-             String obj[] = new String[1];
-             while (ite.hasNext()) {
-             System.out.println("sigue 2");
-             obj = (String[]) ite.next();
-             Map<String, String> listaaux = new HashMap<String, String>();
-             listaaux.put("nombre", obj[0]);
-             detallecirc.add(listaaux);
-             }*/
             List lista = new ArrayList<String>();
             System.out.println(seleccion.get("correlativo").toString());
             lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo")));
@@ -204,7 +193,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                corr = Integer.parseInt(od.getCorrela(usu.getUsu()));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -336,33 +325,6 @@ public class OficioBean {
     }
 
     public void mostrar() {
-        /*Long indice = od.getIndice(correlativo);
-         System.out.println("entra a mostrar");
-         System.out.println(docselec);
-         for (int i = 0; i < docselec.size(); i++) {
-         System.out.println("entra aca");
-         Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-         Iterator it = hm.entrySet().iterator();
-         while (it.hasNext()) {
-         System.out.println("entra otra aca");
-         Map.Entry e = (Map.Entry) it.next();
-         try {
-         DetallOficcircId dofi = new DetallOficcircId();
-         System.out.println("GUARDAR DEPENDENCIA");
-         dofi.setCodigo(od.getCodigo(e.getValue().toString()));
-         System.out.println("GUARDAR INDICE");
-         dofi.setIdOfcirc(indice);
-         DetallOficcirc dof = new DetallOficcirc();
-         System.out.println("CREAR DETALLE OFICIO CIRCULAR");
-         dof.setDependencia(od.getDependencias2(e.getValue().toString()));
-         dof.setId(dofi);
-         dof.setOficCirc(od.getOficioCircular(correlativo));
-         od.guardarDetalleOfCirc(dof);
-         } catch (Exception ex) {
-         System.out.println(ex.getMessage());
-         }
-         }
-         }*/
         try {
             Long indice = od.getIndice(correlativo);
             System.out.println("entra a mostrar");
@@ -391,10 +353,11 @@ public class OficioBean {
             ofi.setAsuntoOficio(asunto);
             ofi.setCorrelativoOficio(correlativo2);
             ofi.setFechaOficio(fecha);
-            ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
+            ofi.setDependenciaByCodigo(deriv.getDep(origen));
             ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
             ofi.setReferenciaOficio(null);
             ofi.setTramiteDatos(null);
+            ofi.setUsuario(usu);
             dd.guardarOficio(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -816,6 +779,14 @@ public class OficioBean {
 
     public void setDetallecirc(List detallecirc) {
         this.detallecirc = detallecirc;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
     }
 
 }

@@ -25,6 +25,26 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public String getCorrela(String usu) {
+        System.out.println("get correlat");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(correlativoOficio) from Oficios where usuario.usu='"+usu+"'";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get correla ");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+
+    @Override
     public List getOficioUnicoExpediente() {
         List depes = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();

@@ -215,7 +215,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
 
     @Override
     public String CrearAnd(String objeto, int posi) {
-        return " And " + CrearVariable(posi) + " LIKE '%" + objeto + "%' ";
+        return " And " + CrearVariable(posi) + " LIKE UPPER('%" + objeto + "%') ";
     }
 
     @Override
@@ -295,7 +295,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "DOC.DOCU_SIGLAS,\n"
                     + "DOC.DOCU_ANIO\n"
                     + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
-                    + "WHERE TD.TRAM_NUM='" + tramnum + "' \n"
+                    + "WHERE TD.TRAM_NUM=UPPER('" + tramnum + "') \n"
                     + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
                     + "AND U.ID_OFICINA=OFI.ID_OFICINA");
             codigos = query.list();

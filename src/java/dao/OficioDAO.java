@@ -33,4 +33,5 @@ public interface OficioDAO {
     public List getOficioUnicoExpediente();
     public List getOficioUnicoNoExp();
     public List getOficoCircDetal(String correla);
+    public String getCorrela(String usu);
 }

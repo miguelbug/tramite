@@ -85,8 +85,9 @@
                             </p:dataTable>
                         </p:tab>
                         <p:tab title="GENERAR OFICIOS UNICOS">
-                            <center>
-                                <p:panelGrid columns="2" id="panelOfUn">
+
+                            <p:panelGrid columns="2" id="panelOfUn">
+                                <center>
                                     <p:outputLabel value="Expediente:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo2}"/>
 
@@ -97,15 +98,17 @@
                                     <p:outputLabel value="#{oficioBean.auxfecha}"/>
 
                                     <p:outputLabel value="Origen:"/>
-                                    <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
+                                    <p:outputLabel value="#{oficioBean.origen}"/>
 
                                     <p:outputLabel value="Destino:"/>
                                     <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                         <f:selectItems value="#{oficioBean.destinos}"/>
                                     </p:selectOneMenu>
-                                </p:panelGrid>
-                                <br></br>
+                                </center>
+                            </p:panelGrid>
+                            <br></br>
+                            <center>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
                                 </p:commandButton>
                             </center>
