@@ -19,13 +19,65 @@
                     <center>
                         <p:panelGrid columns="4">
                             <p:outputLabel value="Desde:"/>
-                            <p:calendar value="#{objxUnidadController.date1}"/>
+                            <p:calendar value="#{objxUnidadController.date1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                             <p:outputLabel value="Hasta:"/>
-                            <p:calendar value="#{objxUnidadController.date2}"/>
+                            <p:calendar value="#{objxUnidadController.date2}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                         </p:panelGrid>
                         <br></br>
+                        <p:commandButton id="mostrado" value="Ver"  action="#{objxUnidadController.mostrarReporteFecha}" title="Ver" />
+                    </center>
+                    <br></br>
+                    <center>
+                        <p:dataTable value="#{docusInternos.docusinternos}" var="item" paginator="true" rows="15" id="tabladocusinternos" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     emptyMessage="no hay datos para este filtro" filteredValue="#{docusInternos.otrosdocus}" selection="#{docusInternos.docselec}"
+                                     rowKey="#{item.correlativo}" style="margin-bottom: 0">
+
+                            <p:column headerText="NOMB. DOCU" width="2" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                <h:outputText value="#{item.numerotramite}"/>
+                            </p:column>
+                            <p:column headerText="FECH. REG." width="2" sortBy="#{item.fechareg}" filterBy="#{item.fechareg}" filterMatchMode="contains">
+                                <h:outputText value="#{item.fechareg}"/>
+                            </p:column>
+                            <p:column headerText="TRAM. NUM." width="2" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
+                                <h:outputText value="#{item.tramnum}"/>
+                            </p:column>
+                            <p:column headerText="USUARIO" width="2" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
+                                <h:outputText value="#{item.usu}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </center>
+                    <center>
                         <p:commandButton id="repor10" value="Reporte Respuestas"  ajax="false" action="#{objxUnidadController.mostrarReporteFecha}" title="Reporte" />
                     </center>
+                    <script type="text/javascript">
+                        PrimeFaces.locales['es'] = {
+                            closeText: 'Cerrar',
+                            prevText: 'Anterior',
+                            nextText: 'Siguiente',
+                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                            weekHeader: 'Semana',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            timeOnlyTitle: 'Sólo hora',
+                            timeText: 'Tiempo',
+                            hourText: 'Hora',
+                            minuteText: 'Minuto',
+                            secondText: 'Segundo',
+                            currentText: 'Fecha actual',
+                            ampm: false,
+                            month: 'Mes',
+                            week: 'Semana',
+                            day: 'Día',
+                            allDayText: 'Todo el día'
+                        };
+                    </script>
                 </h:form>
             </ui:define>
         </ui:composition>
