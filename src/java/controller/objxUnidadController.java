@@ -231,12 +231,10 @@ public class objxUnidadController implements Serializable {
         FacesMessage message = null;
         boolean rpt = false;
         parametros.put("usuario", getUSUARIO());
-        //parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", getDate1());
         parametros.put("tramite", tramite);
-        // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
         if (!rpt && message == null) {
