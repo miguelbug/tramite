@@ -680,6 +680,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println("---------sale de guardar tramite dato---------");
                 System.out.println("---------entra a guardar tramite movimiento---------");
                 sgd.temporal(t);
+                movimiento.setEstadConfrirm("Nuevo");
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";

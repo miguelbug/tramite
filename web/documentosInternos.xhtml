@@ -19,6 +19,7 @@
                         <p:tab title="GENERAR OFICIOS CIRCULARES">
                             <center>
                                 <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
+
                                     <p:outputLabel value="Código:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo}"/>
 
@@ -47,11 +48,15 @@
 
                                     <p:outputLabel value="Área Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.arearesponsable}"/>
+
                                 </p:panelGrid>
-                                <br></br>
+                            </center>
+                            <br></br>
+                            <center>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
                                 </p:commandButton>
                             </center>
+
                         </p:tab>
                         <p:tab title="OFICIOS CIRCULARES">
                             <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
@@ -85,9 +90,9 @@
                             </p:dataTable>
                         </p:tab>
                         <p:tab title="GENERAR OFICIOS UNICOS">
+                            <center>
+                                <p:panelGrid columns="2" id="panelOfUn">
 
-                            <p:panelGrid columns="2" id="panelOfUn">
-                                <center>
                                     <p:outputLabel value="Expediente:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo2}"/>
 
@@ -105,8 +110,9 @@
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                         <f:selectItems value="#{oficioBean.destinos}"/>
                                     </p:selectOneMenu>
-                                </center>
-                            </p:panelGrid>
+
+                                </p:panelGrid>
+                            </center>
                             <br></br>
                             <center>
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
