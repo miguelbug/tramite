@@ -277,7 +277,7 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocusInternos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[9];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -290,6 +290,7 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("observacion", String.valueOf(obj[6]));
                 listaaux.put("estado", String.valueOf(obj[7]));
                 listaaux.put("indicador", String.valueOf(obj[8]));
+                listaaux.put("estadodoc", String.valueOf(obj[9]));
                 docusinternos.add(listaaux);
             }
         } catch (Exception e) {
@@ -336,10 +337,11 @@ public class DocumentosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("nombredoc",String.valueOf(obj[1])+" - "+String.valueOf(obj[0])+" - "+String.valueOf(obj[2])+" - "+String.valueOf(obj[3]));
+                /*listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("nombredoc", String.valueOf(obj[1]));
                 listaaux.put("siglas", String.valueOf(obj[2]));
-                listaaux.put("anio", String.valueOf(obj[3]));
+                listaaux.put("anio", String.valueOf(obj[3]));*/
                 listaaux.put("usuario", String.valueOf(obj[4]));
                 listaaux.put("fecha", String.valueOf(obj[5]));
                 detalprov.add(listaaux);

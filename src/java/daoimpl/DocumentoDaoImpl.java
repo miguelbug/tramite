@@ -49,7 +49,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "di.DOCU_SIGLASINT,\n"
                     + "di.DOCU_ANIOINT,\n"
                     + "usua.usu_nombre,\n"
-                    + "di.FECHAREGISTRO\n"
+                    + "DECODE(to_char(di.FECHAREGISTRO, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(di.FECHAREGISTRO, 'dd/MM/yyyy HH:mm:ss')) AS FECHAREGIS\n"
                     + "from docus_internos di, USUARIO usua\n"
                     + "where di.USU=usua.USU\n"
                     + "and di.tram_num='" + tramnum + "'");
@@ -159,7 +159,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "D2.NOMBRE AS DESTINO,"
                     + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
                     + "tm.ESTA_NOMBRE,"
-                    + "I.INDI_NOMBRE\n"
+                    + "I.INDI_NOMBRE,"
+                    + "tm.ESTAD_CONFRIRM\n"
                     + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
