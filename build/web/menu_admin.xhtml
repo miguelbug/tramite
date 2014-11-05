@@ -32,18 +32,49 @@
                 <p:submenu label="Reportes" icon="ui-icon-document" styleClass="conf">
                     <p:menuitem value="Rep. de Documentos" action="reporteVista?faces-redirect=true" />
                 </p:submenu>
-
-                <p:submenu label="Constancias" icon="ui-icon-document" styleClass="conf">
-                    <p:menuitem value="Generar Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
+                <p:submenu label="Reg. Documentos" icon="ui-icon-pencil">
+                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f2:doccircdialog"/>
+                    <p:menuitem value="Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
+                    
+                    <p:menuitem value="Reportes y Consultas" action="documentos?faces-redirect=true"/>                        
                 </p:submenu>
 
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                     <p:menuitem value="Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
                 </p:submenu>
-
-
             </p:menubar>
+
+            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog">
+                <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
+                    <p:outputLabel value="Código:"/>
+                    <p:outputLabel value="#{oficioBean.correlativo}"/>
+                    <p:outputLabel value="Seleccione:" />
+                    <p:pickList id="picklist1" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" 
+                                showCheckbox="true" showSourceFilter="true" filterMatchMode="contains">
+                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                        <f:facet name="targetCaption">Escogidos</f:facet>
+                        <p:column style="width:85%;">
+                            <h:outputText value="#{cities}" />
+                        </p:column>
+                    </p:pickList>
+                    <p:outputLabel value="Asunto:"/>
+                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
+                    <p:outputLabel value="Fecha:"/>
+                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
+                    <p:outputLabel value="Firma:"/>
+                    <p:outputLabel value="#{oficioBean.firma}"/>
+                    <p:outputLabel value="Responsable:"/>
+                    <p:outputLabel value="#{oficioBean.responsable}"/>
+                    <p:outputLabel value="Área Responsable:"/>
+                    <p:outputLabel value="#{oficioBean.arearesponsable}"/>
+                </p:panelGrid>
+                <br></br>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
+                    </p:commandButton>
+                </center>
+            </p:dialog>
 
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">

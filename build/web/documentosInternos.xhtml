@@ -19,12 +19,9 @@
                         <p:tab title="GENERAR OFICIOS CIRCULARES">
                             <center>
                                 <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
-
                                     <p:outputLabel value="Código:"/>
                                     <p:outputLabel value="#{oficioBean.correlativo}"/>
-
                                     <p:outputLabel value="Seleccione:" />
-
                                     <p:pickList id="picklist1" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" 
                                                 showCheckbox="true" showSourceFilter="true" filterMatchMode="contains">
                                         <f:facet name="sourceCaption">Disponibles</f:facet>
@@ -33,22 +30,16 @@
                                             <h:outputText value="#{cities}" />
                                         </p:column>
                                     </p:pickList>
-
                                     <p:outputLabel value="Asunto:"/>
                                     <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
-
                                     <p:outputLabel value="Fecha:"/>
                                     <p:outputLabel value="#{oficioBean.auxfecha}"/>
-
                                     <p:outputLabel value="Firma:"/>
                                     <p:outputLabel value="#{oficioBean.firma}"/>
-
                                     <p:outputLabel value="Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.responsable}"/>
-
                                     <p:outputLabel value="Área Responsable:"/>
                                     <p:outputLabel value="#{oficioBean.arearesponsable}"/>
-
                                 </p:panelGrid>
                             </center>
                             <br></br>
@@ -110,7 +101,6 @@
                                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                         <f:selectItems value="#{oficioBean.destinos}"/>
                                     </p:selectOneMenu>
-
                                 </p:panelGrid>
                             </center>
                             <br></br>

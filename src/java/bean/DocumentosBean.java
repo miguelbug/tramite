@@ -82,7 +82,7 @@ public class DocumentosBean implements Serializable {
     private String destino_ofic;
     private String correlativo_oficio;
     private String referencia;
-    
+
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
@@ -99,7 +99,6 @@ public class DocumentosBean implements Serializable {
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         detalprov = new ArrayList<Map<String, String>>();
-        //seguimientolista2 = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
@@ -107,22 +106,23 @@ public class DocumentosBean implements Serializable {
         ObtenerDepIndic();
 
     }
-    
+
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getTitle().equals("SISG")) {
             MostrarDocumentos();
         } else {
-            if(event.getTab().getTitle().equals("SIS-OGPL")){
+            if (event.getTab().getTitle().equals("SIS-OGPL")) {
                 MostrarDocusInternos();
             }
         }
-       
+
     }
-    public void guardaroficio(){
+
+    public void guardaroficio() {
         FacesMessage message = null;
         System.out.println("guardar oficio");
-        try{
-            Oficios ofi= new Oficios();
+        try {
+            Oficios ofi = new Oficios();
             ofi.setAsuntoOficio(asunto);
             ofi.setFechaOficio(fecha);
             ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
@@ -134,33 +134,36 @@ public class DocumentosBean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
-        }catch(Exception e){
+        } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficio");
-            System.out.println(e.getMessage());           
+            System.out.println(e.getMessage());
         }
-        
     }
-    public void limpiar(){
-        this.tramnum="";
-        this.referencia="";
-        this.asunto="";
-        this.fechaaux="";
-        this.destino_ofic="";
+
+    public void limpiar() {
+        this.tramnum = "";
+        this.referencia = "";
+        this.asunto = "";
+        this.fechaaux = "";
+        this.destino_ofic = "";
     }
-    public void mostrarOficio(){
-        fecha= new Date();
+
+    public void mostrarOficio() {
+        fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fechaaux=sdf.format(fecha);
-        tramnum=obtenerNumeroTramite();
-        correlativo_oficio=generarCorrelativo();
-        referencia=dd.getMotivo(tramnum);
+        fechaaux = sdf.format(fecha);
+        tramnum = obtenerNumeroTramite();
+        correlativo_oficio = generarCorrelativo();
+        referencia = dd.getMotivo(tramnum);
     }
+
     public String getAnio() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(fecha);
     }
+
     public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
@@ -196,9 +199,11 @@ public class DocumentosBean implements Serializable {
         }
         return aux;
     }
-    public void getDependencias(){
+
+    public void getDependencias() {
         dependenciasprov = dd.getDependencias();
     }
+
     public void ObtenerDepIndic() {
         documentosprov = dd.getIndicadores();
         dependenciasprov = dd.getDependencias();
@@ -237,20 +242,21 @@ public class DocumentosBean implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
-    public String obtenerNumeroTramite(){
-        String numerotramite="";
+
+    public String obtenerNumeroTramite() {
+        String numerotramite = "";
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry e = (Map.Entry) it.next();
             if (e.getKey().toString().equals("numerotramite")) {
-                numerotramite=e.getValue().toString();
+                numerotramite = e.getValue().toString();
             }
         }
         return numerotramite;
     }
+
     public void RecorrerLista2() {
         System.out.println("entra a recorrer lista 2");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
@@ -264,10 +270,8 @@ public class DocumentosBean implements Serializable {
                 tranum = e.getValue().toString();
                 System.out.println("------sale-----------");
             }
-
         }
         docselec.clear();
-
     }
 
     public void MostrarDocusInternos() {
@@ -337,11 +341,7 @@ public class DocumentosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("nombredoc",String.valueOf(obj[1])+" - "+String.valueOf(obj[0])+" - "+String.valueOf(obj[2])+" - "+String.valueOf(obj[3]));
-                /*listaaux.put("correlativo", String.valueOf(obj[0]));
-                listaaux.put("nombredoc", String.valueOf(obj[1]));
-                listaaux.put("siglas", String.valueOf(obj[2]));
-                listaaux.put("anio", String.valueOf(obj[3]));*/
+                listaaux.put("nombredoc", String.valueOf(obj[1]) + " - " + String.valueOf(obj[0]) + " - " + String.valueOf(obj[2]) + " - " + String.valueOf(obj[3]));
                 listaaux.put("usuario", String.valueOf(obj[4]));
                 listaaux.put("fecha", String.valueOf(obj[5]));
                 detalprov.add(listaaux);
@@ -474,7 +474,6 @@ public class DocumentosBean implements Serializable {
             System.out.println("error get tramitedatos");
             System.out.println(e.getMessage());
         }
-
         return nuevo;
     }
 
@@ -513,7 +512,6 @@ public class DocumentosBean implements Serializable {
                         tipo.setDocuAnio(e.getValue().toString());
                     }
                 }
-
             }
             System.out.println("tipo docu info: " + tipo.getIdDocu());
         } catch (Exception e) {
@@ -553,11 +551,9 @@ public class DocumentosBean implements Serializable {
 
                         if (e.getKey().toString().equals("movimiento")) {
                             movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
-
                         }
                         if (e.getKey().toString().equals("estado")) {
                             movimiento.setEstaNombre(e.getValue().toString());
-
                         }
                         if (e.getKey().toString().equals("origen")) {
                             movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
@@ -586,7 +582,6 @@ public class DocumentosBean implements Serializable {
                                 nf = formato.parse(e.getValue().toString());
                                 movimiento.setFechaIngr(nf);
                             }
-
                             System.out.println("sale fecha fing");
                         }
                         if (e.getKey().toString().equals("indicador")) {
@@ -598,7 +593,6 @@ public class DocumentosBean implements Serializable {
                             movimiento.setMoviObs(e.getValue().toString());
                             t.setAsunto(e.getValue().toString());
                         }
-
                     } else {
                         if (aux.indexOf("OGPL") == -1) {
                             System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
@@ -658,7 +652,6 @@ public class DocumentosBean implements Serializable {
                                     nf = formato.parse(e.getValue().toString());
                                     movimiento.setFechaIngr(nf);
                                 }
-
                                 System.out.println("sale fecha fing");
                             }
                             if (e.getKey().toString().equals("indicador")) {
@@ -673,7 +666,6 @@ public class DocumentosBean implements Serializable {
                         tdoc = null;
                     }
                     t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
-
                 }
                 System.out.println("---------entra a guardar tramite dato---------");
                 sgd.GuadarTramiteDatos(td, tdoc);
@@ -684,7 +676,6 @@ public class DocumentosBean implements Serializable {
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
-
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);

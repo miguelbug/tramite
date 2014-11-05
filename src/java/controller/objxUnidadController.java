@@ -192,6 +192,7 @@ public class objxUnidadController implements Serializable {
         boolean rpt = false;
         parametros.put("usuario", getUSUARIO());
         //parametros.put("oficina","oficina oli");
+        System.out.println(getDate1()+" - "+getDate2());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", getDate1());

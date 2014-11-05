@@ -6,7 +6,7 @@
     <class name="maping.TipoDocu" table="TIPO_DOCU" schema="MIGUEL">
         <id name="idDocu" type="big_decimal">
             <column name="ID_DOCU" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />

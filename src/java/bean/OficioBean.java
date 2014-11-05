@@ -97,17 +97,8 @@ public class OficioBean {
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
         origen=dd.getOficina(usu);
-        getAnio();
         mostrarofCirc();
-        llenardepes();
-        llenar2();
-        cities = new DualListModel<String>(citiesSource, citiesTarget);
-        generarFecha();
-        generarCorrelativo();
         generarCorrelativo2();
-        responsable();
-        arearesponsable();
-        firma();
         mostrarOficiosSinExp();
         mostrarOficioConExp();
 
@@ -119,7 +110,17 @@ public class OficioBean {
         }
 
     }
-
+    public void abriroficio(){
+        getAnio();
+        generarFecha();
+        generarCorrelativo();
+        responsable();
+        arearesponsable();
+        llenardepes();
+        llenar2();
+        cities = new DualListModel<String>(citiesSource, citiesTarget);
+        firma();
+    }
     public List Detalles() {
         System.out.println("listando detalles");
         detallecirc.clear();
@@ -392,11 +393,11 @@ public class OficioBean {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
         }
-        getAnio();
+        /*getAnio();
         generarFecha();
         generarCorrelativo();
         responsable();
-        arearesponsable();
+        arearesponsable();*/
         limpiar();
         depe2.clear();
 
