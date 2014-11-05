@@ -12,6 +12,7 @@ import maping.Dependencia;
 import maping.DetallOficcirc;
 import maping.OficCirc;
 import maping.Oficina;
+import maping.TiposDocumentos;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -23,6 +24,44 @@ import util.HibernateUtil;
 public class OficioDaoImpl implements OficioDAO {
 
     Session session;
+
+    @Override
+    public TiposDocumentos getTipoDocu(String nombre) {
+        System.out.println("get tipodocu");
+        TiposDocumentos tipodocu=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "from TiposDocumentos where nombreDocu='"+nombre+"'";
+        try {
+            session.beginTransaction();
+            tipodocu = (TiposDocumentos) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get correla ");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return tipodocu;
+    }
+
+    @Override
+    public List getTiposDocus() {
+        List depes = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get tipos docus");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='1'");
+            depes = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal tiposdocus");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
 
     @Override
     public String getCorrela(String usu) {

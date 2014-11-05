@@ -29,5 +29,6 @@
     <mapping resource="maping/Oficina.hbm.xml"/>
     <mapping resource="maping/Temporal.hbm.xml"/>
     <mapping resource="maping/TipoContrato.hbm.xml"/>
+    <mapping resource="maping/TiposDocumentos.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

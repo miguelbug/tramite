@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 05/11/2014 09:54:41 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DetallOficcirc" table="DETALL_OFICCIRC" schema="MIGUEL">
-        <composite-id name="id" class="maping.DetallOficcircId">
-            <key-property name="idOfcirc" type="java.lang.Long">
-                <column name="ID_OFCIRC" precision="10" scale="0" />
-            </key-property>
-            <key-property name="codigo" type="java.lang.Long">
-                <column name="CODIGO" precision="10" scale="0" />
-            </key-property>
-        </composite-id>
-        <many-to-one name="oficCirc" class="maping.OficCirc" update="false" insert="false" fetch="select">
+        <id name="idDetalloficirc" type="big_decimal">
+            <column name="ID_DETALLOFICIRC" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="oficCirc" class="maping.OficCirc" fetch="select">
             <column name="ID_OFCIRC" precision="10" scale="0" />
         </many-to-one>
-        <many-to-one name="dependencia" class="maping.Dependencia" update="false" insert="false" fetch="select">
+        <many-to-one name="tiposDocumentos" class="maping.TiposDocumentos" fetch="select">
+            <column name="ID_DOCUMENTO" precision="22" scale="0" />
+        </many-to-one>
+        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
     </class>

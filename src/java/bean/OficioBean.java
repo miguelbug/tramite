@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import maping.DetallOficcirc;
-import maping.DetallOficcircId;
 import maping.OficCirc;
 import maping.Oficios;
 import maping.Usuario;
@@ -77,10 +76,20 @@ public class OficioBean {
     private String origen;
     private Map<String, String> seleccion;
     private String seleccionado;
-    private String[] selectedCities;
+    
     private DualListModel<String> cities;
     List<String> citiesSource = new ArrayList<String>();
     List<String> citiesTarget = new ArrayList<String>();
+    //
+    private String escogido;
+    private List tiposdocus;
+    //
+    //pruebas
+    //
+    private String prueba;
+    private List<String> cities2;
+    private String[] selectedCities;
+    private String nombre;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -96,11 +105,16 @@ public class OficioBean {
         oficiosSinExp = new ArrayList<Map<String, String>>();
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
-        origen=dd.getOficina(usu);
+        tiposdocus = new ArrayList<String>();
+        cities2 = new ArrayList<String>();
+        origen = dd.getOficina(usu);
+        llenardepes();
+        cities = new DualListModel<String>(citiesSource, citiesTarget);
         mostrarofCirc();
         generarCorrelativo2();
         mostrarOficiosSinExp();
         mostrarOficioConExp();
+        
 
     }
 
@@ -108,19 +122,38 @@ public class OficioBean {
         if (event.getTab().getTitle().equals("OFICIOS CIRCULARES")) {
             mostrarofCirc();
         }
-
     }
-    public void abriroficio(){
+
+    public void ObtenerTiposDocus() {
+        System.out.println("listando tipos docus");
+        tiposdocus.clear();
+        try {/*
+            List lista = new ArrayList();
+            lista = od.getTiposDocus();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[1];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                tiposdocus.add(String.valueOf(obj[0]));
+                
+            }
+        */
+        tiposdocus=od.getTiposDocus();} catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void abriroficio() {
+        ObtenerTiposDocus();
         getAnio();
         generarFecha();
         generarCorrelativo();
         responsable();
         arearesponsable();
-        llenardepes();
-        llenar2();
-        cities = new DualListModel<String>(citiesSource, citiesTarget);
         firma();
     }
+
     public List Detalles() {
         System.out.println("listando detalles");
         detallecirc.clear();
@@ -274,6 +307,7 @@ public class OficioBean {
     }
 
     public void llenar2() {
+        cities2.clear();
         String tipo = "";
         String nombre = "";
         for (int i = 0; i < depe.size(); i++) {
@@ -288,18 +322,19 @@ public class OficioBean {
                     tipo = e.getValue().toString();
                 }
             }
-            citiesSource.add(nombre);
+            if(prueba.equals(tipo)){
+                cities2.add(nombre);
+            }
+            
         }
 
     }
 
-    public void llenar(ActionEvent ex) {
-
-        System.out.println(cities);
-        depe2.clear();
-        System.out.println(tipodepe);
+    public void llenar() {
+        citiesSource.clear();
         String tipo = "";
         String nombre = "";
+        System.out.println("ESTE ES EL TIPO: "+prueba);
         for (int i = 0; i < depe.size(); i++) {
             HashMap hashMap = (HashMap) depe.get(i);
             Iterator it = hashMap.entrySet().iterator();
@@ -312,17 +347,11 @@ public class OficioBean {
                     tipo = e.getValue().toString();
                 }
             }
-            if (tipodepe.equals(tipo)) {
+            if (prueba.equals(tipo)) {
                 citiesSource.add(nombre);
-                //System.out.println("ENTRA A GUARDAR EN DEPE2");
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("nombre", nombre);
-                depe2.add(listaaux);
             }
         }
-
-        System.out.println(cities);
-
+        cities.setSource(citiesSource);
     }
 
     public void mostrar() {
@@ -330,15 +359,11 @@ public class OficioBean {
             Long indice = od.getIndice(correlativo);
             System.out.println("entra a mostrar");
             for (int i = 0; i < cities.getTarget().size(); i++) {
-                DetallOficcircId dofi = new DetallOficcircId();
-                dofi.setCodigo(od.getCodigo(cities.getTarget().get(i)));
-                dofi.setIdOfcirc(indice);
 
                 DetallOficcirc dof = new DetallOficcirc();
                 dof.setDependencia(od.getDependencias2(cities.getTarget().get(i)));
-                dof.setId(dofi);
                 dof.setOficCirc(od.getOficioCircular(correlativo));
-
+                dof.setTiposDocumentos(od.getTipoDocu(escogido));
                 od.guardarDetalleOfCirc(dof);
             }
             this.cities.getTarget().clear();
@@ -394,10 +419,11 @@ public class OficioBean {
             System.out.println(e.getMessage());
         }
         /*getAnio();
-        generarFecha();
-        generarCorrelativo();
-        responsable();
-        arearesponsable();*/
+         generarFecha();
+         generarCorrelativo();
+         responsable();
+         arearesponsable();*/
+        
         limpiar();
         depe2.clear();
 
@@ -790,4 +816,44 @@ public class OficioBean {
         this.origen = origen;
     }
 
+    public String getEscogido() {
+        return escogido;
+    }
+
+    public void setEscogido(String escogido) {
+        this.escogido = escogido;
+    }
+
+    public List getTiposdocus() {
+        return tiposdocus;
+    }
+
+    public void setTiposdocus(List tiposdocus) {
+        this.tiposdocus = tiposdocus;
+    }
+
+    public String getPrueba() {
+        return prueba;
+    }
+
+    public void setPrueba(String prueba) {
+        this.prueba = prueba;
+    }
+
+    public List<String> getCities2() {
+        return cities2;
+    }
+
+    public void setCities2(List<String> cities2) {
+        this.cities2 = cities2;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
 }

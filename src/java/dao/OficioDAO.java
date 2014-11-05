@@ -11,6 +11,7 @@ import maping.Dependencia;
 import maping.DetallOficcirc;
 import maping.OficCirc;
 import maping.Oficina;
+import maping.TiposDocumentos;
 
 /**
  *
@@ -34,4 +35,6 @@ public interface OficioDAO {
     public List getOficioUnicoNoExp();
     public List getOficoCircDetal(String correla);
     public String getCorrela(String usu);
+    public List getTiposDocus();
+    public TiposDocumentos getTipoDocu(String nombre);
 }

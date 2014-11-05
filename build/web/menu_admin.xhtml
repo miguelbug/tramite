@@ -25,6 +25,11 @@
                     <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
                     <p:menuitem value="Documentos Internos" action="documentosInternos?faces-redirect=true"/>
                 </p:submenu>
+                <p:submenu label="Reg. Documentos" icon="ui-icon-pencil">
+                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f2:doccircdialog"/>
+                    <p:menuitem value="Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
+                    <p:menuitem value="Reportes y Consultas" action="documentos?faces-redirect=true"/>                        
+                </p:submenu>
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
@@ -32,12 +37,7 @@
                 <p:submenu label="Reportes" icon="ui-icon-document" styleClass="conf">
                     <p:menuitem value="Rep. de Documentos" action="reporteVista?faces-redirect=true" />
                 </p:submenu>
-                <p:submenu label="Reg. Documentos" icon="ui-icon-pencil">
-                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f2:doccircdialog"/>
-                    <p:menuitem value="Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
-                    
-                    <p:menuitem value="Reportes y Consultas" action="documentos?faces-redirect=true"/>                        
-                </p:submenu>
+
 
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
@@ -47,17 +47,25 @@
 
             <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog">
                 <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
-                    <p:outputLabel value="Código:"/>
+                    <p:outputLabel value="Tipo de Documento:"/>
+                    <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{oficioBean.tiposdocus}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Número:"/>
                     <p:outputLabel value="#{oficioBean.correlativo}"/>
-                    <p:outputLabel value="Seleccione:" />
-                    <p:pickList id="picklist1" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" 
-                                showCheckbox="true" showSourceFilter="true" filterMatchMode="contains">
-                        <f:facet name="sourceCaption">Disponibles</f:facet>
-                        <f:facet name="targetCaption">Escogidos</f:facet>
-                        <p:column style="width:85%;">
-                            <h:outputText value="#{cities}" />
-                        </p:column>
+
+                    <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}" >
+                        <f:selectItem itemLabel="Destino" itemValue=" "/>
+                        <f:selectItem itemLabel="Facultad" itemValue="facultad"/>
+                        <f:selectItem itemLabel="Dependencia Externa" itemValue="DependenciaInterna"/>
+                        <f:selectItem itemLabel="Dependencia Interna" itemValue="DependenciaExterna"/>
+                        <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":f2:pickList"/>
+                    </p:selectOneMenu>
+                    <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px">
+                        <p:ajax process="pickList" event="transfer"/>
                     </p:pickList>
+
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
                     <p:outputLabel value="Fecha:"/>
@@ -72,6 +80,7 @@
                 <br></br>
                 <center>
                     <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
+                        <f:ajax event="click" onevent="DocCircdialog.hide()"/>
                     </p:commandButton>
                 </center>
             </p:dialog>
