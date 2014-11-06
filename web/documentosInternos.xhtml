@@ -16,39 +16,6 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:ajax event="tabChange" listener="#{oficioBean.onTabChange}" update=":form"/>
-                        <!--<p:tab title="GENERAR OFICIOS CIRCULARES">
-                            <center>
-                                <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
-                                    <p:outputLabel value="Código:"/>
-                                    <p:outputLabel value="#{oficioBean.correlativo}"/>
-                                    <p:outputLabel value="Seleccione:" />
-                                    <p:pickList id="picklist1" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" 
-                                                showCheckbox="true" showSourceFilter="true" filterMatchMode="contains">
-                                        <f:facet name="sourceCaption">Disponibles</f:facet>
-                                        <f:facet name="targetCaption">Escogidos</f:facet>
-                                        <p:column style="width:85%;">
-                                            <h:outputText value="#{cities}" />
-                                        </p:column>
-                                    </p:pickList>
-                                    <p:outputLabel value="Asunto:"/>
-                                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
-                                    <p:outputLabel value="Fecha:"/>
-                                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
-                                    <p:outputLabel value="Firma:"/>
-                                    <p:outputLabel value="#{oficioBean.firma}"/>
-                                    <p:outputLabel value="Responsable:"/>
-                                    <p:outputLabel value="#{oficioBean.responsable}"/>
-                                    <p:outputLabel value="Área Responsable:"/>
-                                    <p:outputLabel value="#{oficioBean.arearesponsable}"/>
-                                </p:panelGrid>
-                            </center>
-                            <br></br>
-                            <center>
-                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
-                                </p:commandButton>
-                            </center>
-
-                        </p:tab>-->
                         <p:tab title="OFICIOS CIRCULARES">
                             <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -80,61 +47,32 @@
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
-                        <!--<p:tab title="GENERAR OFICIOS UNICOS">
-                            <center>
-                                <p:panelGrid columns="2" id="panelOfUn">
-
-                                    <p:outputLabel value="Expediente:"/>
-                                    <p:outputLabel value="#{oficioBean.correlativo2}"/>
-
-                                    <p:outputLabel value="Asunto:"/>
-                                    <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>
-
-                                    <p:outputLabel value="Fecha:"/>
-                                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
-
-                                    <p:outputLabel value="Origen:"/>
-                                    <p:outputLabel value="#{oficioBean.origen}"/>
-
-                                    <p:outputLabel value="Destino:"/>
-                                    <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                        <f:selectItems value="#{oficioBean.destinos}"/>
-                                    </p:selectOneMenu>
-                                </p:panelGrid>
-                            </center>
-                            <br></br>
-                            <center>
-                                <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
-                                </p:commandButton>
-                            </center>
-                        </p:tab>-->
                         <p:tab title="MOSTRAR OFICIOS UNICOS CON EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
-                                <p:column headerText="NUM.TRAM." width="1">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.tramnum}"/>
                                 </p:column>
-                                <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}"/>
                                 </p:column>
-                                <p:column headerText="REFERENCIA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="REFERENCIA" width="5" sortBy="#{item.referencia}" filterBy="#{item.referencia}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.referencia}"/>
                                 </p:column>
-                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asunto}"/>
                                 </p:column>
-                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}"/>
                                 </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
                                 </p:column>
                             </p:dataTable>
 
@@ -156,6 +94,38 @@
                                 </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origen}"/>
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="CONSTANCIAS">
+                            <p:dataTable value="#{constanciaBean.constancias}" id="constanciastablas" var="item" paginator="true" rows="10" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus}"
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+
+                                <p:column headerText="NUM. CORR." width="1" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.correlativo}"/>
+                                </p:column>
+                                <p:column headerText="FECH. EMIS." width="5" sortBy="#{item.fechaemi}" filterBy="#{item.fechaemi}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaemi}"/>
+                                </p:column>
+                                <p:column headerText="DRIGIDO" width="5" sortBy="#{item.dirigidoa}" filterBy="#{item.dirigidoa}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.dirigidoa}"/>
+                                </p:column>
+                                <p:column headerText="TIP. CONTR." width="5" sortBy="#{item.tipocontrato}" filterBy="#{item.tipocontrato}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.tipocontrato}"/>
+                                </p:column>
+                                <p:column headerText="DESDE" width="5" sortBy="#{item.desde}" filterBy="#{item.desde}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.desde}"/>
+                                </p:column>
+                                <p:column headerText="HASTA" width="5" sortBy="#{item.hasta}" filterBy="#{item.hasta}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.hasta}"/>
+                                </p:column>
+                                <p:column headerText="USUARIO" width="5" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.usu}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:tab>

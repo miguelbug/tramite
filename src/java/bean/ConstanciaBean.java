@@ -12,14 +12,18 @@ import daoimpl.DerivarDaoImpl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Constancias;
 import maping.Usuario;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -43,14 +47,18 @@ public class ConstanciaBean {
     private ConstanciaDAO cons;
     private FacesContext faceContext;
     private Usuario usu;
+    private List constancias;
+    private List otrosdocus;
 
     public ConstanciaBean() {
         deriv = new DerivarDaoImpl();
         cons = new ConstanciaDaoImpl();
         empleados = new ArrayList<String>();
+        constancias= new ArrayList<Map<String, String>>();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        mostrarConstancias();
     }
 
     public void abrirconstancia() {
@@ -142,6 +150,7 @@ public class ConstanciaBean {
     }
 
     public void guardarconstancia() {
+        FacesMessage message = null;
         Constancias c = new Constancias();
         c.setCorrelativo(correlativo);
         c.setDesde(desde);
@@ -152,10 +161,38 @@ public class ConstanciaBean {
         c.setUsuario(usu);
         try {
             cons.guardarConstancia(c);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO LA CONSTANCIA");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR LA CONSTANCIA");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
         }
 
+    }
+    public void mostrarConstancias(){
+        System.out.println("listando documentos");
+        constancias.clear();
+        try {
+            List lista = new ArrayList();
+            lista = cons.getConstancias();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("fechaemi", String.valueOf(obj[1]));
+                listaaux.put("dirigidoa", String.valueOf(obj[2]));
+                listaaux.put("tipocontrato", String.valueOf(obj[3]));
+                listaaux.put("desde", String.valueOf(obj[4]));
+                listaaux.put("hasta", String.valueOf(obj[5]));
+                listaaux.put("usu", String.valueOf(obj[6]));
+                constancias.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getCorrelativo() {
@@ -268,6 +305,22 @@ public class ConstanciaBean {
 
     public void setUsu(Usuario usu) {
         this.usu = usu;
+    }
+
+    public List getConstancias() {
+        return constancias;
+    }
+
+    public void setConstancias(List constancias) {
+        this.constancias = constancias;
+    }
+
+    public List getOtrosdocus() {
+        return otrosdocus;
+    }
+
+    public void setOtrosdocus(List otrosdocus) {
+        this.otrosdocus = otrosdocus;
     }
 
 }

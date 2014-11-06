@@ -68,7 +68,7 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("select tc.NOMBRE_CONTRATO\n"
                     + "from jefatura j, tipo_contrato tc\n"
-                    + "where j.nombre||' '||j.apellidos = '"+nombre+"'\n"
+                    + "where j.nombre||' '||j.apellidos = '" + nombre + "'\n"
                     + "and j.id_contrato=tc.ID_CONTRATO");
             contrato = (String) query.uniqueResult();
             session.beginTransaction().commit();
@@ -96,6 +96,31 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
         } finally {
             session.close();
         }
+    }
+
+    @Override
+    public List getConstancias() {
+        System.out.println("getconstancias");
+        List constancias = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT CORRELATIVO,\n"
+                    + "FECHA_EMISION,\n"
+                    + "DRIGIDO_A,\n"
+                    + "TIPO_CONTRATO,\n"
+                    + "DESDE,\n"
+                    + "HASTA,\n"
+                    + "USU\n"
+                    + "FROM CONSTANCIAS");
+            constancias = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no getconstancias");
+            System.out.println(e.getMessage());
+        }
+        return constancias;
     }
 
 }

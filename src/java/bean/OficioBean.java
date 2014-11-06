@@ -189,7 +189,7 @@ public class OficioBean {
             List lista = new ArrayList();
             lista = od.getOficioUnicoNoExp();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[4];
+            Object obj[] = new Object[5];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -197,6 +197,7 @@ public class OficioBean {
                 listaaux.put("fecha", String.valueOf(obj[1]));
                 listaaux.put("asunto", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("destino", String.valueOf(obj[4]));
                 oficiosSinExp.add(listaaux);
             }
         } catch (Exception e) {

@@ -18,4 +18,5 @@ public interface ConstanciaDAO {
     public List getJefatura();
     public String getContrato(String nombre);
     public void guardarConstancia(Constancias c);
+    public List getConstancias();
 }

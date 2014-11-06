@@ -52,7 +52,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get tipos docus");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='1'");
+            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='0'");
             depes = (List) query.list();
             session.beginTransaction().commit();
             session.close();
@@ -95,8 +95,8 @@ public class OficioDaoImpl implements OficioDAO {
                     + "ofi.FECHA_OFICIO,\n"
                     + "ofi.REFERENCIA_OFICIO,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
-                    + "d1.nombre,\n"
-                    + "d2.nombre\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino\n"
                     + "from OFICIOS ofi, Dependencia d1, Dependencia d2\n"
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"
@@ -121,10 +121,11 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery("select ofi.CORRELATIVO_OFICIO,\n"
                     + "ofi.FECHA_OFICIO,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
-                    + "d1.nombre\n"
-                    + "\n"
-                    + "from OFICIOS ofi, Dependencia d1\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2\n"
                     + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is null");
             depes = (List) query.list();
             session.beginTransaction().commit();
