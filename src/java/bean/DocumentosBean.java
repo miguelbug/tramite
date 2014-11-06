@@ -130,7 +130,8 @@ public class DocumentosBean implements Serializable {
             ofi.setCorrelativoOficio(correlativo_oficio);
             ofi.setReferenciaOficio(dd.getMotivo(tramnum));
             ofi.setTramiteDatos(deriv.getTramite(tramnum));
-            dd.guardarOficio(ofi);
+            dd.guardarOficio(ofi,tramnum,obtenerMovimiento());
+            ofi.setUsuario(usu);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
@@ -242,6 +243,18 @@ public class DocumentosBean implements Serializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+   public String obtenerMovimiento() {
+        String numerotramite = "";
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        Iterator it = hm.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry e = (Map.Entry) it.next();
+            if (e.getKey().toString().equals("movimiento")) {
+                numerotramite = e.getValue().toString();
+            }
+        }
+        return numerotramite;
     }
 
     public String obtenerNumeroTramite() {

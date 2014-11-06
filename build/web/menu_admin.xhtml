@@ -28,25 +28,56 @@
                 <p:submenu label="Reg. Documentos" icon="ui-icon-pencil">
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f2:doccircdialog"/>
                     <p:menuitem value="Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
-                    <p:menuitem value="Reportes y Consultas" action="documentos?faces-redirect=true"/>                        
+                    <p:submenu label="Otros Doc.">
+                        <p:menuitem value="Of. Únicos" actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('OFUnicDialog').show()" update=":f2:ofiunicos"/>
+                        <p:menuitem value="Directivas"/>
+                    </p:submenu>
+                    <p:menuitem value="Reportes y Consultas"/>                        
                 </p:submenu>
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
-
-                <p:submenu label="Reportes" icon="ui-icon-document" styleClass="conf">
-                    <p:menuitem value="Rep. de Documentos" action="reporteVista?faces-redirect=true" />
-                </p:submenu>
-
-
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                     <p:menuitem value="Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
                 </p:submenu>
             </p:menubar>
 
-            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog">
-                <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
+            <p:dialog header="Oficio Único" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="ofiunicos">
+                <p:panelGrid columns="2" id="panelOfUn">
+                    <p:outputLabel value="Número:"/>
+                    <p:outputLabel value="#{oficioBean.correlativo2}"/>
+
+                    <p:outputLabel value="Tipo de Documento:"/>
+                    <p:selectOneMenu id="tipodocuofunic" value="#{oficioBean.escogido}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{oficioBean.tiposdocus}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Asunto:"/>
+                    <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>
+
+                    <p:outputLabel value="Fecha:"/>
+                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
+
+                    <p:outputLabel value="Origen:"/>
+                    <p:outputLabel value="#{oficioBean.origen}"/>
+
+                    <p:outputLabel value="Destino:"/>
+                    <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{oficioBean.destinos}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <br></br>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
+                    </p:commandButton>
+                </center>
+            </p:dialog>
+
+            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog" style="width: 150px">
+                <p:panelGrid columns="2" id="formuloficCirc">
                     <p:outputLabel value="Tipo de Documento:"/>
                     <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -104,7 +135,7 @@
                 </center>
             </p:dialog>
 
-            <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog">
+            <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog" >
                 <p:panelGrid columns="2" id="panelconst">
                     <p:outputLabel value="N° Correlativo:"/>
                     <p:outputLabel value="#{constanciaBean.correlativo}"/>

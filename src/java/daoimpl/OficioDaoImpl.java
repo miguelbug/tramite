@@ -97,7 +97,6 @@ public class OficioDaoImpl implements OficioDAO {
                     + "ofi.ASUNTO_OFICIO,\n"
                     + "d1.nombre,\n"
                     + "d2.nombre\n"
-                    + "\n"
                     + "from OFICIOS ofi, Dependencia d1, Dependencia d2\n"
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"

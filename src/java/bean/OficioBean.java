@@ -101,17 +101,16 @@ public class OficioBean {
         depe2 = new ArrayList<Map<String, String>>();
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
-        destinos = dd.getDependencias();
+        
         oficiosSinExp = new ArrayList<Map<String, String>>();
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
         tiposdocus = new ArrayList<String>();
         cities2 = new ArrayList<String>();
-        origen = dd.getOficina(usu);
+        
         llenardepes();
         cities = new DualListModel<String>(citiesSource, citiesTarget);
         mostrarofCirc();
-        generarCorrelativo2();
         mostrarOficiosSinExp();
         mostrarOficioConExp();
         
@@ -139,9 +138,18 @@ public class OficioBean {
                 
             }
         */
-        tiposdocus=od.getTiposDocus();} catch (Exception e) {
+        tiposdocus=od.getTiposDocus();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    public void abrirOficioUnico(){
+        getAnio();
+        generarFecha();
+        generarCorrelativo2();
+        ObtenerTiposDocus();
+        origen = dd.getOficina(usu);
+        destinos = dd.getDependencias();
     }
 
     public void abriroficio() {
@@ -384,7 +392,7 @@ public class OficioBean {
             ofi.setReferenciaOficio(null);
             ofi.setTramiteDatos(null);
             ofi.setUsuario(usu);
-            dd.guardarOficio(ofi);
+            dd.guardarOficio2(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
@@ -418,20 +426,16 @@ public class OficioBean {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
         }
-        /*getAnio();
-         generarFecha();
-         generarCorrelativo();
-         responsable();
-         arearesponsable();*/
         
         limpiar();
-        depe2.clear();
+        cities.getTarget().clear();
 
     }
 
     public void limpiar() {
-        asunto = "";
-        tipodepe = " ";
+        asunto2 = "";
+        escogido = " ";
+        prueba= " ";
     }
 
     public void mostrarofCirc() {

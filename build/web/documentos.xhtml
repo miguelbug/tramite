@@ -32,7 +32,7 @@
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
-                                    <p:column headerText="MOV." width="3" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
+                                    <p:column headerText="MOV." width="1">
                                         <h:outputText value="#{item.movimiento}"/>
                                     </p:column>
                                     <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
@@ -109,7 +109,7 @@
                                         <h:outputText value="#{item.estadodoc}" />
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetallesProv" oncomplete="PF('itemDetallProv').show()" icon="ui-icon-search" title="Detalle Proveido">
+                                        <p:commandButton update=":form:tabladetallesResp" oncomplete="PF('itemDetallResp').show()" icon="ui-icon-search" title="Detalle">
                                             <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
                                         </p:commandButton>
                                     </p:column>
@@ -133,10 +133,10 @@
                                     <p:column headerText="CORR." width="2" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                         <h:outputText value="#{item.correlativo}"/>
                                     </p:column>
-                                    <p:column headerText="NUMERO DOC." width="3" sortBy="#{item.numerodoc}" filterBy="#{item.numerodoc}" filterMatchMode="contains">
+                                    <p:column headerText="NUMERO DOC." width="5" sortBy="#{item.numerodoc}" filterBy="#{item.numerodoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerodoc}"/>
                                     </p:column>
-                                    <p:column headerText="MOVMIENTO" width="5" sortBy="#{item.movimiento}" filterBy="#{item.movimiento}" filterMatchMode="contains">
+                                    <p:column headerText="MOV." width="1">
                                         <h:outputText value="#{item.movimiento}"/>
                                     </p:column>
                                     <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
@@ -147,9 +147,6 @@
                                     </p:column>
                                     <p:column headerText="F.REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                         <h:outputText value="#{item.fecha}" />
-                                    </p:column>
-                                    <p:column headerText="NOMB. DOC." width="5" sortBy="#{item.nombredocu}" filterBy="#{item.nombredocu}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.nombredocu}" />
                                     </p:column>
                                     <p:column headerText="USUARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                         <h:outputText value="#{item.usuario}" />
@@ -193,8 +190,8 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-                        <p:dialog header="Detalle Proveido" widgetVar="itemDetallProv" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                            <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesProv" >
+                        <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesResp" >
                                 <p:column headerText="Nombre Doc.">
                                     <h:outputText value="#{car.nombredoc}" />
                                 </p:column>

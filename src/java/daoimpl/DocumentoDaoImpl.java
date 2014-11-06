@@ -23,7 +23,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
-    public void guardarOficio(Oficios ofi) {
+    public void guardarOficio2(Oficios ofi) {
         System.out.println("guardar oficio");
         session = HibernateUtil.getSessionFactory().openSession();
         try{
@@ -35,6 +35,43 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void ActualizarMov(String tramnum, String mov) {
+        System.out.println("actualizar tramite movimiento");
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='FINALIZADO' , ESTA_NOMBRE='FINALIZADO' WHERE TRAM_NUM='" + tramnum + "' AND MOVI_NUM='" + Integer.parseInt(mov) + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar tramite");
+        } catch (Exception e) {
+            System.out.println("mal actualizar tramite");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
+    public void guardarOficio(Oficios ofi, String tramnum, String movimiento) {
+        System.out.println("guardar oficio");
+        session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            session.beginTransaction();
+            session.save(ofi);
+            session.beginTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            System.out.println("mal guardar oficio");
+            System.out.println(e.getMessage());
+        }
+        ActualizarMov(tramnum,movimiento);
     }
 
     @Override

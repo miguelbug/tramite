@@ -16,7 +16,7 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:ajax event="tabChange" listener="#{oficioBean.onTabChange}" update=":form"/>
-                        <p:tab title="GENERAR OFICIOS CIRCULARES">
+                        <!--<p:tab title="GENERAR OFICIOS CIRCULARES">
                             <center>
                                 <p:panelGrid columns="2" style="width: 60%" id="formuloficCirc">
                                     <p:outputLabel value="Código:"/>
@@ -48,7 +48,7 @@
                                 </p:commandButton>
                             </center>
 
-                        </p:tab>
+                        </p:tab>-->
                         <p:tab title="OFICIOS CIRCULARES">
                             <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -80,7 +80,7 @@
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
-                        <p:tab title="GENERAR OFICIOS UNICOS">
+                        <!--<p:tab title="GENERAR OFICIOS UNICOS">
                             <center>
                                 <p:panelGrid columns="2" id="panelOfUn">
 
@@ -108,9 +108,8 @@
                                 <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
                                 </p:commandButton>
                             </center>
-                        </p:tab>
-                        <p:tab title="MOSTRAR OFICIOS UNICOS">
-                            <p:outputLabel value="OFICIOS CON EXPEDIENTES"/>
+                        </p:tab>-->
+                        <p:tab title="MOSTRAR OFICIOS UNICOS CON EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
@@ -119,7 +118,7 @@
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                     <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
-                                <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                <p:column headerText="NUM.TRAM." width="1">
                                     <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
                                 <p:column headerText="FECHA" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
@@ -138,8 +137,9 @@
                                     <h:outputText value="#{item.numerotramite}"/>
                                 </p:column>
                             </p:dataTable>
-                            <br></br>
-                            <p:outputLabel value="OFICIOS SIN EXPEDIENTES"/>
+
+                        </p:tab>
+                        <p:tab title="MOSTRAR OFICIOS UNICOS SIN EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficSinExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
@@ -160,6 +160,7 @@
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
+
                     <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                         <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc" >
                             <p:column headerText="DESTINO">
