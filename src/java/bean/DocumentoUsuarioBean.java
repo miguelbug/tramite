@@ -7,9 +7,11 @@ package bean;
 
 import dao.DerivarDAO;
 import dao.DocumentoDAO;
+import dao.DocusInternosDAO;
 import dao.SeguimientoDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
+import daoimpl.DocusInternosDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -61,7 +62,7 @@ public class DocumentoUsuarioBean {
     private String asunto;
     private String siglasdocus;
     private DerivarDAO deriv;
-    private String correlativo;
+    private String correlativo = "";
     private String docunombre;
     private String estado;
     private boolean confirmar = false;
@@ -74,6 +75,7 @@ public class DocumentoUsuarioBean {
     //private String correlativo;
     //private String asunto;
     private String tramaux;
+    private DocusInternosDAO di;
     //private String numtramaux:
     //private String codinterno;
     //private String estado;
@@ -92,6 +94,7 @@ public class DocumentoUsuarioBean {
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
+        di = new DocusInternosDaoImpl();
         confirmadosderivados = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
@@ -106,64 +109,63 @@ public class DocumentoUsuarioBean {
 
     }
 
-    public void MostrarConfirmadosDerivados() {
-        System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
-        confirmadosderivados.clear();
-        try {
-            System.out.println("entra a seguimiento3");
-            List lista = new ArrayList();
-            System.out.println(usu.getOficina().getIdOficina());
-            lista = deriv.getConfDeriv(usu.getOficina().getIdOficina());
-            Iterator ite = lista.iterator();
-            Object obj[] = new Object[9];
-            while (ite.hasNext()) {
-                obj = (Object[]) ite.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("movimnum", String.valueOf(obj[0]));
-                listaaux.put("numerotramite", String.valueOf(obj[1]));
-                listaaux.put("origen", String.valueOf(obj[2]));
-                listaaux.put("destino", String.valueOf(obj[3]));
-                listaaux.put("fechaenvio", String.valueOf(obj[4]));
-                listaaux.put("fechaingr", String.valueOf(obj[5]));
-                listaaux.put("observacion", String.valueOf(obj[6]));
-                listaaux.put("estado", String.valueOf(obj[7]));
-                listaaux.put("indicador", String.valueOf(obj[8]));
-                confirmadosderivados.add(listaaux);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    /*public void MostrarConfirmadosDerivados() {
+     System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
+     confirmadosderivados.clear();
+     try {
+     System.out.println("entra a seguimiento3");
+     List lista = new ArrayList();
+     System.out.println(usu.getOficina().getIdOficina());
+     lista = deriv.getConfDeriv(usu.getOficina().getIdOficina());
+     Iterator ite = lista.iterator();
+     Object obj[] = new Object[9];
+     while (ite.hasNext()) {
+     obj = (Object[]) ite.next();
+     Map<String, String> listaaux = new HashMap<String, String>();
+     listaaux.put("movimnum", String.valueOf(obj[0]));
+     listaaux.put("numerotramite", String.valueOf(obj[1]));
+     listaaux.put("origen", String.valueOf(obj[2]));
+     listaaux.put("destino", String.valueOf(obj[3]));
+     listaaux.put("fechaenvio", String.valueOf(obj[4]));
+     listaaux.put("fechaingr", String.valueOf(obj[5]));
+     listaaux.put("observacion", String.valueOf(obj[6]));
+     listaaux.put("estado", String.valueOf(obj[7]));
+     listaaux.put("indicador", String.valueOf(obj[8]));
+     confirmadosderivados.add(listaaux);
+     }
+     } catch (Exception e) {
+     System.out.println(e.getMessage());
+     }
+     }
 
-    public void MostrarConfirmados() {
-        System.out.println("CONFIRMADOS¡¡¡¡¡");
-        confirmados.clear();
-        try {
-            System.out.println("entra a seguimiento2");
-            List lista = new ArrayList();
-            System.out.println(usu.getOficina().getIdOficina());
-            lista = deriv.getConfirmados(usu.getOficina().getIdOficina());
-            Iterator ite = lista.iterator();
-            Object obj[] = new Object[9];
-            while (ite.hasNext()) {
-                obj = (Object[]) ite.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("movimnum", String.valueOf(obj[0]));
-                listaaux.put("numerotramite", String.valueOf(obj[1]));
-                listaaux.put("origen", String.valueOf(obj[2]));
-                listaaux.put("destino", String.valueOf(obj[3]));
-                listaaux.put("fechaenvio", String.valueOf(obj[4]));
-                listaaux.put("fechaingr", String.valueOf(obj[5]));
-                listaaux.put("observacion", String.valueOf(obj[6]));
-                listaaux.put("estado", String.valueOf(obj[7]));
-                listaaux.put("indicador", String.valueOf(obj[8]));
-                confirmados.add(listaaux);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+     public void MostrarConfirmados() {
+     System.out.println("CONFIRMADOS¡¡¡¡¡");
+     confirmados.clear();
+     try {
+     System.out.println("entra a seguimiento2");
+     List lista = new ArrayList();
+     System.out.println(usu.getOficina().getIdOficina());
+     lista = deriv.getConfirmados(usu.getOficina().getIdOficina());
+     Iterator ite = lista.iterator();
+     Object obj[] = new Object[9];
+     while (ite.hasNext()) {
+     obj = (Object[]) ite.next();
+     Map<String, String> listaaux = new HashMap<String, String>();
+     listaaux.put("movimnum", String.valueOf(obj[0]));
+     listaaux.put("numerotramite", String.valueOf(obj[1]));
+     listaaux.put("origen", String.valueOf(obj[2]));
+     listaaux.put("destino", String.valueOf(obj[3]));
+     listaaux.put("fechaenvio", String.valueOf(obj[4]));
+     listaaux.put("fechaingr", String.valueOf(obj[5]));
+     listaaux.put("observacion", String.valueOf(obj[6]));
+     listaaux.put("estado", String.valueOf(obj[7]));
+     listaaux.put("indicador", String.valueOf(obj[8]));
+     confirmados.add(listaaux);
+     }
+     } catch (Exception e) {
+     System.out.println(e.getMessage());
+     }
+     }*/
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
@@ -187,6 +189,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 listaaux.put("estadDoc", String.valueOf(obj[9]));
+                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0])));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {
@@ -353,7 +356,7 @@ public class DocumentoUsuarioBean {
 
             } else {
                 System.out.println("entra a getsiglas");
-                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
                 correlativo = generarCorrelativo();
                 System.out.println("entra a iniciar fecha");
                 IniciarFecha();
@@ -431,10 +434,16 @@ public class DocumentoUsuarioBean {
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
             /////actualizarmovimiento
-            deriv.ActualizarTramite(numtramaux, String.valueOf(deriv.getMovimiento(numtramaux)));
-            deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);
+            /*deriv.ActualizarTramite(numtramaux, String.valueOf(deriv.getMovimiento(numtramaux)));
+             deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
+             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);*/
+            for (int i = 0; i < docselec2.size(); i++) {
+                Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())));
+                deriv.InsertarMovimiento(deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu);
+            }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "DERIVADO: " + numtramaux, "DOCUMENTO DE RESPUESTA: " + correlativo);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
             MostrarParaUsuario();
@@ -461,7 +470,7 @@ public class DocumentoUsuarioBean {
 
             }
 
-            docselec2.clear();
+            //docselec2.clear();
         } catch (Exception e) {
             System.out.println("error fecha");
             System.out.println(e.getMessage());
@@ -470,20 +479,52 @@ public class DocumentoUsuarioBean {
     }
 
     public void Motivo() {
+        /*try {
+         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+         Iterator it = hm.entrySet().iterator();
+         while (it.hasNext()) {
+         Map.Entry e = (Map.Entry) it.next();
+         if (e.getKey().toString().equals("numerotramite")) {
+         System.out.println(e.getValue().toString());
+         numtramaux = e.getValue().toString();
+         motivo = dd.getMotivo(e.getValue().toString());
+         }
+
+         }
+
+         docselec2.clear();
+         } catch (Exception e) {
+         System.out.println("errormotivo");
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+         }*/
         try {
-            Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
-            Iterator it = hm.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry e = (Map.Entry) it.next();
-                if (e.getKey().toString().equals("numerotramite")) {
-                    System.out.println(e.getValue().toString());
-                    numtramaux = e.getValue().toString();
-                    motivo = dd.getMotivo(e.getValue().toString());
+            for (int i = 0; i < docselec2.size(); i++) {
+                Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+                if (i == 0) {
+                    System.out.println(hm.get("numerotramite").toString());
+                    numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
+                    motivo = dd.getMotivo(hm.get("numerotramite").toString());
+                } else {
+                    numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
                 }
 
+                /*Iterator it = hm.entrySet().iterator();
+                 while (it.hasNext()) {
+                 Map.Entry e = (Map.Entry) it.next();
+                 if (e.getKey().toString().equals("numerotramite") && i == 0) {
+                 System.out.println(e.getValue().toString());
+                 //numtramaux = e.getValue().toString();
+                 motivo = dd.getMotivo(e.getValue().toString());
+                 }
+                 if (e.getKey().toString().equals("numerotramite")) {
+                 System.out.println(e.getValue().toString());
+                 numtramaux = numtramaux + " / " + e.getValue().toString();
+                 }
+                 }*/
             }
 
-            docselec2.clear();
+            //docselec2.clear();
         } catch (Exception e) {
             System.out.println("errormotivo");
             System.out.println(e.getMessage());

@@ -47,4 +47,26 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         return proveidos;
     }
 
+    @Override
+    public String getRespuesta(String tramnum) {
+        String correlaresp="";
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get respuestas");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT DOCU_CORRELAINT\n"
+                    + "FROM DOCUS_INTERNOS\n"
+                    + "WHERE TRAM_NUM='"+tramnum+"'\n"
+                    + "ORDER BY DOCU_CORRELAINT DESC");
+            correlaresp = (String)query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal get respuestas");
+            System.out.println(e.getMessage());
+        }
+        return correlaresp;
+    }
+    
+
 }

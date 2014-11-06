@@ -96,14 +96,16 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public String getSiglas(String ofi) {
+    public String getSiglas(String ofi, String usu) {
+        System.out.println("oficina: "+ ofi);
         System.out.println("getssiglas");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "select ofi.siglas\n"
                 + "from Oficina ofi, Usuario usua\n"
                 + "where usua.oficina.idOficina='" + ofi + "'\n"
-                + "and usua.oficina.idOficina=ofi.idOficina";
+                + "and usua.oficina.idOficina=ofi.idOficina\n"
+                + "and usua.usu='"+usu+"'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();

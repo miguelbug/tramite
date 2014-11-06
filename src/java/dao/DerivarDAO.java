@@ -23,7 +23,7 @@ import maping.Usuario;
  */
 public interface DerivarDAO {
     public String getIndice(String tramnum, String tipodocu);
-    public String getSiglas(String ofi);
+    public String getSiglas(String ofi, String usu);
     public String getSiglas2(String nombofi);
     public int getMovimiento(String tramnum);
     public void InsertarMovimiento(int movimiento, Date fechaenvio,String asunto, String estado, String numtram, String origen, String destino, Indicador i);

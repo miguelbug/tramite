@@ -94,7 +94,7 @@ public class DerivarBean {
 
             } else {
                 System.out.println("entra a getsiglas");
-                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina());
+                siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(),usu.getUsu());
                 correlativo = generarCorrelativo();
                 System.out.println("entra a iniciar fecha");
                 IniciarFecha();
