@@ -108,10 +108,10 @@ public class DocumentosBean implements Serializable {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("SISG")) {
+        if (event.getTab().getTitle().equals("SISTEMA INTEGRAL SEC. GENERAL")) {
             MostrarDocumentos();
         } else {
-            if (event.getTab().getTitle().equals("SIS-OGPL")) {
+            if (event.getTab().getTitle().equals("SISTEMA DE TRAMITE INTERNO OGPL")) {
                 MostrarDocusInternos();
             }
         }
@@ -130,7 +130,7 @@ public class DocumentosBean implements Serializable {
             ofi.setCorrelativoOficio(correlativo_oficio);
             ofi.setReferenciaOficio(dd.getMotivo(tramnum));
             ofi.setTramiteDatos(deriv.getTramite(tramnum));
-            dd.guardarOficio(ofi,tramnum,obtenerMovimiento());
+            dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
             ofi.setUsuario(usu);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -244,7 +244,8 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-   public String obtenerMovimiento() {
+
+    public String obtenerMovimiento() {
         String numerotramite = "";
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
@@ -322,7 +323,7 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocumentos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[9];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -334,7 +335,8 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("fing", String.valueOf(obj[5]));
                 listaaux.put("indicador", String.valueOf(obj[6]));
                 listaaux.put("observacion", String.valueOf(obj[7]));
-                listaaux.put("estado", String.valueOf(obj[8]));
+                listaaux.put("docunomb", String.valueOf(obj[8]));
+                listaaux.put("estado", String.valueOf(obj[9]));
                 documentos.add(listaaux);
             }
         } catch (Exception e) {
@@ -449,38 +451,22 @@ public class DocumentosBean implements Serializable {
         try {
             for (int i = 0; i < tdaux.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
-                Iterator it = hm.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry e = (Map.Entry) it.next();
-                    if (e.getKey().toString().equals("numerotramite")) {
-                        System.out.println("llena numerotramite");
-                        nuevo.setTramNum(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("fecha")) {
-                        System.out.println("entra a fecha envio td");
-                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        Date nf = new Date();
-                        System.out.println(e.getValue().toString().substring(0, 19));
-                        nf = formato.parse(e.getValue().toString().substring(0, 19));
-                        nuevo.setTramFecha(nf);
-                    }
-                    if (e.getKey().toString().equals("codigo")) {
-                        System.out.println("llena codigo td");
-                        nuevo.setDependencia(deriv.getDependencia2(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("observacion")) {
-                        System.out.println("llena obsv. td");
-                        nuevo.setTramObs(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("estado")) {
-                        System.out.println("llena estado td");
-                        nuevo.setEstaDescrip(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("usuario")) {
-                        System.out.println("llena usuario td");
-                        nuevo.setUsuario(log.getUniqeUsuario(e.getValue().toString()));
-                    }
-                }
+                System.out.println("llena numerotramite");
+                nuevo.setTramNum(hm.get("numerotramite").toString());
+                System.out.println("entra a fecha envio td");
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date nf = new Date();
+                System.out.println(hm.get("fecha").toString().substring(0, 19));
+                nf = formato.parse(hm.get("fecha").toString().substring(0, 19));
+                nuevo.setTramFecha(nf);
+                System.out.println("llena codigo td");
+                nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
+                System.out.println("llena obsv. td");
+                nuevo.setTramObs(hm.get("observacion").toString());
+                System.out.println("llena estado td");
+                nuevo.setEstaDescrip(hm.get("estado").toString());
+                System.out.println("llena usuario td");
+                nuevo.setUsuario(log.getUniqeUsuario(hm.get("usuario").toString()));
             }
             System.out.println("Se obtiene numero tramite:" + nuevo.getTramNum());
         } catch (Exception e) {
@@ -497,34 +483,18 @@ public class DocumentosBean implements Serializable {
         try {
             for (int i = 0; i < tdaux2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) tdaux2.get(i);
-                Iterator it = hm.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry e = (Map.Entry) it.next();
-                    if (e.getKey().toString().equals("numerotramite")) {
-                        System.out.println("numero tramite tipodocu");
-                        tipo.setTramiteDatos(td);
-                    }
-                    if (e.getKey().toString().equals("docunombre")) {
-                        System.out.println("docu nombre tipodocu");
-                        tipo.setDocuNombre(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("docunumero")) {
-                        System.out.println("docunumero tipodocu");
-                        tipo.setDocuNum(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("docupric")) {
-                        System.out.println("docupric tipodocu");
-                        tipo.setDocuPric(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("docusiglas")) {
-                        System.out.println("docusiglas tipodocu");
-                        tipo.setDocuSiglas(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("docuanio")) {
-                        System.out.println("docuanio tipodocu");
-                        tipo.setDocuAnio(e.getValue().toString());
-                    }
-                }
+                System.out.println("numero tramite tipodocu");
+                tipo.setTramiteDatos(td);
+                System.out.println("docu nombre tipodocu");
+                tipo.setDocuNombre(hm.get("docunombre").toString());
+                System.out.println("docunumero tipodocu");
+                tipo.setDocuNum(hm.get("docunumero").toString());
+                System.out.println("docupric tipodocu");
+                tipo.setDocuPric(hm.get("docupric").toString());
+                System.out.println("docusiglas tipodocu");
+                tipo.setDocuSiglas(hm.get("docusiglas").toString());
+                System.out.println("docuanio tipodocu");
+                tipo.setDocuAnio(hm.get("docuanio").toString());
             }
             System.out.println("tipo docu info: " + tipo.getIdDocu());
         } catch (Exception e) {
@@ -544,142 +514,94 @@ public class DocumentosBean implements Serializable {
             for (int i = 0; i < docselec.size(); i++) {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-                Iterator it = hm.entrySet().iterator();
                 TramiteMovimiento movimiento = new TramiteMovimiento();
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
                 Temporal t = new Temporal();
-                while (it.hasNext()) {
-                    Map.Entry e = (Map.Entry) it.next();
-                    if (e.getKey().toString().equals("numerotramite")) {
-                        aux = e.getValue().toString();
-                        t.setTramNum(e.getValue().toString());
-                    }
-                    if (aux.indexOf("OGPL") != -1) {
-                        System.out.println("ENTRA A OGPL");
-                        //ntram = e.getValue().toString();
-                        td = getTramiteDato(aux);
-                        tdoc = getTipodocumento(aux, td);
-                        movimiento.setTramiteDatos(td);
-
-                        if (e.getKey().toString().equals("movimiento")) {
-                            movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
-                        }
-                        if (e.getKey().toString().equals("estado")) {
-                            movimiento.setEstaNombre(e.getValue().toString());
-                        }
-                        if (e.getKey().toString().equals("origen")) {
-                            movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
-                            t.setOrigen(e.getValue().toString());
-                        }
-                        if (e.getKey().toString().equals("destino")) {
-                            movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
-                            t.setDestino(e.getValue().toString());
-                        }
-                        if (e.getKey().toString().equals("fenvio")) {
-                            System.out.println("entra a fecha envio");
-                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                            Date nf = new Date();
-                            nf = formato.parse(e.getValue().toString());
-                            movimiento.setFechaEnvio(nf);
-                            t.setFecha(nf);
-                            System.out.println("sale fecha envio");
-                        }
-                        if (e.getKey().toString().equals("fing")) {
-                            System.out.println("entra a fecha ing");
-                            if (e.getValue().toString().equals(" ")) {
-                                movimiento.setFechaIngr(null);
-                            } else {
-                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                Date nf = new Date();
-                                nf = formato.parse(e.getValue().toString());
-                                movimiento.setFechaIngr(nf);
-                            }
-                            System.out.println("sale fecha fing");
-                        }
-                        if (e.getKey().toString().equals("indicador")) {
-                            System.out.println("entra a indicador");
-                            movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
-                            System.out.println("sle indicador");
-                        }
-                        if (e.getKey().toString().equals("observacion")) {
-                            movimiento.setMoviObs(e.getValue().toString());
-                            t.setAsunto(e.getValue().toString());
-                        }
+                aux = hm.get("numerotramite").toString();
+                t.setTramNum(hm.get("numerotramite").toString());
+                if (aux.indexOf("OGPL") != -1) {
+                    System.out.println("ENTRA A OGPL");
+                    td = getTramiteDato(aux);
+                    tdoc = getTipodocumento(aux, td);
+                    movimiento.setTramiteDatos(td);
+                    movimiento.setMoviNum(Short.parseShort(hm.get("movimiento").toString()));
+                    movimiento.setEstaNombre(hm.get("estado").toString());
+                    movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
+                    t.setOrigen(hm.get("origen").toString());
+                    movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
+                    t.setDestino(hm.get("destino").toString());
+                    System.out.println("entra a fecha envio");
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date nf = new Date();
+                    nf = formato.parse(hm.get("fenvio").toString());
+                    movimiento.setFechaEnvio(nf);
+                    t.setFecha(nf);
+                    System.out.println("sale fecha envio");
+                    System.out.println("entra a fecha ing");
+                    if (hm.get("fing").toString().equals(" ")) {
+                        movimiento.setFechaIngr(null);
                     } else {
-                        if (aux.indexOf("OGPL") == -1) {
-                            System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
-                            if (e.getKey().toString().equals("numerotramite")) {
-                                td.setTramNum(e.getValue().toString());
-                                t.setTramNum(e.getValue().toString());
-                            }
-                            if (e.getKey().toString().equals("fenvio")) {
-                                System.out.println("entra a fecha envio");
-                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                Date nf = new Date();
-                                nf = formato.parse(e.getValue().toString());
-                                td.setTramFecha(nf);
-                                System.out.println("sale fecha envio");
-                                t.setFecha(nf);
-                            }
-                            if (e.getKey().toString().equals("observacion")) {
-                                td.setTramObs(e.getValue().toString());
-                                t.setAsunto(e.getValue().toString());
-                            }
-                            if (e.getKey().toString().equals("estado")) {
-                                td.setEstaDescrip(e.getValue().toString());
-                            }
-                            if (e.getKey().toString().equals("origen")) {
-                                td.setDependencia(deriv.getDependencia(e.getValue().toString()));
-                                t.setOrigen(e.getValue().toString());
-                            }
-                            movimiento.setTramiteDatos(td);
-                            if (e.getKey().toString().equals("movimiento")) {
-                                movimiento.setMoviNum(Short.parseShort(e.getValue().toString()));
-                            }
-                            if (e.getKey().toString().equals("estado")) {
-                                movimiento.setEstaNombre(e.getValue().toString());
-                            }
-                            if (e.getKey().toString().equals("origen")) {
-                                movimiento.setDependenciaByCodigo(deriv.getDependencia(e.getValue().toString()));
-                            }
-                            if (e.getKey().toString().equals("destino")) {
-                                movimiento.setDependenciaByCodigo1(deriv.getDependencia(e.getValue().toString()));
-                                t.setDestino(e.getValue().toString());
-                            }
-                            if (e.getKey().toString().equals("fenvio")) {
-                                System.out.println("entra a fecha envio");
-                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                Date nf = new Date();
-                                nf = formato.parse(e.getValue().toString());
-                                movimiento.setFechaEnvio(nf);
-                                System.out.println("sale fecha envio");
-                            }
-                            if (e.getKey().toString().equals("fing")) {
-                                System.out.println("entra a fecha ing");
-                                if (e.getValue().toString().equals(" ")) {
-                                    movimiento.setFechaIngr(null);
-                                } else {
-                                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                    Date nf = new Date();
-                                    nf = formato.parse(e.getValue().toString());
-                                    movimiento.setFechaIngr(nf);
-                                }
-                                System.out.println("sale fecha fing");
-                            }
-                            if (e.getKey().toString().equals("indicador")) {
-                                System.out.println("entra a indicador");
-                                movimiento.setIndicador(deriv.getIndic(e.getValue().toString()));
-                                System.out.println("sle indicador");
-                            }
-                            if (e.getKey().toString().equals("observacion")) {
-                                movimiento.setMoviObs(e.getValue().toString());
-                            }
-                        }
-                        tdoc = null;
+                        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date nf2 = new Date();
+                        nf2 = formato2.parse(hm.get("fing").toString().toString());
+                        movimiento.setFechaIngr(nf2);
                     }
-                    t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
+                    System.out.println("sale fecha fing");
+                    System.out.println("entra a indicador");
+                    movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
+                    System.out.println("sle indicador");
+                    movimiento.setMoviObs(hm.get("observacion").toString());
+                    t.setAsunto(hm.get("observacion").toString());
+                    //}
+                } else {
+                    if (aux.indexOf("OGPL") == -1) {
+                        System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
+                        td.setTramNum(hm.get("numerotramite").toString());
+                        t.setTramNum(hm.get("numerotramite").toString());
+                        System.out.println("entra a fecha envio");
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date nf = new Date();
+                        nf = formato.parse(hm.get("fenvio").toString());
+                        td.setTramFecha(nf);
+                        System.out.println("sale fecha envio");
+                        t.setFecha(nf);
+                        td.setTramObs(hm.get("observacion").toString());
+                        t.setAsunto(hm.get("observacion").toString());
+                        td.setEstaDescrip(hm.get("estado").toString());
+                        td.setDependencia(deriv.getDependencia(hm.get("origen").toString()));
+                        t.setOrigen(hm.get("origen").toString());
+                        movimiento.setTramiteDatos(td);
+                        movimiento.setMoviNum(Short.parseShort(hm.get("movimiento").toString()));
+                        movimiento.setEstaNombre(hm.get("estado").toString());
+                        movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
+                        movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
+                        t.setDestino(hm.get("destino").toString());
+                        System.out.println("entra a fecha envio");
+                        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date nf2 = new Date();
+                        nf2 = formato2.parse(hm.get("fenvio").toString());
+                        movimiento.setFechaEnvio(nf2);
+                        System.out.println("sale fecha envio");
+                        System.out.println("entra a fecha ing");
+                        if (hm.get("fing").toString().equals(" ")) {
+                            movimiento.setFechaIngr(null);
+                        } else {
+                            SimpleDateFormat formato3 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            Date nf3 = new Date();
+                            nf3 = formato3.parse(hm.get("fing").toString());
+                            movimiento.setFechaIngr(nf);
+                        }
+                        System.out.println("sale fecha fing");
+                    }
+                    System.out.println("entra a indicador");
+                    movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
+                    System.out.println("sale indicador");
+                    movimiento.setMoviObs(hm.get("observacion").toString());
                 }
+                tdoc = null;
+
+                t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
                 System.out.println("---------entra a guardar tramite dato---------");
                 sgd.GuadarTramiteDatos(td, tdoc);
                 System.out.println("---------sale de guardar tramite dato---------");
@@ -689,9 +611,9 @@ public class DocumentosBean implements Serializable {
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
             MostrarDocusInternos();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");

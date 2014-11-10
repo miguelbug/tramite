@@ -26,12 +26,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void guardarOficio2(Oficios ofi) {
         System.out.println("guardar oficio");
         session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             session.beginTransaction();
             session.save(ofi);
             session.beginTransaction().commit();
             session.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
         }
@@ -62,16 +62,16 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void guardarOficio(Oficios ofi, String tramnum, String movimiento) {
         System.out.println("guardar oficio");
         session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             session.beginTransaction();
             session.save(ofi);
             session.beginTransaction().commit();
             session.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
         }
-        ActualizarMov(tramnum,movimiento);
+        ActualizarMov(tramnum, movimiento);
     }
 
     @Override
@@ -151,22 +151,53 @@ public class DocumentoDaoImpl implements DocumentoDAO {
              + "DEP.NOMBRE \n"
              + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO "
              + "order by tram_fecha desc");
-             docus = query.list();*/
-            Query query = session.createSQLQuery("select TRAM_NUM,"
-                    + "MOVI_NUM,"
-                    + "MOVI_ORIGEN,"
-                    + "MOVI_DESTINO,"
-                    + "DECODE(to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,"
-                    + "DECODE(to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,"
-                    + "INDI_NOMBRE,"
-                    + "DECODE(MOVI_OBS,NULL,' ',MOVI_OBS) AS OBSERVACION, "
-                    + "ESTA_NOMBRE\n"
-                    + "from vw_ogpl002@TRAMITEDBLINK\n"
-                    + "where MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
-                    + "AND DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
-                    + "and tram_num not in (select tram_num from tramite_datos)\n"
-                    + "and MOVI_FEC_ING IS NULL\n"
-                    + "order by MOVI_FEC_ENV DESC");
+             docus = query.list();
+             select vista2.TRAM_NUM,\n"
+             + "vista2.MOVI_NUM,\n"
+             + "vista2.MOVI_ORIGEN,\n"
+             + "vista2.MOVI_DESTINO,\n"
+             + "DECODE(to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+             + "DECODE(to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+             + "vista2.INDI_NOMBRE,\n"
+             + "DECODE(vista2.MOVI_OBS,NULL,' ',vista2.MOVI_OBS) AS OBSERVACION,\n"
+             + "DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre) as docunombre,\n"
+             + "vista2.ESTA_NOMBRE\n"
+             + "from vw_ogpl002@TRAMITEDBLINK vista2 left outer join vw_ogpl001@TRAMITEDBLINK vista1\n"
+             + "on  vista2.tram_num=vista1.tram_num\n"
+             + "and vista2.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+             + "AND vista2.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
+             + "and vista2.tram_num not in (select tram_num from tramite_datos)\n"
+             + "and vista2.MOVI_FEC_ING IS NULL\n"
+             + "and vista1.docu_pric='1'");
+             docus = query.list();
+             System.out.println("despues de query session*/
+            Query query = session.createSQLQuery("SELECT R.TRAM_NUM,\n"
+                    + "R.MOVI_NUM,\n"
+                    + "R.FECHAENVIO,\n"
+                    + "R.MOVI_ORIGEN,\n"
+                    + "R.FECHAING,\n"
+                    + "R.MOVI_DESTINO,\n"
+                    + "R.OBSERVACION,\n"
+                    + "R.INDI_NOMBRE,\n"
+                    + "R.DOCUNOMBRE,\n"
+                    + "R.ESTA_NOMBRE \n"
+                    + "  FROM (select vista2.TRAM_NUM,\n"
+                    + "       vista2.MOVI_NUM,\n"
+                    + "       vista2.MOVI_ORIGEN,\n"
+                    + "       vista2.MOVI_DESTINO,\n"
+                    + "       DECODE(to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "       DECODE(to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+                    + "       vista2.INDI_NOMBRE,\n"
+                    + "       DECODE(vista2.MOVI_OBS,NULL,' ',vista2.MOVI_OBS) AS OBSERVACION,\n"
+                    + "       DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre) as docunombre,\n"
+                    + "       vista2.ESTA_NOMBRE\n"
+                    + "       from vw_ogpl002@TRAMITEDBLINK vista2 left join vw_ogpl001@TRAMITEDBLINK vista1\n"
+                    + "       on vista2.tram_num=vista1.tram_num\n"
+                    + "       and vista1.docu_pric='1'\n"
+                    + "       AND vista2.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
+                    + "       and vista2.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION')R\n"
+                    + "WHERE R.FECHAING =' '\n"
+                    + "ORDER BY R.FECHAENVIO");
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();

@@ -79,88 +79,6 @@
                                 </p:dataTable>
                             </center>
                         </p:tab>
-                        <!--<p:tab title="Confirmados" id="tab2">
-                            <p:dataTable value="#{documentoUsuarioBean.confirmados}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec2}"
-                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-
-                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.movimnum}"/>
-                                </p:column>
-                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
-                                </p:column>
-                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}"/>
-                                </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
-                                </p:column>
-                                <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fechaenvio}" />
-                                </p:column>
-                                <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fechaingr}" />
-                                </p:column>
-                                <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.observacion}" />
-                                </p:column>
-                                <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.estado}" />
-                                </p:column>
-                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.indicador}" />
-                                </p:column>
-                                <p:column style="width:32px;text-align: center">
-                                    <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}"/>
-                                    </p:commandButton>
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton process="tablaconfirmados" icon="ui-icon-search" value="Seguimmiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog2').show()"
-                                                     update=":form:tablaseguim2" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
-                                    <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
-                                                     oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
-                                </f:facet>
-                            </p:dataTable>
-                        </p:tab>-->
-                        <!--<p:tab title="Derivados Internos" id="tab3">
-                            <p:dataTable value="#{documentoUsuarioBean.confirmadosderivados}" var="item" paginator="true" rows="15" id="tablaconfirmderiv" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}"
-                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
-
-                                <p:column headerText="MOVIMIENTO" width="5" sortBy="#{item.movimnum}" filterBy="#{item.movimnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.movimnum}"/>
-                                </p:column>
-                                <p:column headerText="NUMERO TRAMITE" width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.numerotramite}"/>
-                                </p:column>
-                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}"/>
-                                </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
-                                </p:column>
-                                <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fechaenvio}" />
-                                </p:column>
-                                <p:column headerText="FECH. INGRESO" width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fechaingr}" />
-                                </p:column>
-                                <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.observacion}" />
-                                </p:column>
-                                <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.estado}" />
-                                </p:column>
-                                <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.indicador}" />
-                                </p:column>
-                            </p:dataTable>
-                        </p:tab>-->
                     </p:tabView>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
@@ -245,7 +163,7 @@
                     </p:dialog>
                     <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:panelGrid columns="2" id="panelProv">
-                            
+
                             <p:outputLabel value="Documento: "/>
                             <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>

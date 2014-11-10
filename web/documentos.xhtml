@@ -53,6 +53,9 @@
                                     <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
+                                    <p:column headerText="DOC.NOMB" width="5" sortBy="#{item.docunomb}" filterBy="#{item.docunomb}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docunomb}" />
+                                    </p:column>
                                     <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estado}" />
                                     </p:column>
@@ -99,12 +102,12 @@
                                     <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
-                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                    <!--<p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estado}" />
                                     </p:column>
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
                                         <h:outputText value="#{item.indicador}" />
-                                    </p:column>
+                                    </p:column>-->
                                     <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadodoc}" filterBy="#{item.estadodoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadodoc}" />
                                     </p:column>
