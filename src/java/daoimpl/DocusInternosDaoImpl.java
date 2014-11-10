@@ -33,7 +33,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "DOCU_ANIOINT,"
                     + "FECHAREGISTRO,"
                     + "TRAM_NUM,"
-                    + "USU\n"
+                    + "USU,"
+                    + "DOCU_ASUNTO\n"
                     + "FROM DOCUS_INTERNOS\n"
                     + "WHERE USU='"+usu+"'\n"
                     + "ORDER BY DOCU_CORRELAINT DESC");
@@ -54,7 +55,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get respuestas");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT DOCU_CORRELAINT\n"
+            Query query = session.createSQLQuery("SELECT DOCU_NOMBREINT||' N°'||DOCU_CORRELAINT||'-'||DOCU_SIGLASINT||'-'||DOCU_ANIOINT\n"
                     + "FROM DOCUS_INTERNOS\n"
                     + "WHERE TRAM_NUM='"+tramnum+"'\n"
                     + "ORDER BY DOCU_CORRELAINT DESC");

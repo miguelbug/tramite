@@ -9,6 +9,7 @@ import java.util.Date;
 public class Oficios implements java.io.Serializable {
 
     private long idOficio;
+    private TiposDocumentos tiposDocumentos;
     private TramiteDatos tramiteDatos;
     private Dependencia dependenciaByCodigo1;
     private Usuario usuario;
@@ -25,8 +26,9 @@ public class Oficios implements java.io.Serializable {
         this.idOficio = idOficio;
     }
 
-    public Oficios(long idOficio, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String correlativoOficio, Date fechaOficio, String referenciaOficio, String asuntoOficio) {
+    public Oficios(long idOficio, TiposDocumentos tiposDocumentos, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String correlativoOficio, Date fechaOficio, String referenciaOficio, String asuntoOficio) {
         this.idOficio = idOficio;
+        this.tiposDocumentos = tiposDocumentos;
         this.tramiteDatos = tramiteDatos;
         this.dependenciaByCodigo1 = dependenciaByCodigo1;
         this.usuario = usuario;
@@ -107,6 +109,14 @@ public class Oficios implements java.io.Serializable {
 
     public void setAsuntoOficio(String asuntoOficio) {
         this.asuntoOficio = asuntoOficio;
+    }
+
+    public TiposDocumentos getTiposDocumentos() {
+        return tiposDocumentos;
+    }
+
+    public void setTiposDocumentos(TiposDocumentos tiposDocumentos) {
+        this.tiposDocumentos = tiposDocumentos;
     }
 
 }

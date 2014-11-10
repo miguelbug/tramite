@@ -230,7 +230,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu) {
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto) {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
@@ -242,6 +242,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setTramiteDatos(getTramite(numtram));
             di.setFecharegistro(fecharegistro);
             di.setUsuario(usu);
+            di.setAsunto(asunto);
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(di);

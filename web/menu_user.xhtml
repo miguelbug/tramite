@@ -27,10 +27,7 @@
                 <p:submenu label="Registro" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
-                    <p:submenu label="Otros Doc.">
-                        <p:menuitem value="Of. Únicos" actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('OFUnicDialog').show()" update=":f3:ofiunicos"/>
-                        <p:menuitem value="Directivas"/>
-                    </p:submenu>
+                    <p:menuitem value="Otros Doc." actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('OFUnicDialog').show()" update=":f3:ofiunicos"/>
                 </p:submenu>
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
@@ -55,12 +52,6 @@
                 <p:panelGrid columns="2" id="panelOfUn">
                     <p:outputLabel value="Número:"/>
                     <p:outputLabel value="#{oficioBean.correlativo2}"/>
-
-                    <p:outputLabel value="Tipo de Documento:"/>
-                    <p:selectOneMenu id="tipodocuofunic" value="#{oficioBean.escogido}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{oficioBean.tiposdocus}"/>
-                    </p:selectOneMenu>
 
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>

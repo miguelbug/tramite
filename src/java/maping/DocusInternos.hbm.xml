@@ -8,6 +8,9 @@
             <column name="IDTIP" precision="5" scale="0" />
             <generator class="increment" />
         </id>
+        <many-to-one name="tiposDocumentos" class="maping.TiposDocumentos" fetch="select">
+            <column name="ID_DOCUMENTO" precision="22" scale="0" />
+        </many-to-one>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />
         </many-to-one>
@@ -31,6 +34,9 @@
         </property>
         <property name="fecharegistro" type="date">
             <column name="FECHAREGISTRO" length="7" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="DOCU_ASUNTO" length="300" />
         </property>
     </class>
 </hibernate-mapping>

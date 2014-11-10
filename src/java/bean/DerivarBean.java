@@ -253,7 +253,7 @@ public class DerivarBean {
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
             deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);
+            deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu,asunto);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA DERIVADO EL DOCUMENTO: " + numtramaux);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();

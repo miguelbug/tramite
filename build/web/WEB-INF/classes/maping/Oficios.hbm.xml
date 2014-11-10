@@ -8,6 +8,9 @@
             <column name="ID_OFICIO" precision="10" scale="0" />
             <generator class="increment" />
         </id>
+        <many-to-one name="tiposDocumentos" class="maping.TiposDocumentos" fetch="select">
+            <column name="ID_DOCUMENTO" precision="22" scale="0" />
+        </many-to-one>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />
         </many-to-one>

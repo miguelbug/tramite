@@ -354,7 +354,7 @@ public class DocumentosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("nombredoc", String.valueOf(obj[1]) + " - " + String.valueOf(obj[0]) + " - " + String.valueOf(obj[2]) + " - " + String.valueOf(obj[3]));
+                listaaux.put("nombredoc", String.valueOf(obj[1]) + " N°" + String.valueOf(obj[0]) + "-" + String.valueOf(obj[2]) + "-" + String.valueOf(obj[3]));
                 listaaux.put("usuario", String.valueOf(obj[4]));
                 listaaux.put("fecha", String.valueOf(obj[5]));
                 detalprov.add(listaaux);

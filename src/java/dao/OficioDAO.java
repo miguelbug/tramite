@@ -35,6 +35,6 @@ public interface OficioDAO {
     public List getOficioUnicoNoExp();
     public List getOficoCircDetal(String correla);
     public String getCorrela(String usu);
-    public List getTiposDocus();
+    public List getTiposDocus(String flag);
     public TiposDocumentos getTipoDocu(String nombre);
 }

@@ -8,9 +8,11 @@ package bean;
 import dao.DerivarDAO;
 import dao.DocumentoDAO;
 import dao.DocusExtDAO;
+import dao.OficioDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.DocusExtDaoImpl;
+import daoimpl.OficioDaoImpl;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class DocusExternosBean implements Serializable {
     private DocusExtDAO ded;
     private List otrosdocus;
     private List docselec;
+    private List tiposdocus;
+    private OficioDAO od;
 
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
@@ -71,6 +75,8 @@ public class DocusExternosBean implements Serializable {
         documentosext = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
+        od = new OficioDaoImpl();
+        tiposdocus= new ArrayList<String>();
         ObtenerDepIndic();
         a1 = true;
         a2 = false;
@@ -128,8 +134,14 @@ public class DocusExternosBean implements Serializable {
         return cadena;
     }
 
-    public void Derivar() {
-
+    public void ObtenerTiposDocus() {
+        System.out.println("listando tipos docus");
+        tiposdocus.clear();
+        try {
+            tiposdocus = od.getTiposDocus("0");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void Proveidoo() {
@@ -139,6 +151,7 @@ public class DocusExternosBean implements Serializable {
         getAnio();
         System.out.println("entra aca 3");
         generarCorrelativo();
+        ObtenerTiposDocus();
     }
 
     public void ObtenerDepIndic() {
@@ -162,7 +175,7 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void Cambios() {
-        
+
         correlativo = " ";
         if (documento != null) {
             if (documento.equals("4")) {
@@ -432,6 +445,22 @@ public class DocusExternosBean implements Serializable {
 
     public void setDocselec(List docselec) {
         this.docselec = docselec;
+    }
+
+    public List getTiposdocus() {
+        return tiposdocus;
+    }
+
+    public void setTiposdocus(List tiposdocus) {
+        this.tiposdocus = tiposdocus;
+    }
+
+    public OficioDAO getOd() {
+        return od;
+    }
+
+    public void setOd(OficioDAO od) {
+        this.od = od;
     }
 
 }

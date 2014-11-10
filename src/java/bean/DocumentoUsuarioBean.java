@@ -41,49 +41,17 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List seguimientolista2;
-    private List seguimientolista;
-    private List confirmados;
-    private List otrosdocus;
-    private List docselec;
-    private List detalle;
+    private List seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados;
     private Map<String, String> seleccion;
     private DocumentoDAO dd;
-    private Date fecha;
+    private Date fecha, anio;
     private Usuario usu;
-    private String fechadia;
-    private String fechahora;
-    private String motivo = "";
-    private String usuario = "";
+    private String fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux;
     private final FacesContext faceContext;
-    private String codinterno;
     private SeguimientoDAO sgd;
-    private String numtramaux;
-    private String asunto;
-    private String siglasdocus;
     private DerivarDAO deriv;
-    private String correlativo = "";
-    private String docunombre;
-    private String estado;
-    private boolean confirmar = false;
-    private boolean aparecer;
-    private List docselec2;
-    private List confirmadosderivados;
-    ////////////////////////////////
-    private Date anio;
-    //private String docunombre;
-    //private String correlativo;
-    //private String asunto;
-    private String tramaux;
+    private boolean confirmar = false, aparecer;
     private DocusInternosDAO di;
-    //private String numtramaux:
-    //private String codinterno;
-    //private String estado;
-    //private String fechadia;
-    //private String fechahora;
-    //private String motivo;
-    //private String usuario;
-    ///////////////////////////////
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -441,7 +409,7 @@ public class DocumentoUsuarioBean {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())));
                 deriv.InsertarMovimiento(deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu);
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto);
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "DERIVADO: " + numtramaux, "DOCUMENTO DE RESPUESTA: " + correlativo);
             RequestContext.getCurrentInstance().showMessageInDialog(message);

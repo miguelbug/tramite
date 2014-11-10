@@ -45,14 +45,16 @@ public class OficioDaoImpl implements OficioDAO {
         return tipodocu;
     }
 
+
+
     @Override
-    public List getTiposDocus() {
+    public List getTiposDocus(String f) {
         List depes = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get tipos docus");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='0'");
+            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='"+f+"'");
             depes = (List) query.list();
             session.beginTransaction().commit();
             session.close();

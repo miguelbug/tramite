@@ -56,7 +56,7 @@ public class DocusInternos {
             List lista = new ArrayList();
             lista = did.getDocusInternos(usu.getUsu());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[8];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -64,6 +64,7 @@ public class DocusInternos {
                 listaaux.put("fechareg", String.valueOf(obj[4]));
                 listaaux.put("tramnum", String.valueOf(obj[5]));
                 listaaux.put("usu", String.valueOf(obj[6]));
+                listaaux.put("asunto", String.valueOf(obj[7]));
                 docusinternos.add(listaaux);
             }
 
