@@ -375,17 +375,15 @@ public class DocumentosBean implements Serializable {
             System.out.println(seleccion.get("numerotramite").toString());
             lista = dd.getDetalle(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[8];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("tramnum", String.valueOf(obj[0]));
-                listaaux.put("fecha", String.valueOf(obj[1]));
-                listaaux.put("origen", String.valueOf(obj[2]));
-                listaaux.put("observacion", String.valueOf(obj[3]));
-                listaaux.put("estado", String.valueOf(obj[4]));
-                listaaux.put("usuario", String.valueOf(obj[5]));
-                listaaux.put("docnomb", String.valueOf(obj[6]) + "-" + String.valueOf(obj[7]) + "-" + String.valueOf(obj[8]) + "-" + String.valueOf(obj[9]));
+                listaaux.put("fecha", String.valueOf(obj[0]));
+                listaaux.put("origen", String.valueOf(obj[1]));
+                listaaux.put("observacion", String.valueOf(obj[2]));
+                listaaux.put("estado", String.valueOf(obj[3]));
+                listaaux.put("docnomb", String.valueOf(obj[4]) + "N° " + String.valueOf(obj[5]) + "-" + String.valueOf(obj[6]) + "-" + String.valueOf(obj[7]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {

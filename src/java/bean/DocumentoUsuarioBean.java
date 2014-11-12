@@ -8,10 +8,12 @@ package bean;
 import dao.DerivarDAO;
 import dao.DocumentoDAO;
 import dao.DocusInternosDAO;
+import dao.OficioDAO;
 import dao.SeguimientoDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.DocusInternosDaoImpl;
+import daoimpl.OficioDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,15 +48,17 @@ public class DocumentoUsuarioBean {
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
-    private String fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux;
+    private String fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux,llego,confirme,docresp,docofic;
     private final FacesContext faceContext;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
     private boolean confirmar = false, aparecer;
     private DocusInternosDAO di;
+    private OficioDAO ofi;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
+        ofi= new OficioDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
@@ -188,6 +192,12 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
         return detalle;
+    }
+    public void Detalle(){
+        llego=seleccion.get("fechaenvio").toString();
+        confirme=seleccion.get("fechaingr").toString();
+        docresp=di.getRespuesta(seleccion.get("tramnnum").toString());
+        docofic=ofi.getOficioDocumento(seleccion.get("tramnnum").toString());
     }
 
     public void Confirmar() {
@@ -473,6 +483,7 @@ public class DocumentoUsuarioBean {
                     System.out.println(hm.get("numerotramite").toString());
                     numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
                     motivo = dd.getMotivo(hm.get("numerotramite").toString());
+                    asunto=motivo;
                 } else {
                     numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
                 }
@@ -749,6 +760,46 @@ public class DocumentoUsuarioBean {
 
     public void setTramaux(String tramaux) {
         this.tramaux = tramaux;
+    }
+
+    public String getLlego() {
+        return llego;
+    }
+
+    public void setLlego(String llego) {
+        this.llego = llego;
+    }
+
+    public String getConfirme() {
+        return confirme;
+    }
+
+    public void setConfirme(String confirme) {
+        this.confirme = confirme;
+    }
+
+    public String getDocresp() {
+        return docresp;
+    }
+
+    public void setDocresp(String docresp) {
+        this.docresp = docresp;
+    }
+
+    public String getDocofic() {
+        return docofic;
+    }
+
+    public void setDocofic(String docofic) {
+        this.docofic = docofic;
+    }
+
+    public DocusInternosDAO getDi() {
+        return di;
+    }
+
+    public void setDi(DocusInternosDAO di) {
+        this.di = di;
     }
 
 }

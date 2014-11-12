@@ -63,8 +63,10 @@
                                         <h:outputText value="#{item.docgene}" />
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}"/>
+                                        <p:commandButton update=":form:detalle" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                            <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}">
+                                                <p:ajax listener="#{documentoUsuarioBean.Detalle()}" event="click" update=":form:detalle"/>
+                                            </f:setPropertyActionListener>
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
@@ -80,8 +82,8 @@
                             </center>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
+                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <!--<p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
                             <p:column headerText="FECHA REGISTRO">
                                 <h:outputText value="#{car.FECHA}" />
                             </p:column>
@@ -97,7 +99,17 @@
                             <p:column headerText="DOCUMENTO">
                                 <h:outputText value="#{car.DOCUMENTO}" />
                             </p:column>
-                        </p:dataTable>
+                        </p:dataTable>-->
+                        <p:panelGrid columns="2" id="detalle" >
+                            <p:outputLabel value="Llegó el: "/>
+                            <p:outputLabel value="#{documentoUsuarioBean.llego}"/>
+                            <p:outputLabel value="Lo confirmé él: "/>
+                            <p:outputLabel value="#{documentoUsuarioBean.confirme}"/>
+                            <p:outputLabel value="Doc. de Respuesta: "/>
+                            <p:outputLabel value="#{documentoUsuarioBean.docresp}"/>
+                            <p:outputLabel value="Oficio Generado: "/>
+                            <p:outputLabel value="#{documentoUsuarioBean.docofic}"/>
+                        </p:panelGrid>
                     </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial2">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >

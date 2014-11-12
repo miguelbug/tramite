@@ -180,24 +180,26 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "R.OBSERVACION,\n"
                     + "R.INDI_NOMBRE,\n"
                     + "R.DOCUNOMBRE,\n"
-                    + "R.ESTA_NOMBRE \n"
+                    + "R.ESTA_NOMBRE\n"
                     + "  FROM (select vista2.TRAM_NUM,\n"
                     + "       vista2.MOVI_NUM,\n"
                     + "       vista2.MOVI_ORIGEN,\n"
                     + "       vista2.MOVI_DESTINO,\n"
+                    + "       vista2.DEST_COD,\n"
                     + "       DECODE(to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
                     + "       DECODE(to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
                     + "       vista2.INDI_NOMBRE,\n"
                     + "       DECODE(vista2.MOVI_OBS,NULL,' ',vista2.MOVI_OBS) AS OBSERVACION,\n"
-                    + "       DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre) as docunombre,\n"
+                    + "       DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre|| 'N° '||vista1.docu_num||'-'||vista1.docu_siglas||'-'||vista1.docu_anio) as docunombre,\n"
+                    + "       DECODE(vista1.docu_pric,null,' ',vista1.docu_pric) as docupric,\n"
                     + "       vista2.ESTA_NOMBRE\n"
                     + "       from vw_ogpl002@TRAMITEDBLINK vista2 left join vw_ogpl001@TRAMITEDBLINK vista1\n"
                     + "       on vista2.tram_num=vista1.tram_num\n"
-                    + "       and vista1.docu_pric='1'\n"
-                    + "       AND vista2.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
-                    + "       and vista2.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION')R\n"
+                    + "       )R\n"
                     + "WHERE R.FECHAING =' '\n"
-                    + "ORDER BY R.FECHAENVIO");
+                    + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
+                    + "AND R.docupric in ('1',' ')");
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();

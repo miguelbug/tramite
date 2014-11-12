@@ -47,7 +47,7 @@
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
-                        <p:tab title="MOSTRAR OFICIOS UNICOS CON EXPEDIENTES">
+                        <p:tab title="DOCUMENTOS CON EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
@@ -77,7 +77,7 @@
                             </p:dataTable>
 
                         </p:tab>
-                        <p:tab title="MOSTRAR OFICIOS UNICOS SIN EXPEDIENTES">
+                        <p:tab title="DOCUMENTOS SIN EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficSinExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"

@@ -29,6 +29,9 @@
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
                     <p:menuitem value="Otros Doc." actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('OFUnicDialog').show()" update=":f3:ofiunicos"/>
                 </p:submenu>
+                <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
+                    <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
+                </p:submenu>
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                     <p:menuitem value="Cambiar Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
@@ -47,7 +50,7 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
+
             <p:dialog header="Oficio Único" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="ofiunicos">
                 <p:panelGrid columns="2" id="panelOfUn">
                     <p:outputLabel value="Número:"/>
@@ -74,7 +77,7 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
+
             <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog" style="width: 150px">
                 <p:panelGrid columns="2" id="formuloficCirc">
                     <p:outputLabel value="Tipo de Documento:"/>
@@ -114,7 +117,7 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
+
             <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docudialog">
                 <p:panelGrid columns="2" id="panelOfUn2">
                     <p:outputLabel value="Expediente:"/>
