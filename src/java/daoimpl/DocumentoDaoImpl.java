@@ -195,6 +195,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       vista2.ESTA_NOMBRE\n"
                     + "       from vw_ogpl002@TRAMITEDBLINK vista2 left join vw_ogpl001@TRAMITEDBLINK vista1\n"
                     + "       on vista2.tram_num=vista1.tram_num\n"
+                    + "       ORDER BY vista2.MOVI_FEC_ENV DESC\n"
                     + "       )R\n"
                     + "WHERE R.FECHAING =' '\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"

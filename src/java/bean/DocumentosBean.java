@@ -83,6 +83,9 @@ public class DocumentosBean implements Serializable {
     private String destino_ofic;
     private String correlativo_oficio;
     private String referencia;
+    //
+    private boolean hecho;
+    private boolean nohecho;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -504,7 +507,7 @@ public class DocumentosBean implements Serializable {
     }
 
     public void Confirmar() {
-        FacesMessage message = null;
+        //FacesMessage message = null;
         try {
             System.out.println("ENTRA A CONFIRMAR seguimiento");
             String ntram = "";
@@ -607,20 +610,24 @@ public class DocumentosBean implements Serializable {
                 System.out.println("---------entra a guardar tramite movimiento---------");
                 t.setImpreso(BigDecimal.valueOf(1));
                 sgd.temporal(t);
-                movimiento.setEstadConfrirm("NUEVO");
+                movimiento.setEstadConfrirm("SIN CONFIRMAR");
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
+                hecho=true;
+                nohecho=false;
+                //message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
                 
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                //RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());
             e.printStackTrace();
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas en el confirmado");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            nohecho=false;
+            hecho=true;
+            //message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas en el confirmado");
+            //RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
         MostrarDocumentos();
         MostrarDocusInternos();
@@ -868,6 +875,22 @@ public class DocumentosBean implements Serializable {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
+    }
+
+    public boolean isHecho() {
+        return hecho;
+    }
+
+    public void setHecho(boolean hecho) {
+        this.hecho = hecho;
+    }
+
+    public boolean isNohecho() {
+        return nohecho;
+    }
+
+    public void setNohecho(boolean nohecho) {
+        this.nohecho = nohecho;
     }
 
 }

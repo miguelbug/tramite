@@ -201,7 +201,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             tm.setDependenciaByCodigo(getDependencia(origen));
             tm.setDependenciaByCodigo1(getDependencia2(destino));
             tm.setIndicador(i);
-            tm.setEstadConfrirm("SIN ACCION");
+            tm.setEstadConfrirm("EN PROCESO");
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(tm);
