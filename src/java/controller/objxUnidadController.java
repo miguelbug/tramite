@@ -8,7 +8,9 @@ package controller;
 
 import bean.DocumentosBean;
 import dao.DocumentoDAO;
+import dao.reporteDAO;
 import daoimpl.DocumentoDaoImpl;
+import daoimpl.reporteDaoImpl;
 import maping.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -41,9 +43,11 @@ public class objxUnidadController implements Serializable {
     private Date date1;
     private Date date2;
     private String USUARIO;
+    private reporteDAO rpda;
 
     public objxUnidadController() {
         dd = new DocumentoDaoImpl();
+        rpda= new reporteDaoImpl();
     }
 
     public void mostrarReporRegModPres() {
@@ -107,6 +111,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        //rpda.ActualizarTemporal();
     }
 
     public void mostrarReporteDocumentos() {
