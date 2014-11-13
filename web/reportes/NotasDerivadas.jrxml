@@ -31,7 +31,7 @@
 	</parameter>
 	<queryString><![CDATA[select TRAM_NUM,FECHA,ORIGEN,ASUNTO,DESTINO
 from temporal
-where impreso is null
+where impreso=1
 order by destino]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
@@ -51,7 +51,7 @@ order by destino]]></queryString>
 			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="105"
+						x="110"
 						y="24"
 						width="89"
 						height="20"
@@ -64,6 +64,19 @@ order by destino]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
+						x="199"
+						y="24"
+						width="190"
+						height="20"
+						key="staticText-7"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ORIGEN DOC.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
 						x="9"
 						y="24"
 						width="91"
@@ -73,11 +86,11 @@ order by destino]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DETALLE]]></text>
+				<text><![CDATA[DOCUMENTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="547"
+						x="619"
 						y="24"
 						width="130"
 						height="20"
@@ -114,10 +127,10 @@ order by destino]]></queryString>
 				</line>
 				<staticText>
 					<reportElement
-						x="200"
-						y="25"
+						x="390"
+						y="24"
 						width="230"
-						height="18"
+						height="20"
 						forecolor="#000000"
 						backcolor="#000000"
 						key="staticText-13"/>
@@ -152,22 +165,11 @@ order by destino]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="66"  isSplitAllowed="true" >
-				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="9"
-						y="8"
-						width="49"
-						height="52"
-						key="image-1"/>
-					<box></box>
-					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
-				</image>
+			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="64"
-						y="9"
+						x="0"
+						y="-1"
 						width="285"
 						height="14"
 						key="staticText-1"/>
@@ -175,25 +177,12 @@ order by destino]]></queryString>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="69"
-						y="29"
-						width="211"
-						height="15"
-						key="staticText-2"/>
-					<box></box>
-					<textElement>
-						<font size="9"/>
-					</textElement>
-				<text><![CDATA[SISTEMA DE TRAMITE DOCUMENTARIO  OGPL]]></text>
+				<text><![CDATA[UNMSM -SISTEMA DE TRAMITE DOCUMENTARIO OGPL]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="59"
-						y="45"
+						x="0"
+						y="19"
 						width="701"
 						height="14"
 						key="textField-1"
@@ -263,12 +252,12 @@ order by destino]]></queryString>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="32"  isSplitAllowed="true" >
+			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="12"
 						y="0"
-						width="95"
+						width="88"
 						height="30"
 						key="textField-7"/>
 					<box></box>
@@ -279,7 +268,7 @@ order by destino]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="103"
+						x="112"
 						y="0"
 						width="85"
 						height="28"
@@ -290,10 +279,23 @@ order by destino]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}.toString()]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="202"
+						y="0"
+						width="180"
+						height="30"
+						key="textField-9"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ORIGEN}]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="545"
+						x="619"
 						y="1"
 						width="130"
 						height="28"
@@ -316,9 +318,9 @@ order by destino]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="203"
+						x="393"
 						y="1"
-						width="294"
+						width="220"
 						height="28"
 						key="textField-10"/>
 					<box></box>
@@ -329,7 +331,16 @@ order by destino]]></queryString>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="499"
+						x="619"
+						y="-19"
+						width="0"
+						height="49"
+						key="line-9"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="389"
 						y="-19"
 						width="0"
 						height="49"
@@ -347,8 +358,8 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="90"
-						y="-19"
+						x="109"
+						y="-18"
 						width="0"
 						height="48"
 						key="line-12"/>
@@ -365,9 +376,9 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="10"
-						y="30"
-						width="741"
+						x="9"
+						y="29"
+						width="740"
 						height="0"
 						key="line-14"/>
 					<graphicElement stretchType="NoStretch"/>
