@@ -31,7 +31,7 @@
 	</parameter>
 	<queryString><![CDATA[select TRAM_NUM,FECHA,ORIGEN,ASUNTO,DESTINO
 from temporal
-where impreso=1 and reimpreso=null
+where impreso=1 and reimpreso is null
 order by destino]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
