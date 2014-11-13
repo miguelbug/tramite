@@ -51,13 +51,11 @@ public class objxUnidadController implements Serializable {
     }
 
     public void mostrarReporRegModPres() {
-
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
         HashMap<String, Object> parametros = new HashMap<String, Object>();
         parametros.clear();
-
 
         FacesContext context = FacesContext.getCurrentInstance();
         System.out.println("context" + context);
@@ -111,9 +109,12 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-        //rpda.ActualizarTemporal();
-    }
 
+    }
+    public void ejecutarReporteDeriv(){
+        mostrarReporteNotasDeriv();
+        rpda.ActualizarTemporal();
+    }
     public void mostrarReporteDocumentos() {
 
         context = FacesContext.getCurrentInstance();

@@ -19,17 +19,9 @@
                     <br></br>
                     <br></br>
                     <center>
-<<<<<<< HEAD
-                        <p:tabView id="tabmayor" dynamic="true">
-                            <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
-=======
-                           
 
                         <p:tabView id="tabmayor" dynamic="true">
-
-                             <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
->>>>>>> origin/master
-                            <p:tab title="SISG">
+                            <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
@@ -75,19 +67,19 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px"
-                                                         update="tabladocumentos" actionListener="#{documentosBean.Confirmar()}"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
+                                                         update="tabladocumentos,:form:avisohecho" actionListener="#{documentosBean.Confirmar()}"
                                                          />
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
-                            <p:tab title="SIS-OGPL">
+                           <!-- <p:tab title="SISTEMA TRAMITE INTERNO OGPL">
                                 <p:dataTable value="#{documentosBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column selectionMode="multiple" style="width:32px;text-align:center"/>
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
@@ -109,12 +101,12 @@
                                     <p:column headerText="OBSV." width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
-                                    <!--<p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estado}" />
                                     </p:column>
                                     <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
                                         <h:outputText value="#{item.indicador}" />
-                                    </p:column>-->
+                                    </p:column>
                                     <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadodoc}" filterBy="#{item.estadodoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadodoc}" />
                                     </p:column>
@@ -124,17 +116,23 @@
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" style="position:absolute; left:30px; height:26px"
-                                                         action="#{objxUnidadController.mostrarReporteNotasDeriv}"
-                                                         title="Reporte" />
 
                                         <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form:panelOfUn,:form:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:215px; height:26px"
                                                          actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
                                     </f:facet>
                                 </p:dataTable>
-                            </p:tab>
-                           
+                            </p:tab>-->
                         </p:tabView>
+                        <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" id="avisohecho">
+                            <center>
+                                <p:outputLabel value="SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.hecho}"/>
+                                <p:outputLabel value="NO SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.nohecho}"/>
+                                <br></br>
+                                <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.ejecutarReporteDeriv}" title="Reporte" rendered="#{documentosBean.hecho}">
+                                    <f:ajax event="click" onevent="aviso.hide()"/>
+                                </p:commandButton>
+                            </center>
+                        </p:dialog>
                         <p:dialog header="Oficio - #{documentosBean.correlativo_oficio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dialogOficioUnico">
                             <center>
                                 <p:panelGrid columns="2" id="panelOfUn">
@@ -224,10 +222,12 @@
                             </p:dataTable>
                             <br></br>
                             <center>
-                                <p:commandButton id="repor10" value="Reporte de Seguimiento"  action="#{objxUnidadController.mostrarReporteSeguimiento}" title="REPORTE" />
+                                <p:commandButton id="repor10" value="Reporte de Seguimiento"  action="#{objxUnidadController.mostrarReporteSeguimiento}" title="REPORTE">
+                                    <f:ajax event="click" onevent="seguimDialog.hide()"/>
+                                </p:commandButton>
                             </center>
                         </p:dialog>
-                       
+
 
                     </center>
                     <br></br>

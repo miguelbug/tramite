@@ -36,7 +36,7 @@ public class reporteDaoImpl implements reporteDAO {
             session.close();
         }
         System.out.println("actualizados: " + i);
-
     }
+        
 
 }
