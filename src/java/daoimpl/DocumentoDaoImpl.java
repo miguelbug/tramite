@@ -173,6 +173,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
              System.out.println("despues de query session*/
             Query query = session.createSQLQuery("SELECT R.TRAM_NUM,\n"
                     + "R.MOVI_NUM,\n"
+<<<<<<< HEAD
                                         + "R.MOVI_ORIGEN,\n"
                                         + "R.MOVI_DESTINO,\n"
                     + "R.FECHAENVIO,\n"
@@ -181,6 +182,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "R.INDI_NOMBRE,\n"
                     + "R.OBSERVACION,\n"
 
+=======
+                    + "R.MOVI_ORIGEN,\n"
+                    + "R.MOVI_DESTINO,\n"
+                    + "R.FECHAENVIO,\n"
+                    + "R.FECHAING,\n"
+                    + "R.INDI_NOMBRE,\n"
+                    + "R.OBSERVACION,\n"
+>>>>>>> origin/master
                     + "R.DOCUNOMBRE,\n"
                     + "R.ESTA_NOMBRE\n"
                     + "  FROM (select vista2.TRAM_NUM,\n"
