@@ -32,8 +32,8 @@
                                     <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
-                                    <p:column headerText="MOV." width="5" style="text-align: center">
-                                        <h:outputText value="#{item.movimnum}"/>
+                                    <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docgene}" />
                                     </p:column>
                                     <!--<p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                         <h:outputText value="#{item.origen}"/>
@@ -59,13 +59,13 @@
                                     <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadDoc}" />
                                     </p:column>
-                                    <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.docgene}" />
+                                    
+                                    <p:column headerText="MOV." width="5" style="text-align: center">
+                                        <h:outputText value="#{item.movimnum}"/>
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:detalle" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}">
-                                                <p:ajax listener="#{documentoUsuarioBean.Detalle()}" event="click" update=":form:detalle"/>
+                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                            <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}" >
                                             </f:setPropertyActionListener>
                                         </p:commandButton>
                                     </p:column>
@@ -83,33 +83,21 @@
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <!--<p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
                             <p:column headerText="FECHA REGISTRO">
-                                <h:outputText value="#{car.FECHA}" />
+                                <h:outputText value="#{car.FECHAENVIO}" />
                             </p:column>
-                            <p:column headerText="ORIGEN">
-                                <h:outputText value="#{car.ORIGEN}" />
+                            <p:column headerText="FECHA DE INGR.">
+                                <h:outputText value="#{car.FECHAINGR}" />
                             </p:column>
-                            <p:column headerText="OBSERVACION">
-                                <h:outputText value="#{car.OBSV}" />
+                            <p:column headerText="DOC. DE RESPUESTA">
+                                <h:outputText value="#{car.RESP}" />
                             </p:column>
-                            <p:column headerText="DESCRIPCION">
-                                <h:outputText value="#{car.DESCRIP}" />
+                            <p:column headerText="OFICIO">
+                                <h:outputText value="#{car.OFICIO}" />
                             </p:column>
-                            <p:column headerText="DOCUMENTO">
-                                <h:outputText value="#{car.DOCUMENTO}" />
-                            </p:column>
-                        </p:dataTable>-->
-                        <p:panelGrid columns="2" id="detalle" >
-                            <p:outputLabel value="Llegó el: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.llego}"/>
-                            <p:outputLabel value="Lo confirmé él: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.confirme}"/>
-                            <p:outputLabel value="Doc. de Respuesta: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.docresp}"/>
-                            <p:outputLabel value="Oficio Generado: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.docofic}"/>
-                        </p:panelGrid>
+                        </p:dataTable>
+                        
                     </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial2">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >

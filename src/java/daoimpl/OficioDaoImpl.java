@@ -421,7 +421,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficiodocumento");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select correlativoOficio from Oficios where tramnum='"+tramnum+"'";
+        String sql = "select correlativoOficio from Oficios where tramiteDatos.tramNum='"+tramnum+"'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();

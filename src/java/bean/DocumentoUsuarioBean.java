@@ -173,32 +173,70 @@ public class DocumentoUsuarioBean {
         System.out.println("listando detalles");
         detalle.clear();
         try {
-            List lista = new ArrayList();
             System.out.println(seleccion.get("numerotramite").toString());
-            lista = dd.getDetalle(seleccion.get("numerotramite").toString());
-            Iterator ite = lista.iterator();
-            Object obj[] = new Object[8];
-            while (ite.hasNext()) {
-                obj = (Object[]) ite.next();
+            System.out.println(seleccion.get("fechaenvio").toString());
+            System.out.println(seleccion.get("fechaingr").toString());
+            //lista = dd.getDetalle(seleccion.get("numerotramite").toString());
+            //Iterator ite = lista.iterator();
+            //Object obj[] = new Object[8];
+            //while (ite.hasNext()) {
+                //obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("FECHA", String.valueOf(obj[0]));
-                listaaux.put("ORIGEN", String.valueOf(obj[1]));
-                listaaux.put("OBSV", String.valueOf(obj[2]));
-                listaaux.put("DESCRIP", String.valueOf(obj[3]));
-                listaaux.put("DOCUMENTO", String.valueOf(obj[4]) + " - " + String.valueOf(obj[5]) + " - " + String.valueOf(obj[6]) + " - " + String.valueOf(obj[7]));
+                listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
+                listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
+                listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
+                listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString()));
                 detalle.add(listaaux);
-            }
+           // }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return detalle;
     }
+    /*public String llego(){
+        if(seleccion.get("fechaenvio").toString().equals(null)){
+            llego="";
+        }else{
+            llego=seleccion.get("fechaenvio").toString();
+        }
+        
+        return llego;
+    }
+    public String confirme(){
+        if(seleccion.get("fechaingr").toString().equals(null)){
+            confirme="";
+        }
+        else{
+            confirme=seleccion.get("fechaingr").toString();
+        }
+        
+        return confirme;
+    }
+    public String docresp(){
+        if(seleccion.get("tramnnum").toString().equals(null)){
+            docresp="";
+        }else{
+            docresp=di.getRespuesta(seleccion.get("tramnnum").toString());
+        }
+        
+        return docresp;
+    }
+    public String docofic(){
+        if(seleccion.get("tramnnum").toString().equals(null)){
+            docofic="";
+        }else{
+            docofic=ofi.getOficioDocumento(seleccion.get("tramnnum").toString());
+        }
+        
+        return docofic;
+    }
+    /*
     public void Detalle(){
         llego=seleccion.get("fechaenvio").toString();
         confirme=seleccion.get("fechaingr").toString();
         docresp=di.getRespuesta(seleccion.get("tramnnum").toString());
         docofic=ofi.getOficioDocumento(seleccion.get("tramnnum").toString());
-    }
+    }*/
 
     public void Confirmar() {
         try {

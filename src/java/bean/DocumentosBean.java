@@ -23,6 +23,7 @@ import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.LoginDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -604,6 +605,7 @@ public class DocumentosBean implements Serializable {
                 sgd.GuadarTramiteDatos(td, tdoc);
                 System.out.println("---------sale de guardar tramite dato---------");
                 System.out.println("---------entra a guardar tramite movimiento---------");
+                t.setImpreso(BigDecimal.valueOf(1));
                 sgd.temporal(t);
                 movimiento.setEstadConfrirm("NUEVO");
                 sgd.GuardarTramiteMovimiento(movimiento);
