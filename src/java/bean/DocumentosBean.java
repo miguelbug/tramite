@@ -615,7 +615,6 @@ public class DocumentosBean implements Serializable {
                 
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
-            MostrarDocusInternos();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());

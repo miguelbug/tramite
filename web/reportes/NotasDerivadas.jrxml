@@ -4,11 +4,11 @@
 <jasperReport
 		 name="NotasDerivadas"
 		 columnCount="1"
-		 printOrder="Vertical"
+		 printOrder="Horizontal"
 		 orientation="Landscape"
-		 pageWidth="842"
-		 pageHeight="595"
-		 columnWidth="782"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
 		 columnSpacing="0"
 		 leftMargin="30"
 		 rightMargin="30"
@@ -51,63 +51,63 @@ order by destino]]></queryString>
 			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="110"
+						x="75"
 						y="24"
-						width="89"
+						width="45"
 						height="20"
 						key="staticText-6"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
-				<text><![CDATA[FECHA DOC.]]></text>
+				<text><![CDATA[FECHA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="199"
+						x="121"
 						y="24"
-						width="190"
+						width="122"
 						height="20"
 						key="staticText-7"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[ORIGEN DOC.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="9"
+						x="4"
 						y="24"
-						width="91"
+						width="70"
 						height="20"
 						key="staticText-9"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[DOCUMENTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="619"
+						x="419"
 						y="24"
-						width="130"
+						width="111"
 						height="20"
 						forecolor="#000000"
 						backcolor="#000000"
 						key="staticText-10"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[FIRMA DE CONFORMIDAD]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="9"
+						x="8"
 						y="4"
-						width="740"
+						width="522"
 						height="20"
 						key="textField-13"/>
 					<box></box>
@@ -118,33 +118,33 @@ order by destino]]></queryString>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="10"
+						x="6"
 						y="43"
-						width="740"
+						width="524"
 						height="0"
 						key="line-7"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
-						x="390"
+						x="245"
 						y="24"
-						width="230"
+						width="174"
 						height="20"
 						forecolor="#000000"
 						backcolor="#000000"
 						key="staticText-13"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[ASUNTO]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="10"
+						x="6"
 						y="25"
-						width="740"
+						width="524"
 						height="0"
 						key="line-8"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -165,11 +165,11 @@ order by destino]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="44"  isSplitAllowed="true" >
+			<band height="48"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
-						y="-1"
+						y="1"
 						width="285"
 						height="14"
 						key="staticText-1"/>
@@ -177,16 +177,15 @@ order by destino]]></queryString>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[UNMSM -SISTEMA DE TRAMITE DOCUMENTARIO OGPL]]></text>
+				<text><![CDATA[UNMSM - SISTEMA DE TRAMITE DOCUMENTARIO OGPL]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="0"
-						y="19"
-						width="701"
+						x="1"
+						y="32"
+						width="528"
 						height="14"
-						key="textField-1"
-						isPrintRepeatedValues="false"/>
+						key="textField-1"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" />
@@ -195,22 +194,22 @@ order by destino]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="579"
-						y="19"
-						width="74"
+						x="404"
+						y="14"
+						width="33"
 						height="13"
 						key="staticText-3"/>
 					<box></box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 				<text><![CDATA[Usuario:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy   h:mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="653"
-						y="6"
-						width="113"
+						x="439"
+						y="1"
+						width="91"
 						height="13"
 						key="textField-2"/>
 					<box></box>
@@ -221,9 +220,9 @@ order by destino]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="653"
-						y="19"
-						width="113"
+						x="440"
+						y="14"
+						width="90"
 						height="13"
 						key="textField-3"/>
 					<box></box>
@@ -234,16 +233,16 @@ order by destino]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="580"
-						y="6"
-						width="73"
+						x="359"
+						y="1"
+						width="78"
 						height="13"
 						key="staticText-4"/>
 					<box></box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<text><![CDATA[Fec. Impresion: ]]></text>
+				<text><![CDATA[Fec. Impresion:]]></text>
 				</staticText>
 			</band>
 		</pageHeader>
@@ -255,49 +254,49 @@ order by destino]]></queryString>
 			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="12"
-						y="0"
-						width="88"
+						x="7"
+						y="-1"
+						width="67"
 						height="30"
 						key="textField-7"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TRAM_NUM}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="112"
-						y="0"
-						width="85"
-						height="28"
+						x="75"
+						y="-1"
+						width="45"
+						height="30"
 						key="textField-8"/>
 					<box></box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}.toString()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="202"
+						x="122"
 						y="0"
-						width="180"
+						width="119"
 						height="30"
 						key="textField-9"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ORIGEN}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="619"
+						x="420"
 						y="1"
-						width="130"
+						width="110"
 						height="28"
 						key="staticText-11"/>
 					<box></box>
@@ -308,7 +307,7 @@ order by destino]]></queryString>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="750"
+						x="619"
 						y="-19"
 						width="0"
 						height="49"
@@ -318,20 +317,20 @@ order by destino]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="393"
+						x="245"
 						y="1"
-						width="220"
+						width="173"
 						height="28"
 						key="textField-10"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASUNTO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="619"
+						x="529"
 						y="-19"
 						width="0"
 						height="49"
@@ -340,7 +339,7 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="389"
+						x="243"
 						y="-19"
 						width="0"
 						height="49"
@@ -349,7 +348,7 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="199"
+						x="120"
 						y="-19"
 						width="0"
 						height="49"
@@ -358,7 +357,7 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="109"
+						x="74"
 						y="-18"
 						width="0"
 						height="48"
@@ -367,7 +366,7 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="9"
+						x="5"
 						y="-19"
 						width="0"
 						height="49"
@@ -376,11 +375,20 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="9"
+						x="6"
 						y="29"
-						width="740"
+						width="523"
 						height="0"
 						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="420"
+						y="-19"
+						width="0"
+						height="49"
+						key="line-15"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 			</band>
@@ -390,7 +398,7 @@ order by destino]]></queryString>
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="28"  isSplitAllowed="true" >
+			<band height="24"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="9"
@@ -403,11 +411,11 @@ order by destino]]></queryString>
 					<textElement>
 						<font size="7"/>
 					</textElement>
-				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL]]></text>
+				<text><![CDATA[Sistema de Tramite Documentario - PROYECTOS OGPL]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="630"
+						x="429"
 						y="3"
 						width="44"
 						height="11"
@@ -420,7 +428,7 @@ order by destino]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="674"
+						x="476"
 						y="3"
 						width="47"
 						height="11"
@@ -434,10 +442,10 @@ order by destino]]></queryString>
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="32"  isSplitAllowed="true" >
+			<band height="23"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="674"
+						x="475"
 						y="3"
 						width="47"
 						height="11"
@@ -450,7 +458,7 @@ order by destino]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="630"
+						x="429"
 						y="3"
 						width="44"
 						height="11"
@@ -472,12 +480,12 @@ order by destino]]></queryString>
 					<textElement>
 						<font size="7"/>
 					</textElement>
-				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL ]]></text>
+				<text><![CDATA[Sistema de Tramite Documentario - PROYECTOS OGPL ]]></text>
 				</staticText>
 			</band>
 		</lastPageFooter>
 		<summary>
-			<band height="25"  isSplitAllowed="true" >
+			<band height="7"  isSplitAllowed="true" >
 			</band>
 		</summary>
 </jasperReport>
