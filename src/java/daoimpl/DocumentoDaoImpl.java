@@ -173,23 +173,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
              System.out.println("despues de query session*/
             Query query = session.createSQLQuery("SELECT R.TRAM_NUM,\n"
                     + "R.MOVI_NUM,\n"
-<<<<<<< HEAD
-                                        + "R.MOVI_ORIGEN,\n"
-                                        + "R.MOVI_DESTINO,\n"
-                    + "R.FECHAENVIO,\n"
-
-                    + "R.FECHAING,\n"
-                    + "R.INDI_NOMBRE,\n"
-                    + "R.OBSERVACION,\n"
-
-=======
                     + "R.MOVI_ORIGEN,\n"
                     + "R.MOVI_DESTINO,\n"
                     + "R.FECHAENVIO,\n"
                     + "R.FECHAING,\n"
                     + "R.INDI_NOMBRE,\n"
                     + "R.OBSERVACION,\n"
->>>>>>> origin/master
                     + "R.DOCUNOMBRE,\n"
                     + "R.ESTA_NOMBRE\n"
                     + "  FROM (select vista2.TRAM_NUM,\n"
@@ -209,6 +198,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       )R\n"
                     + "WHERE R.FECHAING =' '\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "and R.TRAM_NUM not in (select tram_num from tramite_datos)\n"
                     + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
                     + "AND R.docupric in ('1',' ')");
             docus = query.list();

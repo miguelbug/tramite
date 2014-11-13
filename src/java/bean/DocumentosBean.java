@@ -109,10 +109,10 @@ public class DocumentosBean implements Serializable {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("SISTEMA INTEGRAL SEC. GENERAL")) {
+        if (event.getTab().getTitle().equals("SISG")) {
             MostrarDocumentos();
         } else {
-            if (event.getTab().getTitle().equals("SISTEMA DE TRAMITE INTERNO OGPL")) {
+            if (event.getTab().getTitle().equals("SIS OGPL")) {
                 MostrarDocusInternos();
             }
         }
@@ -612,6 +612,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
+                
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
             MostrarDocusInternos();
