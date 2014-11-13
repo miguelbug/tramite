@@ -19,10 +19,15 @@
                     <br></br>
                     <br></br>
                     <center>
+<<<<<<< HEAD
                         <p:tabView>
                             <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
+=======
+                        <p:tabView id="tabmayor" dynamic="true">
+                           <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form:tabmayor"/>-->
+>>>>>>> origin/master
 
-                            <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
+                            <p:tab title="SISG">
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
@@ -74,7 +79,7 @@
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
-                            <p:tab title="SISTEMA DE TRAMITE INTERNO OGPL">
+                            <p:tab title="SIS-OGPL">
                                 <p:dataTable value="#{documentosBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"

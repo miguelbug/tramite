@@ -198,6 +198,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       )R\n"
                     + "WHERE R.FECHAING =' '\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "and R.TRAM_NUM not in (select tram_num from tramite_datos)\n"
                     + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
                     + "AND R.TRAM_NUM not in (select tram_num from tramite_datos)\n"
                     + "AND R.docupric in ('1',' ')");
