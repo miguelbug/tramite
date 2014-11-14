@@ -19,10 +19,23 @@
                     <br></br>
                     <br></br>
                     <center>
+<<<<<<< HEAD
+                           
+                        <p:tabView id="tabmayor" dynamic="true">
 
+                             <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
+                            <p:tab title="SISG">
+=======
+
+<<<<<<< HEAD
                         <p:tabView id="tabmayor">
                             
                             <p:tab title="SISTEMA INTEGRAL SEC. GENERAL" id="tab1">
+=======
+                        <p:tabView id="tabmayor" dynamic="true">
+                            <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
+>>>>>>> origin/master
+>>>>>>> origin/master
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
