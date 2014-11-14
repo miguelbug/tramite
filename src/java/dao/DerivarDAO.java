@@ -49,4 +49,7 @@ public interface DerivarDAO {
     public void GuardarProveido(Proveido p);
     public void ActualizarTramite(String tramaux, String movimiento);
     public String getCorrelativoOficio();
+    public Usuario getUsuario(String oficina);
+    public Usuario getUsu(String nombre);
+    public void ActualizarUsuario(String tramnum, String movi, String nombreusuario);
 }
