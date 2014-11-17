@@ -88,34 +88,57 @@ public class DocumentoUsuarioBean {
 
     public void ConfirmarAsignar() {
         Confirmar();
+        System.out.println("\nENTRA A ASIGNAR\n");
         Asignar();
+        System.out.println("\nSALE DE ASIGNAR\n");
+        docselec2.clear();
     }
 
     public void llenarDesignados() {
         designados = sgd.getDesignados(usu.getOficina().getIdOficina());
     }
 
+    public Usuario getusuario(String nombre) {
+        Usuario usu = new Usuario();
+        List lista = new ArrayList();
+        lista = deriv.getUsu(nombre);
+        Iterator ite = lista.iterator();
+        Object obj[] = new Object[5];
+        while (ite.hasNext()) {
+            obj = (Object[]) ite.next();
+            usu.setUsu(String.valueOf(obj[0]));
+            usu.setUsuNombre(String.valueOf(obj[1]));
+            usu.setClave(String.valueOf(obj[2]));
+            usu.setEstado(String.valueOf(obj[3]));
+            usu.setOficina(deriv.getOficina(String.valueOf(obj[4])));
+        }
+        return usu;
+    }
+
     public void Asignar() {
+        System.out.println(docselec2);
         FacesMessage message = null;
         try {
-            
+
             String ntram = "";
             int movi = 0;
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 ntram = hm.get("numerotramite").toString();
                 movi = Integer.parseInt(hm.get("movimnum").toString());
-                deriv.ActualizarUsuario(ntram, String.valueOf(movi),asignado);
+                System.out.println("entra a actualizar usuario");
+                deriv.ActualizarUsuario(ntram, String.valueOf(movi), getusuario(asignado));
+                System.out.println("sale de actualizar usuario");
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado y asignado");
-            
+
         } catch (Exception e) {
-            System.out.println("ERROR CONFIRMAR");
+            System.out.println("ERROR ASIGNAR");
             System.out.println(e.getMessage());
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
         }
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-        
+
     }
 
     public void MostrarParaUsuario() {

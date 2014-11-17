@@ -19,23 +19,8 @@
                     <br></br>
                     <br></br>
                     <center>
-<<<<<<< HEAD
-                           
-                        <p:tabView id="tabmayor" dynamic="true">
-
-                             <!--<p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form"/>-->
-                            <p:tab title="SISG">
-=======
-
-<<<<<<< HEAD
-                        <p:tabView id="tabmayor">
-                            
-                            <p:tab title="SISTEMA INTEGRAL SEC. GENERAL" id="tab1">
-=======
                         <p:tabView id="tabmayor" dynamic="true">
                             <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
->>>>>>> origin/master
->>>>>>> origin/master
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
@@ -81,26 +66,26 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        
+
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
                                                          update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"
                                                          />
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
-                           
+
                         </p:tabView>
                         <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" id="avisohecho">
                             <center>
                                 <p:outputLabel value="SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.hecho}"/>
                                 <p:outputLabel value="NO SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.nohecho}"/>
                                 <br></br>
-                                <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.ejecutarReporteDeriv}" title="Reporte" rendered="#{documentosBean.hecho}">
+                                <p:commandButton id="repor6" value="Reporte Confirm."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.ejecutarReporteDeriv}" title="Reporte">
                                     <f:ajax event="click" onevent="aviso.hide()"/>
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-                        
+
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                 <p:column headerText="fecha">

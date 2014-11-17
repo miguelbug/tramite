@@ -107,7 +107,6 @@ public class DocumentosBean implements Serializable {
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
-        ObtenerDepIndic();
 
     }
 
@@ -544,7 +543,7 @@ public class DocumentosBean implements Serializable {
                     movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
                     t.setOrigen(hm.get("origen").toString());
                     movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
-                    movimiento.setUsuario(deriv.getUsuario(hm.get("destino").toString()));
+                    movimiento.setUsuario(getusuario(deriv.getCodigoDep(hm.get("destino").toString())));
                     t.setDestino(hm.get("destino").toString());
                     System.out.println("entra a fecha envio");
                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -591,7 +590,7 @@ public class DocumentosBean implements Serializable {
                         movimiento.setEstaNombre(hm.get("estado").toString());
                         movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
                         movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
-                        movimiento.setUsuario(deriv.getUsuario(hm.get("destino").toString()));
+                        movimiento.setUsuario(getusuario((deriv.getCodigoDep(hm.get("destino").toString()))));
                         t.setDestino(hm.get("destino").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -646,6 +645,23 @@ public class DocumentosBean implements Serializable {
             //RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
 
+    }
+
+    public Usuario getusuario(String nombofic) {
+        Usuario usu = new Usuario();
+        List lista = new ArrayList();
+        lista = deriv.listandoUsuario(nombofic);
+        Iterator ite = lista.iterator();
+        Object obj[] = new Object[5];
+        while (ite.hasNext()) {
+            obj = (Object[]) ite.next();
+            usu.setUsu(String.valueOf(obj[0]));
+            usu.setUsuNombre(String.valueOf(obj[1]));
+            usu.setClave(String.valueOf(obj[2]));
+            usu.setEstado(String.valueOf(obj[3]));
+            usu.setOficina(deriv.getOficina(String.valueOf(obj[4])));
+        }
+        return usu;
     }
 
     public void cambiar() {
