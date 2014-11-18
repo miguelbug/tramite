@@ -131,7 +131,7 @@ public class DocumentoUsuarioBean {
                 System.out.println("sale de actualizar usuario");
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado y asignado");
-
+            MostrarParaUsuario();
         } catch (Exception e) {
             System.out.println("ERROR ASIGNAR");
             System.out.println(e.getMessage());
@@ -180,11 +180,6 @@ public class DocumentoUsuarioBean {
             System.out.println(seleccion.get("numerotramite").toString());
             System.out.println(seleccion.get("fechaenvio").toString());
             System.out.println(seleccion.get("fechaingr").toString());
-            //lista = dd.getDetalle(seleccion.get("numerotramite").toString());
-            //Iterator ite = lista.iterator();
-            //Object obj[] = new Object[8];
-            //while (ite.hasNext()) {
-            //obj = (Object[]) ite.next();
             Map<String, String> listaaux = new HashMap<String, String>();
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());

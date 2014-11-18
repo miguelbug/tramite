@@ -473,16 +473,35 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void ActualizarUsuario(String tramnum, String movi, Usuario usua) {
-        System.out.println("entra a actualizar");
-        int i = 0;
+    public TramiteMovimiento getTramiteMovimiento(String numtram, String movi) {
+        System.out.println("entra a tm");
+        TramiteMovimiento tm= null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "Update TramiteMovimiento set usuario='"+usua+"'  where tramiteDatos.tramNum='"+tramnum+"' and moviNum='"+movi+"'";
+        String sql = "FROM TramiteMovimiento where tramiteDatos.tramNum='"+numtram+"' and moviNum='"+Short.valueOf(movi)+"'";
         try {
             session.beginTransaction();
-            i = session.createQuery(sql).executeUpdate();
+            tm=(TramiteMovimiento) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get tm");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return tm;
+    }
+
+    @Override
+    public void ActualizarUsuario(String tramnum, String movi, Usuario usua) {
+        System.out.println("entra a actualizar");
+        TramiteMovimiento tm=getTramiteMovimiento(tramnum,movi);
+        tm.setUsuario(usua);
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
             session.beginTransaction();
+            session.saveOrUpdate(tm);
+            session.beginTransaction().commit();
         }
         catch(Exception e) {
             System.out.println("mal confirmar");
@@ -490,7 +509,6 @@ public class DerivarDaoImpl implements DerivarDAO {
         }finally {
             session.close();
         }
-        System.out.println("actualizados: " + i);
     }
 
     @Override
