@@ -509,7 +509,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println("docuanio tipodocu");
                 tipo.setDocuAnio(hm.get("docuanio").toString());
             }
-            System.out.println("tipo docu info: " + tipo.getIdDocu());
+            System.out.println("tipo docu info: " + tipo.getDocuNum() + "-" + tipo.getDocuNombre() + "-" + tipo.getDocuAnio());
         } catch (Exception e) {
             System.out.println("mal get tipodocumento");
             System.out.println(e.getMessage());
@@ -572,6 +572,7 @@ public class DocumentosBean implements Serializable {
                     if (aux.indexOf("OGPL") == -1) {
                         System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
                         td.setTramNum(hm.get("numerotramite").toString());
+
                         t.setTramNum(hm.get("numerotramite").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -608,13 +609,21 @@ public class DocumentosBean implements Serializable {
                             movimiento.setFechaIngr(nf);
                         }
                         System.out.println("sale fecha fing");
+                        td.setUsuario(usu);
+                        tdoc.setTramiteDatos(td);
+                        Date fecha2= new Date();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                        tdoc.setDocuAnio(sdf.format(fecha2));
+                        tdoc.setDocuNombre("SIN NOMBRE");
+                        tdoc.setDocuNum("SIN NUMERO");
+                        tdoc.setDocuSiglas(hm.get("numerotramite").toString().substring(6, 10));
+                        tdoc.setDocuPric("1");
                     }
                     System.out.println("entra a indicador");
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
                     System.out.println("sale indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                 }
-                tdoc = null;
 
                 t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
                 System.out.println("---------entra a guardar tramite dato---------");
