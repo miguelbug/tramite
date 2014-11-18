@@ -107,15 +107,14 @@ public class DocumentosBean implements Serializable {
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
-        ObtenerDepIndic();
 
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("SISG")) {
+        if (event.getTab().getTitle().equals("SISTEMA INTEGRAL SEC. GENERAL") && event.getTab().getId().equals("tab1")) {
             MostrarDocumentos();
         } else {
-            if (event.getTab().getTitle().equals("SIS OGPL")) {
+            if (event.getTab().getTitle().equals("SISTEMA TRAMITE INTERNO OGPL") && event.getTab().getId().equals("tab2")) {
                 MostrarDocusInternos();
             }
         }
@@ -126,16 +125,28 @@ public class DocumentosBean implements Serializable {
         FacesMessage message = null;
         System.out.println("guardar oficio");
         try {
-            Oficios ofi = new Oficios();
-            ofi.setAsuntoOficio(asunto);
-            ofi.setFechaOficio(fecha);
-            ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
-            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
-            ofi.setCorrelativoOficio(correlativo_oficio);
-            ofi.setReferenciaOficio(dd.getMotivo(tramnum));
-            ofi.setTramiteDatos(deriv.getTramite(tramnum));
-            dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
-            ofi.setUsuario(usu);
+            String ntram = "";
+            int movi = 0;
+            for (int i = 0; i < docselec.size(); i++) {
+                Oficios ofi = new Oficios();
+                ofi.setAsuntoOficio(asunto);
+                ofi.setFechaOficio(fecha);
+                ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
+                ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
+                ofi.setCorrelativoOficio(correlativo_oficio);
+                ofi.setReferenciaOficio(dd.getMotivo(tramnum));
+                ofi.setTramiteDatos(deriv.getTramite(tramnum));
+                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                ofi.setUsuario(usu);
+                Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+                ntram = hm.get("numerotramite").toString();
+                movi = Integer.parseInt(hm.get("movimnum").toString());
+                Date nuevFech = new Date();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+                deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
+            }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
@@ -498,7 +509,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println("docuanio tipodocu");
                 tipo.setDocuAnio(hm.get("docuanio").toString());
             }
-            System.out.println("tipo docu info: " + tipo.getIdDocu());
+            System.out.println("tipo docu info: " + tipo.getDocuNum() + "-" + tipo.getDocuNombre() + "-" + tipo.getDocuAnio());
         } catch (Exception e) {
             System.out.println("mal get tipodocumento");
             System.out.println(e.getMessage());
@@ -532,6 +543,7 @@ public class DocumentosBean implements Serializable {
                     movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
                     t.setOrigen(hm.get("origen").toString());
                     movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
+                    movimiento.setUsuario(getusuario(deriv.getCodigoDep(hm.get("destino").toString())));
                     t.setDestino(hm.get("destino").toString());
                     System.out.println("entra a fecha envio");
                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -560,6 +572,7 @@ public class DocumentosBean implements Serializable {
                     if (aux.indexOf("OGPL") == -1) {
                         System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
                         td.setTramNum(hm.get("numerotramite").toString());
+
                         t.setTramNum(hm.get("numerotramite").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -578,6 +591,7 @@ public class DocumentosBean implements Serializable {
                         movimiento.setEstaNombre(hm.get("estado").toString());
                         movimiento.setDependenciaByCodigo(deriv.getDependencia(hm.get("origen").toString()));
                         movimiento.setDependenciaByCodigo1(deriv.getDependencia(hm.get("destino").toString()));
+                        movimiento.setUsuario(getusuario((deriv.getCodigoDep(hm.get("destino").toString()))));
                         t.setDestino(hm.get("destino").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -595,13 +609,21 @@ public class DocumentosBean implements Serializable {
                             movimiento.setFechaIngr(nf);
                         }
                         System.out.println("sale fecha fing");
+                        td.setUsuario(usu);
+                        tdoc.setTramiteDatos(td);
+                        Date fecha2= new Date();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                        tdoc.setDocuAnio(sdf.format(fecha2));
+                        tdoc.setDocuNombre("SIN NOMBRE");
+                        tdoc.setDocuNum("SIN NUMERO");
+                        tdoc.setDocuSiglas(hm.get("numerotramite").toString().substring(6, 10));
+                        tdoc.setDocuPric("1");
                     }
                     System.out.println("entra a indicador");
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
                     System.out.println("sale indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                 }
-                tdoc = null;
 
                 t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
                 System.out.println("---------entra a guardar tramite dato---------");
@@ -614,23 +636,41 @@ public class DocumentosBean implements Serializable {
                 sgd.GuardarTramiteMovimiento(movimiento);
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
-                hecho=true;
-                nohecho=false;
+                hecho = true;
+                nohecho = false;
                 //message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
-                
+
                 //RequestContext.getCurrentInstance().showMessageInDialog(message);
+                MostrarDocumentos();
+                MostrarDocusInternos();
             }
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());
             e.printStackTrace();
-            nohecho=false;
-            hecho=true;
+            nohecho = true;
+            hecho = false;
             //message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas en el confirmado");
             //RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
-        MostrarDocumentos();
-        MostrarDocusInternos();
+
+    }
+
+    public Usuario getusuario(String nombofic) {
+        Usuario usu = new Usuario();
+        List lista = new ArrayList();
+        lista = deriv.listandoUsuario(nombofic);
+        Iterator ite = lista.iterator();
+        Object obj[] = new Object[5];
+        while (ite.hasNext()) {
+            obj = (Object[]) ite.next();
+            usu.setUsu(String.valueOf(obj[0]));
+            usu.setUsuNombre(String.valueOf(obj[1]));
+            usu.setClave(String.valueOf(obj[2]));
+            usu.setEstado(String.valueOf(obj[3]));
+            usu.setOficina(deriv.getOficina(String.valueOf(obj[4])));
+        }
+        return usu;
     }
 
     public void cambiar() {

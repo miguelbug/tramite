@@ -43,12 +43,12 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados;
+    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados;
     private Map<String, String> seleccion;
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
-    private String fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux,llego,confirme,docresp,docofic;
+    private String asignado, fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
     private final FacesContext faceContext;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
@@ -58,11 +58,12 @@ public class DocumentoUsuarioBean {
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
-        ofi= new OficioDaoImpl();
+        ofi = new OficioDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         seguimientolista2 = new ArrayList<Map<String, String>>();
+        designados = new ArrayList<String>();
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
@@ -81,63 +82,65 @@ public class DocumentoUsuarioBean {
 
     }
 
-    /*public void MostrarConfirmadosDerivados() {
-     System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
-     confirmadosderivados.clear();
-     try {
-     System.out.println("entra a seguimiento3");
-     List lista = new ArrayList();
-     System.out.println(usu.getOficina().getIdOficina());
-     lista = deriv.getConfDeriv(usu.getOficina().getIdOficina());
-     Iterator ite = lista.iterator();
-     Object obj[] = new Object[9];
-     while (ite.hasNext()) {
-     obj = (Object[]) ite.next();
-     Map<String, String> listaaux = new HashMap<String, String>();
-     listaaux.put("movimnum", String.valueOf(obj[0]));
-     listaaux.put("numerotramite", String.valueOf(obj[1]));
-     listaaux.put("origen", String.valueOf(obj[2]));
-     listaaux.put("destino", String.valueOf(obj[3]));
-     listaaux.put("fechaenvio", String.valueOf(obj[4]));
-     listaaux.put("fechaingr", String.valueOf(obj[5]));
-     listaaux.put("observacion", String.valueOf(obj[6]));
-     listaaux.put("estado", String.valueOf(obj[7]));
-     listaaux.put("indicador", String.valueOf(obj[8]));
-     confirmadosderivados.add(listaaux);
-     }
-     } catch (Exception e) {
-     System.out.println(e.getMessage());
-     }
-     }
+    public void abrirAsignacion() {
+        llenarDesignados();
+    }
 
-     public void MostrarConfirmados() {
-     System.out.println("CONFIRMADOS¡¡¡¡¡");
-     confirmados.clear();
-     try {
-     System.out.println("entra a seguimiento2");
-     List lista = new ArrayList();
-     System.out.println(usu.getOficina().getIdOficina());
-     lista = deriv.getConfirmados(usu.getOficina().getIdOficina());
-     Iterator ite = lista.iterator();
-     Object obj[] = new Object[9];
-     while (ite.hasNext()) {
-     obj = (Object[]) ite.next();
-     Map<String, String> listaaux = new HashMap<String, String>();
-     listaaux.put("movimnum", String.valueOf(obj[0]));
-     listaaux.put("numerotramite", String.valueOf(obj[1]));
-     listaaux.put("origen", String.valueOf(obj[2]));
-     listaaux.put("destino", String.valueOf(obj[3]));
-     listaaux.put("fechaenvio", String.valueOf(obj[4]));
-     listaaux.put("fechaingr", String.valueOf(obj[5]));
-     listaaux.put("observacion", String.valueOf(obj[6]));
-     listaaux.put("estado", String.valueOf(obj[7]));
-     listaaux.put("indicador", String.valueOf(obj[8]));
-     confirmados.add(listaaux);
-     }
-     } catch (Exception e) {
-     System.out.println(e.getMessage());
-     }
-     }*/
+    public void ConfirmarAsignar() {
+        Confirmar();
+        System.out.println("\nENTRA A ASIGNAR\n");
+        Asignar();
+        System.out.println("\nSALE DE ASIGNAR\n");
+        docselec2.clear();
+    }
+
+    public void llenarDesignados() {
+        designados = sgd.getDesignados(usu.getOficina().getIdOficina());
+    }
+
+    public Usuario getusuario(String nombre) {
+        Usuario usu = new Usuario();
+        List lista = new ArrayList();
+        lista = deriv.getUsu(nombre);
+        Iterator ite = lista.iterator();
+        Object obj[] = new Object[5];
+        while (ite.hasNext()) {
+            obj = (Object[]) ite.next();
+            usu.setUsu(String.valueOf(obj[0]));
+            usu.setUsuNombre(String.valueOf(obj[1]));
+            usu.setClave(String.valueOf(obj[2]));
+            usu.setEstado(String.valueOf(obj[3]));
+            usu.setOficina(deriv.getOficina(String.valueOf(obj[4])));
+        }
+        return usu;
+    }
+
+    public void Asignar() {
+        System.out.println(docselec2);
+        FacesMessage message = null;
+        try {
+
+            String ntram = "";
+            int movi = 0;
+            for (int i = 0; i < docselec2.size(); i++) {
+                Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+                ntram = hm.get("numerotramite").toString();
+                movi = Integer.parseInt(hm.get("movimnum").toString());
+                System.out.println("entra a actualizar usuario");
+                deriv.ActualizarUsuario(ntram, String.valueOf(movi), getusuario(asignado));
+                System.out.println("sale de actualizar usuario");
+            }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha confirmado y asignado");
+            MostrarParaUsuario();
+        } catch (Exception e) {
+            System.out.println("ERROR ASIGNAR");
+            System.out.println(e.getMessage());
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
+        }
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+
+    }
+
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
@@ -147,7 +150,7 @@ public class DocumentoUsuarioBean {
             System.out.println(usu.getOficina().getIdOficina());
             lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[10];
+            Object obj[] = new Object[11];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -162,6 +165,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("estado", String.valueOf(obj[8]));
                 listaaux.put("estadDoc", String.valueOf(obj[9]));
                 listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0])));
+                listaaux.put("usuario", String.valueOf(obj[10]));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {
@@ -176,67 +180,18 @@ public class DocumentoUsuarioBean {
             System.out.println(seleccion.get("numerotramite").toString());
             System.out.println(seleccion.get("fechaenvio").toString());
             System.out.println(seleccion.get("fechaingr").toString());
-            //lista = dd.getDetalle(seleccion.get("numerotramite").toString());
-            //Iterator ite = lista.iterator();
-            //Object obj[] = new Object[8];
-            //while (ite.hasNext()) {
-                //obj = (Object[]) ite.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
-                listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
-                listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
-                listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString()));
-                detalle.add(listaaux);
-           // }
+            Map<String, String> listaaux = new HashMap<String, String>();
+            listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
+            listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
+            listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
+            listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString()));
+            detalle.add(listaaux);
+            // }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return detalle;
     }
-    /*public String llego(){
-        if(seleccion.get("fechaenvio").toString().equals(null)){
-            llego="";
-        }else{
-            llego=seleccion.get("fechaenvio").toString();
-        }
-        
-        return llego;
-    }
-    public String confirme(){
-        if(seleccion.get("fechaingr").toString().equals(null)){
-            confirme="";
-        }
-        else{
-            confirme=seleccion.get("fechaingr").toString();
-        }
-        
-        return confirme;
-    }
-    public String docresp(){
-        if(seleccion.get("tramnnum").toString().equals(null)){
-            docresp="";
-        }else{
-            docresp=di.getRespuesta(seleccion.get("tramnnum").toString());
-        }
-        
-        return docresp;
-    }
-    public String docofic(){
-        if(seleccion.get("tramnnum").toString().equals(null)){
-            docofic="";
-        }else{
-            docofic=ofi.getOficioDocumento(seleccion.get("tramnnum").toString());
-        }
-        
-        return docofic;
-    }
-    /*
-    public void Detalle(){
-        llego=seleccion.get("fechaenvio").toString();
-        confirme=seleccion.get("fechaingr").toString();
-        docresp=di.getRespuesta(seleccion.get("tramnnum").toString());
-        docofic=ofi.getOficioDocumento(seleccion.get("tramnnum").toString());
-    }*/
 
     public void Confirmar() {
         try {
@@ -247,19 +202,9 @@ public class DocumentoUsuarioBean {
             for (int i = 0; i < docselec2.size(); i++) {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-                Iterator it = hm.entrySet().iterator();
-                TramiteMovimiento tm = new TramiteMovimiento();
-                while (it.hasNext()) {
-                    Map.Entry e = (Map.Entry) it.next();
-                    if (e.getKey().toString().equals("numerotramite")) {
-                        ntram = e.getValue().toString();
+                ntram = hm.get("numerotramite").toString();
+                movi = Integer.parseInt(hm.get("movimnum").toString());
 
-                    }
-                    if (e.getKey().toString().equals("movimnum")) {
-                        movi = Integer.parseInt(e.getValue().toString());
-
-                    }
-                }
                 Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -521,7 +466,7 @@ public class DocumentoUsuarioBean {
                     System.out.println(hm.get("numerotramite").toString());
                     numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
                     motivo = dd.getMotivo(hm.get("numerotramite").toString());
-                    asunto=motivo;
+                    asunto = motivo;
                 } else {
                     numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
                 }
@@ -838,6 +783,30 @@ public class DocumentoUsuarioBean {
 
     public void setDi(DocusInternosDAO di) {
         this.di = di;
+    }
+
+    public List getDesignados() {
+        return designados;
+    }
+
+    public void setDesignados(List designados) {
+        this.designados = designados;
+    }
+
+    public String getAsignado() {
+        return asignado;
+    }
+
+    public void setAsignado(String asignado) {
+        this.asignado = asignado;
+    }
+
+    public OficioDAO getOfi() {
+        return ofi;
+    }
+
+    public void setOfi(OficioDAO ofi) {
+        this.ofi = ofi;
     }
 
 }

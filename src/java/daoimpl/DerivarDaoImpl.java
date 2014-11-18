@@ -18,6 +18,7 @@ import maping.DocusExt;
 import maping.DocusExtint;
 import maping.DocusInternos;
 import maping.Indicador;
+import maping.Oficina;
 import maping.Proveido;
 import maping.TipoDocu;
 import maping.TramiteDatos;
@@ -97,7 +98,7 @@ public class DerivarDaoImpl implements DerivarDAO {
 
     @Override
     public String getSiglas(String ofi, String usu) {
-        System.out.println("oficina: "+ ofi);
+        System.out.println("oficina: " + ofi);
         System.out.println("getssiglas");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
@@ -105,7 +106,7 @@ public class DerivarDaoImpl implements DerivarDAO {
                 + "from Oficina ofi, Usuario usua\n"
                 + "where usua.oficina.idOficina='" + ofi + "'\n"
                 + "and usua.oficina.idOficina=ofi.idOficina\n"
-                + "and usua.usu='"+usu+"'";
+                + "and usua.usu='" + usu + "'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
@@ -319,6 +320,26 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public String getCodigoDep(String nombdepe) {
+        System.out.println("codigo depe");
+        String codigo=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT CODIGO FROM DEPENDENCIA WHERE NOMBRE='"+nombdepe+"'";
+        try {
+            session.beginTransaction();
+            codigo = String.valueOf(session.createSQLQuery(sql).uniqueResult());
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal codigo depe");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return codigo;
+    }
+
+    @Override
     public Dependencia getDependencia2(String codigo) {
         System.out.println("depende2");
         Dependencia dep = null;
@@ -416,6 +437,78 @@ public class DerivarDaoImpl implements DerivarDAO {
             System.out.println(e.getMessage());
         }
         return codigos;
+    }
+
+    @Override
+    public List getUsu(String nombre) {
+        System.out.println("entra a getusu");
+        List<String> usu = new ArrayList<String>();
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT USU,USU_NOMBRE,CLAVE,ESTADO,ID_OFICINA FROM USUARIO WHERE USU_NOMBRE='" + nombre + "'";
+        try {
+            session.beginTransaction();
+            usu= (List<String>)session.createSQLQuery(sql).list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal usu");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return usu;
+    }
+
+    @Override
+    public Usuario transformar(String nombre) {
+        List<String> lista= (List<String>)getUsu(nombre);
+        System.out.println(lista);
+        Usuario usua= new Usuario();
+        usua.setUsu(String.valueOf(lista.get(0)));
+        usua.setUsuNombre(String.valueOf(lista.get(1)));
+        usua.setClave(String.valueOf(lista.get(2)));
+        usua.setEstado(String.valueOf(lista.get(3)));
+        usua.setOficina(getOficina(String.valueOf(lista.get(4))));
+        return usua;
+    }
+
+    @Override
+    public TramiteMovimiento getTramiteMovimiento(String numtram, String movi) {
+        System.out.println("entra a tm");
+        TramiteMovimiento tm= null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "FROM TramiteMovimiento where tramiteDatos.tramNum='"+numtram+"' and moviNum='"+Short.valueOf(movi)+"'";
+        try {
+            session.beginTransaction();
+            tm=(TramiteMovimiento) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get tm");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return tm;
+    }
+
+    @Override
+    public void ActualizarUsuario(String tramnum, String movi, Usuario usua) {
+        System.out.println("entra a actualizar");
+        TramiteMovimiento tm=getTramiteMovimiento(tramnum,movi);
+        tm.setUsuario(usua);
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(tm);
+            session.beginTransaction().commit();
+        }
+        catch(Exception e) {
+            System.out.println("mal confirmar");
+            System.out.println(e.getMessage());
+        }finally {
+            session.close();
+        }
     }
 
     @Override
@@ -613,6 +706,61 @@ public class DerivarDaoImpl implements DerivarDAO {
         } finally {
             session.close();
         }
+    }
+
+    @Override
+    public List listandoUsuario(String nombdepe) {
+        System.out.println("get usuario");
+        List<String> index = new ArrayList<String>();
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT USUA.USU, USUA.USU_NOMBRE, USUA.CLAVE, USUA.ESTADO, USUA.ID_OFICINA FROM USUARIO USUA, JEFATURA JEFA\n"
+                + "WHERE USUA.ID_OFICINA='"+nombdepe+"' AND USUA.ESTADO='activo' AND USUA.USU=JEFA.USU AND JEFA.CARGO='JEFE DE ÁREA'";
+        try {
+            session.beginTransaction();
+            index = (List<String>) session.createSQLQuery(sql).list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal getusuario");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println(index);
+        return index;
+    }
+
+    @Override
+    public Oficina getOficina(String nombre) {
+        Oficina ofi=null;
+        System.out.println("getofics");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "FROM Oficina where idOficina='"+nombre+"'";
+        try{
+            session.beginTransaction();
+            ofi = (Oficina) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        }catch(Exception e){
+            System.out.println("mal getofics");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return ofi;
+    }
+
+    @Override
+    public Usuario getUsuario(String oficina) {
+        List<String> lista=listandoUsuario(oficina);
+        System.out.println(lista);
+        Usuario usu= new Usuario();
+        usu.setUsu(String.valueOf(lista.get(0)));
+        usu.setUsuNombre(String.valueOf(lista.get(1)));
+        usu.setClave(String.valueOf(lista.get(2)));
+        usu.setEstado(String.valueOf(lista.get(3)));
+        usu.setOficina(getOficina(String.valueOf(lista.get(4))));
+        return usu;
     }
 
 }

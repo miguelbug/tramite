@@ -12,6 +12,7 @@ import maping.Dependencia;
 import maping.DocusExt;
 import maping.DocusExtint;
 import maping.Indicador;
+import maping.Oficina;
 import maping.Proveido;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -49,4 +50,12 @@ public interface DerivarDAO {
     public void GuardarProveido(Proveido p);
     public void ActualizarTramite(String tramaux, String movimiento);
     public String getCorrelativoOficio();
+    public Usuario getUsuario(String oficina);
+    public List getUsu(String nombre);
+    public void ActualizarUsuario(String tramnum, String movi, Usuario usu);
+    public String getCodigoDep(String nombdepe);
+    public List listandoUsuario(String nombdepe);
+    public Oficina getOficina(String nombre);
+    public Usuario transformar(String nombre);
+    public TramiteMovimiento getTramiteMovimiento(String numtram, String movi);
 }

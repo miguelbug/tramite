@@ -29,5 +29,6 @@ public interface SeguimientoDAO {
     public void GuardarTDoc(TipoDocu tdocu);
     public void GuardarTramiteMovimiento(TramiteMovimiento tm);
     public void temporal(Temporal t);
+    public List getDesignados(String oficina);
     
 }

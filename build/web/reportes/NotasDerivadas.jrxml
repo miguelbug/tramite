@@ -29,13 +29,17 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[select TRAM_NUM,FECHA,ORIGEN,ASUNTO,DESTINO
+	<queryString><![CDATA[select TRAM_NUM,
+DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss')) AS FECHA,
+ORIGEN,
+ASUNTO,
+DESTINO
 from temporal
-where impreso=1 and reimpreso is null
+where impreso=1 and reimpreso IS null
 order by destino]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
-	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="FECHA" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="ASUNTO" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
@@ -61,19 +65,6 @@ order by destino]]></queryString>
 						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
 				<text><![CDATA[FECHA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="121"
-						y="24"
-						width="122"
-						height="20"
-						key="staticText-7"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[ORIGEN DOC.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -127,9 +118,9 @@ order by destino]]></queryString>
 				</line>
 				<staticText>
 					<reportElement
-						x="245"
+						x="130"
 						y="24"
-						width="174"
+						width="288"
 						height="20"
 						forecolor="#000000"
 						backcolor="#000000"
@@ -278,19 +269,6 @@ order by destino]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}.toString()]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="122"
-						y="0"
-						width="119"
-						height="30"
-						key="textField-9"/>
-					<box></box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ORIGEN}]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement
 						mode="Opaque"
@@ -317,9 +295,9 @@ order by destino]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="245"
-						y="1"
-						width="173"
+						x="125"
+						y="0"
+						width="293"
 						height="28"
 						key="textField-10"/>
 					<box></box>
@@ -335,15 +313,6 @@ order by destino]]></queryString>
 						width="0"
 						height="49"
 						key="line-9"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<line direction="TopDown">
-					<reportElement
-						x="243"
-						y="-19"
-						width="0"
-						height="49"
-						key="line-10"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<line direction="TopDown">

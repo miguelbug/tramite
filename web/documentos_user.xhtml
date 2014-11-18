@@ -59,9 +59,11 @@
                                     <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadDoc}" />
                                     </p:column>
-                                    
                                     <p:column headerText="MOV." width="5" style="text-align: center">
                                         <h:outputText value="#{item.movimnum}"/>
+                                    </p:column>
+                                    <p:column headerText="ASIGN." width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.usuario}"/>
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
@@ -73,8 +75,8 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentoUsuarioBean.RecorrerLista()}"/>
 
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.Confirmar()}"
-                                                         update=":form:growl,tabladocumentos" />
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.abrirAsignacion()}"
+                                                         update=":form:asignados" oncomplete="PF('asignadosDialog').show()"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
                                                          oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
                                     </f:facet>
@@ -82,6 +84,19 @@
                             </center>
                         </p:tab>
                     </p:tabView>
+                    <p:dialog header="Asignación" widgetVar="asignadosDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="asignados">
+                        <center>
+                            <p:outputLabel value="Asignando a:"/>
+                            <br></br>
+                            <p:selectOneMenu value="#{documentoUsuarioBean.asignado}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{documentoUsuarioBean.designados}"/>
+                            </p:selectOneMenu>
+                            <br></br>
+                            <p:commandButton value="Confirmar" actionListener="#{documentoUsuarioBean.ConfirmarAsignar()}" update=":form:"/>
+                        </center>
+
+                    </p:dialog>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
                             <p:column headerText="FECHA REGISTRO">
@@ -97,7 +112,7 @@
                                 <h:outputText value="#{car.OFICIO}" />
                             </p:column>
                         </p:dataTable>
-                        
+
                     </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial2">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >

@@ -217,12 +217,14 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "I.INDI_NOMBRE,\n"
                     + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE,\n"
-                    + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO\n"
-                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I\n"
+                    + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
+                    + "USUA.USU_NOMBRE AS NOMBRE\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA\n"
                     + "WHERE TM.CODIGO1='" + oficina + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
-                    + "AND TM.INDI_COD=I.INDI_COD");
+                    + "AND TM.INDI_COD=I.INDI_COD\n"
+                    + "AND TM.USU=USUA.USU");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -329,6 +331,27 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
                     + "where TRAM_NUM='" + tramnum + "'\n"
                     + "AND DOCU_PRIC='1'");
+            td = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problem tiposdocus");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return td;
+    }
+
+    @Override
+    public List getDesignados(String oficina) {
+        List td = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT USU_NOMBRE\n"
+                    + "FROM USUARIO\n"
+                    + "where ID_OFICINA='" + oficina + "'\n"
+                    + "AND ESTADO='activo'");
             td = (List) query.list();
             session.beginTransaction().commit();
             session.close();
