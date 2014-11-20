@@ -20,6 +20,7 @@ public class Temporal  implements java.io.Serializable {
      private BigDecimal reimpreso;
      private String destino;
      private String siglas;
+     private String tiposdocumentos;
 
     public Temporal() {
     }
@@ -28,17 +29,20 @@ public class Temporal  implements java.io.Serializable {
     public Temporal(long id) {
         this.id = id;
     }
-    public Temporal(long id, String tramNum, Date fecha, String origen, String asunto, BigDecimal impreso, BigDecimal reimpreso, String destino, String siglas) {
-       this.id = id;
-       this.tramNum = tramNum;
-       this.fecha = fecha;
-       this.origen = origen;
-       this.asunto = asunto;
-       this.impreso = impreso;
-       this.reimpreso = reimpreso;
-       this.destino = destino;
-       this.siglas = siglas;
+
+    public Temporal(long id, String tramNum, Date fecha, String origen, String asunto, BigDecimal impreso, BigDecimal reimpreso, String destino, String siglas, String tiposdocumentos) {
+        this.id = id;
+        this.tramNum = tramNum;
+        this.fecha = fecha;
+        this.origen = origen;
+        this.asunto = asunto;
+        this.impreso = impreso;
+        this.reimpreso = reimpreso;
+        this.destino = destino;
+        this.siglas = siglas;
+        this.tiposdocumentos = tiposdocumentos;
     }
+    
    
     public long getId() {
         return this.id;
@@ -102,6 +106,14 @@ public class Temporal  implements java.io.Serializable {
     
     public void setSiglas(String siglas) {
         this.siglas = siglas;
+    }
+
+    public String getTiposdocumentos() {
+        return tiposdocumentos;
+    }
+
+    public void setTiposdocumentos(String tiposdocumentos) {
+        this.tiposdocumentos = tiposdocumentos;
     }
 
 

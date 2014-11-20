@@ -567,6 +567,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("sle indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                     t.setAsunto(hm.get("observacion").toString());
+                    t.setTiposdocumentos(hm.get("docunomb").toString());
                     //}
                 } else {
                     if (aux.indexOf("OGPL") == -1) {
@@ -611,13 +612,14 @@ public class DocumentosBean implements Serializable {
                         System.out.println("sale fecha fing");
                         td.setUsuario(usu);
                         tdoc.setTramiteDatos(td);
-                        Date fecha2= new Date();
+                        Date fecha2 = new Date();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
                         tdoc.setDocuAnio(sdf.format(fecha2));
                         tdoc.setDocuNombre("SIN NOMBRE");
                         tdoc.setDocuNum("SIN NUMERO");
-                        tdoc.setDocuSiglas(hm.get("numerotramite").toString().substring(6, 10));
+                        tdoc.setDocuSiglas(siglas(hm.get("numerotramite").toString()));
                         tdoc.setDocuPric("1");
+                        t.setTiposdocumentos(hm.get("docunomb").toString());
                     }
                     System.out.println("entra a indicador");
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
@@ -654,6 +656,17 @@ public class DocumentosBean implements Serializable {
             //RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
 
+    }
+
+    public String siglas(String tramnum) {
+        StringTokenizer tokens = new StringTokenizer(tramnum, "-");
+        int j = 0;
+        String cadena[] = new String[3];
+        while (tokens.hasMoreTokens()) {
+            cadena[j] = tokens.nextToken();
+            j++;
+        }
+        return cadena[1];
     }
 
     public Usuario getusuario(String nombofic) {

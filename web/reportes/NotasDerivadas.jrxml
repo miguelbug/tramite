@@ -33,7 +33,8 @@
 DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss')) AS FECHA,
 ORIGEN,
 ASUNTO,
-DESTINO
+DESTINO,
+TIPODOCUMENTOS
 from temporal
 where impreso=1 and reimpreso IS null
 order by destino]]></queryString>
@@ -43,6 +44,7 @@ order by destino]]></queryString>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="ASUNTO" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
+	<field name="TIPODOCUMENTOS" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -55,9 +57,9 @@ order by destino]]></queryString>
 			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="75"
+						x="66"
 						y="24"
-						width="45"
+						width="54"
 						height="20"
 						key="staticText-6"/>
 					<box></box>
@@ -70,7 +72,7 @@ order by destino]]></queryString>
 					<reportElement
 						x="4"
 						y="24"
-						width="70"
+						width="62"
 						height="20"
 						key="staticText-9"/>
 					<box></box>
@@ -118,9 +120,9 @@ order by destino]]></queryString>
 				</line>
 				<staticText>
 					<reportElement
-						x="130"
+						x="199"
 						y="24"
-						width="288"
+						width="219"
 						height="20"
 						forecolor="#000000"
 						backcolor="#000000"
@@ -140,10 +142,23 @@ order by destino]]></queryString>
 						key="line-8"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
+				<staticText>
+					<reportElement
+						x="135"
+						y="24"
+						width="54"
+						height="20"
+						key="staticText-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TIPO DOC.]]></text>
+				</staticText>
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="23"  isSplitAllowed="true" >
+			<band height="37"  isSplitAllowed="true" >
 			</band>
 			</groupFooter>
 		</group>
@@ -245,10 +260,10 @@ order by destino]]></queryString>
 			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="7"
-						y="-1"
-						width="67"
-						height="30"
+						x="8"
+						y="0"
+						width="58"
+						height="28"
 						key="textField-7"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -258,9 +273,9 @@ order by destino]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="75"
+						x="66"
 						y="-1"
-						width="45"
+						width="54"
 						height="30"
 						key="textField-8"/>
 					<box></box>
@@ -283,21 +298,12 @@ order by destino]]></queryString>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="619"
-						y="-19"
-						width="0"
-						height="49"
-						key="line-6"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="125"
+						x="203"
 						y="0"
-						width="293"
+						width="212"
 						height="28"
 						key="textField-10"/>
 					<box></box>
@@ -326,8 +332,8 @@ order by destino]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="74"
-						y="-18"
+						x="66"
+						y="-20"
 						width="0"
 						height="48"
 						key="line-12"/>
@@ -360,6 +366,28 @@ order by destino]]></queryString>
 						key="line-15"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="199"
+						y="-19"
+						width="0"
+						height="49"
+						key="line-16"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="123"
+						y="0"
+						width="74"
+						height="30"
+						key="textField-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TIPODOCUMENTOS}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>

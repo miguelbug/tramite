@@ -32,5 +32,8 @@
         <property name="siglas" type="string">
             <column name="SIGLAS" length="30" />
         </property>
+        <property name="tiposdocumentos" type="string">
+            <column name="TIPODOCUMENTOS" length="100" />
+        </property>
     </class>
 </hibernate-mapping>
