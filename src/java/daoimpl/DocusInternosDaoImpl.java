@@ -6,7 +6,9 @@
 package daoimpl;
 
 import dao.DocusInternosDAO;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,7 +23,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
     Session session;
 
     @Override
-    public List getDocusInternos(String usu) {
+    public List getDocusInternos(String usu, String f1, String f2) {
         List proveidos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get DOCUS INTERNO");
@@ -37,6 +39,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "DOCU_ASUNTO\n"
                     + "FROM DOCUS_INTERNOS\n"
                     + "WHERE USU='"+usu+"'\n"
+                    + "and FECHAREGISTRO BETWEEN '"+f1+"' and '"+f2+"' \n"
                     + "ORDER BY DOCU_CORRELAINT DESC");
             proveidos = query.list();
             session.beginTransaction().commit();

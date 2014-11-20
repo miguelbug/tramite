@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSession;
 import maping.Oficios;
 import maping.Temporal;
 import maping.TipoDocu;
+import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
 import maping.Usuario;
@@ -136,16 +137,21 @@ public class DocumentosBean implements Serializable {
                 ofi.setCorrelativoOficio(correlativo_oficio);
                 ofi.setReferenciaOficio(dd.getMotivo(tramnum));
                 ofi.setTramiteDatos(deriv.getTramite(tramnum));
-                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
                 ofi.setUsuario(usu);
+                ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
+                System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+                System.out.println("ESTE ES EL DOCSELEC: "+docselec);
                 ntram = hm.get("numerotramite").toString();
-                movi = Integer.parseInt(hm.get("movimnum").toString());
+                movi = Integer.parseInt(hm.get("movimiento").toString());
                 Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
-                deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
+                System.out.println("confirmaar tramite entre");
+                deriv.Confirmar(ntram, movi);
+                System.out.println("confirmaar tramite sale");
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -155,6 +161,7 @@ public class DocumentosBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -173,6 +180,7 @@ public class DocumentosBean implements Serializable {
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = dd.getMotivo(tramnum);
+        getDependencias();
     }
 
     public String getAnio() {

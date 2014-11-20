@@ -55,7 +55,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         } finally {
             session.close();
         }
-        System.out.println("se ha actualizado: " + i);
+        System.out.println("se ha actualizado¡¡¡¡¡¡¡: " + i);
     }
 
     @Override
@@ -67,10 +67,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.save(ofi);
             session.beginTransaction().commit();
             session.close();
+            System.out.println("se guardó oficio");
         } catch (Exception e) {
-            System.out.println("mal guardar oficio");
+            System.out.println("?????????????mal guardar oficio¡¡¡¡");
             System.out.println(e.getMessage());
         }
+        System.out.println("entra a actualizar movimiento");
         ActualizarMov(tramnum, movimiento);
     }
 
