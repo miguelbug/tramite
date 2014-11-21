@@ -87,6 +87,8 @@ public class DocumentosBean implements Serializable {
     //
     private boolean hecho;
     private boolean nohecho;
+    
+    private List documentos_confirmados;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -100,6 +102,7 @@ public class DocumentosBean implements Serializable {
         log = new LoginDaoImpl();
         fechaprov = new Date();
         documentosprov = new ArrayList<Map<String, String>>();
+        documentos_confirmados= new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
@@ -108,6 +111,7 @@ public class DocumentosBean implements Serializable {
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
+        this.MostrarDocumentosConfirmados();
 
     }
 
@@ -338,7 +342,33 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
+    public void MostrarDocumentosConfirmados(){
+        System.out.println("listando documentos");
+        this.documentos_confirmados.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.getDocumentos_Confirm();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[10];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fenvio", String.valueOf(obj[4]));
+                listaaux.put("fing", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("docunomb", String.valueOf(obj[8]));
+                listaaux.put("estado", String.valueOf(obj[9]));
+                documentos_confirmados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void MostrarDocumentos() {
         System.out.println("listando documentos");
         documentos.clear();
@@ -952,6 +982,14 @@ public class DocumentosBean implements Serializable {
 
     public void setNohecho(boolean nohecho) {
         this.nohecho = nohecho;
+    }
+
+    public List getDocumentos_confirmados() {
+        return documentos_confirmados;
+    }
+
+    public void setDocumentos_confirmados(List documentos_confirmados) {
+        this.documentos_confirmados = documentos_confirmados;
     }
 
 }

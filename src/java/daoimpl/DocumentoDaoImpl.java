@@ -139,6 +139,59 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
+    public List getDocumentos_Confirm() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("entró a getdocus confim");
+            session.beginTransaction();
+            System.out.println("despues de begin confirm");
+            Query query = session.createSQLQuery("SELECT R.TRAM_NUM,\n"
+                    + "R.MOVI_NUM,\n"
+                    + "R.MOVI_ORIGEN,\n"
+                    + "R.MOVI_DESTINO,\n"
+                    + "R.FECHAENVIO,\n"
+                    + "R.FECHAING,\n"
+                    + "R.INDI_NOMBRE,\n"
+                    + "R.OBSERVACION,\n"
+                    + "R.DOCUNOMBRE,\n"
+                    + "R.ESTA_NOMBRE,\n"
+                    + "R.DOCUPRIC\n"
+                    + "  FROM (select vista2.TRAM_NUM,\n"
+                    + "       vista2.MOVI_NUM,\n"
+                    + "       vista2.MOVI_ORIGEN,\n"
+                    + "       vista2.MOVI_DESTINO,\n"
+                    + "       vista2.DEST_COD,\n"
+                    + "       DECODE(to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
+                    + "       DECODE(to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
+                    + "       vista2.INDI_NOMBRE,\n"
+                    + "       DECODE(vista2.MOVI_OBS,NULL,' ',vista2.MOVI_OBS) AS OBSERVACION,\n"
+                    + "       DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre|| 'N° '||vista1.docu_num||'-'||vista1.docu_siglas||'-'||vista1.docu_anio) as docunombre,\n"
+                    + "       DECODE(vista1.docu_pric,null,'3',vista1.docu_pric) as docupric,\n"
+                    + "       vista2.ESTA_NOMBRE\n"
+                    + "       from vw_ogpl002@TRAMITEDBLINK vista2 left join vw_ogpl001@TRAMITEDBLINK vista1\n"
+                    + "       on vista2.tram_num=vista1.tram_num\n"
+                    + "       ORDER BY vista2.MOVI_FEC_ENV DESC\n"
+                    + "       )R\n"
+                    + "WHERE R.FECHAING not in (' ')\n"
+                    + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "and (R.TRAM_NUM||'-'||R.FECHAENVIO) not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy HH:mm:ss') from tramite_datos)\n"
+                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
+                    + "GROUP BY R.TRAM_NUM,R.MOVI_NUM,R.MOVI_ORIGEN,R.MOVI_DESTINO,R.FECHAENVIO,R.FECHAING,R.INDI_NOMBRE,R.OBSERVACION,R.DOCUNOMBRE,R.ESTA_NOMBRE,R.DOCUPRIC");
+            docus = query.list();
+            System.out.println("despues de query session");
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna");
+        return docus;
+    }
+
+    @Override
     public List getDocumentos() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -182,7 +235,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "R.INDI_NOMBRE,\n"
                     + "R.OBSERVACION,\n"
                     + "R.DOCUNOMBRE,\n"
-                    + "R.ESTA_NOMBRE\n"
+                    + "R.ESTA_NOMBRE,\n"
+                    + "R.DOCUPRIC\n"
                     + "  FROM (select vista2.TRAM_NUM,\n"
                     + "       vista2.MOVI_NUM,\n"
                     + "       vista2.MOVI_ORIGEN,\n"
@@ -193,7 +247,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       vista2.INDI_NOMBRE,\n"
                     + "       DECODE(vista2.MOVI_OBS,NULL,' ',vista2.MOVI_OBS) AS OBSERVACION,\n"
                     + "       DECODE(vista1.docu_nombre,NULL,'SIN DOC.',vista1.docu_nombre|| 'N° '||vista1.docu_num||'-'||vista1.docu_siglas||'-'||vista1.docu_anio) as docunombre,\n"
-                    + "       DECODE(vista1.docu_pric,null,' ',vista1.docu_pric) as docupric,\n"
+                    + "       DECODE(vista1.docu_pric,null,'3',vista1.docu_pric) as docupric,\n"
                     + "       vista2.ESTA_NOMBRE\n"
                     + "       from vw_ogpl002@TRAMITEDBLINK vista2 left join vw_ogpl001@TRAMITEDBLINK vista1\n"
                     + "       on vista2.tram_num=vista1.tram_num\n"
@@ -201,9 +255,9 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       )R\n"
                     + "WHERE R.FECHAING =' '\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
-                    + "and R.TRAM_NUM not in (select tram_num from tramite_datos)\n"
+                    + "and (R.TRAM_NUM||'-'||R.FECHAENVIO) not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy HH:mm:ss') from tramite_datos)\n"
                     + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
-                    + "AND R.docupric in ('1',' ')");
+                    + "GROUP BY R.TRAM_NUM,R.MOVI_NUM,R.MOVI_ORIGEN,R.MOVI_DESTINO,R.FECHAENVIO,R.FECHAING,R.INDI_NOMBRE,R.OBSERVACION,R.DOCUNOMBRE,R.ESTA_NOMBRE,R.DOCUPRIC");
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();
