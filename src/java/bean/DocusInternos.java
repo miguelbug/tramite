@@ -8,6 +8,7 @@ package bean;
 
 import dao.DocusInternosDAO;
 import daoimpl.DocusInternosDaoImpl;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,8 +35,8 @@ public class DocusInternos {
     private DocusInternosDAO did;
     private List otrosdocus;
     private List docselec;
-    private Date fecha1;
-    private Date fecha2;
+    private static Date fecha1;
+    private static Date fecha2;
     
     
     public DocusInternos() {
@@ -44,17 +45,19 @@ public class DocusInternos {
         docusinternos = new ArrayList<HashMap<String,String>>();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
-        mostrarDocusInternos();
+        
     }
     public void actualizarLista(){
         
     }
     public void mostrarDocusInternos(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+        System.out.println(sdf.format(fecha1)+"---"+sdf.format(fecha2));
         System.out.println("listando docus internos");
         docusinternos.clear();
         try {
             List lista = new ArrayList();
-            lista = did.getDocusInternos(usu.getUsu());
+            lista = did.getDocusInternos(usu.getUsu(),sdf.format(fecha1),sdf.format(fecha2));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[8];
             while (ite.hasNext()) {
@@ -110,6 +113,22 @@ public class DocusInternos {
 
     public void setDocselec(List docselec) {
         this.docselec = docselec;
+    }
+
+    public Date getFecha1() {
+        return fecha1;
+    }
+
+    public void setFecha1(Date fecha1) {
+        this.fecha1 = fecha1;
+    }
+
+    public Date getFecha2() {
+        return fecha2;
+    }
+
+    public void setFecha2(Date fecha2) {
+        this.fecha2 = fecha2;
     }
     
 }

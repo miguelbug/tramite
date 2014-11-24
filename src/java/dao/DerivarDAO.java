@@ -14,6 +14,7 @@ import maping.DocusExtint;
 import maping.Indicador;
 import maping.Oficina;
 import maping.Proveido;
+import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
 import maping.Usuario;
@@ -58,4 +59,5 @@ public interface DerivarDAO {
     public Oficina getOficina(String nombre);
     public Usuario transformar(String nombre);
     public TramiteMovimiento getTramiteMovimiento(String numtram, String movi);
+    public TiposDocumentos getTipoDoc(String tipo);
 }

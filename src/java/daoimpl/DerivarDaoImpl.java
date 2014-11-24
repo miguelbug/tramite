@@ -21,6 +21,7 @@ import maping.Indicador;
 import maping.Oficina;
 import maping.Proveido;
 import maping.TipoDocu;
+import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
 import maping.Usuario;
@@ -509,6 +510,26 @@ public class DerivarDaoImpl implements DerivarDAO {
         }finally {
             session.close();
         }
+    }
+
+    @Override
+    public TiposDocumentos getTipoDoc(String tipo) {
+        System.out.println("entra a actualizar");
+        TiposDocumentos td= new TiposDocumentos();
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql="FROM TiposDocumentos where nombreDocu='"+tipo+"'";
+        try {
+            session.beginTransaction();
+            td=(TiposDocumentos)session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        }
+        catch(Exception e) {
+            System.out.println("mal confirmar");
+            System.out.println(e.getMessage());
+        }finally {
+            session.close();
+        }
+        return td;
     }
 
     @Override

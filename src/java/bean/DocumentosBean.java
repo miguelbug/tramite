@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSession;
 import maping.Oficios;
 import maping.Temporal;
 import maping.TipoDocu;
+import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
 import maping.Usuario;
@@ -86,6 +87,8 @@ public class DocumentosBean implements Serializable {
     //
     private boolean hecho;
     private boolean nohecho;
+    
+    private List documentos_confirmados;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -99,6 +102,7 @@ public class DocumentosBean implements Serializable {
         log = new LoginDaoImpl();
         fechaprov = new Date();
         documentosprov = new ArrayList<Map<String, String>>();
+        documentos_confirmados= new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
@@ -107,6 +111,7 @@ public class DocumentosBean implements Serializable {
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
+        this.MostrarDocumentosConfirmados();
 
     }
 
@@ -136,16 +141,21 @@ public class DocumentosBean implements Serializable {
                 ofi.setCorrelativoOficio(correlativo_oficio);
                 ofi.setReferenciaOficio(dd.getMotivo(tramnum));
                 ofi.setTramiteDatos(deriv.getTramite(tramnum));
-                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
                 ofi.setUsuario(usu);
+                ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
+                System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+                System.out.println("ESTE ES EL DOCSELEC: "+docselec);
                 ntram = hm.get("numerotramite").toString();
-                movi = Integer.parseInt(hm.get("movimnum").toString());
+                movi = Integer.parseInt(hm.get("movimiento").toString());
                 Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
-                deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
+                System.out.println("confirmaar tramite entre");
+                deriv.Confirmar(ntram, movi);
+                System.out.println("confirmaar tramite sale");
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -155,6 +165,7 @@ public class DocumentosBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -173,6 +184,7 @@ public class DocumentosBean implements Serializable {
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = dd.getMotivo(tramnum);
+        getDependencias();
     }
 
     public String getAnio() {
@@ -330,7 +342,33 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
+    public void MostrarDocumentosConfirmados(){
+        System.out.println("listando documentos");
+        this.documentos_confirmados.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.getDocumentos_Confirm();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[10];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fenvio", String.valueOf(obj[4]));
+                listaaux.put("fing", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("docunomb", String.valueOf(obj[8]));
+                listaaux.put("estado", String.valueOf(obj[9]));
+                documentos_confirmados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void MostrarDocumentos() {
         System.out.println("listando documentos");
         documentos.clear();
@@ -944,6 +982,14 @@ public class DocumentosBean implements Serializable {
 
     public void setNohecho(boolean nohecho) {
         this.nohecho = nohecho;
+    }
+
+    public List getDocumentos_confirmados() {
+        return documentos_confirmados;
+    }
+
+    public void setDocumentos_confirmados(List documentos_confirmados) {
+        this.documentos_confirmados = documentos_confirmados;
     }
 
 }

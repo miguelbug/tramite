@@ -144,6 +144,8 @@ public class DocumentoUsuarioBean {
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
+        
+        
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -176,6 +178,8 @@ public class DocumentoUsuarioBean {
     public List Detalles() {
         System.out.println("listando detalles");
         detalle.clear();
+        Date anio= new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         try {
             System.out.println(seleccion.get("numerotramite").toString());
             System.out.println(seleccion.get("fechaenvio").toString());
@@ -184,7 +188,7 @@ public class DocumentoUsuarioBean {
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
             listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
-            listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString()));
+            listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString())+"-OGPL-"+sdf.format(anio));
             detalle.add(listaaux);
             // }
         } catch (Exception e) {
