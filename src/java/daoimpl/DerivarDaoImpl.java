@@ -244,7 +244,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setTramiteDatos(getTramite(numtram));
             di.setFecharegistro(fecharegistro);
             di.setUsuario(usu);
-            di.setAsunto(asunto);
+            di.setDocuAsunto(asunto);
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(di);

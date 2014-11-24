@@ -499,17 +499,19 @@ public class DocumentosBean implements Serializable {
         ObtenerTramiteDato(tramnum);
         System.out.println("info tramite datos: " + tdaux);
         TramiteDatos nuevo = new TramiteDatos();
+        maping.TramiteDatosId nuevoid= new maping.TramiteDatosId();
         try {
             for (int i = 0; i < tdaux.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
                 System.out.println("llena numerotramite");
-                nuevo.setTramNum(hm.get("numerotramite").toString());
+                nuevoid.setTramNum(hm.get("numerotramite").toString());
                 System.out.println("entra a fecha envio td");
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date nf = new Date();
                 System.out.println(hm.get("fecha").toString().substring(0, 19));
                 nf = formato.parse(hm.get("fecha").toString().substring(0, 19));
-                nuevo.setTramFecha(nf);
+                nuevoid.setTramFecha(nf);
+                nuevo.setId(nuevoid);
                 System.out.println("llena codigo td");
                 nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
                 System.out.println("llena obsv. td");
@@ -519,7 +521,7 @@ public class DocumentosBean implements Serializable {
                 System.out.println("llena usuario td");
                 nuevo.setUsuario(log.getUniqeUsuario(hm.get("usuario").toString()));
             }
-            System.out.println("Se obtiene numero tramite:" + nuevo.getTramNum());
+            System.out.println("Se obtiene numero tramite:" + nuevoid.getTramNum());
         } catch (Exception e) {
             System.out.println("error get tramitedatos");
             System.out.println(e.getMessage());
@@ -569,6 +571,7 @@ public class DocumentosBean implements Serializable {
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
                 Temporal t = new Temporal();
+                maping.TramiteDatosId nuevoid= new maping.TramiteDatosId();
                 aux = hm.get("numerotramite").toString();
                 t.setTramNum(hm.get("numerotramite").toString());
                 if (aux.indexOf("OGPL") != -1) {
@@ -586,6 +589,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("entra a fecha envio");
                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date nf = new Date();
+                    System.out.println("LA FECHA DE ENVIO OGPL ES: "+hm.get("fenvio").toString());
                     nf = formato.parse(hm.get("fenvio").toString());
                     movimiento.setFechaEnvio(nf);
                     t.setFecha(nf);
@@ -610,14 +614,14 @@ public class DocumentosBean implements Serializable {
                 } else {
                     if (aux.indexOf("OGPL") == -1) {
                         System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
-                        td.setTramNum(hm.get("numerotramite").toString());
-
+                        nuevoid.setTramNum(hm.get("numerotramite").toString());
                         t.setTramNum(hm.get("numerotramite").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf = new Date();
                         nf = formato.parse(hm.get("fenvio").toString());
-                        td.setTramFecha(nf);
+                        nuevoid.setTramFecha(nf);
+                        td.setId(nuevoid);
                         System.out.println("sale fecha envio");
                         t.setFecha(nf);
                         td.setTramObs(hm.get("observacion").toString());
@@ -636,6 +640,7 @@ public class DocumentosBean implements Serializable {
                         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf2 = new Date();
                         nf2 = formato2.parse(hm.get("fenvio").toString());
+                        System.out.println("LA FECHA DE ENVIO NO OGPL ES: "+hm.get("fenvio").toString());
                         movimiento.setFechaEnvio(nf2);
                         System.out.println("sale fecha envio");
                         System.out.println("entra a fecha ing");
@@ -678,9 +683,6 @@ public class DocumentosBean implements Serializable {
                 ntram = "";
                 hecho = true;
                 nohecho = false;
-                //message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
-
-                //RequestContext.getCurrentInstance().showMessageInDialog(message);
                 MostrarDocumentos();
                 MostrarDocusInternos();
             }

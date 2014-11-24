@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 24/11/2014 03:02:41 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.Oficios" table="OFICIOS" schema="MIGUEL">
         <id name="idOficio" type="long">
@@ -13,6 +13,7 @@
         </many-to-one>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />
+            <column name="TRAM_FECHA" length="7" />
         </many-to-one>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />

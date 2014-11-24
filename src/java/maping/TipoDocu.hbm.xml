@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 24/11/2014 03:02:41 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TipoDocu" table="TIPO_DOCU" schema="MIGUEL">
         <id name="idDocu" type="big_decimal">
@@ -10,6 +10,7 @@
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />
+            <column name="TRAM_FECHA" length="7" />
         </many-to-one>
         <property name="docuPric" type="string">
             <column name="DOCU_PRIC" length="30" not-null="true" />
