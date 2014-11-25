@@ -25,7 +25,7 @@ public class reporteDaoImpl implements reporteDAO {
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
-            i = session.createQuery(sql).executeUpdate();
+            i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             System.out.println("sale de begin");
         } catch (Exception e) {

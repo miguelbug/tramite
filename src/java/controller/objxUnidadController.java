@@ -47,7 +47,7 @@ public class objxUnidadController implements Serializable {
 
     public objxUnidadController() {
         dd = new DocumentoDaoImpl();
-        rpda= new reporteDaoImpl();
+        rpda = new reporteDaoImpl();
     }
 
     public void mostrarReporRegModPres() {
@@ -111,10 +111,19 @@ public class objxUnidadController implements Serializable {
         }
 
     }
-    public void ejecutarReporteDeriv(){
-        mostrarReporteNotasDeriv();
-        rpda.ActualizarTemporal();
+
+    public void ejecutarReporteDeriv() {
+        try {
+            System.out.println("IMPRIMIRÁ");
+            mostrarReporteNotasDeriv();
+            System.out.println("SE IMPRIMIIO");
+            rpda.ActualizarTemporal();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
+
     public void mostrarReporteDocumentos() {
 
         context = FacesContext.getCurrentInstance();
@@ -178,7 +187,7 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void mostrarReporteFecha() {
 
         context = FacesContext.getCurrentInstance();
@@ -198,7 +207,7 @@ public class objxUnidadController implements Serializable {
         boolean rpt = false;
         parametros.put("usuario", getUSUARIO());
         //parametros.put("oficina","oficina oli");
-        System.out.println(getDate1()+" - "+getDate2());
+        System.out.println(getDate1() + " - " + getDate2());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", getDate1());
@@ -213,14 +222,12 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
-    
-    
+
     public void mostrarReporteSeguimiento() {
-        String tramite= "";
+        String tramite = "";
         tramite = DocumentosBean.tranum;
         System.out.println(DocumentosBean.tranum);
-        System.out.printf("PARAMETRO DEL TRAM NUM  %s" , tramite);
+        System.out.printf("PARAMETRO DEL TRAM NUM  %s", tramite);
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -329,7 +336,7 @@ public class objxUnidadController implements Serializable {
         logo = serveltcontext.getRealPath("/resources/img/" + "escudo_reporte" + ".jpg");
         return logo;
     }
-    
+
     /* public String obtenerUsuario(){
 	
      String nombre="";
@@ -351,7 +358,6 @@ public class objxUnidadController implements Serializable {
 	
 	
      }*/
-
     public void setUSUARIO(String USUARIO) {
         this.USUARIO = USUARIO;
     }
@@ -379,7 +385,5 @@ public class objxUnidadController implements Serializable {
     public void setDate2(Date date2) {
         this.date2 = date2;
     }
-    
-    
 
 }

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>DOCUMENTOS INTERNOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form" >
+                    <p:tabView>
+                        <p:tab title="CONSTANCIAS">
+                            <p:dataTable value="#{constanciaBean.constancias}" id="constanciastablas" var="item" paginator="true" rows="15" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus}"
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+
+                                <p:column headerText="NUM. CORR." width="1" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.correlativo}"/>
+                                </p:column>
+                                <p:column headerText="FECH. EMIS." width="5" sortBy="#{item.fechaemi}" filterBy="#{item.fechaemi}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fechaemi}"/>
+                                </p:column>
+                                <p:column headerText="DRIGIDO" width="5" sortBy="#{item.dirigidoa}" filterBy="#{item.dirigidoa}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.dirigidoa}"/>
+                                </p:column>
+                                <p:column headerText="TIP. CONTR." width="5" sortBy="#{item.tipocontrato}" filterBy="#{item.tipocontrato}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.tipocontrato}"/>
+                                </p:column>
+                                <p:column headerText="DESDE" width="5" sortBy="#{item.desde}" filterBy="#{item.desde}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.desde}"/>
+                                </p:column>
+                                <p:column headerText="HASTA" width="5" sortBy="#{item.hasta}" filterBy="#{item.hasta}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.hasta}"/>
+                                </p:column>
+                                <p:column headerText="USUARIO" width="5" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.usu}"/>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="constanciastablas" icon="ui-icon-search" value="Crear Constancia" style="position:absolute; left:25px; height:26px " oncomplete="PF('ConstDialog').show()"
+                                                     update="constanciastablas,:form:panelconst" actionListener="#{constanciaBean.abrirconstancia()}"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                    <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog" >
+                        <p:panelGrid columns="2" id="panelconst">
+                            <p:outputLabel value="N° Correlativo:"/>
+                            <p:outputLabel value="#{constanciaBean.correlativo}"/>
+
+                            <p:outputLabel value="Origen:"/>
+                            <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
+
+                            <p:outputLabel value="Dirigido a:"/>
+                            <p:selectOneMenu id="constpersona" value="#{constanciaBean.escogido}" filterMatchMode="contains">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{constanciaBean.empleados}"/>
+                                <p:ajax event="change" listener="#{constanciaBean.cambio()}" update="panelconst"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Tipo de Contrato:"/>
+                            <p:outputLabel value="#{constanciaBean.tipocontrato}"/>
+
+                            <p:outputLabel value="Desde:"/>
+                            <p:calendar id="mask" value="#{constanciaBean.desde}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+
+                            <p:outputLabel value="Hasta:"/>
+                            <p:calendar id="mask1" value="#{constanciaBean.hasta}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+
+                            <p:outputLabel value="Fecha de emision:"/>
+                            <p:outputLabel id="mask2" value="#{constanciaBean.fechaemisionaux}" />
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">
+                                <f:ajax event="click" onevent="ConstDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <script type="text/javascript">
+                        PrimeFaces.locales['es'] = {
+                            closeText: 'Cerrar',
+                            prevText: 'Anterior',
+                            nextText: 'Siguiente',
+                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                            weekHeader: 'Semana',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            timeOnlyTitle: 'Sólo hora',
+                            timeText: 'Tiempo',
+                            hourText: 'Hora',
+                            minuteText: 'Minuto',
+                            secondText: 'Segundo',
+                            currentText: 'Fecha actual',
+                            ampm: false,
+                            month: 'Mes',
+                            week: 'Semana',
+                            day: 'Día',
+                            allDayText: 'Todo el día'
+                        };
+                    </script>  
+                    <br></br>
+                    <br></br>	
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

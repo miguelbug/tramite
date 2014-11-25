@@ -21,21 +21,21 @@
             <br></br>
 
             <p:menubar>
-                <p:submenu label="Ver" icon="ui-icon-pencil">
+                <p:submenu label="Sist. Sec. General" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
-                    <p:menuitem value="Documentos Internos" action="documentosInternos?faces-redirect=true"/>
+
                     <p:menuitem value="Dar Respuesta" action="documentos_respta?faces-redirect=true"/>
-                    <p:menuitem value="Doc. Perdidos" action="documentos_perdidos?faces-redirect=true"/>
+                    <p:menuitem value="Doc. Pendientes" action="documentos_perdidos?faces-redirect=true"/>
                 </p:submenu>
-                <p:submenu label="Reg. Documentos" icon="ui-icon-pencil">
-                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f2:doccircdialog"/>
-                    <p:menuitem value="Constancias" actionListener="#{constanciaBean.abrirconstancia()}" oncomplete="PF('ConstDialog').show()" update=":f2:constdialog"/>
-                    <p:menuitem value="Proveídos" actionListener="#{docusExternosBean.Proveidoo()}" oncomplete="PF('provDialog').show()" update=":f2:docextpanel"/>
-                    <p:menuitem value="Otros Doc." actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('OFUnicDialog').show()" update=":f2:ofiunicos"/>
-                    
-                    <p:menuitem value="Reportes y Consultas"/>
+                
+                
+                <p:submenu label="Gestion Documentos" icon="ui-icon-pencil">
+                   <p:menuitem value="Oficios" action="Oficios?faces-redirect=true"/>
+                   <p:menuitem value="Oficios Circulares" action="Oficios_Circulares?faces-redirect=true"/>
+                   <p:menuitem value="Proveidos" action="Proveidos?faces-redirect=true" />
+                   <p:menuitem value="Constancias" action="Constancias?faces-redirect=true"/>
                 </p:submenu>
-                                        
+                
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
@@ -45,108 +45,7 @@
                 </p:submenu>
             </p:menubar>
 
-            <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
-                <p:panelGrid columns="2" id="panelProv">
-                    <p:outputLabel value="Documento: "/>
-                    <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{docusExternosBean.tiposdocus}"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Nro. Doc: "/>
-                    <p:inputText value="#{docusExternosBean.codigoexp}"/>
-                    <p:outputLabel value="Asunto: "/>
-                    <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}"/>
-                    <p:outputLabel value="Dep. Origen: "/>
-                    <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:140px" filterMatchMode="contains">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Dep. Destino: "/>
-                    <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px" filterMatchMode="contains">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Fecha: "/>
-                    <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
-                    <p:outputLabel value="Usuario: "/>
-                    <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
-                </p:panelGrid>
-                <br></br>
-                <center>
-                    <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
-                        <f:ajax event="click" onevent="provDialog.hide()"/>
-                    </p:commandButton>
-                </center>
-            </p:dialog>
-
-            <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="ofiunicos">
-                <p:panelGrid columns="2" id="panelOfUn">
-                    <p:outputLabel value="Número:"/>
-                    <p:outputLabel value="#{oficioBean.correlativo2}"/>
-
-                    
-
-                    <p:outputLabel value="Asunto:"/>
-                    <p:inputTextarea  rows="2" cols="60" value="#{oficioBean.asunto}"/>
-
-                    <p:outputLabel value="Fecha:"/>
-                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
-
-                    <p:outputLabel value="Origen:"/>
-                    <p:outputLabel value="#{oficioBean.origen}"/>
-
-                    <p:outputLabel value="Destino:"/>
-                    <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{oficioBean.destinos}"/>
-                    </p:selectOneMenu>
-                </p:panelGrid>
-                <br></br>
-                <center>
-                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
-                    </p:commandButton>
-                </center>
-            </p:dialog>
-
-            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog" style="width: 150px">
-                <p:panelGrid columns="2" id="formuloficCirc">
-                    <p:outputLabel value="Tipo de Documento:"/>
-                    <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{oficioBean.tiposdocus}"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Número:"/>
-                    <p:outputLabel value="#{oficioBean.correlativo}"/>
-
-                    <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}" >
-                        <f:selectItem itemLabel="Destino" itemValue=" "/>
-                        <f:selectItem itemLabel="Facultad" itemValue="facultad"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="DependenciaInterna"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="DependenciaExterna"/>
-                        <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":f2:pickList"/>
-                    </p:selectOneMenu>
-                    <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px">
-                        <p:ajax process="pickList" event="transfer"/>
-                    </p:pickList>
-
-                    <p:outputLabel value="Asunto:"/>
-                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="2" cols="60"/>
-                    <p:outputLabel value="Fecha:"/>
-                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
-                    <p:outputLabel value="Firma:"/>
-                    <p:outputLabel value="#{oficioBean.firma}"/>
-                    <p:outputLabel value="Responsable:"/>
-                    <p:outputLabel value="#{oficioBean.responsable}"/>
-                    <p:outputLabel value="Área Responsable:"/>
-                    <p:outputLabel value="#{oficioBean.arearesponsable}"/>
-                </p:panelGrid>
-                <br></br>
-                <center>
-                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
-                        <f:ajax event="click" onevent="DocCircdialog.hide()"/>
-                    </p:commandButton>
-                </center>
-            </p:dialog>
+            
 
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">
@@ -167,68 +66,8 @@
                 </center>
             </p:dialog>
 
-            <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog" >
-                <p:panelGrid columns="2" id="panelconst">
-                    <p:outputLabel value="N° Correlativo:"/>
-                    <p:outputLabel value="#{constanciaBean.correlativo}"/>
-
-                    <p:outputLabel value="Origen:"/>
-                    <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
-
-                    <p:outputLabel value="Dirigido a:"/>
-                    <p:selectOneMenu id="constpersona" value="#{constanciaBean.escogido}" filterMatchMode="contains">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{constanciaBean.empleados}"/>
-                        <p:ajax event="change" listener="#{constanciaBean.cambio()}" update="panelconst"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="Tipo de Contrato:"/>
-                    <p:outputLabel value="#{constanciaBean.tipocontrato}"/>
-
-                    <p:outputLabel value="Desde:"/>
-                    <p:calendar id="mask" value="#{constanciaBean.desde}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
-
-                    <p:outputLabel value="Hasta:"/>
-                    <p:calendar id="mask1" value="#{constanciaBean.hasta}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
-
-                    <p:outputLabel value="Fecha de emision:"/>
-                    <p:outputLabel id="mask2" value="#{constanciaBean.fechaemisionaux}" />
-                </p:panelGrid>
-                <br></br>
-                <center>
-                    <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">
-                        <f:ajax event="click" onevent="ConstDialog.hide()"/>
-                    </p:commandButton>
-                </center>
-            </p:dialog>
-            <script type="text/javascript">
-                PrimeFaces.locales['es'] = {
-                    closeText: 'Cerrar',
-                    prevText: 'Anterior',
-                    nextText: 'Siguiente',
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-                    weekHeader: 'Semana',
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: '',
-                    timeOnlyTitle: 'Sólo hora',
-                    timeText: 'Tiempo',
-                    hourText: 'Hora',
-                    minuteText: 'Minuto',
-                    secondText: 'Segundo',
-                    currentText: 'Fecha actual',
-                    ampm: false,
-                    month: 'Mes',
-                    week: 'Semana',
-                    day: 'Día',
-                    allDayText: 'Todo el día'
-                };
-            </script>  
+           
+            
         </h:form>
     </h:body>
 </html>
