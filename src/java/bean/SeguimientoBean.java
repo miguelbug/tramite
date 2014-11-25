@@ -113,10 +113,10 @@ public class SeguimientoBean {
             List lista = new ArrayList();
             List lista1 = new ArrayList();
             lista = sgd.getSeguimientoGrande1(tramnum);
-            lista1= sgd.getSeguimientoGrande2(tramnum);
+            lista1 = sgd.getSeguimientoGrande2(tramnum);
             System.out.println(lista.size());
             Iterator ite = lista.iterator();
-            Iterator ite2= lista1.iterator();
+            Iterator ite2 = lista1.iterator();
             Object obj[] = new Object[9];
             Object obj1[] = new Object[9];
             while (ite.hasNext()) {
@@ -408,43 +408,29 @@ public class SeguimientoBean {
         ObtenerTramiteDato(tramnum);
         System.out.println("info tramite datos: " + tdaux);
         TramiteDatos nuevo = new TramiteDatos();
+        maping.TramiteDatosId nuevoid = new maping.TramiteDatosId();
         try {
             for (int i = 0; i < tdaux.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
-                Iterator it = hm.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry e = (Map.Entry) it.next();
-                    if (e.getKey().toString().equals("numerotramite")) {
-                        System.out.println("llena numerotramite");
-                        nuevo.setTramNum(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("fecha")) {
-                        System.out.println("entra a fecha envio td");
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date nf = new Date();
-                        System.out.println(e.getValue().toString().substring(0, 19));
-                        nf = formato.parse(e.getValue().toString());
-                        nuevo.setTramFecha(nf);
-                    }
-                    if (e.getKey().toString().equals("codigo")) {
-                        System.out.println("llena codigo td");
-                        nuevo.setDependencia(deriv.getDependencia2(e.getValue().toString()));
-                    }
-                    if (e.getKey().toString().equals("observacion")) {
-                        System.out.println("llena obsv. td");
-                        nuevo.setTramObs(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("estado")) {
-                        System.out.println("llena estado td");
-                        nuevo.setEstaDescrip(e.getValue().toString());
-                    }
-                    if (e.getKey().toString().equals("usuario")) {
-                        System.out.println("llena usuario td");
-                        nuevo.setUsuario(log.getUniqeUsuario(e.getValue().toString()));
-                    }
-                }
+
+                System.out.println("llena numerotramite");
+                nuevoid.setTramNum(hm.get("numerotramite").toString());
+                System.out.println("entra a fecha envio td");
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date nf = new Date();
+                System.out.println(hm.get("fecha").toString().substring(0, 19));
+                nf = formato.parse(hm.get("fecha").toString());
+                nuevoid.setTramFecha(nf);
+                System.out.println("llena codigo td");
+                nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
+                System.out.println("llena obsv. td");
+                nuevo.setTramObs(hm.get("observacion").toString());
+                System.out.println("llena estado td");
+                nuevo.setEstaDescrip(hm.get("estado").toString());
+                System.out.println("llena usuario td");
+                nuevo.setUsuario(log.getUniqeUsuario(hm.get("usuario").toString()));
             }
-            System.out.println("Se obtiene numero tramite:" + nuevo.getTramNum());
+            System.out.println("Se obtiene numero tramite:" + nuevoid.getTramNum());
         } catch (Exception e) {
             System.out.println("error get tramitedatos");
             System.out.println(e.getMessage());
@@ -459,7 +445,7 @@ public class SeguimientoBean {
             System.out.println("ENTRA A CONFIRMAR seguimiento");
             String ntram = "";
             int movi = 0;
-            String aux="";
+            String aux = "";
             for (int i = 0; i < docselec.size(); i++) {
                 System.out.println("entra al bucle for");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
@@ -467,6 +453,7 @@ public class SeguimientoBean {
                 TramiteMovimiento movimiento = new TramiteMovimiento();
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
+                maping.TramiteDatosId nuevoid= new maping.TramiteDatosId();
                 while (it.hasNext()) {
                     Map.Entry e = (Map.Entry) it.next();
                     if (e.getKey().toString().equals("numerotramite")) {
@@ -525,16 +512,19 @@ public class SeguimientoBean {
                         if (aux.indexOf("OGPL") == -1) {
                             System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
                             if (e.getKey().toString().equals("numerotramite")) {
-                                td.setTramNum(e.getValue().toString());
+                                nuevoid.setTramNum(e.getValue().toString());
+                                //td.setTramNum(e.getValue().toString());
                             }
                             if (e.getKey().toString().equals("fenvio")) {
                                 System.out.println("entra a fecha envio");
                                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 Date nf = new Date();
                                 nf = formato.parse(e.getValue().toString());
-                                td.setTramFecha(nf);
+                                //td.setTramFecha(nf);
+                                nuevoid.setTramFecha(nf);
                                 System.out.println("sale fecha envio");
                             }
+                            td.setId(nuevoid);
                             if (e.getKey().toString().equals("observacion")) {
                                 td.setTramObs(e.getValue().toString());
                             }

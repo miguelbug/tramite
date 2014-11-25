@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSession;
 import maping.Oficios;
 import maping.Temporal;
 import maping.TipoDocu;
+import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
 import maping.Usuario;
@@ -87,6 +88,8 @@ public class DocumentosBean implements Serializable {
     private boolean hecho;
     private boolean nohecho;
 
+    private List documentos_confirmados;
+
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
@@ -99,6 +102,7 @@ public class DocumentosBean implements Serializable {
         log = new LoginDaoImpl();
         fechaprov = new Date();
         documentosprov = new ArrayList<Map<String, String>>();
+        documentos_confirmados = new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
@@ -107,6 +111,7 @@ public class DocumentosBean implements Serializable {
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
         MostrarDocusInternos();
+        this.MostrarDocumentosConfirmados();
 
     }
 
@@ -136,16 +141,21 @@ public class DocumentosBean implements Serializable {
                 ofi.setCorrelativoOficio(correlativo_oficio);
                 ofi.setReferenciaOficio(dd.getMotivo(tramnum));
                 ofi.setTramiteDatos(deriv.getTramite(tramnum));
-                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
                 ofi.setUsuario(usu);
+                ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
+                System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
                 Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+                System.out.println("ESTE ES EL DOCSELEC: " + docselec);
                 ntram = hm.get("numerotramite").toString();
-                movi = Integer.parseInt(hm.get("movimnum").toString());
+                movi = Integer.parseInt(hm.get("movimiento").toString());
                 Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
-                deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
+                System.out.println("confirmaar tramite entre");
+                deriv.Confirmar(ntram, movi);
+                System.out.println("confirmaar tramite sale");
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -155,6 +165,7 @@ public class DocumentosBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -173,6 +184,7 @@ public class DocumentosBean implements Serializable {
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = dd.getMotivo(tramnum);
+        getDependencias();
     }
 
     public String getAnio() {
@@ -331,6 +343,34 @@ public class DocumentosBean implements Serializable {
         }
     }
 
+    public void MostrarDocumentosConfirmados() {
+        System.out.println("listando documentos");
+        this.documentos_confirmados.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.getDocumentos_Confirm();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[10];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("destino", String.valueOf(obj[3]));
+                listaaux.put("fenvio", String.valueOf(obj[4]));
+                listaaux.put("fing", String.valueOf(obj[5]));
+                listaaux.put("indicador", String.valueOf(obj[6]));
+                listaaux.put("observacion", String.valueOf(obj[7]));
+                listaaux.put("docunomb", String.valueOf(obj[8]));
+                listaaux.put("estado", String.valueOf(obj[9]));
+                documentos_confirmados.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void MostrarDocumentos() {
         System.out.println("listando documentos");
         documentos.clear();
@@ -461,17 +501,19 @@ public class DocumentosBean implements Serializable {
         ObtenerTramiteDato(tramnum);
         System.out.println("info tramite datos: " + tdaux);
         TramiteDatos nuevo = new TramiteDatos();
+        maping.TramiteDatosId nuevoid = new maping.TramiteDatosId();
         try {
             for (int i = 0; i < tdaux.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
                 System.out.println("llena numerotramite");
-                nuevo.setTramNum(hm.get("numerotramite").toString());
+                nuevoid.setTramNum(hm.get("numerotramite").toString());
                 System.out.println("entra a fecha envio td");
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date nf = new Date();
                 System.out.println(hm.get("fecha").toString().substring(0, 19));
                 nf = formato.parse(hm.get("fecha").toString().substring(0, 19));
-                nuevo.setTramFecha(nf);
+                nuevoid.setTramFecha(nf);
+                nuevo.setId(nuevoid);
                 System.out.println("llena codigo td");
                 nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
                 System.out.println("llena obsv. td");
@@ -479,9 +521,9 @@ public class DocumentosBean implements Serializable {
                 System.out.println("llena estado td");
                 nuevo.setEstaDescrip(hm.get("estado").toString());
                 System.out.println("llena usuario td");
-                nuevo.setUsuario(log.getUniqeUsuario(hm.get("usuario").toString()));
+                nuevo.setUsuario(usu);
             }
-            System.out.println("Se obtiene numero tramite:" + nuevo.getTramNum());
+            System.out.println("Se obtiene numero tramite:" + nuevoid.getTramNum());
         } catch (Exception e) {
             System.out.println("error get tramitedatos");
             System.out.println(e.getMessage());
@@ -531,6 +573,7 @@ public class DocumentosBean implements Serializable {
                 TramiteDatos td = new TramiteDatos();
                 TipoDocu tdoc = new TipoDocu();
                 Temporal t = new Temporal();
+                maping.TramiteDatosId nuevoid = new maping.TramiteDatosId();
                 aux = hm.get("numerotramite").toString();
                 t.setTramNum(hm.get("numerotramite").toString());
                 if (aux.indexOf("OGPL") != -1) {
@@ -548,6 +591,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("entra a fecha envio");
                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date nf = new Date();
+                    System.out.println("LA FECHA DE ENVIO OGPL ES: " + hm.get("fenvio").toString());
                     nf = formato.parse(hm.get("fenvio").toString());
                     movimiento.setFechaEnvio(nf);
                     t.setFecha(nf);
@@ -572,14 +616,14 @@ public class DocumentosBean implements Serializable {
                 } else {
                     if (aux.indexOf("OGPL") == -1) {
                         System.out.println("ENTRA A DEPENDENCIAS EXTERNAS");
-                        td.setTramNum(hm.get("numerotramite").toString());
-
+                        nuevoid.setTramNum(hm.get("numerotramite").toString());
                         t.setTramNum(hm.get("numerotramite").toString());
                         System.out.println("entra a fecha envio");
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf = new Date();
                         nf = formato.parse(hm.get("fenvio").toString());
-                        td.setTramFecha(nf);
+                        nuevoid.setTramFecha(nf);
+                        td.setId(nuevoid);
                         System.out.println("sale fecha envio");
                         t.setFecha(nf);
                         td.setTramObs(hm.get("observacion").toString());
@@ -598,6 +642,7 @@ public class DocumentosBean implements Serializable {
                         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf2 = new Date();
                         nf2 = formato2.parse(hm.get("fenvio").toString());
+                        System.out.println("LA FECHA DE ENVIO NO OGPL ES: " + hm.get("fenvio").toString());
                         movimiento.setFechaEnvio(nf2);
                         System.out.println("sale fecha envio");
                         System.out.println("entra a fecha ing");
@@ -640,12 +685,8 @@ public class DocumentosBean implements Serializable {
                 ntram = "";
                 hecho = true;
                 nohecho = false;
-                //message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha confirmado el documento");
-
-                //RequestContext.getCurrentInstance().showMessageInDialog(message);
-                MostrarDocumentos();
-                MostrarDocusInternos();
             }
+            MostrarDocumentos();
         } catch (Exception e) {
             System.out.println("ERROR CONFIRMAR");
             System.out.println(e.getMessage());
@@ -944,6 +985,14 @@ public class DocumentosBean implements Serializable {
 
     public void setNohecho(boolean nohecho) {
         this.nohecho = nohecho;
+    }
+
+    public List getDocumentos_confirmados() {
+        return documentos_confirmados;
+    }
+
+    public void setDocumentos_confirmados(List documentos_confirmados) {
+        this.documentos_confirmados = documentos_confirmados;
     }
 
 }

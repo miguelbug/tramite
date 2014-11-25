@@ -19,12 +19,12 @@
                     <center>
                         <p:panelGrid columns="4">
                             <p:outputLabel value="Desde:"/>
-                            <p:calendar value="#{objxUnidadController.date1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                            <p:calendar value="#{docusInternos.fecha1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                             <p:outputLabel value="Hasta:"/>
-                            <p:calendar value="#{objxUnidadController.date2}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                            <p:calendar value="#{docusInternos.fecha2}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                         </p:panelGrid>
                         <br></br>
-                        <p:commandButton id="mostrado" value="Ver"  action="#{objxUnidadController.mostrarReporteFecha}" title="Ver" />
+                        <p:commandButton id="mostrado" value="Ver"  actionListener="#{docusInternos.mostrarDocusInternos()}" title="Ver" update="tabladocusinternos" />
                     </center>
                     <br></br>
                     <center>

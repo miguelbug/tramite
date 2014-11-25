@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 24/11/2014 03:02:41 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
         <id name="idtip" type="int">
@@ -13,6 +13,7 @@
         </many-to-one>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
             <column name="TRAM_NUM" length="42" />
+            <column name="TRAM_FECHA" length="7" />
         </many-to-one>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
@@ -35,7 +36,7 @@
         <property name="fecharegistro" type="date">
             <column name="FECHAREGISTRO" length="7" />
         </property>
-        <property name="asunto" type="string">
+        <property name="docuAsunto" type="string">
             <column name="DOCU_ASUNTO" length="300" />
         </property>
     </class>

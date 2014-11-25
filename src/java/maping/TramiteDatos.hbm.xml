@@ -4,19 +4,20 @@
 <!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="maping.TramiteDatos" table="TRAMITE_DATOS" schema="MIGUEL">
-        <id name="tramNum" type="string">
-            <column name="TRAM_NUM" length="42" />
-            <generator class="assigned" />
-        </id>
+        <composite-id name="id" class="maping.TramiteDatosId">
+            <key-property name="tramNum" type="string">
+                <column name="TRAM_NUM" length="42" />
+            </key-property>
+            <key-property name="tramFecha" type="date">
+                <column name="TRAM_FECHA" length="7" />
+            </key-property>
+        </composite-id>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
         </many-to-one>
         <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
-        <property name="tramFecha" type="date">
-            <column name="TRAM_FECHA" length="7" not-null="true" />
-        </property>
         <property name="tramObs" type="string">
             <column name="TRAM_OBS" length="250" />
         </property>
@@ -26,24 +27,28 @@
         <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
         <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
             </key>
             <one-to-many class="maping.Oficios" />
         </set>
         <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
             </key>
             <one-to-many class="maping.TramiteMovimiento" />
         </set>
         <set name="tipoDocus" table="TIPO_DOCU" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
             </key>
             <one-to-many class="maping.TipoDocu" />
         </set>

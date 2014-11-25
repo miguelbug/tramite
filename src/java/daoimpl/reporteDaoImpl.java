@@ -21,11 +21,11 @@ public class reporteDaoImpl implements reporteDAO {
     public void ActualizarTemporal() {
         int i=0;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "Update Temporal set reimpreso='0' where impreso='1'";
+        String sql = "Update Temporal set reimpreso='0' where impreso='1' and reimpreso is null";
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
-            i = session.createQuery(sql).executeUpdate();
+            i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             System.out.println("sale de begin");
         } catch (Exception e) {

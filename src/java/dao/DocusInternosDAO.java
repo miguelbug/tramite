@@ -6,6 +6,7 @@
 
 package dao;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,6 @@ import java.util.List;
  * @author OGPL
  */
 public interface DocusInternosDAO {
-    public List getDocusInternos(String usu);
+    public List getDocusInternos(String usu, String f1, String f2);
     public String getRespuesta(String tramnum);
 }

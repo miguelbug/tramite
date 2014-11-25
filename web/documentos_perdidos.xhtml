@@ -15,13 +15,13 @@
     <h:body style="background-color: #D0D0D0;" >
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
-                <h:form id="form" >
+                <h:form id="form4" >
                     <br></br>
                     <br></br>
                     <center>
                         <p:tabView id="tabmayor" dynamic="true">
                             <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
-                                <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
+                                <p:dataTable value="#{documentosBean.documentos_confirmados}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
                                              rowKey="#{item.numerotramite}" style="margin-bottom: 0">
@@ -59,16 +59,16 @@
                                     </p:column>
 
                                     <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                        <p:commandButton update=":form4:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                             <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                         update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
+                                                         update=":form4:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
 
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
-                                                         update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"
+                                                         update="tabladocumentos,:form4:avisohecho,:form4:" actionListener="#{documentosBean.Confirmar()}"
                                                          />
                                     </f:facet>
                                 </p:dataTable>
@@ -84,7 +84,6 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                 <p:column headerText="fecha">
@@ -141,8 +140,6 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-
-
                     </center>
                     <br></br>
                     <br></br>
