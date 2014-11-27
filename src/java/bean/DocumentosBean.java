@@ -110,8 +110,6 @@ public class DocumentosBean implements Serializable {
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
         MostrarDocumentos();
-        MostrarDocusInternos();
-        this.MostrarDocumentosConfirmados();
 
     }
 

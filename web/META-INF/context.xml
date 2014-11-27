@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/pruebatramite"/>
+<Context antiJARLocking="true" path="/pruebatramite">
+    
+    <Resource 
+        name="jdbc/hr" 
+              auth="Container"
+              type="javax.sql.DataSource" 
+              driverClassName="oracle.jdbc.OracleDriver"
+              url="jdbc:oracle:thin:@//172.16.89.130:1521/xe"
+              username="miguel" 
+              password="miguelon" 
+              maxActive="8" 
+              maxIdle="4"
+              maxWait="10"/>
+</Context>

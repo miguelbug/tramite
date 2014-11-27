@@ -119,7 +119,9 @@ public class objxUnidadController implements Serializable {
             System.out.println("SE IMPRIMIIO");
             rpda.ActualizarTemporal();
         } catch (Exception e) {
+            System.out.println("ERROR");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
     }
