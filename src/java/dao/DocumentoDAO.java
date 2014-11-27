@@ -32,4 +32,10 @@ public interface DocumentoDAO {
     public void guardarOficio(Oficios ofi, String tramnum, String movimiento);
     public void guardarOficio2(Oficios ofi);
     public void ActualizarMov(String tramnum, String mov);
+    
+    public void EliminarTramite(String tramnum, String fecha);
+    public void EliminarTD(String tramnum, String fecha);
+    public void EliminarTipDocu(String tramnum, String fecha);
+    public void EliminarTramMov(String tramnum, String fecha);
+    public void EliminarTemporal(String tramnum, String fecha);
 }

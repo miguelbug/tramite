@@ -16,7 +16,7 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="OFICIOS">
-                            <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="15" 
+                            <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficiotodos" var="item" paginator="true" rows="15" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
@@ -42,9 +42,42 @@
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <h:outputText value="#{item.destino}"/>
                                 </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
+                                                     update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirOficioUnico()}"/>
+                                </f:facet>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
+                    <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="ofiunicos">
+                        <p:panelGrid columns="2" id="panelOfUn">
+                            <p:outputLabel value="Número:"/>
+                            <p:outputLabel value="#{oficioBean.correlativo2}"/>
+
+
+
+                            <p:outputLabel value="Asunto:"/>
+                            <p:inputTextarea  rows="2" cols="60" value="#{oficioBean.asunto}"/>
+
+                            <p:outputLabel value="Fecha:"/>
+                            <p:outputLabel value="#{oficioBean.auxfecha}"/>
+
+                            <p:outputLabel value="Origen:"/>
+                            <p:outputLabel value="#{oficioBean.origen}"/>
+
+                            <p:outputLabel value="Destino:"/>
+                            <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{oficioBean.destinos}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+
                     <br></br>
                     <br></br>	
                 </h:form>

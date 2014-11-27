@@ -95,6 +95,9 @@ public class DocumentosBean implements Serializable {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+        
         documentos = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
@@ -109,9 +112,23 @@ public class DocumentosBean implements Serializable {
         detalprov = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
-        MostrarDocumentos();
-        MostrarDocusInternos();
-        this.MostrarDocumentosConfirmados();
+        boolean isdocumentos = (currentPage.lastIndexOf("documentos.xhtml") > -1);
+        boolean isdocusinternos = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
+        boolean isdocumentosconfirm = (currentPage.lastIndexOf("documentos_perdidos.xhtml") > -1);
+        if(isdocumentos){
+            MostrarDocumentos();
+        }else{
+            if(isdocusinternos){
+                MostrarDocusInternos();
+            }else{
+                if(isdocumentosconfirm){
+                    this.MostrarDocumentosConfirmados();
+                }
+            }
+        }
+        
+        
+        
 
     }
 
@@ -122,6 +139,23 @@ public class DocumentosBean implements Serializable {
             if (event.getTab().getTitle().equals("SISTEMA TRAMITE INTERNO OGPL") && event.getTab().getId().equals("tab2")) {
                 MostrarDocusInternos();
             }
+        }
+
+    }
+
+    public void Eliminar() {
+        FacesMessage message = null;
+        try {
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+            dd.EliminarTramite(hm.get("numerotramite").toString(),hm.get("fenvio").toString().substring(0, 10));
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA ELIMINADO EL EXPEDIENTE");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            MostrarDocusInternos();
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODODO ELIMINAR EL EXPEDIENTE");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println(e.getMessage());
+            
         }
 
     }
@@ -275,43 +309,35 @@ public class DocumentosBean implements Serializable {
     public String obtenerMovimiento() {
         String numerotramite = "";
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        Iterator it = hm.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            if (e.getKey().toString().equals("movimiento")) {
-                numerotramite = e.getValue().toString();
-            }
-        }
+        /* if (e.getKey().toString().equals("movimiento")) {
+         numerotramite = e.getValue().toString();
+         }*/
+        numerotramite = hm.get("movimiento").toString();
         return numerotramite;
     }
 
     public String obtenerNumeroTramite() {
         String numerotramite = "";
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        Iterator it = hm.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            if (e.getKey().toString().equals("numerotramite")) {
-                numerotramite = e.getValue().toString();
-            }
-        }
+        numerotramite = hm.get("numerotramite").toString();
         return numerotramite;
     }
 
     public void RecorrerLista2() {
         System.out.println("entra a recorrer lista 2");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        Iterator it = hm.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            if (e.getKey().toString().equals("numerotramite")) {
-                System.out.println(e.getValue().toString());
-                System.out.println("------entra---------");
-                MostrarSeguimiento2(e.getValue().toString());
-                tranum = e.getValue().toString();
-                System.out.println("------sale-----------");
-            }
-        }
+        //if (e.getKey().toString().equals("numerotramite")) {
+
+        /*System.out.println(e.getValue().toString());
+         System.out.println("------entra---------");
+         MostrarSeguimiento2(e.getValue().toString());
+         tranum = e.getValue().toString();
+         System.out.println("------sale-----------");*/
+        System.out.println(hm.get("numerotramite").toString());
+        System.out.println("------entra---------");
+        MostrarSeguimiento2(hm.get("numerotramite").toString());
+        tranum = hm.get("numerotramite").toString();
+        System.out.println("------sale-----------");
         docselec.clear();
     }
 

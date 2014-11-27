@@ -61,8 +61,11 @@
                                 </p:column>
                                 <f:facet name="footer">
 
-                                    <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form2:panelOfUn,:form2:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:215px; height:26px"
+                                    <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form2:panelOfUn,:form2:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
+                                    
+                                   <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:175px; height:26px" actionListener="#{documentosBean.Eliminar()}"
+                                                         update="tablaconfirmados"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>

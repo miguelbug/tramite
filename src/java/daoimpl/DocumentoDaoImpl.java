@@ -228,7 +228,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       on vista2.tram_num=vista1.tram_num\n"
                     + "       ORDER BY vista2.MOVI_FEC_ENV DESC\n"
                     + "       )R\n"
-                    + "WHERE R.FECHAING not in (' ')\n"
+                    + "WHERE R.FECHAING in (' ')\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
                     + "and R.TRAM_NUM||'-'||to_char(R.MOVI_FEC_ENV,'dd/MM/yyyy')  not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy') from tramite_datos)\n"
                     + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
@@ -453,6 +453,82 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println(e.getMessage());
         }
         return codigos;
+    }
+
+    @Override
+    public void EliminarTramite(String tramnum, String fecha) {
+        this.EliminarTramMov(tramnum, fecha);
+        this.EliminarTipDocu(tramnum, fecha);
+        this.EliminarTD(tramnum, fecha);
+        this.EliminarTemporal(tramnum, fecha);
+    }
+
+    @Override
+    public void EliminarTD(String tramnum, String fecha) {
+        System.out.println("ENTRA A ELIMINAR TD");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql ="DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= :tramitenum AND ";
+        try{
+            session.beginTransaction();
+            int i=session.createSQLQuery("DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= '"+tramnum+"' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='"+fecha+"'").executeUpdate();
+            session.beginTransaction().commit();
+            session.close();
+            System.out.println("eliminados: "+i);
+        }catch(Exception e){
+            System.out.println("mal eliminar TD");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void EliminarTipDocu(String tramnum, String fecha) {
+        System.out.println("ENTRA A ELIMINAR TIPO DOCU");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql ="DELETE FROM TIPO_DOCU WHERE TRAM_NUM='"+tramnum+"' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='"+fecha+"'";
+        try{
+            session.beginTransaction();
+            int i=session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            session.close();
+            System.out.println("eliminados: "+i);
+        }catch(Exception e){
+            System.out.println("mal eliminar TIPO DOCU");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void EliminarTramMov(String tramnum, String fecha) {
+        System.out.println("ENTRA A ELIMINAR TM");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql ="DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='"+tramnum+"' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='"+fecha+"'";
+        try{
+            session.beginTransaction();
+            int i=session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            session.close();
+            System.out.println("eliminados: "+i);
+        }catch(Exception e){
+            System.out.println("mal eliminar TM");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void EliminarTemporal(String tramnum, String fecha) {
+        System.out.println("ENTRA A ELIMINAR TEMPORAL");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql ="DELETE FROM TEMPORAL WHERE TRAM_NUM='"+tramnum+"' AND to_char(FECHA,'dd/MM/yyyy')='"+fecha+"'";
+        try{
+            session.beginTransaction();
+            int i=session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            session.close();
+            System.out.println("eliminados: "+i);
+        }catch(Exception e){
+            System.out.println("mal eliminar TEMPORAL");
+            System.out.println(e.getMessage());
+        }
     }
 
 }
