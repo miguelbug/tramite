@@ -23,18 +23,22 @@
             <p:menubar>
                 <p:submenu label="Sist. Sec. General" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
+<<<<<<< HEAD
                     <p:menuitem value="Dar Respuesta" action="documentos_respta?faces-redirect=true"/>
+=======
+>>>>>>> origin/master
                     <p:menuitem value="Doc. Pendientes" action="documentos_perdidos?faces-redirect=true"/>
                 </p:submenu>
-                
-                
+
+
                 <p:submenu label="Gestion Documentos" icon="ui-icon-pencil">
-                   <p:menuitem value="Oficios" action="Oficios?faces-redirect=true"/>
-                   <p:menuitem value="Oficios Circulares" action="Oficios_Circulares?faces-redirect=true"/>
-                   <p:menuitem value="Proveidos" action="Proveidos?faces-redirect=true" />
-                   <p:menuitem value="Constancias" action="Constancias?faces-redirect=true"/>
+                    <p:menuitem value="Respuesta a Expediente" action="documentos_respta?faces-redirect=true"/>
+                    <p:menuitem value="Oficios" action="Oficios?faces-redirect=true"/>
+                    <p:menuitem value="Oficios Circulares" action="Oficios_Circulares?faces-redirect=true"/>
+                    <p:menuitem value="Proveidos" action="Proveidos?faces-redirect=true" />
+                    <p:menuitem value="Constancias" action="Constancias?faces-redirect=true"/>
                 </p:submenu>
-                
+
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
@@ -44,7 +48,7 @@
                 </p:submenu>
             </p:menubar>
 
-            
+
 
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">
@@ -65,8 +69,8 @@
                 </center>
             </p:dialog>
 
-           
-            
+
+
         </h:form>
     </h:body>
 </html>
