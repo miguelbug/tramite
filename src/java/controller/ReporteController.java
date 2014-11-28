@@ -190,8 +190,10 @@ public class ReporteController {
                 if (lista != null && lista.size() > 0) {
                     System.out.println("nro de paginas: " + lista.size());
                     if (tipoFormato == 0) {
+                        System.out.println("TIPO DE FORMATO ES 0");
                         exportarReporteaPDF(jasperPrint, context, response, request);
                     } else {
+                        System.out.println("EXPORTAR A XLS");
                         exportarReporteaXLS(jasperPrint, context, response, request);
                     }
                     System.out.println("Tiene hojas");
@@ -199,7 +201,8 @@ public class ReporteController {
                 }
             }
         } catch (Exception e) {
-            //log.error(e);
+            System.out.println("ERROR EJECUTAR REPORTE");
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         System.out.println("No tiene hojas");
@@ -246,10 +249,10 @@ public class ReporteController {
             return jasperPrint;
 
         } catch (JRException e) {
-            //log.error(e);
+            System.out.println(e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
-            //log.error(e);
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return new JasperPrint();

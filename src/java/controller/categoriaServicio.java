@@ -3,34 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.jdbc.Work;
+
 /**
  *
  * @author USUARIO
  */
 public class categoriaServicio {
-Session session;
-conexion nuevacon= new conexion();   
-    public Connection getConexion()
-    {    
-    return nuevacon.obetenerConecion();
+
+    Session session;
+    conexion nuevacon = new conexion();
+
+    public Connection getConexion() {
+        return nuevacon.obetenerConecion();
     }
-    
-/*
-public void doWorkOnConnection(Session session) {
-  session.doWork(new Work() {
-    @Override
-    public void execute(Connection connection) throws SQLException {
+
+    /*
+     public void doWorkOnConnection(Session session) {
+     session.doWork(new Work() {
+     @Override
+     public void execute(Connection connection) throws SQLException {
         
-    }
-  });
-}
-*/
+     }
+     });
+     }
+     */
 }
