@@ -118,9 +118,6 @@ public class DocumentosBean implements Serializable {
         detalprov = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
-<<<<<<< HEAD
-        MostrarDocumentos();
-=======
         boolean isdocumentos = (currentPage.lastIndexOf("documentos.xhtml") > -1);
         boolean isdocusinternos = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
         boolean isdocumentosconfirm = (currentPage.lastIndexOf("documentos_perdidos.xhtml") > -1);
@@ -135,14 +132,8 @@ public class DocumentosBean implements Serializable {
                 }
             }
         }
-<<<<<<< HEAD
     }
-=======
-        
-        
-        
->>>>>>> origin/master
->>>>>>> origin/master
+
 
     public void mostrarProveido() {
         System.out.println(docselec);
