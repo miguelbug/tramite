@@ -31,6 +31,13 @@
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
+        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
+            </key>
+            <one-to-many class="maping.DocusExtint" />
+        </set>
         <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />

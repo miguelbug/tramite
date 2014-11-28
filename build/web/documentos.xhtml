@@ -60,7 +60,8 @@
 
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                            <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}">
+                                            </f:setPropertyActionListener>
                                         </p:commandButton>
                                     </p:column>
                                     <f:facet name="footer">

@@ -8,6 +8,10 @@
             <column name="ID" precision="10" scale="0" />
             <generator class="increment" />
         </id>
+        <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
+            <column name="TRAM_NUM" length="42" />
+            <column name="TRAM_FECHA" length="7" />
+        </many-to-one>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
         </many-to-one>

@@ -1,5 +1,5 @@
 package maping;
-// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
+// Generated 28/11/2014 11:44:21 AM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -13,6 +13,7 @@ public class DocusExtint  implements java.io.Serializable {
 
 
      private long id;
+     private TramiteDatos tramiteDatos;
      private Dependencia dependenciaByCodigo1;
      private Usuario usuario;
      private Dependencia dependenciaByCodigo;
@@ -30,8 +31,9 @@ public class DocusExtint  implements java.io.Serializable {
     public DocusExtint(long id) {
         this.id = id;
     }
-    public DocusExtint(long id, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, DocusExt docusExt, String numerodoc, String asunto, Date fecha, Long movimientoDext, Set<Proveido> proveidos) {
+    public DocusExtint(long id, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, DocusExt docusExt, String numerodoc, String asunto, Date fecha, Long movimientoDext, Set<Proveido> proveidos) {
        this.id = id;
+       this.tramiteDatos = tramiteDatos;
        this.dependenciaByCodigo1 = dependenciaByCodigo1;
        this.usuario = usuario;
        this.dependenciaByCodigo = dependenciaByCodigo;
@@ -49,6 +51,13 @@ public class DocusExtint  implements java.io.Serializable {
     
     public void setId(long id) {
         this.id = id;
+    }
+    public TramiteDatos getTramiteDatos() {
+        return this.tramiteDatos;
+    }
+    
+    public void setTramiteDatos(TramiteDatos tramiteDatos) {
+        this.tramiteDatos = tramiteDatos;
     }
     public Dependencia getDependenciaByCodigo1() {
         return this.dependenciaByCodigo1;

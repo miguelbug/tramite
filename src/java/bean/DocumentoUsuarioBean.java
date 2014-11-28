@@ -188,7 +188,7 @@ public class DocumentoUsuarioBean {
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
             listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
-            listaaux.put("OFICIO", ofi.getOficioDocumento(seleccion.get("numerotramite").toString())+"-OGPL-"+sdf.format(anio));
+            listaaux.put("OFICIO","N° "+ ofi.getOficioDocumento(seleccion.get("numerotramite").toString())+"-OGPL-"+sdf.format(anio));
             detalle.add(listaaux);
             // }
         } catch (Exception e) {

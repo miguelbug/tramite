@@ -20,7 +20,7 @@
                     <br></br>
                     <br></br>
                     <p:tabView>
-                        <p:ajax event="tabChange" listener="#{documentoUsuarioBean.onTabChange}" update=":form"/>
+
                         <p:tab title="Documentos" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
@@ -66,7 +66,7 @@
                                         <h:outputText value="#{item.usuario}"/>
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
-                                        <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
+                                        <p:commandButton process="tabladocumentos" update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
                                             <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion}" >
                                             </f:setPropertyActionListener>
                                         </p:commandButton>
@@ -88,7 +88,7 @@
                         <center>
                             <p:outputLabel value="Asignando a:"/>
                             <br></br>
-                            <p:selectOneMenu value="#{documentoUsuarioBean.asignado}" required="true">
+                            <p:selectOneMenu value="#{documentoUsuarioBean.asignado}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{documentoUsuarioBean.designados}"/>
                             </p:selectOneMenu>
@@ -180,7 +180,7 @@
                         <p:panelGrid columns="2" id="panelProv">
 
                             <p:outputLabel value="Documento: "/>
-                            <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}" required="true">
+                            <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="Oficio" itemValue="1"/>
                                 <f:selectItem itemLabel="Informes" itemValue="2"/>
@@ -194,19 +194,19 @@
 
                             <p:outputLabel value="Nro. Doc: "/>
                             <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
-                            <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}" required="true"/>
+                            <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}" required="true"/>
+                            <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}"/>
 
                             <p:outputLabel value="Dep. Origen: "/>
-                            <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px" required="true">
+                            <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px" >
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Dep. Destino: "/>
-                            <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px" required="true">
+                            <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
                             </p:selectOneMenu>
@@ -229,7 +229,7 @@
                         <p:panelGrid columns="2" id="panelDeriv">
 
                             <p:outputLabel value="Tipo de Documento: "/>
-                            <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}" required="true">
+                            <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
                                 <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
@@ -243,13 +243,13 @@
                             <p:outputLabel value="#{documentoUsuarioBean.correlativo}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}" required="true"/>
+                            <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}"/>
 
                             <p:outputLabel value="Referencia: "/>
                             <p:outputLabel value="#{documentoUsuarioBean.numtramaux}"/>
 
                             <p:outputLabel value="Oficina Interna: "/>
-                            <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}" required="true">
+                            <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}">
                                 <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
                                 <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
                                 <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />

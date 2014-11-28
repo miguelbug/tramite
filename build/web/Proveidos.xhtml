@@ -78,7 +78,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
+                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv,:form:">
                                 <f:ajax event="click" onevent="provDialog.hide()"/>
                             </p:commandButton>
                         </center>

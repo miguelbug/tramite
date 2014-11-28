@@ -32,7 +32,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import maping.DocusExt;
+import maping.DocusExtint;
 import maping.Oficios;
+import maping.Proveido;
 import maping.Temporal;
 import maping.TipoDocu;
 import maping.TiposDocumentos;
@@ -84,6 +87,9 @@ public class DocumentosBean implements Serializable {
     private String destino_ofic;
     private String correlativo_oficio;
     private String referencia;
+    private String correlativo_proveido;
+    private String destino_prov;
+    private String codinterno;
     //
     private boolean hecho;
     private boolean nohecho;
@@ -97,7 +103,7 @@ public class DocumentosBean implements Serializable {
         usu = (Usuario) session.getAttribute("sesionUsuario");
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
-        
+
         documentos = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
@@ -115,39 +121,87 @@ public class DocumentosBean implements Serializable {
         boolean isdocumentos = (currentPage.lastIndexOf("documentos.xhtml") > -1);
         boolean isdocusinternos = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
         boolean isdocumentosconfirm = (currentPage.lastIndexOf("documentos_perdidos.xhtml") > -1);
-        if(isdocumentos){
+        if (isdocumentos) {
             MostrarDocumentos();
-        }else{
-            if(isdocusinternos){
+        } else {
+            if (isdocusinternos) {
                 MostrarDocusInternos();
-            }else{
-                if(isdocumentosconfirm){
+            } else {
+                if (isdocumentosconfirm) {
                     this.MostrarDocumentosConfirmados();
                 }
             }
         }
-        
-        
-        
-
     }
 
-    public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("SISTEMA INTEGRAL SEC. GENERAL") && event.getTab().getId().equals("tab1")) {
-            MostrarDocumentos();
-        } else {
-            if (event.getTab().getTitle().equals("SISTEMA TRAMITE INTERNO OGPL") && event.getTab().getId().equals("tab2")) {
-                MostrarDocusInternos();
-            }
-        }
+    public void mostrarProveido() {
+        System.out.println(docselec);
+        fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fechaaux = sdf.format(fecha);
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        tramnum = obtenerNumeroTramite();
+        this.correlativo_proveido = deriv.getCorreProv();
+        origen = hm.get("origen").toString();
+        destino_prov = hm.get("destino").toString();
+    }
 
+    public void guardar_prov() {
+        System.out.println("ENTRA LA P....");
+        DocusExt de = new DocusExt();
+        DocusExtint di = new DocusExtint();
+        Proveido p = new Proveido();
+        FacesMessage message = null;
+        try {
+            di.setNumerodoc(tramnum);
+            di.setTramiteDatos(deriv.getTramite(tramnum));
+            di.setAsunto(asunto);
+            di.setFecha(fechaprov);
+            di.setDependenciaByCodigo(deriv.getDep(origen));
+            di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
+            di.setMovimientoDext(Long.parseLong("1"));
+            de = deriv.getDocuExt(documento);
+            di.setDocusExt(de);
+            di.setUsuario(usu);
+
+            p.setCorrelativod(correlativo_proveido);
+            p.setDependenciaByCodigo(deriv.getDep(origen));
+            p.setDependenciaByCodigo1(deriv.getDep(destino_prov));
+            p.setDocusExtint(di);
+            p.setFechaenvio(fechaprov);
+            p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
+
+            deriv.guardarDocusExt(di);
+            deriv.GuardarProveido(p);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            MostrarDocusInternos();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
+    
+    public void limpiar_prov(){
+        asunto="";
+        codinterno="100392";
+    }
+    public void mostrarOficio() {
+        fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fechaaux = sdf.format(fecha);
+        tramnum = obtenerNumeroTramite();
+        correlativo_oficio = generarCorrelativo();
+        referencia = dd.getMotivo(tramnum);
+        getDependencias();
     }
 
     public void Eliminar() {
         FacesMessage message = null;
         try {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-            dd.EliminarTramite(hm.get("numerotramite").toString(),hm.get("fenvio").toString().substring(0, 10));
+            dd.EliminarTramite(hm.get("numerotramite").toString(), hm.get("fenvio").toString().substring(0, 10));
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA ELIMINADO EL EXPEDIENTE");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             MostrarDocusInternos();
@@ -155,9 +209,7 @@ public class DocumentosBean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODODO ELIMINAR EL EXPEDIENTE");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
-            
         }
-
     }
 
     public void guardaroficio() {
@@ -194,6 +246,7 @@ public class DocumentosBean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
+            MostrarDocusInternos();
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -209,16 +262,6 @@ public class DocumentosBean implements Serializable {
         this.asunto = "";
         this.fechaaux = "";
         this.destino_ofic = "";
-    }
-
-    public void mostrarOficio() {
-        fecha = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fechaaux = sdf.format(fecha);
-        tramnum = obtenerNumeroTramite();
-        correlativo_oficio = generarCorrelativo();
-        referencia = dd.getMotivo(tramnum);
-        getDependencias();
     }
 
     public String getAnio() {
@@ -426,11 +469,10 @@ public class DocumentosBean implements Serializable {
     }
 
     public List DetProv() {
-        System.out.println("listando detalles");
+       System.out.println("listando detalles");
         detalprov.clear();
         try {
             List lista = new ArrayList();
-            System.out.println(seleccion.get("numerotramite").toString());
             lista = dd.getProveidos(seleccion.get("numerotramite").toString());
             Iterator ite = lista.iterator();
             Object obj[] = new Object[6];
@@ -444,6 +486,7 @@ public class DocumentosBean implements Serializable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return detalprov;
     }
@@ -1019,6 +1062,30 @@ public class DocumentosBean implements Serializable {
 
     public void setDocumentos_confirmados(List documentos_confirmados) {
         this.documentos_confirmados = documentos_confirmados;
+    }
+
+    public String getCorrelativo_proveido() {
+        return correlativo_proveido;
+    }
+
+    public void setCorrelativo_proveido(String correlativo_proveido) {
+        this.correlativo_proveido = correlativo_proveido;
+    }
+
+    public String getDestino_prov() {
+        return destino_prov;
+    }
+
+    public void setDestino_prov(String destino_prov) {
+        this.destino_prov = destino_prov;
+    }
+
+    public String getCodinterno() {
+        return codinterno;
+    }
+
+    public void setCodinterno(String codinterno) {
+        this.codinterno = codinterno;
     }
 
 }

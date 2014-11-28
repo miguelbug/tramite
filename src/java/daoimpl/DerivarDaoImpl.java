@@ -242,9 +242,11 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setDocuSiglasint(siglas);
             di.setDocuAnioint(anio);
             di.setTramiteDatos(getTramite(numtram));
+            di.setTiposDocumentos(getTipoDoc(nombre));
             di.setFecharegistro(fecharegistro);
             di.setUsuario(usu);
             di.setDocuAsunto(asunto);
+            
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(di);
@@ -265,7 +267,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         TramiteDatos td = null;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("impl: " + tramite);
-        String sql = "FROM TramiteDatos WHERE tramNum='" + tramite + "'";
+        String sql = "FROM TramiteDatos WHERE id.tramNum='" + tramite + "'";
         try {
             session.beginTransaction();
             td = (TramiteDatos) session.createQuery(sql).uniqueResult();
@@ -478,7 +480,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("entra a tm");
         TramiteMovimiento tm= null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "FROM TramiteMovimiento where tramiteDatos.tramNum='"+numtram+"' and moviNum='"+Short.valueOf(movi)+"'";
+        String sql = "FROM TramiteMovimiento where tramiteDatos.id.tramNum='"+numtram+"' and moviNum='"+Short.valueOf(movi)+"'";
         try {
             session.beginTransaction();
             tm=(TramiteMovimiento) session.createQuery(sql).uniqueResult();
@@ -542,7 +544,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("entra a confirmar tramites");
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "Update TramiteMovimiento set estadConfrirm='CONFIRMADO',"
-                + " fechaIngr=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') where tramiteDatos.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
+                + " fechaIngr=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') where tramiteDatos.id.tramNum='" + numtram + "' and moviNum='" + Short.parseShort(String.valueOf(movimiento)) + "'";
         try {
             System.out.println("entra a begin");
             session.beginTransaction();
@@ -696,7 +698,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("get docu ext");
         DocusExt index = null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "FROM DocusExt where iddoc='" + Long.parseLong(codigo) + "'";
+        String sql = "FROM DocusExt where nombdocu='" + codigo + "'";
         try {
             session.beginTransaction();
             index = (DocusExt) session.createQuery(sql).uniqueResult();
@@ -704,7 +706,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal getdocuext");
             System.out.println(e.getMessage());
-            session.beginTransaction().rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }

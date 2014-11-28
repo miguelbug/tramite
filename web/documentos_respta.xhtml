@@ -55,21 +55,51 @@
                                     <h:outputText value="#{item.estadodoc}" />
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
-                                    <p:commandButton update=":form2:tabladetallesResp" oncomplete="PF('itemDetallResp').show()" icon="ui-icon-search" title="Detalle">
-                                        <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}"/>
+                                    <p:commandButton process="tablaconfirmados" update=":form2:tabladetallesResp" oncomplete="PF('itemDetallResp').show()" icon="ui-icon-search" title="Detalle">
+                                        <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}" >
+                                        </f:setPropertyActionListener>
                                     </p:commandButton>
                                 </p:column>
                                 <f:facet name="footer">
-
                                     <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form2:panelOfUn,:form2:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
-                                    
-                                   <p:commandButton process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:175px; height:26px" actionListener="#{documentosBean.Eliminar()}"
-                                                         update="tablaconfirmados"/>
+
+                                    <p:commandButton process="tablaconfirmados" id="proveidobuton" value="Proveido(S)" update=":form2:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
+                                                     actionListener="#{documentosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos"/>
+
+                                    <p:commandButton id="eliminarbuton" process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:325px; height:26px" actionListener="#{documentosBean.Eliminar()}"
+                                                     update="tablaconfirmados"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
+                    <p:dialog header="Proveido - N° #{documentosBean.correlativo_proveido}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
+                        <center>
+                            <p:panelGrid columns="2" id="panelProvExp">
+                                <p:outputLabel value="Expediente:"/>
+                                <p:outputLabel value="#{documentosBean.tramnum}"/>
+                                <p:outputLabel value="Asunto:"/>
+                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}"/>
+                                <p:outputLabel value="Origen:"/>
+                                <p:outputLabel value="#{documentosBean.origen}"/>
+                                <p:outputLabel value="Destino:"/>
+                                <p:selectOneMenu id="identif" value="#{documentosBean.codinterno}">
+                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
+                                    <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
+                                    <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
+                                    <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
+                                    <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
+                                    <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Fecha Emisión:"/>
+                                <p:outputLabel value="#{documentosBean.fechaaux}"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:commandButton value="Guardar" actionListener="#{documentosBean.guardar_prov()}" update="proveidoExpediente">
+                                <f:ajax event="click" onevent="proveidoExp.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
                     <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                         <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesResp" >
                             <p:column headerText="Nombre Doc.">
@@ -88,9 +118,9 @@
                             <p:panelGrid columns="2" id="panelOfUn">
                                 <p:outputLabel value="Expediente:"/>
                                 <p:outputLabel value="#{documentosBean.tramnum}" />
-                                <p:outputLabel value="Referencia:"/>
-                                <p:outputLabel value="#{documentosBean.referencia}"/>
                                 <p:outputLabel value="Asunto:"/>
+                                <p:outputLabel value="#{documentosBean.referencia}"/>
+                                <p:outputLabel value="Observación"/>
                                 <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}" required="true"/>
                                 <p:outputLabel value="Fecha:"/>
                                 <p:outputLabel value="#{documentosBean.fechaaux}"/>
