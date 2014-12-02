@@ -26,7 +26,7 @@ public interface DocumentoDAO {
     public String getMotivo(String tramnum);
     public String getOficina(Usuario usu);
     public List getDocusInternos();
-    public List getDependencias();
+    public List getDependencias(String tipos);
     public List getIndicadores();
     public List getProveidos(String tramnum);
     public void guardarOficio(Oficios ofi, String tramnum, String movimiento);
@@ -38,4 +38,6 @@ public interface DocumentoDAO {
     public void EliminarTipDocu(String tramnum, String fecha);
     public void EliminarTramMov(String tramnum, String fecha);
     public void EliminarTemporal(String tramnum, String fecha);
+    
+    public List documentosCorregir();
 }

@@ -72,9 +72,9 @@
 
                             <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}" >
                                 <f:selectItem itemLabel="Destino" itemValue=" "/>
-                                <f:selectItem itemLabel="Facultad" itemValue="facultad"/>
-                                <f:selectItem itemLabel="Dependencia Externa" itemValue="DependenciaInterna"/>
-                                <f:selectItem itemLabel="Dependencia Interna" itemValue="DependenciaExterna"/>
+                                <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
+                                <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
                                 <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":form:pickList"/>
                             </p:selectOneMenu>
                             <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px">

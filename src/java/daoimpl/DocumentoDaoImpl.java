@@ -103,12 +103,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public List getDependencias() {
+    public List getDependencias(String tipo) {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select nombre from Dependencia order by nombre");
+            Query query = session.createSQLQuery("select nombre from Dependencia where tipodepe='"+tipo+"' order by nombre");
             docus = (List) query.list();
             session.beginTransaction().commit();
             session.close();
@@ -248,6 +248,43 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
+    public List documentosCorregir() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("getdocusinternos");
+            session.beginTransaction();
+            System.out.println("despues de begin");
+            Query query = session.createSQLQuery("select tm.tram_num,"
+                    + "tm.movi_num,"
+                    + "DECODE(to_char(tm.FECHA_ENVIO,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
+                    + "D1.NOMBRE AS ORIGEN,"
+                    + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
+                    + "D2.NOMBRE AS DESTINO,"
+                    + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
+                    + "tm.ESTA_NOMBRE,"
+                    + "I.INDI_NOMBRE,"
+                    + "tm.ESTAD_CONFRIRM\n"
+                    + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE tm.INDI_COD=I.INDI_COD\n"
+                    + "and tm.CODIGO=D1.CODIGO\n"
+                    + "and tm.CODIGO1=D2.CODIGO\n"
+                    + "and D1.NOMBRE='OFICINA GENERAL DE PLANIFICACION'"
+                    + "order by D2.NOMBRE");
+            docus = query.list();
+            System.out.println("despues de query de getdocusinternos");
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró a getdocusinternos");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        System.out.println("retorna");
+        return docus;
+    }
+
+    @Override
     public List getDocusInternos() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -269,6 +306,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
                     + "and tm.CODIGO1=D2.CODIGO\n"
+                    + "and D2.NOMBRE='OFICINA GENERAL DE PLANIFICACION'"
                     + "order by D2.NOMBRE");
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");

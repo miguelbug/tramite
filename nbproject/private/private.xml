@@ -3,26 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/C:/Users/ADMI/Documents/GitHub/tramite/tramite/web/META-INF/context.xml</file>
-=======
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_admin.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/controller/objxUnidadController.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/controller/ReporteController.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/controller/conexion.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentosInternos.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_user.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/reportes/NotasDerivadas.jrxml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
->>>>>>> origin/master
->>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

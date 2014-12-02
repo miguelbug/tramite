@@ -90,6 +90,7 @@ public class OficioBean {
     private List<String> cities2;
     private String[] selectedCities;
     private String nombre;
+    private String tipodestino;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -149,9 +150,11 @@ public class OficioBean {
         generarCorrelativo2();
         ObtenerTiposDocus();
         origen = dd.getOficina(usu);
-        destinos = dd.getDependencias();
+        
     }
-
+    public void agregardestinos(){
+        destinos = dd.getDependencias(tipodestino);
+    }
     public void abriroficio() {
         ObtenerTiposDocus2();
         getAnio();
@@ -859,6 +862,14 @@ public class OficioBean {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTipodestino() {
+        return tipodestino;
+    }
+
+    public void setTipodestino(String tipodestino) {
+        this.tipodestino = tipodestino;
     }
 
 }
