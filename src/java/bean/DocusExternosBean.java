@@ -64,7 +64,9 @@ public class DocusExternosBean implements Serializable {
     private List docselec;
     private List tiposdocus;
     private OficioDAO od;
-
+    private String tipodestino;
+    private String tipoorigen;
+    
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
         ded = new DocusExtDaoImpl();
@@ -155,7 +157,10 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void ObtenerDepIndic() {
-        dependenciasprov = dd.getDependencias();
+        dependenciasprov = dd.getDependencias(tipodestino);
+    }
+    public void ObtenerDepIndic2(){
+        dependenciasprov = dd.getDependencias(tipoorigen);
     }
 
     public void getAnio() {
@@ -461,6 +466,22 @@ public class DocusExternosBean implements Serializable {
 
     public void setOd(OficioDAO od) {
         this.od = od;
+    }
+
+    public String getTipodestino() {
+        return tipodestino;
+    }
+
+    public void setTipodestino(String tipodestino) {
+        this.tipodestino = tipodestino;
+    }
+
+    public String getTipoorigen() {
+        return tipoorigen;
+    }
+
+    public void setTipoorigen(String tipoorigen) {
+        this.tipoorigen = tipoorigen;
     }
 
 }

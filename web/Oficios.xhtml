@@ -65,6 +65,15 @@
                             <p:outputLabel value="Origen:"/>
                             <p:outputLabel value="#{oficioBean.origen}"/>
 
+                            <p:outputLabel value="Tipo Destino:"/>
+                            <p:selectOneMenu value="#{oficioBean.tipodestino}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
+                                <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                                <p:ajax event="change" listener="#{oficioBean.agregardestinos()}" update="documentosOfioUnic"/>
+                            </p:selectOneMenu>
+
                             <p:outputLabel value="Destino:"/>
                             <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>

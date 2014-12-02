@@ -80,6 +80,8 @@ public class DocumentosBean implements Serializable {
     public static String tranum;
     private List detalprov;
     ////////
+    public String asunto_prov;
+    public String origen_prov;
     private String asunto;
     private String tramnum;
     private Date fecha;
@@ -90,11 +92,13 @@ public class DocumentosBean implements Serializable {
     private String correlativo_proveido;
     private String destino_prov;
     private String codinterno;
+    private String tipodestino;
     //
     private boolean hecho;
     private boolean nohecho;
 
     private List documentos_confirmados;
+    private List documentos_corregir;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -105,11 +109,13 @@ public class DocumentosBean implements Serializable {
         String currentPage = facesContext.getViewRoot().getViewId();
 
         documentos = new ArrayList<Map<String, String>>();
+        this.documentos_corregir = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         log = new LoginDaoImpl();
         fechaprov = new Date();
+        fecha=new Date();
         documentosprov = new ArrayList<Map<String, String>>();
         documentos_confirmados = new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
@@ -121,6 +127,7 @@ public class DocumentosBean implements Serializable {
         boolean isdocumentos = (currentPage.lastIndexOf("documentos.xhtml") > -1);
         boolean isdocusinternos = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
         boolean isdocumentosconfirm = (currentPage.lastIndexOf("documentos_perdidos.xhtml") > -1);
+        boolean isdocumentoscorregir = (currentPage.lastIndexOf("documentos_corregir.xhtml") > -1);
         if (isdocumentos) {
             MostrarDocumentos();
         } else {
@@ -129,36 +136,79 @@ public class DocumentosBean implements Serializable {
             } else {
                 if (isdocumentosconfirm) {
                     this.MostrarDocumentosConfirmados();
+                } else {
+                    if (isdocumentoscorregir) {
+                        this.Mostrar_corregir();
+                    }
                 }
             }
         }
     }
 
+    public void generarCorrelativo_proveido() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (getAnio().equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorreProv());
+                System.out.println("aumentando el correlativo: " + corr);
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
+
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
+        }
+        correlativo_proveido = aux;
+    }
 
     public void mostrarProveido() {
         System.out.println(docselec);
-        fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fechaaux = sdf.format(fecha);
+        fechaaux = sdf.format(fechaprov);
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         tramnum = obtenerNumeroTramite();
-        this.correlativo_proveido = deriv.getCorreProv();
-        origen = hm.get("origen").toString();
+        generarCorrelativo_proveido();
+        origen_prov = hm.get("origen").toString();
         destino_prov = hm.get("destino").toString();
     }
 
-    public void guardar_prov() {
+    public void Guardar_prov() {
         System.out.println("ENTRA LA P....");
         DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
         Proveido p = new Proveido();
         FacesMessage message = null;
         try {
+            System.out.println(asunto);
             di.setNumerodoc(tramnum);
             di.setTramiteDatos(deriv.getTramite(tramnum));
-            di.setAsunto(asunto);
-            di.setFecha(fechaprov);
-            di.setDependenciaByCodigo(deriv.getDep(origen));
+            di.setAsunto(asunto_prov);
+            di.setFecha(fecha);
+            di.setDependenciaByCodigo(deriv.getDep(origen_prov));
             di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
             di.setMovimientoDext(Long.parseLong("1"));
             de = deriv.getDocuExt(documento);
@@ -166,7 +216,7 @@ public class DocumentosBean implements Serializable {
             di.setUsuario(usu);
 
             p.setCorrelativod(correlativo_proveido);
-            p.setDependenciaByCodigo(deriv.getDep(origen));
+            p.setDependenciaByCodigo(deriv.getDep(origen_prov));
             p.setDependenciaByCodigo1(deriv.getDep(destino_prov));
             p.setDocusExtint(di);
             p.setFechaenvio(fechaprov);
@@ -183,11 +233,12 @@ public class DocumentosBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
-    
-    public void limpiar_prov(){
-        asunto="";
-        codinterno="100392";
+
+    public void limpiar_prov() {
+        asunto = "";
+        codinterno = "100392";
     }
+
     public void mostrarOficio() {
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -195,7 +246,6 @@ public class DocumentosBean implements Serializable {
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = dd.getMotivo(tramnum);
-        getDependencias();
     }
 
     public void Eliminar() {
@@ -307,18 +357,46 @@ public class DocumentosBean implements Serializable {
     }
 
     public void getDependencias() {
-        dependenciasprov = dd.getDependencias();
+        dependenciasprov = dd.getDependencias(tipodestino);
     }
 
     public void ObtenerDepIndic() {
         documentosprov = dd.getIndicadores();
-        dependenciasprov = dd.getDependencias();
+        dependenciasprov = dd.getDependencias(tipodestino);
     }
 
     public String fechaactual() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return sdf.format(fechaprov);
 
+    }
+
+    public void Mostrar_corregir() {
+        System.out.println("listando documentos corregir");
+        this.documentos_corregir.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.documentosCorregir();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[10];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("numerotramite", String.valueOf(obj[0]));
+                listaaux.put("movimiento", String.valueOf(obj[1]));
+                listaaux.put("fenvio", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("fing", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("observacion", String.valueOf(obj[6]));
+                listaaux.put("estado", String.valueOf(obj[7]));
+                listaaux.put("indicador", String.valueOf(obj[8]));
+                listaaux.put("estadodoc", String.valueOf(obj[9]));
+                documentos_corregir.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void MostrarSeguimiento2(String tramnum) {
@@ -353,9 +431,6 @@ public class DocumentosBean implements Serializable {
     public String obtenerMovimiento() {
         String numerotramite = "";
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        /* if (e.getKey().toString().equals("movimiento")) {
-         numerotramite = e.getValue().toString();
-         }*/
         numerotramite = hm.get("movimiento").toString();
         return numerotramite;
     }
@@ -370,13 +445,6 @@ public class DocumentosBean implements Serializable {
     public void RecorrerLista2() {
         System.out.println("entra a recorrer lista 2");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        //if (e.getKey().toString().equals("numerotramite")) {
-
-        /*System.out.println(e.getValue().toString());
-         System.out.println("------entra---------");
-         MostrarSeguimiento2(e.getValue().toString());
-         tranum = e.getValue().toString();
-         System.out.println("------sale-----------");*/
         System.out.println(hm.get("numerotramite").toString());
         System.out.println("------entra---------");
         MostrarSeguimiento2(hm.get("numerotramite").toString());
@@ -469,8 +537,8 @@ public class DocumentosBean implements Serializable {
         }
     }
 
-    public List DetProv() {
-       System.out.println("listando detalles");
+    public List Detalle_documento() {
+        System.out.println("listando detalles");
         detalprov.clear();
         try {
             List lista = new ArrayList();
@@ -487,7 +555,6 @@ public class DocumentosBean implements Serializable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         return detalprov;
     }
@@ -1087,6 +1154,38 @@ public class DocumentosBean implements Serializable {
 
     public void setCodinterno(String codinterno) {
         this.codinterno = codinterno;
+    }
+
+    public List getDocumentos_corregir() {
+        return documentos_corregir;
+    }
+
+    public void setDocumentos_corregir(List documentos_corregir) {
+        this.documentos_corregir = documentos_corregir;
+    }
+
+    public String getAsunto_prov() {
+        return asunto_prov;
+    }
+
+    public void setAsunto_prov(String asunto_prov) {
+        this.asunto_prov = asunto_prov;
+    }
+
+    public String getOrigen_prov() {
+        return origen_prov;
+    }
+
+    public void setOrigen_prov(String origen_prov) {
+        this.origen_prov = origen_prov;
+    }
+
+    public String getTipodestino() {
+        return tipodestino;
+    }
+
+    public void setTipodestino(String tipodestino) {
+        this.tipodestino = tipodestino;
     }
 
 }

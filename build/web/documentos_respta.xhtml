@@ -55,8 +55,9 @@
                                     <h:outputText value="#{item.estadodoc}" />
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
-                                    <p:commandButton process="tablaconfirmados" update=":form2:tabladetallesResp" oncomplete="PF('itemDetallResp').show()" icon="ui-icon-search" title="Detalle">
+                                    <p:commandButton process="@this" update=":form2:tabladetallesResp" oncomplete="PF('itemDetallResp').show()" icon="ui-icon-search" title="Detalle">
                                         <f:setPropertyActionListener value="#{item}" target="#{documentosBean.seleccion}" >
+                                            
                                         </f:setPropertyActionListener>
                                     </p:commandButton>
                                 </p:column>
@@ -64,11 +65,8 @@
                                     <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form2:panelOfUn,:form2:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
 
-                                    <p:commandButton process="tablaconfirmados" id="proveidobuton" value="Proveido(S)" update=":form2:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
-                                                     actionListener="#{documentosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos"/>
-
-                                    <p:commandButton id="eliminarbuton" process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:325px; height:26px" actionListener="#{documentosBean.Eliminar()}"
-                                                     update="tablaconfirmados"/>
+                                    <p:commandButton id="proveidobuton"  process="tablaconfirmados" value="Proveido(S)" update=":form2:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
+                                                     actionListener="#{documentosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos" />
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
@@ -79,29 +77,22 @@
                                 <p:outputLabel value="Expediente:"/>
                                 <p:outputLabel value="#{documentosBean.tramnum}"/>
                                 <p:outputLabel value="Asunto:"/>
-                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}"/>
+                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto_prov}"/>
                                 <p:outputLabel value="Origen:"/>
-                                <p:outputLabel value="#{documentosBean.origen}"/>
+                                <p:outputLabel value="#{documentosBean.origen_prov}"/>
                                 <p:outputLabel value="Destino:"/>
-                                <p:selectOneMenu id="identif" value="#{documentosBean.codinterno}">
-                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
-                                    <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
-                                    <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
-                                    <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
-                                    <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
-                                    <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
-                                </p:selectOneMenu>
+                                <p:outputLabel value="#{documentosBean.destino_prov}"/>
                                 <p:outputLabel value="Fecha Emisión:"/>
                                 <p:outputLabel value="#{documentosBean.fechaaux}"/>
                             </p:panelGrid>
                             <br></br>
-                            <p:commandButton value="Guardar" actionListener="#{documentosBean.guardar_prov()}" update="proveidoExpediente">
+                            <p:commandButton value="Guardar" actionListener="#{documentosBean.Guardar_prov()}" update="proveidoExpediente">
                                 <f:ajax event="click" onevent="proveidoExp.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <p:dataTable var="car" value="#{documentosBean.DetProv()}" id="tabladetallesResp" >
+                    <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="detallrespuestaresp">
+                        <p:dataTable var="car" value="#{documentosBean.Detalle_documento()}" id="tabladetallesResp" >
                             <p:column headerText="Nombre Doc.">
                                 <h:outputText value="#{car.nombredoc}" />
                             </p:column>
@@ -121,13 +112,21 @@
                                 <p:outputLabel value="Asunto:"/>
                                 <p:outputLabel value="#{documentosBean.referencia}"/>
                                 <p:outputLabel value="Observación"/>
-                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}" required="true"/>
+                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}"/>
                                 <p:outputLabel value="Fecha:"/>
                                 <p:outputLabel value="#{documentosBean.fechaaux}"/>
                                 <p:outputLabel value="Origen:"/>
                                 <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
+                                <p:outputLabel value="Tipo de Destino:"/>
+                                <p:selectOneMenu id="tipodestino" value="#{documentosBean.tipodestino}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                    <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
+                                    <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                                    <p:ajax event="change" listener="#{documentosBean.getDependencias()}" update="documentosOfioUnic"/>
+                                </p:selectOneMenu>
                                 <p:outputLabel value="Destino:"/>
-                                <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}" filter="true" filterMatchMode="contains" required="true">
+                                <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}" filter="true" filterMatchMode="contains">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItems value="#{documentosBean.dependenciasprov}"/>
                                 </p:selectOneMenu>
