@@ -6,7 +6,9 @@
 //ESTE ES PARA EL REPORTE
 package controller;
 
+import bean.ConstanciaBean;
 import bean.DocumentosBean;
+import bean.OficioBean;
 import dao.DocumentoDAO;
 import dao.reporteDAO;
 import daoimpl.DocumentoDaoImpl;
@@ -176,8 +178,9 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
         boolean rpt = false;
+        System.out.println(DocumentosBean.tranum);
         parametros.put("usuario", getUSUARIO());
-        //parametros.put("oficina","oficina oli");
+        parametros.put("correlativo", DocumentosBean.tranum);
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         // parametros.put("USUARIO","miguel" ); 
@@ -259,7 +262,73 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-
+    
+    public void mostrarReporteConstancia() {
+        String tramite = "";
+        tramite = DocumentosBean.tranum;
+        System.out.println(DocumentosBean.tranum);
+        System.out.printf("PARAMETRO DEL TRAM NUM  %s", tramite);
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        System.out.println(DocumentosBean.tranum);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("constancias");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("correlativo",ConstanciaBean.getCorrelativo2());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
+    public void mostrarReporteOficioCircular() {
+        String tramite = "";
+        System.out.printf("PARAMETRO DEL TRAM NUM  %s", OficioBean.getCorrelativo_exportar());
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        System.out.println(DocumentosBean.tranum);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("oficioCircular");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("correlativo",OficioBean.getCorrelativo_exportar());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
     public void setAnioActual(int anioActual) {
         this.anioActual = anioActual;
     }

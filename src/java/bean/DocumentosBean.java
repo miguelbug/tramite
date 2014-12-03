@@ -54,51 +54,18 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentosBean implements Serializable {
 
-    private List documentos;
+    private List documentos, seglista, docselec, seguimientolista, tdaux, tdaux2, documentosprov, dependenciasprov, detalprov, documentos_confirmados, documentos_corregir, otrosdocus, docusinternos;
     private DocumentoDAO dd;
-    private List otrosdocus;
-    private boolean mostrar = false;
-    private List seglista;
+    private boolean mostrar = false, hecho, nohecho,ver,no_ver;
     private Map<String, String> seleccion;
-    /*pruebas*/
     private Usuario usu;
     private final FacesContext faceContext;
-    private List docselec;
-    private List seguimientolista;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
-    private List tdaux;
-    private List tdaux2;
     private LoginDao log;
-    private List docusinternos;
-    private Date fechaprov;
-    private List documentosprov;
-    private List dependenciasprov;
-    private String documento;
-    private String origen;
-    private Date aux;
+    private Date fechaprov, aux, fecha;
+    private String documento, origen, asunto_prov, origen_prov, asunto, tramnum, fechaaux, destino_ofic, correlativo_oficio, referencia, correlativo_proveido, destino_prov, codinterno, tipodestino;
     public static String tranum;
-    private List detalprov;
-    ////////
-    public String asunto_prov;
-    public String origen_prov;
-    private String asunto;
-    private String tramnum;
-    private Date fecha;
-    private String fechaaux;
-    private String destino_ofic;
-    private String correlativo_oficio;
-    private String referencia;
-    private String correlativo_proveido;
-    private String destino_prov;
-    private String codinterno;
-    private String tipodestino;
-    //
-    private boolean hecho;
-    private boolean nohecho;
-
-    private List documentos_confirmados;
-    private List documentos_corregir;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -115,7 +82,7 @@ public class DocumentosBean implements Serializable {
         deriv = new DerivarDaoImpl();
         log = new LoginDaoImpl();
         fechaprov = new Date();
-        fecha=new Date();
+        fecha = new Date();
         documentosprov = new ArrayList<Map<String, String>>();
         documentos_confirmados = new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
@@ -194,6 +161,7 @@ public class DocumentosBean implements Serializable {
         generarCorrelativo_proveido();
         origen_prov = hm.get("origen").toString();
         destino_prov = hm.get("destino").toString();
+        tranum=correlativo_proveido;
     }
 
     public void Guardar_prov() {
@@ -224,13 +192,18 @@ public class DocumentosBean implements Serializable {
 
             deriv.guardarDocusExt(di);
             deriv.GuardarProveido(p);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            
+            /*message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");     
+            RequestContext.getCurrentInstance().showMessageInDialog(message);*/
             MostrarDocusInternos();
+            ver=true;
+            no_ver=false;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ver=false;
+            no_ver=true;
+            /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);*/
         }
     }
 
@@ -1186,6 +1159,22 @@ public class DocumentosBean implements Serializable {
 
     public void setTipodestino(String tipodestino) {
         this.tipodestino = tipodestino;
+    }
+
+    public boolean isVer() {
+        return ver;
+    }
+
+    public void setVer(boolean ver) {
+        this.ver = ver;
+    }
+
+    public boolean isNo_ver() {
+        return no_ver;
+    }
+
+    public void setNo_ver(boolean no_ver) {
+        this.no_ver = no_ver;
     }
 
 }

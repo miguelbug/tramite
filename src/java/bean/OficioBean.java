@@ -91,6 +91,8 @@ public class OficioBean {
     private String[] selectedCities;
     private String nombre;
     private String tipodestino;
+    private static String correlativo_exportar;
+    private boolean ver,nover;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -151,6 +153,7 @@ public class OficioBean {
         ObtenerTiposDocus();
         origen = dd.getOficina(usu);
         
+        
     }
     public void agregardestinos(){
         destinos = dd.getDependencias(tipodestino);
@@ -163,6 +166,8 @@ public class OficioBean {
         responsable();
         arearesponsable();
         firma();
+        correlativo_exportar=correlativo;
+        
     }
 
     public List Detalles() {
@@ -423,11 +428,11 @@ public class OficioBean {
             ofi.setResponsable(responsable);
             od.guardarOficioCircular(ofi);
             mostrar();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ver=true;
+            nover=false;
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ver=false;
+            nover=true;
             System.out.println(e.getMessage());
         }
 
@@ -870,6 +875,30 @@ public class OficioBean {
 
     public void setTipodestino(String tipodestino) {
         this.tipodestino = tipodestino;
+    }
+
+    public static String getCorrelativo_exportar() {
+        return correlativo_exportar;
+    }
+
+    public static void setCorrelativo_exportar(String correlativo_exportar) {
+        OficioBean.correlativo_exportar = correlativo_exportar;
+    }
+
+    public boolean isVer() {
+        return ver;
+    }
+
+    public void setVer(boolean ver) {
+        this.ver = ver;
+    }
+
+    public boolean isNover() {
+        return nover;
+    }
+
+    public void setNover(boolean nover) {
+        this.nover = nover;
     }
 
 }

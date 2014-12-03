@@ -106,11 +106,11 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT CORRELATIVO,\n"
-                    + "FECHA_EMISION,\n"
+                    + "to_char(FECHA_EMISION,'DD/MM/YYYY') AS FECHAEMISION,\n"
                     + "DRIGIDO_A,\n"
                     + "TIPO_CONTRATO,\n"
-                    + "DESDE,\n"
-                    + "HASTA,\n"
+                    + "to_char(DESDE,'DD/MM/YYYY') AS DESDE,\n"
+                    + "TO_CHAR(HASTA,'DD/MM/YYYY') AS HASTA,\n"
                     + "USU\n"
                     + "FROM CONSTANCIAS");
             constancias = query.list();

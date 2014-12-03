@@ -78,8 +78,24 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst">
+                            <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst,constanciaImprimirDialog" oncomplete="PF('constanciaImprimir').show()">
                                 <f:ajax event="click" onevent="ConstDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    
+                    <p:dialog header="Aviso" widgetVar="constanciaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constanciaImprimirDialog" >
+                        <center>
+                            <p:outputLabel value="LA CONSTANCIA N° #{constanciaBean.correlativo} SE HA CREADO" rendered="#{constanciaBean.ver}"/>
+                            <br></br>
+                            <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarReporteConstancia()}" ajax="false" rendered="#{constanciaBean.ver}">
+                                <f:ajax event="click" onevent="constanciaImprimir.hide()"/>
+                            </p:commandButton>
+                            
+                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{constanciaBean.nover}"/>
+                            <br></br>
+                            <p:commandButton value="Aceptar" rendered="#{constanciaBean.nover}">
+                                <f:ajax event="click" onevent="constanciaImprimir.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>
