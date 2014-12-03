@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocusExternosBean.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Proveidos.xhtml</file>
@@ -12,6 +13,20 @@
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/D:/proyecto/tramite/src/java/hibernate.reveng.xml</file>
+            <file>file:/D:/proyecto/tramite/src/java/controller/conexion.java</file>
+            <file>file:/D:/proyecto/tramite/web/META-INF/context.xml</file>
+            <file>file:/D:/proyecto/tramite/src/java/hibernate.cfg.xml</file>
+=======
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_admin.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/controller/conexion.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
+>>>>>>> origin/master
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
