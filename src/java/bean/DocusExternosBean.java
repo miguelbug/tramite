@@ -97,7 +97,7 @@ public class DocusExternosBean implements Serializable {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("correlativo", getCadenaCorr(String.valueOf(obj[0])));
-                listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + " - " + obj[1]));
+                listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + "-" + obj[1]));
                 listaaux.put("movimiento", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
                 listaaux.put("destino", String.valueOf(obj[4]));

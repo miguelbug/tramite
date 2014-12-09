@@ -16,44 +16,50 @@
             <ui:define name="content">
                 <h:form id="form">
                     <br></br>
-                    <center>
-                        <p:panelGrid columns="4">
-                            <p:outputLabel value="Desde:"/>
-                            <p:calendar value="#{docusInternos.fecha1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
-                            <p:outputLabel value="Hasta:"/>
-                            <p:calendar value="#{docusInternos.fecha2}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
-                        </p:panelGrid>
-                        <br></br>
-                        <p:commandButton id="mostrado" value="Ver"  actionListener="#{docusInternos.mostrarDocusInternos()}" title="Ver" update="tabladocusinternos" />
-                    </center>
                     <br></br>
-                    <center>
-                        <p:dataTable value="#{docusInternos.docusinternos}" var="item" paginator="true" rows="15" id="tabladocusinternos" 
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     emptyMessage="no hay datos para este filtro" filteredValue="#{docusInternos.otrosdocus}" selection="#{docusInternos.docselec}"
-                                     rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                    <p:dataTable value="#{docusInternos.docusinternos}" var="item" paginator="true" rows="15" id="tabladocusinternos" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="no hay datos para este filtro" filteredValue="#{docusInternos.otrosdocus}" selection="#{docusInternos.docselec}"
+                                 rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
-                            <p:column headerText="NOMB. DOCU" width="2" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
-                                <h:outputText value="#{item.numerotramite}"/>
-                            </p:column>
-                            <p:column headerText="FECH. REG." width="2" sortBy="#{item.fechareg}" filterBy="#{item.fechareg}" filterMatchMode="contains">
-                                <h:outputText value="#{item.fechareg}"/>
-                            </p:column>
-                            <p:column headerText="TRAM. NUM." width="2" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                <h:outputText value="#{item.tramnum}"/>
-                            </p:column>
-                            <p:column headerText="USUARIO" width="2" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
-                                <h:outputText value="#{item.usu}"/>
-                            </p:column>
-                            <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                <h:outputText value="#{item.asunto}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </center>
+                        <p:column headerText="NOMB. DOCU" width="2" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                            <h:outputText value="#{item.numerotramite}"/>
+                        </p:column>
+                        <p:column headerText="FECH. REG." width="2" sortBy="#{item.fechareg}" filterBy="#{item.fechareg}" filterMatchMode="contains">
+                            <h:outputText value="#{item.fechareg}"/>
+                        </p:column>
+                        <p:column headerText="TRAM. NUM." width="2" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
+                            <h:outputText value="#{item.tramnum}"/>
+                        </p:column>
+                        <p:column headerText="USUARIO" width="2" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
+                            <h:outputText value="#{item.usu}"/>
+                        </p:column>
+                        <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                            <h:outputText value="#{item.asunto}"/>
+                        </p:column>
+                    </p:dataTable>
                     <br></br>
                     <center>
-                        <p:commandButton id="repor10" value="Reporte Respuestas"  ajax="false" action="#{objxUnidadController.mostrarReporteFecha}" title="Reporte" />
+                        <p:commandButton id="repor10" value="Reporte Documentos" title="Reporte" oncomplete="PF('reporteDialog').show()" />
                     </center>
+
+                    <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <center>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Desde:"/>
+                                <p:calendar value="#{docusInternos.fecha1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                                <p:outputLabel value="Hasta:"/>
+                                <p:calendar value="#{docusInternos.fecha2}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:commandButton id="mostrado" value="Exportar" actionListener="#{objxUnidadController.mostrarReporteFecha}" ajax="false" title="Ver"/>
+                        </center>
+                    </p:dialog>
+
+
+
+
+
                     <script type="text/javascript">
                         PrimeFaces.locales['es'] = {
                             closeText: 'Cerrar',

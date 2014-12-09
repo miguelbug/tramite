@@ -45,6 +45,7 @@ public class DocusInternos {
         docusinternos = new ArrayList<HashMap<String,String>>();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        mostrarDocusInternos();
         
     }
     public void actualizarLista(){
@@ -52,18 +53,17 @@ public class DocusInternos {
     }
     public void mostrarDocusInternos(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
-        System.out.println(sdf.format(fecha1)+"---"+sdf.format(fecha2));
         System.out.println("listando docus internos");
         docusinternos.clear();
         try {
             List lista = new ArrayList();
-            lista = did.getDocusInternos(usu.getUsu(),sdf.format(fecha1),sdf.format(fecha2));
+            lista = did.getDocusInternos(usu.getUsu());
             Iterator ite = lista.iterator();
             Object obj[] = new Object[8];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("numerotramite",String.valueOf(obj[1])+" - "+String.valueOf(obj[0])+" - "+String.valueOf(obj[2])+" - "+String.valueOf(obj[3]));
+                listaaux.put("numerotramite",String.valueOf(obj[1])+"-"+String.valueOf(obj[0])+"-"+String.valueOf(obj[2])+"-"+String.valueOf(obj[3]));
                 listaaux.put("fechareg", String.valueOf(obj[4]));
                 listaaux.put("tramnum", String.valueOf(obj[5]));
                 listaaux.put("usu", String.valueOf(obj[6]));

@@ -14,6 +14,6 @@ import java.util.List;
  * @author OGPL
  */
 public interface DocusInternosDAO {
-    public List getDocusInternos(String usu, String f1, String f2);
+    public List getDocusInternos(String usu);
     public String getRespuesta(String tramnum);
 }
