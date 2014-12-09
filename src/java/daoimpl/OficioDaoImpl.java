@@ -223,7 +223,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get dependencia 2");
         try {
             session.beginTransaction();
-            Query query = session.createQuery("from Dependencia\n"
+            Query query = session.createQuery("SELECT nombre,tipodepe from Dependencia\n"
                     + "WHERE nombre='" + nombre + "'");
             depe = (Dependencia) query.uniqueResult();
             session.beginTransaction().commit();

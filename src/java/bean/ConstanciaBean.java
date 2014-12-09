@@ -49,8 +49,12 @@ public class ConstanciaBean {
     private Usuario usu;
     private List constancias;
     private List otrosdocus;
+    private Date fechaactual;
+    private static String correlativo2;
+    private boolean ver,nover;
 
     public ConstanciaBean() {
+        fechaactual= new Date();
         deriv = new DerivarDaoImpl();
         cons = new ConstanciaDaoImpl();
         empleados = new ArrayList<String>();
@@ -66,6 +70,7 @@ public class ConstanciaBean {
         fechaactual();
         generarCorrelativo2();
         mostrarJefatura();
+        correlativo2=correlativo;
     }
 
     public void cambio() {
@@ -159,14 +164,15 @@ public class ConstanciaBean {
         c.setDrigidoA(escogido);
         c.setTipoContrato(tipocontrato);
         c.setUsuario(usu);
+        c.setFechaRegistro(this.fechaactual);
         try {
             cons.guardarConstancia(c);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO LA CONSTANCIA");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ver=true;
+            nover=false;
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR LA CONSTANCIA");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
+            ver=false;
+            nover=true;
         }
 
     }
@@ -321,6 +327,38 @@ public class ConstanciaBean {
 
     public void setOtrosdocus(List otrosdocus) {
         this.otrosdocus = otrosdocus;
+    }
+
+    public Date getFechaactual() {
+        return fechaactual;
+    }
+
+    public void setFechaactual(Date fechaactual) {
+        this.fechaactual = fechaactual;
+    }
+
+    public static String getCorrelativo2() {
+        return correlativo2;
+    }
+
+    public static void setCorrelativo2(String correlativo2) {
+        ConstanciaBean.correlativo2 = correlativo2;
+    }
+
+    public boolean isVer() {
+        return ver;
+    }
+
+    public void setVer(boolean ver) {
+        this.ver = ver;
+    }
+
+    public boolean isNover() {
+        return nover;
+    }
+
+    public void setNover(boolean nover) {
+        this.nover = nover;
     }
 
 }
