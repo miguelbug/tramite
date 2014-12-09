@@ -232,21 +232,19 @@
                             <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
-                                <f:selectItem itemLabel="OFICIO MULTIPLE" itemValue="OFICIO MULTIPLE"/>
-                                <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="OFICIO CIRCULAR" />
                                 <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
                                 <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
                                 <p:ajax event="change" listener="#{documentoUsuarioBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="N°: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.correlativo}"/>
+                            <p:outputLabel value="Documento: "/>
+                            <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativo}-#{documentoUsuarioBean.siglasdocus}-#{documentoUsuarioBean.fechanio}"/>
 
                             <p:outputLabel value="Asunto: "/>
                             <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}"/>
 
                             <p:outputLabel value="Referencia: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.numtramaux}"/>
+                            <p:outputLabel value="Expediente(s) #{documentoUsuarioBean.numtramaux}"/>
 
                             <p:outputLabel value="Oficina Interna: "/>
                             <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}">

@@ -189,7 +189,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarMovimiento(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
+    public void InsertarMovimiento(Usuario usu, int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i) {
         try {
             System.out.println(movimiento + " " + fechaenvio + " " + asunto + " " + estado + " " + numtram + " " + origen + " " + destino + " " + i);
             System.out.println("entra a guardado insertmovi");
@@ -203,6 +203,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             tm.setDependenciaByCodigo(getDependencia(origen));
             tm.setDependenciaByCodigo1(getDependencia2(destino));
             tm.setIndicador(i);
+            tm.setUsuario(usu);
             tm.setEstadConfrirm("EN PROCESO");
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -218,18 +219,6 @@ public class DerivarDaoImpl implements DerivarDAO {
         }
     }
 
-    @Override
-    public void InsertarMovimiento2(int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino) {
-        try {
-            System.out.println("entra a guardado insertmovi");
-        } catch (Exception ex) {
-            System.err.println("falló guardado movimiento." + ex);
-            System.out.println(ex.getMessage());
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-    }
 
     @Override
     public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto) {

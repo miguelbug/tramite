@@ -81,7 +81,7 @@ public class OficioBean {
     List<String> citiesSource = new ArrayList<String>();
     List<String> citiesTarget = new ArrayList<String>();
     //
-    private String escogido;
+    private String escogido="";
     private List tiposdocus;
     //
     //pruebas
@@ -93,6 +93,7 @@ public class OficioBean {
     private String tipodestino;
     private static String correlativo_exportar;
     private boolean ver,nover;
+    private String siglasdocus="";
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -151,6 +152,7 @@ public class OficioBean {
         generarFecha();
         generarCorrelativo2();
         ObtenerTiposDocus();
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         origen = dd.getOficina(usu);
         
         
@@ -167,7 +169,7 @@ public class OficioBean {
         arearesponsable();
         firma();
         correlativo_exportar=correlativo;
-        
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
     }
 
     public List Detalles() {
@@ -899,6 +901,14 @@ public class OficioBean {
 
     public void setNover(boolean nover) {
         this.nover = nover;
+    }
+
+    public String getSiglasdocus() {
+        return siglasdocus;
+    }
+
+    public void setSiglasdocus(String siglasdocus) {
+        this.siglasdocus = siglasdocus;
     }
 
 }

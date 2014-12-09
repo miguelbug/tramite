@@ -48,7 +48,7 @@ public class DocumentoUsuarioBean {
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
-    private String asignado, fechadia, fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
+    private String asignado, fechadia, fechanio = "", fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
     private final FacesContext faceContext;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
@@ -144,8 +144,7 @@ public class DocumentoUsuarioBean {
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
-        
-        
+
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -178,7 +177,7 @@ public class DocumentoUsuarioBean {
     public List Detalles() {
         System.out.println("listando detalles");
         detalle.clear();
-        Date anio= new Date();
+        Date anio = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         try {
             System.out.println(seleccion.get("numerotramite").toString());
@@ -188,7 +187,7 @@ public class DocumentoUsuarioBean {
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
             listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
-            listaaux.put("OFICIO","N° "+ ofi.getOficioDocumento(seleccion.get("numerotramite").toString())+"-OGPL-"+sdf.format(anio));
+            listaaux.put("OFICIO", "N° " + ofi.getOficioDocumento(seleccion.get("numerotramite").toString()) + "-OGPL-" + sdf.format(anio));
             detalle.add(listaaux);
             // }
         } catch (Exception e) {
@@ -243,9 +242,11 @@ public class DocumentoUsuarioBean {
 
     public void IniciarFecha() {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat formato2 = new SimpleDateFormat("yyyy");
         fecha = new Date();
         fechadia = "";
         fechahora = "";
+        this.fechanio = "";
         StringTokenizer tokens = new StringTokenizer(formato.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
             if (fechadia.equals("")) {
@@ -255,6 +256,7 @@ public class DocumentoUsuarioBean {
                 fechahora = tokens.nextToken();
             }
         }
+        fechanio = formato2.format(fecha);
     }
 
     public void UsuarioSelec() {
@@ -398,14 +400,10 @@ public class DocumentoUsuarioBean {
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
-            /////actualizarmovimiento
-            /*deriv.ActualizarTramite(numtramaux, String.valueOf(deriv.getMovimiento(numtramaux)));
-             deriv.InsertarMovimiento(deriv.getMovimiento(numtramaux) + 1, fecha, asunto, estado, numtramaux, getNombOficina(), codinterno, in);
-             deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), numtramaux, fecha, usu);*/
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())));
-                deriv.InsertarMovimiento(deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
+                deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
                 deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto);
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "DERIVADO: " + numtramaux, "DOCUMENTO DE RESPUESTA: " + correlativo);
@@ -435,7 +433,6 @@ public class DocumentoUsuarioBean {
 
             }
 
-            //docselec2.clear();
         } catch (Exception e) {
             System.out.println("error fecha");
             System.out.println(e.getMessage());
@@ -444,53 +441,19 @@ public class DocumentoUsuarioBean {
     }
 
     public void Motivo() {
-        /*try {
-         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
-         Iterator it = hm.entrySet().iterator();
-         while (it.hasNext()) {
-         Map.Entry e = (Map.Entry) it.next();
-         if (e.getKey().toString().equals("numerotramite")) {
-         System.out.println(e.getValue().toString());
-         numtramaux = e.getValue().toString();
-         motivo = dd.getMotivo(e.getValue().toString());
-         }
-
-         }
-
-         docselec2.clear();
-         } catch (Exception e) {
-         System.out.println("errormotivo");
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-         }*/
         try {
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 if (i == 0) {
                     System.out.println(hm.get("numerotramite").toString());
-                    numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
+                    numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
                     motivo = dd.getMotivo(hm.get("numerotramite").toString());
                     asunto = motivo;
                 } else {
-                    numtramaux = numtramaux + " / " + hm.get("numerotramite").toString();
+                    numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
                 }
-
-                /*Iterator it = hm.entrySet().iterator();
-                 while (it.hasNext()) {
-                 Map.Entry e = (Map.Entry) it.next();
-                 if (e.getKey().toString().equals("numerotramite") && i == 0) {
-                 System.out.println(e.getValue().toString());
-                 //numtramaux = e.getValue().toString();
-                 motivo = dd.getMotivo(e.getValue().toString());
-                 }
-                 if (e.getKey().toString().equals("numerotramite")) {
-                 System.out.println(e.getValue().toString());
-                 numtramaux = numtramaux + " / " + e.getValue().toString();
-                 }
-                 }*/
             }
 
-            //docselec2.clear();
         } catch (Exception e) {
             System.out.println("errormotivo");
             System.out.println(e.getMessage());
@@ -811,6 +774,14 @@ public class DocumentoUsuarioBean {
 
     public void setOfi(OficioDAO ofi) {
         this.ofi = ofi;
+    }
+
+    public String getFechanio() {
+        return fechanio;
+    }
+
+    public void setFechanio(String fechanio) {
+        this.fechanio = fechanio;
     }
 
 }
