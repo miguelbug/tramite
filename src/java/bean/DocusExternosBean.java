@@ -26,9 +26,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import maping.DocusExt;
 import maping.DocusExtint;
-import maping.Proveido;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
@@ -96,7 +94,7 @@ public class DocusExternosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("correlativo", String.valueOf(obj[0]).replaceAll(String.valueOf(obj[0]).substring(0, 2), getCadenaCorr(String.valueOf(obj[0]).substring(0,1))+"-"));
+                listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + "-" + obj[1]));
                 listaaux.put("movimiento", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
@@ -254,9 +252,7 @@ public class DocusExternosBean implements Serializable {
 
     public void guardar() {
         System.out.println("SE HA GUARDADO");
-        DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
-        Proveido p = new Proveido();
         FacesMessage message = null;
         try {
             di.setNumerodoc(codigoexp);
@@ -265,19 +261,9 @@ public class DocusExternosBean implements Serializable {
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));
             di.setMovimientoDext(Long.parseLong("1"));
-            de = deriv.getDocuExt(documento);
-            di.setDocusExt(de);
             di.setUsuario(usu);
 
-            p.setCorrelativod(correlativo);
-            p.setDependenciaByCodigo(deriv.getDep(origen));
-            p.setDependenciaByCodigo1(deriv.getDep(destino));
-            p.setDocusExtint(di);
-            p.setFechaenvio(fechaprov);
-            p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
-
             deriv.guardarDocusExt(di);
-            deriv.GuardarProveido(p);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();

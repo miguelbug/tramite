@@ -44,7 +44,7 @@
                                     <h:outputText value="#{item.nombredocu}" />
                                 </p:column>
                                 <f:facet name="footer">
-                                    <p:commandButton id="proveidobuton"  process="tablainternos" value="Proveido(S)" update=":form:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
+                                    <p:commandButton id="proveidobuton"  process="tablainternos" value="Proveido(S)" update=":form:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{proveidosInternosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos" />
                                 </f:facet>
                             </p:dataTable>
@@ -62,11 +62,14 @@
                                 <p:outputLabel value="#{proveidosInternosBean.origen_prov}"/>
                                 <p:outputLabel value="Destino:"/>
                                 <p:outputLabel value="#{proveidosInternosBean.destino_prov}"/>
+                                <p:outputLabel value="Encargado:"/>
+                                <p:outputLabel value="#{proveidosInternosBean.usuario}"/>
                                 <p:outputLabel value="Fecha Emisión:"/>
                                 <p:outputLabel value="#{proveidosInternosBean.fechaaux}"/>
                             </p:panelGrid>
                             <br></br>
-                            <p:commandButton value="Guardar" update="proveidoExpediente,mensajeImprimir" oncomplete="PF('dialogMensaje').show()">
+                            <p:commandButton value="Guardar" update="proveidoExpediente,mensajeImprimir" actionListener="#{proveidosInternosBean.Guardar_prov()}"
+                                              oncomplete="PF('dialogMensaje').show()">
                                 <f:ajax event="click" onevent="proveidoExp.hide()"/>
                             </p:commandButton>
                         </center>

@@ -8,11 +8,9 @@ package dao;
 import java.util.Date;
 import java.util.List;
 import maping.Dependencia;
-import maping.DocusExt;
 import maping.DocusExtint;
 import maping.Indicador;
 import maping.Oficina;
-import maping.Proveido;
 import maping.TiposDocumentos;
 import maping.TramiteDatos;
 import maping.TramiteMovimiento;
@@ -58,8 +56,6 @@ public interface DerivarDAO {
 
     public String getCorre(Usuario usu, String tipo);
 
-    public DocusExt getDocuExt(String codigo);
-
     public void guardarDocusExt(DocusExtint de);
 
     public Dependencia getDep(String nombre);
@@ -69,8 +65,6 @@ public interface DerivarDAO {
     public String getDocExt(String n);
 
     public String getCorreProv();
-
-    public void GuardarProveido(Proveido p);
 
     public void ActualizarTramite(String tramaux, String movimiento);
 

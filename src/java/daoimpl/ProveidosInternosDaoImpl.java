@@ -8,6 +8,7 @@ package daoimpl;
 import dao.ProveidosInternosDao;
 import java.util.ArrayList;
 import java.util.List;
+import maping.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -30,8 +31,8 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             Query query = session.createSQLQuery("select td.NOMBRE_DOCU||' '||' N°'||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||to_char(ofi.FECHA_OFICIO,'YYYY') AS DOCUMENTO,\n"
                     + "to_char(ofi.FECHA_OFICIO,'DD/MM/YYY HH:mm:ss') as fecha,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
-                    + "d1.NOMBRE,\n"
-                    + "d2.NOMBRE,\n"
+                    + "d1.NOMBRE as origen,\n"
+                    + "d2.NOMBRE as destino,\n"
                     + "usua.USU_NOMBRE,\n"
                     + "td.NOMBRE_DOCU\n"
                     + "from oficios ofi, tipos_documentos td, dependencia d1, dependencia d2, USUARIO usua, Oficina oficina\n"
@@ -51,6 +52,24 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             System.out.println(e.getMessage());
         }
         return proveidos;
+    }
+
+    @Override
+    public Usuario getUsuario(String nombre) {
+        Usuario usuario = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get usuario");
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("from Usuario where usuNombre='"+nombre+"'");
+            usuario = (Usuario)query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal get usuario");
+            System.out.println(e.getMessage());
+        }
+        return usuario;
     }
 
 }

@@ -22,5 +22,4 @@
   <table-filter match-name="DOCUS_INTERNOS"/>
   <table-filter match-name="OFIC_CIRC"/>
   <table-filter match-name="OFICINA"/>
-  <table-filter match-name="DOCUS_EXT"/>
 </hibernate-reverse-engineering>

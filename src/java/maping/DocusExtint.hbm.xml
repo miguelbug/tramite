@@ -21,9 +21,6 @@
         <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
-        <many-to-one name="docusExt" class="maping.DocusExt" fetch="select">
-            <column name="IDDOC" precision="10" scale="0" />
-        </many-to-one>
         <property name="numerodoc" type="string">
             <column name="NUMERODOC" length="60" />
         </property>
@@ -36,11 +33,5 @@
         <property name="movimientoDext" type="java.lang.Long">
             <column name="MOVIMIENTO_DEXT" precision="10" scale="0" />
         </property>
-        <set name="proveidos" table="PROVEIDO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.Proveido" />
-        </set>
     </class>
 </hibernate-mapping>
