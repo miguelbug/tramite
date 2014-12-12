@@ -34,7 +34,7 @@ public interface OficioDAO {
     public List getOficioUnicoExpediente();
     public List getOficioUnicoNoExp();
     public List getOficoCircDetal(String correla);
-    public String getCorrela(String usu);
+    public String getCorrela(String usu, String tipodocu);
     public List getTiposDocus(String flag);
     public TiposDocumentos getTipoDocu(String nombre);
     public String getOficioDocumento(String tramnum);

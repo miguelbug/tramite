@@ -71,7 +71,7 @@
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Proveido - N° #{documentosBean.correlativo_proveido}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
+                    <p:dialog header="Proveido-N° #{documentosBean.correlativo_proveido}-#{documentosBean.siglasdocus}-#{documentosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
                         <center>
                             <p:panelGrid columns="2" id="panelProvExp">
                                 <p:outputLabel value="Expediente:"/>
@@ -122,7 +122,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Oficio - #{documentosBean.correlativo_oficio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dialogOficioUnico">
+                    <p:dialog header="Oficio-N° #{documentosBean.correlativo_oficio}-#{documentosBean.siglasdocus}-#{documentosBean.anio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dialogOficioUnico">
                         <center>
                             <p:panelGrid columns="2" id="panelOfUn">
                                 <p:outputLabel value="Expediente:"/>

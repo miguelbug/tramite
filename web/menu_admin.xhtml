@@ -23,10 +23,6 @@
             <p:menubar>
                 <p:submenu label="Sist. Sec. General" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos?faces-redirect=true"/>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
                     <p:menuitem value="Doc. Pendientes" action="documentos_perdidos?faces-redirect=true"/>
                     <p:menuitem value="Doc. para Corregir" action="documentos_corregir?faces-redirect=true"/>
                 </p:submenu>
@@ -34,9 +30,13 @@
 
                 <p:submenu label="Gestion Documentos" icon="ui-icon-pencil">
                     <p:menuitem value="Respuesta a Expediente" action="documentos_respta?faces-redirect=true"/>
-                    <p:menuitem value="Oficios" action="Oficios?faces-redirect=true"/>
-                    <p:menuitem value="Oficios Circulares" action="Oficios_Circulares?faces-redirect=true"/>
-                    <p:menuitem value="Proveidos" action="Proveidos?faces-redirect=true" />
+                    <p:menuitem value="Oficios-OGPL" action="Oficios?faces-redirect=true"/>
+                    <p:menuitem value="Oficios Circulares-OGPL" action="Oficios_Circulares?faces-redirect=true"/>
+                    <p:submenu label="Proveidos" icon="ui-icon-pencil">
+                        <p:menuitem value="Proveidos Externos" action="Proveidos?faces-redirect=true" />
+                        <p:menuitem value="Proveidos Internos" action="Proveidos_internos?faces-redirect=true" />
+                    </p:submenu>
+                    
                     <p:menuitem value="Constancias" action="Constancias?faces-redirect=true"/>
                 </p:submenu>
 

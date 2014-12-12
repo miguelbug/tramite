@@ -96,7 +96,7 @@ public class DocusExternosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("correlativo", getCadenaCorr(String.valueOf(obj[0])));
+                listaaux.put("correlativo", String.valueOf(obj[0]).replaceAll(String.valueOf(obj[0]).substring(0, 2), getCadenaCorr(String.valueOf(obj[0]).substring(0,1))+"-"));
                 listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + "-" + obj[1]));
                 listaaux.put("movimiento", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
@@ -253,6 +253,7 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void guardar() {
+        System.out.println("SE HA GUARDADO");
         DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
         Proveido p = new Proveido();

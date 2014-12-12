@@ -64,7 +64,7 @@ public class DocumentosBean implements Serializable {
     private DerivarDAO deriv;
     private LoginDao log;
     private Date fechaprov, aux, fecha;
-    private String documento, origen, asunto_prov, origen_prov, asunto, tramnum, fechaaux, destino_ofic, correlativo_oficio, referencia, correlativo_proveido, destino_prov, codinterno, tipodestino;
+    private String anio="",siglasdocus,documento, origen, asunto_prov, origen_prov, asunto, tramnum, fechaaux, destino_ofic, correlativo_oficio, referencia, correlativo_proveido, destino_prov, codinterno, tipodestino;
     public static String tranum;
 
     public DocumentosBean() {
@@ -153,8 +153,10 @@ public class DocumentosBean implements Serializable {
     }
 
     public void mostrarProveido() {
+        fechaprov = new Date();
         System.out.println(docselec);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf2= new SimpleDateFormat("YYYY");
         fechaaux = sdf.format(fechaprov);
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         tramnum = obtenerNumeroTramite();
@@ -162,6 +164,8 @@ public class DocumentosBean implements Serializable {
         origen_prov = hm.get("origen").toString();
         destino_prov = hm.get("destino").toString();
         tranum=correlativo_proveido;
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        anio=sdf2.format(fechaprov);
     }
 
     public void Guardar_prov() {
@@ -192,9 +196,6 @@ public class DocumentosBean implements Serializable {
 
             deriv.guardarDocusExt(di);
             deriv.GuardarProveido(p);
-            
-            /*message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");     
-            RequestContext.getCurrentInstance().showMessageInDialog(message);*/
             MostrarDocusInternos();
             ver=true;
             no_ver=false;
@@ -202,8 +203,6 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
             ver=false;
             no_ver=true;
-            /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);*/
         }
     }
 
@@ -215,10 +214,13 @@ public class DocumentosBean implements Serializable {
     public void mostrarOficio() {
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
         fechaaux = sdf.format(fecha);
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = dd.getMotivo(tramnum);
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        anio=sdf1.format(fecha);
     }
 
     public void Eliminar() {
@@ -1175,6 +1177,18 @@ public class DocumentosBean implements Serializable {
 
     public void setNo_ver(boolean no_ver) {
         this.no_ver = no_ver;
+    }
+
+    public String getSiglasdocus() {
+        return siglasdocus;
+    }
+
+    public void setSiglasdocus(String siglasdocus) {
+        this.siglasdocus = siglasdocus;
+    }
+
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
 
 }

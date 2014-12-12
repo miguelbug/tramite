@@ -193,6 +193,38 @@ public class objxUnidadController implements Serializable {
         }
     }
 
+    public void mostrarRepOficio() {
+
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("reporte_Oficio");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        System.out.println(DocumentosBean.tranum);
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("correlativo", OficioBean.getCorrelativo_exportar());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
     public void mostrarReporteFecha() {
 
         context = FacesContext.getCurrentInstance();

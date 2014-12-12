@@ -123,14 +123,14 @@
                 <p:panelGrid columns="2" id="panelOfUn2">
                     
                     <p:outputLabel value="Tipo de Documento:"/>
-                    <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido}" >
+                    <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{oficioBean.tiposdocus}"/>
-                        <p:ajax event="change" update="panelOfUn2"/>
+                        <p:ajax event="change" update="panelOfUn2" listener="#{oficioBean.generarCorrelativo2()}"/>
                     </p:selectOneMenu>
                     
                     <p:outputLabel value="Documento:"/>
-                    <p:outputLabel value="#{oficioBean.escogido} N°#{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
+                    <p:outputLabel value="#{oficioBean.escogido2} N°#{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
 
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>

@@ -37,6 +37,7 @@ public class DocusInternos {
     private List docselec;
     private static Date fecha1;
     private static Date fecha2;
+    private String tipodocumento;
     
     
     public DocusInternos() {
@@ -129,6 +130,14 @@ public class DocusInternos {
 
     public void setFecha2(Date fecha2) {
         this.fecha2 = fecha2;
+    }
+
+    public String getTipodocumento() {
+        return tipodocumento;
+    }
+
+    public void setTipodocumento(String tipodocumento) {
+        this.tipodocumento = tipodocumento;
     }
     
 }
