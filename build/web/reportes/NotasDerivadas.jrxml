@@ -37,8 +37,7 @@ DESTINO,
 TIPODOCUMENTOS
 from temporal
 where impreso=1 and reimpreso IS null
-order by DESTINO,TRAM_NUM
-]]></queryString>
+order by DESTINO,TRAM_NUM]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="FECHA" class="java.lang.String"/>

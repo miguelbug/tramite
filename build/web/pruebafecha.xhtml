@@ -20,8 +20,10 @@
                     <p:dataTable value="#{docusInternos.docusinternos}" var="item" paginator="true" rows="15" id="tabladocusinternos" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  emptyMessage="no hay datos para este filtro" filteredValue="#{docusInternos.otrosdocus}" selection="#{docusInternos.docselec}"
-                                 rowKey="#{item.correlativo}" style="margin-bottom: 0">
-
+                                 rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                        
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        
                         <p:column headerText="NOMB. DOCU" width="2" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                             <h:outputText value="#{item.numerotramite}"/>
                         </p:column>
@@ -45,6 +47,14 @@
 
                     <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                         <center>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Tipo de Documento:"/>
+                                <p:selectOneMenu value="#{docusInternos.tipodocumento}">
+                                    <f:selectItem itemLabel="Documentos de Respuesta" itemValue="1"/>
+                                    <f:selectItem itemLabel="Documentos Propios" itemValue="2"/>
+                                    <f:selectItem itemLabel="Documentos Circulares" itemValue="3"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
                             <p:panelGrid columns="4">
                                 <p:outputLabel value="Desde:"/>
                                 <p:calendar value="#{docusInternos.fecha1}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>

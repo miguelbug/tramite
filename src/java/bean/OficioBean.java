@@ -81,7 +81,8 @@ public class OficioBean {
     List<String> citiesSource = new ArrayList<String>();
     List<String> citiesTarget = new ArrayList<String>();
     //
-    private String escogido="";
+    private String escogido;
+    private String escogido2;
     private List tiposdocus;
     //
     //pruebas
@@ -92,8 +93,8 @@ public class OficioBean {
     private String nombre;
     private String tipodestino;
     private static String correlativo_exportar;
-    private boolean ver,nover;
-    private String siglasdocus="";
+    private boolean ver, nover;
+    private String siglasdocus = "";
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -117,6 +118,7 @@ public class OficioBean {
         mostrarofCirc();
         mostrarOficiosSinExp();
         mostrarOficioConExp();
+        ObtenerTiposDocus2();
 
     }
 
@@ -130,21 +132,26 @@ public class OficioBean {
         System.out.println("listando tipos docus");
         tiposdocus.clear();
         try {
-            tiposdocus = od.getTiposDocus("1");
+            System.out.println("OBTENER TIPOS DOCUS");
+            tiposdocus=od.getTiposDocus("1");
         } catch (Exception e) {
+            System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
         }
+        System.out.println(tiposdocus);
     }
 
     public void ObtenerTiposDocus() {
-
         System.out.println("listando tipos docus");
         tiposdocus.clear();
         try {
-            tiposdocus = od.getTiposDocus("0");
+            System.out.println("OBTENER TIPOS DOCUS");
+            tiposdocus=od.getTiposDocus("0");
         } catch (Exception e) {
+            System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
         }
+        System.out.println(tiposdocus);
     }
 
     public void abrirOficioUnico() {
@@ -154,12 +161,13 @@ public class OficioBean {
         ObtenerTiposDocus();
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         origen = dd.getOficina(usu);
-        
-        
+
     }
-    public void agregardestinos(){
+
+    public void agregardestinos() {
         destinos = dd.getDependencias(tipodestino);
     }
+
     public void abriroficio() {
         ObtenerTiposDocus2();
         getAnio();
@@ -168,7 +176,10 @@ public class OficioBean {
         responsable();
         arearesponsable();
         firma();
-        correlativo_exportar=correlativo;
+        
+        System.out.println("ESTAMOS EN ABRIR OFICIO");
+        System.out.println(tiposdocus);
+        correlativo_exportar = correlativo;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
     }
 
@@ -177,8 +188,8 @@ public class OficioBean {
         detallecirc.clear();
         try {
             List lista = new ArrayList<String>();
-            System.out.println(seleccion.get("correlativo").toString());
-            lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo")));
+            System.out.println(seleccion.get("correlativo").toString().substring(19, 24));
+            lista = od.getOficoCircDetal(String.valueOf(seleccion.get("correlativo").toString().substring(19, 24)));
             for (int i = 0; i < lista.size(); i++) {
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", lista.get(i).toString());
@@ -246,7 +257,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(od.getCorrela(usu.getUsu()));
+                corr = Integer.parseInt(od.getCorrela(usu.getUsu(),escogido2));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -382,6 +393,7 @@ public class OficioBean {
                 DetallOficcirc dof = new DetallOficcirc();
                 dof.setDependencia(od.getDependencias2(cities.getTarget().get(i)));
                 dof.setOficCirc(od.getOficioCircular(correlativo));
+                System.out.println(escogido);
                 dof.setTiposDocumentos(od.getTipoDocu(escogido));
                 od.guardarDetalleOfCirc(dof);
             }
@@ -403,6 +415,8 @@ public class OficioBean {
             ofi.setReferenciaOficio(null);
             ofi.setTramiteDatos(null);
             ofi.setUsuario(usu);
+            System.out.println(escogido2);
+            ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
             dd.guardarOficio2(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -430,11 +444,11 @@ public class OficioBean {
             ofi.setResponsable(responsable);
             od.guardarOficioCircular(ofi);
             mostrar();
-            ver=true;
-            nover=false;
+            ver = true;
+            nover = false;
         } catch (Exception e) {
-            ver=false;
-            nover=true;
+            ver = false;
+            nover = true;
             System.out.println(e.getMessage());
         }
 
@@ -909,6 +923,14 @@ public class OficioBean {
 
     public void setSiglasdocus(String siglasdocus) {
         this.siglasdocus = siglasdocus;
+    }
+
+    public String getEscogido2() {
+        return escogido2;
+    }
+
+    public void setEscogido2(String escogido2) {
+        this.escogido2 = escogido2;
     }
 
 }

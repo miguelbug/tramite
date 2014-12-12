@@ -40,7 +40,7 @@
                                     <h:outputText value="#{item.resp}" />
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
-                                    <p:commandButton update=":form:tabladetalloficcirc" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
+                                    <p:commandButton process="tablaoficirc" update=":form:tabladetalloficcirc" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
                                         <f:setPropertyActionListener value="#{item}" target="#{oficioBean.seleccion}"/>
                                     </p:commandButton>
                                 </p:column>
@@ -59,16 +59,16 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-
                     <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog" style="width: 150px">
                         <p:panelGrid columns="2" id="formuloficCirc">
                             <p:outputLabel value="Tipo de Documento:"/>
                             <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{oficioBean.tiposdocus}"/>
+                                <p:ajax event="change" update="formuloficCirc"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="Número:"/>
-                            <p:outputLabel value="#{oficioBean.correlativo}"/>
+                            <p:outputLabel value="Documento:"/>
+                            <p:outputLabel value="#{oficioBean.escogido} N° #{oficioBean.correlativo}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
 
                             <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}" >
                                 <f:selectItem itemLabel="Destino" itemValue=" "/>
@@ -82,7 +82,7 @@
                             </p:pickList>
 
                             <p:outputLabel value="Asunto:"/>
-                            <p:inputTextarea value="#{oficioBean.asunto2}" rows="2" cols="60"/>
+                            <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
                             <p:outputLabel value="Fecha:"/>
                             <p:outputLabel value="#{oficioBean.auxfecha}"/>
                             <p:outputLabel value="Firma:"/>
@@ -94,7 +94,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,avisooficcircdialog" oncomplete="PF('avisoOfCircDialog').show()">
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
                                 <f:ajax event="click" onevent="DocCircdialog.hide()"/>
                             </p:commandButton>
                         </center>

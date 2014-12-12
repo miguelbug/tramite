@@ -105,14 +105,17 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT CORRELATIVO,\n"
-                    + "to_char(FECHA_EMISION,'DD/MM/YYYY') AS FECHAEMISION,\n"
-                    + "DRIGIDO_A,\n"
-                    + "TIPO_CONTRATO,\n"
-                    + "to_char(DESDE,'DD/MM/YYYY') AS DESDE,\n"
-                    + "TO_CHAR(HASTA,'DD/MM/YYYY') AS HASTA,\n"
-                    + "USU\n"
-                    + "FROM CONSTANCIAS");
+            Query query = session.createSQLQuery("SELECT co.CORRELATIVO||'-'||oficina.siglas||'-'||to_char(CO.fecha_emision,'YYYY') as documento,\n"
+                    + "to_char(CO.FECHA_EMISION,'DD/MM/YYYY') AS FECHAEMISION,\n"
+                    + "CO.DRIGIDO_A,\n"
+                    + "CO.TIPO_CONTRATO,\n"
+                    + "to_char(CO.DESDE,'DD/MM/YYYY') AS DESDE,\n"
+                    + "TO_CHAR(CO.HASTA,'DD/MM/YYYY') AS HASTA,\n"
+                    + "USUA.USU_NOMBRE\n"
+                    + "FROM CONSTANCIAS CO, OFICINA oficina, USUARIO USUA\n"
+                    + "where oficina.ID_OFICINA = USUA.ID_OFICINA\n"
+                    + "AND CO.USU= USUA.USU\n"
+                    + "order by correlativo desc");
             constancias = query.list();
             session.beginTransaction().commit();
             session.close();
