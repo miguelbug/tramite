@@ -16,4 +16,5 @@ import maping.Usuario;
 public interface ProveidosInternosDao {
     public List getDocumentosInternos();
     public Usuario getUsuario(String nombre);
+    public List getProveidosinternos();
 }

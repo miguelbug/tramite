@@ -3,29 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios_Circulares.xhtml</file>
-=======
-<<<<<<< HEAD
-            <file>file:/D:/proyecto/tramite/src/java/hibernate.reveng.xml</file>
-            <file>file:/D:/proyecto/tramite/src/java/controller/conexion.java</file>
-            <file>file:/D:/proyecto/tramite/web/META-INF/context.xml</file>
-            <file>file:/D:/proyecto/tramite/src/java/hibernate.cfg.xml</file>
-=======
->>>>>>> origin/master
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/OficioDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Constancias.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Proveidos.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_admin.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_user.xhtml</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentosInternos.xhtml</file>
-<<<<<<< HEAD
-=======
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
             <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
->>>>>>> 967a406af3d007361047ceb0ebd85561f0b93c2a
->>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

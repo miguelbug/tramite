@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import maping.Dependencia;
 import maping.DetallOficcirc;
+import maping.DocumentosOfiint;
 import maping.OficCirc;
 import maping.Oficina;
 import maping.TiposDocumentos;
@@ -25,6 +26,22 @@ public class OficioDaoImpl implements OficioDAO {
 
     Session session;
 
+    @Override
+    public void GuardarDocumentoOfiInt(DocumentosOfiint doif) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.save(doif);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            System.err.println("falló guardado documentosofiint." + ex);
+            System.out.println(ex.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    
     @Override
     public TiposDocumentos getTipoDocu(String nombre) {
         System.out.println("get tipodocu");

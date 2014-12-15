@@ -96,6 +96,32 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public String getCorrelativoOficinaInterna(Usuario usu, String tipo) {
+        System.out.println("getcorrelativooficinainterna");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT MAX(DOFI.CORRELATIVO_DOCOFINT) FROM DOCUMENTOS_OFIINT DOFI, "
+                + "TIPOS_DOCUMENTOS TD "
+                + "WHERE DOFI.USU='"+usu.getUsu()+"' "
+                + "AND TD.NOMBRE_DOCU = '"+tipo+"' "
+                + "AND DOFI.ID_DOCUMENTO=TD.ID_DOCUMENTO";
+        try {
+            session.beginTransaction();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal getcorrelativooficinainterna");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
+    
+    
+    @Override
     public String getSiglas(String ofi, String usu) {
         System.out.println("oficina: " + ofi);
         System.out.println("getssiglas");
@@ -627,10 +653,10 @@ public class DerivarDaoImpl implements DerivarDAO {
         System.out.println("get correla docusextint");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(correlativod) from DocusExtint";
+        String sql = "SELECT MAX(CORRELATIVOD) FROM DOCUS_EXTINT";
         try {
             session.beginTransaction();
-            index = (String) session.createQuery(sql).uniqueResult();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
             session.beginTransaction().commit();
         } catch (Exception e) {
             System.out.println("mal get corre prov");
@@ -666,8 +692,8 @@ public class DerivarDaoImpl implements DerivarDAO {
     @Override
     public void guardarDocusExt(DocusExtint de) {
         System.out.println("entra a guardardocusext");
+        session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(de);
             session.getTransaction().commit();

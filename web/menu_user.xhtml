@@ -25,7 +25,7 @@
                     <p:menuitem value="Respuestas" action="pruebafecha?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label="Registro" icon="ui-icon-pencil">
-                    <p:menuitem value="Documentos" actionListener="#{oficioBean.abrirOficioUnico()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
+                    <p:menuitem value="Documentos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
 
                 </p:submenu>
@@ -159,7 +159,7 @@
                 </p:panelGrid>
                 <br></br>
                 <center>
-                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="docudialog">
+                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_documentoOfiInt()}" update="docudialog">
                         <f:ajax event="click" onevent="DocuDialog.hide()"/>
                     </p:commandButton>
                 </center>

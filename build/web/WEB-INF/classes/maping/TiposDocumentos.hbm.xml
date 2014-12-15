@@ -20,5 +20,29 @@
             </key>
             <one-to-many class="maping.DetallOficcirc" />
         </set>
+        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
+            </key>
+            <one-to-many class="maping.DocusInternos" />
+        </set>
+        <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
+            </key>
+            <one-to-many class="maping.Oficios" />
+        </set>
+        <set name="documentosOfiints" table="DOCUMENTOS_OFIINT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
+            </key>
+            <one-to-many class="maping.DocumentosOfiint" />
+        </set>
+        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="38" scale="0" />
+            </key>
+            <one-to-many class="maping.DocusExtint" />
+        </set>
     </class>
 </hibernate-mapping>

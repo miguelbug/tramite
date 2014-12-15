@@ -64,34 +64,10 @@
                                 <f:facet name="footer">
                                     <p:commandButton process="tablaconfirmados" id="OfUn" value="Oficio(s)" update=":form2:panelOfUn,:form2:dialogOficioUnico" icon="ui-icon-wrench" style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{documentosBean.mostrarOficio()}" oncomplete="PF('oficiounicodialog').show()" title="Oficio" />
-
-                                    <p:commandButton id="proveidobuton"  process="tablaconfirmados" value="Proveido(S)" update=":form2:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
-                                                     actionListener="#{documentosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos" />
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Proveido-N° #{documentosBean.correlativo_proveido}-#{documentosBean.siglasdocus}-#{documentosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
-                        <center>
-                            <p:panelGrid columns="2" id="panelProvExp">
-                                <p:outputLabel value="Expediente:"/>
-                                <p:outputLabel value="#{documentosBean.tramnum}"/>
-                                <p:outputLabel value="Asunto:"/>
-                                <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto_prov}"/>
-                                <p:outputLabel value="Origen:"/>
-                                <p:outputLabel value="#{documentosBean.origen_prov}"/>
-                                <p:outputLabel value="Destino:"/>
-                                <p:outputLabel value="#{documentosBean.destino_prov}"/>
-                                <p:outputLabel value="Fecha Emisión:"/>
-                                <p:outputLabel value="#{documentosBean.fechaaux}"/>
-                            </p:panelGrid>
-                            <br></br>
-                            <p:commandButton value="Guardar" actionListener="#{documentosBean.Guardar_prov()}" update="proveidoExpediente,mensajeImprimir" oncomplete="PF('dialogMensaje').show()">
-                                <f:ajax event="click" onevent="proveidoExp.hide()"/>
-                            </p:commandButton>
-                        </center>
-                    </p:dialog>
-                    
                     <p:dialog header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="mensajeImprimir">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{documentosBean.correlativo_proveido} CREADO" rendered="#{documentosBean.ver}"/>
@@ -108,7 +84,6 @@
                             
                         </center>
                     </p:dialog>
-                    
                     <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="detallrespuestaresp">
                         <p:dataTable var="car" value="#{documentosBean.Detalle_documento()}" id="tabladetallesResp" >
                             <p:column headerText="Nombre Doc.">

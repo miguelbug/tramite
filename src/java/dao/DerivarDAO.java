@@ -87,4 +87,6 @@ public interface DerivarDAO {
     public TramiteMovimiento getTramiteMovimiento(String numtram, String movi);
 
     public TiposDocumentos getTipoDoc(String tipo);
+    
+    public String getCorrelativoOficinaInterna(Usuario usu, String tipo);
 }
