@@ -22,11 +22,11 @@
                                          rowKey="#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
+                                <p:column headerText="NOMB. DOC." width="5" sortBy="#{item.nombredocu}" filterBy="#{item.nombredocu}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.nombredocu}" />
+                                </p:column>
                                 <p:column headerText="DOCUMENTO" width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
-                                </p:column>
-                                <p:column headerText="FECHA REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <h:outputText value="#{item.asunto}"/>
@@ -37,11 +37,12 @@
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <h:outputText value="#{item.destino}"/>
                                 </p:column>
+                                <p:column headerText="FECHA REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}"/>
+                                </p:column>
+
                                 <p:column headerText="USUARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                     <h:outputText value="#{item.usuario}" />
-                                </p:column>
-                                <p:column headerText="NOMB. DOC." width="5" sortBy="#{item.nombredocu}" filterBy="#{item.nombredocu}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.nombredocu}" />
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton id="proveidobuton"  process="tablainternos" value="Proveido(S)" update=":form:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:25px; height:26px"
@@ -56,6 +57,10 @@
                                          rowKey="#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
+                                
+                                <p:column headerText="NOMB. DOC." width="2" sortBy="#{item.nombdocu}" filterBy="#{item.nombdocu}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.nombdocu}"/>
+                                </p:column>
                                 <p:column headerText="DOCUMENTO" width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
                                 </p:column>
@@ -80,7 +85,7 @@
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
-                    
+
                     <p:dialog header="Proveido-N° #{proveidosInternosBean.correlativo_proveido}-#{proveidosInternosBean.siglasdocus}-#{proveidosInternosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
                         <center>
                             <p:panelGrid columns="2" id="panelProvExp">
@@ -99,7 +104,7 @@
                             </p:panelGrid>
                             <br></br>
                             <p:commandButton value="Guardar" update="proveidoExpediente,mensajeImprimir" actionListener="#{proveidosInternosBean.Guardar_prov()}"
-                                              oncomplete="PF('dialogMensaje').show()">
+                                             oncomplete="PF('dialogMensaje').show()">
                                 <f:ajax event="click" onevent="proveidoExp.hide()"/>
                             </p:commandButton>
                         </center>
@@ -111,13 +116,13 @@
                             <p:commandButton value="Imprimir"  rendered="#{proveidosInternosBean.ver}" ajax="false">
                                 <f:ajax event="click" onevent="dialogMensaje.hide()"/>
                             </p:commandButton>
-                            
+
                             <p:outputLabel value="NO SE HA PODIDO CREAR" rendered="#{proveidosInternosBean.no_ver}"/>
                             <br></br>
                             <p:commandButton value="Aceptar" rendered="#{proveidosInternosBean.no_ver}">
                                 <f:ajax event="click" onevent="dialogMensaje.hide()"/>
                             </p:commandButton>
-                            
+
                         </center>
                     </p:dialog>
                     <br></br>

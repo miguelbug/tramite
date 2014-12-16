@@ -15,21 +15,21 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <p:tabView>
-                        <p:tab title="PROVEIDOS OGPL">
+                        <p:tab title="PROVEIDOS EXTERNOS OGPL">
                             <p:dataTable value="#{docusExternosBean.documentosext}" var="item" paginator="true" rows="15" id="tablaproveidos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{docusExternosBean.otrosdocus}" selection="#{docusExternosBean.docselec}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                                         rowKey="#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
-                                <p:column headerText="CORR." width="2" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
+                                <p:column headerText="CORR." width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.documento}"/>
                                 </p:column>
                                 <p:column headerText="NUMERO DOC." width="5" sortBy="#{item.numerodoc}" filterBy="#{item.numerodoc}" filterMatchMode="contains">
                                     <h:outputText value="#{item.numerodoc}"/>
                                 </p:column>
-                                <p:column headerText="MOV." width="1">
-                                    <h:outputText value="#{item.movimiento}"/>
+                                <p:column headerText="ASUNTO" width="1">
+                                    <h:outputText value="#{item.asunto}"/>
                                 </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origen}" />
@@ -39,6 +39,9 @@
                                 </p:column>
                                 <p:column headerText="F.REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
+                                </p:column>
+                                <p:column headerText="NOMB. DOC." width="5" sortBy="#{item.nombredocu}" filterBy="#{item.nombredocu}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.nombredocu}" />
                                 </p:column>
                                 <p:column headerText="USUARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                     <h:outputText value="#{item.usuario}" />

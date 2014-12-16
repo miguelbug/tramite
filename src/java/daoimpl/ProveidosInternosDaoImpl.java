@@ -28,22 +28,19 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         System.out.println("get docus internos (oficios)");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select td.NOMBRE_DOCU||' '||' N°'||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||to_char(ofi.FECHA_OFICIO,'YYYY') AS DOCUMENTO,\n"
-                    + "to_char(ofi.FECHA_OFICIO,'DD/MM/YYY HH:mm:ss') as fecha,\n"
-                    + "ofi.ASUNTO_OFICIO,\n"
-                    + "d1.NOMBRE as origen,\n"
-                    + "d2.NOMBRE as destino,\n"
-                    + "usua.USU_NOMBRE,\n"
-                    + "td.NOMBRE_DOCU\n"
-                    + "from oficios ofi, tipos_documentos td, dependencia d1, dependencia d2, USUARIO usua, Oficina oficina\n"
-                    + "where ofi.tram_num is null\n"
-                    + "and ofi.codigo <> '100392'\n"
-                    + "and ofi.ID_DOCUMENTO=td.ID_DOCUMENTO\n"
-                    + "and d1.CODIGO=ofi.CODIGO\n"
-                    + "and d2.codigo=ofi.codigo1\n"
-                    + "and ofi.USU=usua.USU\n"
-                    + "and oficina.NOMBRE_OFICINA=d1.NOMBRE\n"
-                    + "order by ofi.CORRELATIVO_OFICIO desc");
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU,\n"
+                    + "DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
+                    + "DOIF.ASUNTO,\n"
+                    + "TO_CHAR(DOIF.FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "U.USU_NOMBRE\n"
+                    + "FROM DOCUMENTOS_OFIINT DOIF, USUARIO U, DEPENDENCIA D1, DEPENDENCIA D2, TIPOS_DOCUMENTOS TD\n"
+                    + "WHERE DOIF.USU=U.USU\n"
+                    + "AND DOIF.CODIGO=D1.CODIGO\n"
+                    + "AND DOIF.CODIGO1=D2.CODIGO\n"
+                    + "AND DOIF.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "ORDER BY DOIF.CORRELATIVO_DOCOFINT DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -79,20 +76,22 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         System.out.println("get docus internos (oficios)");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||OFI.SIGLAS||'-'||TO_CHAR(DE.FECHA,'YYYY') AS DOCUMENTO,\n"
+            Query query = session.createSQLQuery("select DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
                     + "DE.NUMERODOC,\n"
-                    + "TO_CHAR(DE.FECHA_ENVIO,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
                     + "DE.ASUNTO,\n"
-                    + "D1.NOMBRE AS ORIGEN,\n"
-                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "M1.NOMBRE AS ORIGEN,\n"
+                    + "M2.NOMBRE AS DESTINO,\n"
+                    + "to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,\n"
+                    + "TD.NOMBRE_DOCU,\n"
                     + "USUA.USU_NOMBRE\n"
-                    + "FROM DOCUS_EXTINT DE, DEPENDENCIA D1, DEPENDENCIA D2, USUARIO USUA, TIPOS_DOCUMENTOS TD, OFICINA OFI\n"
-                    + "WHERE DE.CODIGO=D1.CODIGO\n"
-                    + "AND DE.CODIGO1=D2.CODIGO\n"
-                    + "AND DE.USU=USUA.USU\n"
+                    + "from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina\n"
+                    + "WHERE DE.CODIGO=M1.CODIGO\n"
+                    + "AND DE.CODIGO1=M2.CODIGO\n"
                     + "AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "AND USUA.ID_OFICINA=OFI.ID_OFICINA\n"
-                    + "ORDER BY DE.CORRELATIVOD DESC");
+                    + "AND DE.USU=USUA.USU\n"
+                    + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
+                    + "AND DE.EXT_INT='pi'\n"
+                    + "ORDER BY DE.ID DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
