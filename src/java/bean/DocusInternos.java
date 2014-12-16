@@ -8,6 +8,7 @@ package bean;
 
 import dao.DocusInternosDAO;
 import daoimpl.DocusInternosDaoImpl;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,16 +28,18 @@ import maping.Usuario;
  */
 @ManagedBean
 @ViewScoped
-public class DocusInternos {
+public class DocusInternos implements Serializable{
 
     private List docusinternos;
     private Usuario usu;
     private final FacesContext faceContext;
     private DocusInternosDAO did;
     private List otrosdocus;
-    private List docselec;
-    private static Date fecha1;
-    private static Date fecha2;
+    public  List docselec;
+    private Date fecha1_1;
+    private Date fecha2_2;
+    public static Date fecha1;
+    public static Date fecha2;
     private String tipodocumento;
     
     
@@ -60,15 +63,16 @@ public class DocusInternos {
             List lista = new ArrayList();
             lista = did.getDocusInternos(usu.getUsu());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[8];
+            Object obj[] = new Object[9];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("numerotramite",String.valueOf(obj[1])+"-"+String.valueOf(obj[0])+"-"+String.valueOf(obj[2])+"-"+String.valueOf(obj[3]));
-                listaaux.put("fechareg", String.valueOf(obj[4]));
-                listaaux.put("tramnum", String.valueOf(obj[5]));
-                listaaux.put("usu", String.valueOf(obj[6]));
-                listaaux.put("asunto", String.valueOf(obj[7]));
+                listaaux.put("posi", String.valueOf(obj[0]));
+                listaaux.put("numerotramite",String.valueOf(obj[2])+"-"+String.valueOf(obj[1])+"-"+String.valueOf(obj[3])+"-"+String.valueOf(obj[4]));
+                listaaux.put("fechareg", String.valueOf(obj[5]));
+                listaaux.put("tramnum", String.valueOf(obj[6]));
+                listaaux.put("usu", String.valueOf(obj[7]));
+                listaaux.put("asunto", String.valueOf(obj[8]));
                 docusinternos.add(listaaux);
             }
 
@@ -116,21 +120,7 @@ public class DocusInternos {
         this.docselec = docselec;
     }
 
-    public Date getFecha1() {
-        return fecha1;
-    }
-
-    public void setFecha1(Date fecha1) {
-        this.fecha1 = fecha1;
-    }
-
-    public Date getFecha2() {
-        return fecha2;
-    }
-
-    public void setFecha2(Date fecha2) {
-        this.fecha2 = fecha2;
-    }
+    
 
     public String getTipodocumento() {
         return tipodocumento;
@@ -138,6 +128,38 @@ public class DocusInternos {
 
     public void setTipodocumento(String tipodocumento) {
         this.tipodocumento = tipodocumento;
+    }
+
+    public static Date getFecha1() {
+        return fecha1;
+    }
+
+    public static void setFecha1(Date fecha1) {
+        DocusInternos.fecha1 = fecha1;
+    }
+
+    public static Date getFecha2() {
+        return fecha2;
+    }
+
+    public static void setFecha2(Date fecha2) {
+        DocusInternos.fecha2 = fecha2;
+    }
+
+    public Date getFecha1_1() {
+        return fecha1_1;
+    }
+
+    public void setFecha1_1(Date fecha1_1) {
+        this.fecha1_1 = fecha1_1;
+    }
+
+    public Date getFecha2_2() {
+        return fecha2_2;
+    }
+
+    public void setFecha2_2(Date fecha2_2) {
+        this.fecha2_2 = fecha2_2;
     }
     
 }

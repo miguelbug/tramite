@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.TemporalDi" table="TEMPORAL_DI" schema="MIGUEL">
+        <id name="id_temp" type="long">
+            <column name="ID_TEMP" precision="10" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="nombDocu" type="string">
+            <column name="NOMB_DOCU" length="100" />
+        </property>
+        <property name="fechaReg" type="date">
+            <column name="FECHA_REG" length="7" />
+        </property>
+        <property name="tramNum" type="string">
+            <column name="TRAM_NUM" length="100" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="USUARIO" length="100" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="300" />
+        </property>
+        <property name="impreso" type="string">
+            <column name="IMPRESO" length="30" />
+        </property>
+        <property name="reimpreso" type="string">
+            <column name="REIMPRESO" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

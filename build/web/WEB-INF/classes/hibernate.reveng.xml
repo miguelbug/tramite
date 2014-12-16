@@ -22,4 +22,5 @@
     <table-filter match-name="OFIC_CIRC"/>
     <table-filter match-name="OFICINA"/>
     <table-filter match-name="DOCUMENTOS_OFIINT"/>
+    <table-filter match-name="TEMPORAL_DI"/>
 </hibernate-reverse-engineering>

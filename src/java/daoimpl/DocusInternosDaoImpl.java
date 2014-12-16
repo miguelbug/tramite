@@ -29,17 +29,19 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get DOCUS INTERNO");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT DOCU_CORRELAINT,"
-                    + "DOCU_NOMBREINT,"
-                    + "DOCU_SIGLASINT,"
-                    + "DOCU_ANIOINT,"
-                    + "FECHAREGISTRO,"
-                    + "TRAM_NUM,"
-                    + "USU,"
-                    + "DOCU_ASUNTO\n"
-                    + "FROM DOCUS_INTERNOS\n"
-                    + "WHERE USU='"+usu+"'\n"
-                    + "ORDER BY DOCU_CORRELAINT DESC");
+            Query query = session.createSQLQuery("SELECT DI.IDTIP,"
+                    + "DI.DOCU_CORRELAINT,"
+                    + "DI.DOCU_NOMBREINT,"
+                    + "DI.DOCU_SIGLASINT,"
+                    + "DI.DOCU_ANIOINT,"
+                    + "TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,"
+                    + "DI.TRAM_NUM,"
+                    + "USUA.USU_NOMBRE,"
+                    + "DI.DOCU_ASUNTO\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA\n"
+                    + "WHERE DI.USU='"+usu+"'\n"
+                    + "AND DI.USU=USUA.USU\n"
+                    + "ORDER BY DI.DOCU_CORRELAINT DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
