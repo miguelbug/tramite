@@ -28,7 +28,6 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         System.out.println("get docus internos (oficios)");
         try {
             session.beginTransaction();
-<<<<<<< HEAD
             Query query = session.createSQLQuery("select td.NOMBRE_DOCU||' '||' N°'||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||to_char(ofi.FECHA_OFICIO,'YYYY') AS DOCUMENTO,\n"
                     + "to_char(ofi.FECHA_OFICIO,'DD/MM/YYY HH:mm:ss') as fecha,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
@@ -45,20 +44,6 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + "and ofi.USU=usua.USU\n"
                     + "and oficina.NOMBRE_OFICINA=d1.NOMBRE\n"
                     + "order by ofi.CORRELATIVO_OFICIO desc");
-=======
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
-                    + "TO_CHAR(DOIF.FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
-                    + "DOIF.ASUNTO,\n"
-                    + "D1.NOMBRE AS ORIGEN,\n"
-                    + "D2.NOMBRE AS DESTINO,\n"
-                    + "USUA.USU_NOMBRE,\n"
-                    + "TD.NOMBRE_DOCU\n"
-                    + "FROM DOCUMENTOS_OFIINT DOIF, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2, USUARIO USUA\n"
-                    + "WHERE DOIF.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "AND DOIF.CODIGO=D1.CODIGO\n"
-                    + "AND DOIF.CODIGO1=D2.CODIGO\n"
-                    + "AND DOIF.USU=USUA.USU\n"
-                    + "ORDER BY DOIF.CORRELATIVO_DOCOFINT DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -108,7 +93,6 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + "AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "AND USUA.ID_OFICINA=OFI.ID_OFICINA\n"
                     + "ORDER BY DE.CORRELATIVOD DESC");
->>>>>>> origin/master
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
