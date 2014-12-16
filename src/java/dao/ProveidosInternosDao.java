@@ -7,6 +7,7 @@
 package dao;
 
 import java.util.List;
+import maping.Usuario;
 
 /**
  *
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface ProveidosInternosDao {
     public List getDocumentosInternos();
+    public Usuario getUsuario(String nombre);
+    public List getProveidosinternos();
 }

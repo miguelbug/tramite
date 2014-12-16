@@ -12,8 +12,6 @@
     <mapping resource="maping/OficCirc.hbm.xml"/>
     <mapping resource="maping/Dependencia.hbm.xml"/>
     <mapping resource="maping/TipoDocu.hbm.xml"/>
-    <mapping resource="maping/Proveido.hbm.xml"/>
-    <mapping resource="maping/DocusExt.hbm.xml"/>
     <mapping resource="maping/DetallOficcirc.hbm.xml"/>
     <mapping resource="maping/TramiteDatos.hbm.xml"/>
     <mapping resource="maping/Jefatura.hbm.xml"/>
@@ -30,5 +28,6 @@
     <mapping resource="maping/Temporal.hbm.xml"/>
     <mapping resource="maping/TipoContrato.hbm.xml"/>
     <mapping resource="maping/TiposDocumentos.hbm.xml"/>
+    <mapping resource="maping/DocumentosOfiint.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

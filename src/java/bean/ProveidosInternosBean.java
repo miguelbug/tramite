@@ -10,6 +10,7 @@ import dao.DerivarDAO;
 import dao.ProveidosInternosDao;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.ProveidosInternosDaoImpl;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,10 +18,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import maping.DocusExtint;
+import maping.TiposDocumentos;
 import maping.Usuario;
 
 /**
@@ -31,27 +35,29 @@ import maping.Usuario;
 @ViewScoped
 public class ProveidosInternosBean {
 
-    private List documentos_internos, docselec, otrosdocus;
+    private List documentos_internos, docselec, otrosdocus, proveidos_internos;
     private ProveidosInternosDao pid;
     private Usuario usu;
     private final FacesContext faceContext;
     private Date fechaprov;
     private String fechaaux, tramnum;
     private Date fecha;
-    private String correlativo_proveido,origen_prov,destino_prov,siglasdocus,anio,asunto;
+    private String correlativo_proveido, origen_prov, destino_prov, siglasdocus, anio, asunto, usuario;
     private DerivarDAO deriv;
-    private boolean mostrar = false, hecho, nohecho,ver,no_ver;
+    private boolean mostrar = false, hecho, nohecho, ver, no_ver;
 
     public ProveidosInternosBean() {
-        fechaprov=new Date();
-        fecha= new Date();
-        deriv= new DerivarDaoImpl();
+        fechaprov = new Date();
+        fecha = new Date();
+        deriv = new DerivarDaoImpl();
         documentos_internos = new ArrayList<Map<String, String>>();
+        proveidos_internos = new ArrayList<Map<String, String>>();
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         pid = new ProveidosInternosDaoImpl();
         getLista();
+        getProveidosInternos();
     }
 
     public void getLista() {
@@ -80,6 +86,32 @@ public class ProveidosInternosBean {
         }
     }
 
+    public void getProveidosInternos() {
+        System.out.println("listando documentos internos");
+        this.proveidos_internos.clear();
+        try {
+            List lista = new ArrayList();
+            lista = pid.getProveidosinternos();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("documento", String.valueOf(obj[0]));
+                listaaux.put("numero", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]));
+                listaaux.put("origen", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("usuario", String.valueOf(obj[6]));
+                proveidos_internos.add(listaaux);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void mostrarProveido() {
         fechaprov = new Date();
         System.out.println(docselec);
@@ -91,9 +123,11 @@ public class ProveidosInternosBean {
         generarCorrelativo_proveido();
         origen_prov = hm.get("origen").toString();
         destino_prov = hm.get("destino").toString();
+        asunto = hm.get("asunto").toString();
         tranum = correlativo_proveido;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf2.format(fechaprov);
+        usuario = hm.get("usuario").toString();
     }
 
     public void generarCorrelativo_proveido() {
@@ -135,8 +169,40 @@ public class ProveidosInternosBean {
         }
         correlativo_proveido = aux;
     }
+
+    public void Guardar_prov() {
+        System.out.println("ENTRA LA P....");
+        DocusExtint di = new DocusExtint();
+        FacesMessage message = null;
+        TiposDocumentos td = new TiposDocumentos();
+        td.setFlag("2");
+        td.setNombreDocu("PROVEIDOS");
+        td.setIdDocumento(BigDecimal.valueOf(6));
+        try {
+            System.out.println(asunto);
+            di.setNumerodoc(tramnum);
+            di.setAsunto(asunto);
+            di.setFecha(fechaprov);
+            di.setFechaEnvio(fechaprov);
+            di.setDependenciaByCodigo(deriv.getDep(origen_prov));
+            di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
+            di.setMovimientoDext(Long.parseLong("1"));
+            di.setUsuario(pid.getUsuario(usuario));
+            di.setCorrelativod(correlativo_proveido);
+            di.setExtInt("pi");
+            di.setTiposDocumentos(td);
+            deriv.guardarDocusExt(di);
+            ver = true;
+            no_ver = false;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            ver = false;
+            no_ver = true;
+        }
+    }
+
     public String getAnio() {
-        fecha= new Date();
+        fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
         return sdf.format(fecha);
     }
@@ -299,6 +365,22 @@ public class ProveidosInternosBean {
 
     public void setNo_ver(boolean no_ver) {
         this.no_ver = no_ver;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public List getProveidos_internos() {
+        return proveidos_internos;
+    }
+
+    public void setProveidos_internos(List proveidos_internos) {
+        this.proveidos_internos = proveidos_internos;
     }
 
 }

@@ -53,12 +53,7 @@
             </key>
             <one-to-many class="maping.TramiteMovimiento" />
         </set>
-        <set name="proveidosForCodigo1" table="PROVEIDO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO1" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.Proveido" />
-        </set>
+        
         <set name="docusExtintsForCodigo" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />
@@ -70,12 +65,6 @@
                 <column name="CODIGO1" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.Oficios" />
-        </set>
-        <set name="proveidosForCodigo" table="PROVEIDO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.Proveido" />
         </set>
         <set name="oficiosesForCodigo" table="OFICIOS" inverse="true" lazy="true" fetch="select">
             <key>

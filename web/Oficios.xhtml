@@ -44,7 +44,7 @@
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
-                                                     update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirOficioUnico()}"/>
+                                                     update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirDocumento()}"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
@@ -80,6 +80,7 @@
                         <br></br>
                         <center>
                             <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
+                                <f:ajax event="click" onevent="OFUnicDialog.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>

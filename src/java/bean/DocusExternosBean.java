@@ -26,12 +26,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import maping.DocusExt;
 import maping.DocusExtint;
-import maping.Proveido;
 import maping.Usuario;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -45,6 +42,7 @@ public class DocusExternosBean implements Serializable {
     private String origen;
     private String destino;
     private List dependenciasprov;
+    private List dependenciasprov2;
     private Date fechaprov;
     private DocumentoDAO dd;
     private FacesContext faceContext;
@@ -74,6 +72,7 @@ public class DocusExternosBean implements Serializable {
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         dependenciasprov = new ArrayList<Map<String, String>>();
+        dependenciasprov2 = new ArrayList<Map<String, String>>();
         documentosext = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
@@ -96,7 +95,7 @@ public class DocusExternosBean implements Serializable {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("correlativo", String.valueOf(obj[0]).replaceAll(String.valueOf(obj[0]).substring(0, 2), getCadenaCorr(String.valueOf(obj[0]).substring(0,1))+"-"));
+                listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("numerodoc", String.valueOf(String.valueOf(obj[6]) + "-" + obj[1]));
                 listaaux.put("movimiento", String.valueOf(obj[2]));
                 listaaux.put("origen", String.valueOf(obj[3]));
@@ -142,25 +141,29 @@ public class DocusExternosBean implements Serializable {
         try {
             tiposdocus = od.getTiposDocus("0");
         } catch (Exception e) {
+            System.out.println("MAL");
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
 
     public void Proveidoo() {
+        
         System.out.println("entra aca 1");
         fechaactual();
-        System.out.println("entra aca 2");
         getAnio();
-        System.out.println("entra aca 3");
-        generarCorrelativo();
         ObtenerTiposDocus();
+        generarCorrelativo();
+
     }
 
     public void ObtenerDepIndic() {
+        dependenciasprov.clear();
         dependenciasprov = dd.getDependencias(tipodestino);
     }
     public void ObtenerDepIndic2(){
-        dependenciasprov = dd.getDependencias(tipoorigen);
+        dependenciasprov.clear();
+        dependenciasprov2 = dd.getDependencias(tipoorigen);
     }
 
     public void getAnio() {
@@ -252,11 +255,9 @@ public class DocusExternosBean implements Serializable {
 
     }
 
-    public void guardar() {
+    public void Guardar_ProvExt() {
         System.out.println("SE HA GUARDADO");
-        DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
-        Proveido p = new Proveido();
         FacesMessage message = null;
         try {
             di.setNumerodoc(codigoexp);
@@ -265,25 +266,20 @@ public class DocusExternosBean implements Serializable {
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));
             di.setMovimientoDext(Long.parseLong("1"));
-            de = deriv.getDocuExt(documento);
-            di.setDocusExt(de);
             di.setUsuario(usu);
-
-            p.setCorrelativod(correlativo);
-            p.setDependenciaByCodigo(deriv.getDep(origen));
-            p.setDependenciaByCodigo1(deriv.getDep(destino));
-            p.setDocusExtint(di);
-            p.setFechaenvio(fechaprov);
-            p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
-
+            di.setCorrelativod(correlativo);
+            di.setFechaEnvio(fechaprov);
+            di.setTiposDocumentos(deriv.getTipoDoc(documento));
+            di.setExtInt("pe");
             deriv.guardarDocusExt(di);
-            deriv.GuardarProveido(p);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
             MostrarDocusExt();
         } catch (Exception e) {
+            System.out.println("PROBLEMAS PROVEIDO EXTERNO");
             System.out.println(e.getMessage());
+            e.printStackTrace();
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
@@ -483,6 +479,14 @@ public class DocusExternosBean implements Serializable {
 
     public void setTipoorigen(String tipoorigen) {
         this.tipoorigen = tipoorigen;
+    }
+
+    public List getDependenciasprov2() {
+        return dependenciasprov2;
+    }
+
+    public void setDependenciasprov2(List dependenciasprov2) {
+        this.dependenciasprov2 = dependenciasprov2;
     }
 
 }

@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import maping.DetallOficcirc;
+import maping.DocumentosOfiint;
 import maping.OficCirc;
 import maping.Oficios;
 import maping.Usuario;
@@ -127,13 +128,17 @@ public class OficioBean {
             mostrarofCirc();
         }
     }
-
+    public void abrirOficioUnico(){
+        getAnio();
+        generarFecha();
+        
+    }
     public void ObtenerTiposDocus2() {
         System.out.println("listando tipos docus");
         tiposdocus.clear();
         try {
             System.out.println("OBTENER TIPOS DOCUS");
-            tiposdocus=od.getTiposDocus("1");
+            tiposdocus = od.getTiposDocus("1");
         } catch (Exception e) {
             System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
@@ -146,7 +151,7 @@ public class OficioBean {
         tiposdocus.clear();
         try {
             System.out.println("OBTENER TIPOS DOCUS");
-            tiposdocus=od.getTiposDocus("0");
+            tiposdocus = od.getTiposDocus("0");
         } catch (Exception e) {
             System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
@@ -154,7 +159,7 @@ public class OficioBean {
         System.out.println(tiposdocus);
     }
 
-    public void abrirOficioUnico() {
+    public void abrirDocumento() {
         getAnio();
         generarFecha();
         generarCorrelativo2();
@@ -176,7 +181,7 @@ public class OficioBean {
         responsable();
         arearesponsable();
         firma();
-        
+
         System.out.println("ESTAMOS EN ABRIR OFICIO");
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
@@ -257,7 +262,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(od.getCorrela(usu.getUsu(),escogido2));
+                corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -407,17 +412,44 @@ public class OficioBean {
         FacesMessage message = null;
         try {
             Oficios ofi = new Oficios();
-            ofi.setAsuntoOficio(asunto);
-            ofi.setCorrelativoOficio(correlativo2);
-            ofi.setFechaOficio(fecha);
-            ofi.setDependenciaByCodigo(deriv.getDep(origen));
-            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
-            ofi.setReferenciaOficio(null);
-            ofi.setTramiteDatos(null);
-            ofi.setUsuario(usu);
-            System.out.println(escogido2);
-            ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
-            dd.guardarOficio2(ofi);
+             ofi.setAsuntoOficio(asunto);
+             ofi.setCorrelativoOficio(correlativo2);
+             ofi.setFechaOficio(fecha);
+             ofi.setDependenciaByCodigo(deriv.getDep(origen));
+             ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
+             ofi.setReferenciaOficio(null);
+             ofi.setTramiteDatos(null);
+             ofi.setUsuario(usu);
+             System.out.println(escogido2);
+             ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
+             dd.guardarOficio2(ofi);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println("mal guardar oficiounico");
+            System.out.println(e.getMessage());
+        }
+        getAnio();
+        generarFecha();
+        generarCorrelativo2();
+        this.asunto = "";
+    }
+
+    public void guardar_documentoOfiInt() {
+        FacesMessage message = null;
+        try {
+            DocumentosOfiint doif = new DocumentosOfiint();
+            doif.setAsunto(asunto);
+            doif.setCorrelativoDocofint(correlativo2);
+            doif.setFecha(fecha);
+            doif.setDependenciaByCodigo(deriv.getDep(origen));
+            doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
+            doif.setTiposDocumentos(od.getTipoDocu(escogido2));
+            doif.setSiglas(siglasdocus);
+            doif.setUsuario(usu);
+            od.GuardarDocumentoOfiInt(doif);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {

@@ -15,7 +15,7 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <p:tabView>
-                        <p:tab title="PROVEIDOS INTERNOS">
+                        <p:tab title="DOCUMENTOS INTERNOS">
                             <p:dataTable value="#{proveidosInternosBean.documentos_internos}" var="item" paginator="true" rows="15" id="tablainternos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus}" selection="#{proveidosInternosBean.docselec}"
@@ -44,9 +44,39 @@
                                     <h:outputText value="#{item.nombredocu}" />
                                 </p:column>
                                 <f:facet name="footer">
-                                    <p:commandButton id="proveidobuton"  process="tablainternos" value="Proveido(S)" update=":form:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:175px; height:26px"
+                                    <p:commandButton id="proveidobuton"  process="tablainternos" value="Proveido(S)" update=":form:proveidoExpediente"  icon="ui-icon-extlink"  style="position:absolute; left:25px; height:26px"
                                                      actionListener="#{proveidosInternosBean.mostrarProveido()}" oncomplete="PF('proveidoExp').show()" title="Proveidos" />
                                 </f:facet>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="PROVEIDOS INTERNOS">
+                            <p:dataTable value="#{proveidosInternosBean.proveidos_internos}" var="item" paginator="true" rows="15" id="tablaproveidosinternos" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus}" selection="#{proveidosInternosBean.docselec}"
+                                         rowKey="#{item.documento}" style="margin-bottom: 0">
+
+                                <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
+                                <p:column headerText="DOCUMENTO" width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.documento}"/>
+                                </p:column>
+                                <p:column headerText="NUMERO DOC." width="2" sortBy="#{item.numero}" filterBy="#{item.numero}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.numero}"/>
+                                </p:column>
+                                <p:column headerText="FECHA REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asunto}"/>
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}" />
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}"/>
+                                </p:column>
+                                <p:column headerText="USUARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.usuario}" />
+                                </p:column>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
@@ -62,11 +92,14 @@
                                 <p:outputLabel value="#{proveidosInternosBean.origen_prov}"/>
                                 <p:outputLabel value="Destino:"/>
                                 <p:outputLabel value="#{proveidosInternosBean.destino_prov}"/>
+                                <p:outputLabel value="Encargado:"/>
+                                <p:outputLabel value="#{proveidosInternosBean.usuario}"/>
                                 <p:outputLabel value="Fecha Emisión:"/>
                                 <p:outputLabel value="#{proveidosInternosBean.fechaaux}"/>
                             </p:panelGrid>
                             <br></br>
-                            <p:commandButton value="Guardar" update="proveidoExpediente,mensajeImprimir" oncomplete="PF('dialogMensaje').show()">
+                            <p:commandButton value="Guardar" update="proveidoExpediente,mensajeImprimir" actionListener="#{proveidosInternosBean.Guardar_prov()}"
+                                              oncomplete="PF('dialogMensaje').show()">
                                 <f:ajax event="click" onevent="proveidoExp.hide()"/>
                             </p:commandButton>
                         </center>

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import maping.Dependencia;
 import maping.DetallOficcirc;
+import maping.DocumentosOfiint;
 import maping.OficCirc;
 import maping.Oficina;
 import maping.TiposDocumentos;
@@ -25,6 +26,22 @@ public class OficioDaoImpl implements OficioDAO {
 
     Session session;
 
+    @Override
+    public void GuardarDocumentoOfiInt(DocumentosOfiint doif) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.save(doif);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            System.err.println("falló guardado documentosofiint." + ex);
+            System.out.println(ex.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    
     @Override
     public TiposDocumentos getTipoDocu(String nombre) {
         System.out.println("get tipodocu");
@@ -97,7 +114,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
-                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:MI:SS') as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
                     + "d1.nombre as origen,\n"
@@ -110,7 +127,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "union\n"
                     + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
-                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:MI:SS') as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
                     + "d1.nombre as origen,\n"

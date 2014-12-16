@@ -61,7 +61,7 @@
                             <p:inputText value="#{docusExternosBean.codigoexp}"/>
                             <p:outputLabel value="Asunto: "/>
                             <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}"/>
-                            
+
                             <p:outputLabel value="Tipo de Origen:"/>
                             <p:selectOneMenu value="#{docusExternosBean.tipoorigen}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -70,12 +70,13 @@
                                 <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
                                 <p:ajax event="change" listener="#{docusExternosBean.ObtenerDepIndic2()}" update="deporigen"/>
                             </p:selectOneMenu>
-                            
                             <p:outputLabel value="Dep. Origen: "/>
                             <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:140px" filterMatchMode="contains">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
+                                <f:selectItems value="#{docusExternosBean.dependenciasprov2}"/>                              
                             </p:selectOneMenu>
+
+
                             <p:outputLabel value="Tipo de Destino:"/>
                             <p:selectOneMenu value="#{docusExternosBean.tipodestino}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -89,6 +90,8 @@
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
                             </p:selectOneMenu>
+                            
+
                             <p:outputLabel value="Fecha: "/>
                             <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
                             <p:outputLabel value="Usuario: "/>
@@ -96,7 +99,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv,:form:">
+                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.Guardar_ProvExt()}" update=":form:">
                                 <f:ajax event="click" onevent="provDialog.hide()"/>
                             </p:commandButton>
                         </center>

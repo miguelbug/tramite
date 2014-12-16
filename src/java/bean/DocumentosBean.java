@@ -32,10 +32,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-import maping.DocusExt;
 import maping.DocusExtint;
 import maping.Oficios;
-import maping.Proveido;
 import maping.Temporal;
 import maping.TipoDocu;
 import maping.TiposDocumentos;
@@ -170,9 +168,7 @@ public class DocumentosBean implements Serializable {
 
     public void Guardar_prov() {
         System.out.println("ENTRA LA P....");
-        DocusExt de = new DocusExt();
         DocusExtint di = new DocusExtint();
-        Proveido p = new Proveido();
         FacesMessage message = null;
         try {
             System.out.println(asunto);
@@ -183,19 +179,9 @@ public class DocumentosBean implements Serializable {
             di.setDependenciaByCodigo(deriv.getDep(origen_prov));
             di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
             di.setMovimientoDext(Long.parseLong("1"));
-            de = deriv.getDocuExt(documento);
-            di.setDocusExt(de);
             di.setUsuario(usu);
 
-            p.setCorrelativod(correlativo_proveido);
-            p.setDependenciaByCodigo(deriv.getDep(origen_prov));
-            p.setDependenciaByCodigo1(deriv.getDep(destino_prov));
-            p.setDocusExtint(di);
-            p.setFechaenvio(fechaprov);
-            p.setFecharegistro(fechaprov);//en un primero momento la fecha de ingreso y de envio del proveido será igual después al derivarse será nulo
-
             deriv.guardarDocusExt(di);
-            deriv.GuardarProveido(p);
             MostrarDocusInternos();
             ver=true;
             no_ver=false;

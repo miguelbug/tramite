@@ -19,10 +19,8 @@ public class Dependencia implements java.io.Serializable {
     private Set<Jefatura> jefaturas = new HashSet<Jefatura>(0);
     private Set<DetallOficcirc> detallOficcircs = new HashSet<DetallOficcirc>(0);
     private Set<TramiteMovimiento> tramiteMovimientosForCodigo1 = new HashSet<TramiteMovimiento>(0);
-    private Set<Proveido> proveidosForCodigo1 = new HashSet<Proveido>(0);
     private Set<DocusExtint> docusExtintsForCodigo = new HashSet<DocusExtint>(0);
     private Set<Oficios> oficiosesForCodigo1 = new HashSet<Oficios>(0);
-    private Set<Proveido> proveidosForCodigo = new HashSet<Proveido>(0);
     private Set<Oficios> oficiosesForCodigo = new HashSet<Oficios>(0);
     private Set<DocusExtint> docusExtintsForCodigo1 = new HashSet<DocusExtint>(0);
 
@@ -33,7 +31,7 @@ public class Dependencia implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    public Dependencia(long codigo, String nombre, String tipodepe, String flac, Set<TramiteDatos> tramiteDatoses, Set<TramiteMovimiento> tramiteMovimientosForCodigo, Set<OficCirc> oficCircs, Set<Jefatura> jefaturas, Set<DetallOficcirc> detallOficcircs, Set<TramiteMovimiento> tramiteMovimientosForCodigo1, Set<Proveido> proveidosForCodigo1, Set<DocusExtint> docusExtintsForCodigo, Set<Oficios> oficiosesForCodigo1, Set<Proveido> proveidosForCodigo, Set<Oficios> oficiosesForCodigo, Set<DocusExtint> docusExtintsForCodigo1) {
+    public Dependencia(long codigo, String nombre, String tipodepe, String flac, Set<TramiteDatos> tramiteDatoses, Set<TramiteMovimiento> tramiteMovimientosForCodigo, Set<OficCirc> oficCircs, Set<Jefatura> jefaturas, Set<DetallOficcirc> detallOficcircs, Set<TramiteMovimiento> tramiteMovimientosForCodigo1, Set<DocusExtint> docusExtintsForCodigo, Set<Oficios> oficiosesForCodigo1, Set<Oficios> oficiosesForCodigo, Set<DocusExtint> docusExtintsForCodigo1) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.tipodepe = tipodepe;
@@ -44,10 +42,8 @@ public class Dependencia implements java.io.Serializable {
         this.jefaturas = jefaturas;
         this.detallOficcircs = detallOficcircs;
         this.tramiteMovimientosForCodigo1 = tramiteMovimientosForCodigo1;
-        this.proveidosForCodigo1 = proveidosForCodigo1;
         this.docusExtintsForCodigo = docusExtintsForCodigo;
         this.oficiosesForCodigo1 = oficiosesForCodigo1;
-        this.proveidosForCodigo = proveidosForCodigo;
         this.oficiosesForCodigo = oficiosesForCodigo;
         this.docusExtintsForCodigo1 = docusExtintsForCodigo1;
     }
@@ -132,14 +128,6 @@ public class Dependencia implements java.io.Serializable {
         this.tramiteMovimientosForCodigo1 = tramiteMovimientosForCodigo1;
     }
 
-    public Set<Proveido> getProveidosForCodigo1() {
-        return this.proveidosForCodigo1;
-    }
-
-    public void setProveidosForCodigo1(Set<Proveido> proveidosForCodigo1) {
-        this.proveidosForCodigo1 = proveidosForCodigo1;
-    }
-
     public Set<DocusExtint> getDocusExtintsForCodigo() {
         return this.docusExtintsForCodigo;
     }
@@ -154,14 +142,6 @@ public class Dependencia implements java.io.Serializable {
 
     public void setOficiosesForCodigo1(Set<Oficios> oficiosesForCodigo1) {
         this.oficiosesForCodigo1 = oficiosesForCodigo1;
-    }
-
-    public Set<Proveido> getProveidosForCodigo() {
-        return this.proveidosForCodigo;
-    }
-
-    public void setProveidosForCodigo(Set<Proveido> proveidosForCodigo) {
-        this.proveidosForCodigo = proveidosForCodigo;
     }
 
     public Set<Oficios> getOficiosesForCodigo() {

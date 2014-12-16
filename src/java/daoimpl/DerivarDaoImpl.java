@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import maping.Dependencia;
-import maping.DocusExt;
 import maping.DocusExtint;
 import maping.DocusInternos;
 import maping.Indicador;
 import maping.Oficina;
-import maping.Proveido;
 import maping.TipoDocu;
 import maping.TiposDocumentos;
 import maping.TramiteDatos;
@@ -97,6 +95,32 @@ public class DerivarDaoImpl implements DerivarDAO {
         return index;
     }
 
+    @Override
+    public String getCorrelativoOficinaInterna(Usuario usu, String tipo) {
+        System.out.println("getcorrelativooficinainterna");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT MAX(DOFI.CORRELATIVO_DOCOFINT) FROM DOCUMENTOS_OFIINT DOFI, "
+                + "TIPOS_DOCUMENTOS TD "
+                + "WHERE DOFI.USU='"+usu.getUsu()+"' "
+                + "AND TD.NOMBRE_DOCU = '"+tipo+"' "
+                + "AND DOFI.ID_DOCUMENTO=TD.ID_DOCUMENTO";
+        try {
+            session.beginTransaction();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal getcorrelativooficinainterna");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
+    
+    
     @Override
     public String getSiglas(String ofi, String usu) {
         System.out.println("oficina: " + ofi);
@@ -625,32 +649,14 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void GuardarProveido(Proveido p) {
-        System.out.println("entra a guardar proevido");
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(p);
-            session.getTransaction().commit();
-            System.out.println("terminó guardar proveido");
-        } catch (Exception e) {
-            System.out.println("mal proveido");
-            System.out.println(e.getMessage());
-            session.beginTransaction().rollback();
-        } finally {
-            session.close();
-        }
-    }
-
-    @Override
     public String getCorreProv() {
-        System.out.println("get proveido");
+        System.out.println("get correla docusextint");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(correlativod) from Proveido";
+        String sql = "SELECT MAX(CORRELATIVOD) FROM DOCUS_EXTINT";
         try {
             session.beginTransaction();
-            index = (String) session.createQuery(sql).uniqueResult();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
             session.beginTransaction().commit();
         } catch (Exception e) {
             System.out.println("mal get corre prov");
@@ -682,31 +688,12 @@ public class DerivarDaoImpl implements DerivarDAO {
         return index;
     }
 
-    @Override
-    public DocusExt getDocuExt(String codigo) {
-        System.out.println("get docu ext");
-        DocusExt index = null;
-        session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "FROM DocusExt where nombdocu='" + codigo + "'";
-        try {
-            session.beginTransaction();
-            index = (DocusExt) session.createQuery(sql).uniqueResult();
-            session.beginTransaction().commit();
-        } catch (Exception e) {
-            System.out.println("mal getdocuext");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return index;
-    }
 
     @Override
     public void guardarDocusExt(DocusExtint de) {
         System.out.println("entra a guardardocusext");
+        session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(de);
             session.getTransaction().commit();
