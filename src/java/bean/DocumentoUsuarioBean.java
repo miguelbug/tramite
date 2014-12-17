@@ -43,12 +43,12 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados, listadocspropios, listadocpropioscir;
-    private Map<String, String> seleccion;
+    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private Map<String, String> seleccion,seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
-    private String asignado, fechadia, fechanio = "", fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
+    private String tipodocupropio, tipodocupropio2, asignado, fechadia, fechanio = "", fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
     private final FacesContext faceContext;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
@@ -84,8 +84,108 @@ public class DocumentoUsuarioBean {
 
     }
 
+    public void listarDocPropiosCircXtipo() {
+        System.out.println("listando documentos2");
+        listadocpropioscir.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = di.getCircularesOficInternaXtipo(usu.getUsuNombre(), tipodocupropio2);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[6];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("documento", String.valueOf(obj[0]));
+                listaaux.put("asunto", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("firma", String.valueOf(obj[4]));
+                listaaux.put("responsable", String.valueOf(obj[5]));
+                listadocpropioscir.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void listarDocPropiosCirc() {
+        System.out.println("listando documentos2");
+        listadocpropioscir.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = di.getCircularesOficInterna(usu.getUsuNombre());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[6];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("documento", String.valueOf(obj[0]));
+                listaaux.put("asunto", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("firma", String.valueOf(obj[4]));
+                listaaux.put("responsable", String.valueOf(obj[5]));
+                listadocpropioscir.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void listarDocPropios() {
-        
+        System.out.println("listando documentos2");
+        listadocspropios.clear();
+
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = di.getDocInternos(usu.getUsu());
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj[0]));
+                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("asunto", String.valueOf(obj[2]));
+                listaaux.put("fecha", String.valueOf(obj[3]));
+                listaaux.put("origen", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("usuario", String.valueOf(obj[6]));
+                listadocspropios.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void listarDocPropiosXtipo() {
+        System.out.println("listando documentos2");
+        listadocspropios.clear();
+
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = di.getDocInternosXtipo(usu.getUsu(), this.tipodocupropio);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj[0]));
+                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("asunto", String.valueOf(obj[2]));
+                listaaux.put("fecha", String.valueOf(obj[3]));
+                listaaux.put("origen", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("usuario", String.valueOf(obj[6]));
+                listadocspropios.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void abrirAsignacion() {
@@ -804,6 +904,54 @@ public class DocumentoUsuarioBean {
 
     public void setListadocpropioscir(List listadocpropioscir) {
         this.listadocpropioscir = listadocpropioscir;
+    }
+
+    public String getTipodocupropio() {
+        return tipodocupropio;
+    }
+
+    public void setTipodocupropio(String tipodocupropio) {
+        this.tipodocupropio = tipodocupropio;
+    }
+
+    public List getOtrosdocus2() {
+        return otrosdocus2;
+    }
+
+    public void setOtrosdocus2(List otrosdocus2) {
+        this.otrosdocus2 = otrosdocus2;
+    }
+
+    public String getTipodocupropio2() {
+        return tipodocupropio2;
+    }
+
+    public void setTipodocupropio2(String tipodocupropio2) {
+        this.tipodocupropio2 = tipodocupropio2;
+    }
+
+    public List getDocselec3() {
+        return docselec3;
+    }
+
+    public void setDocselec3(List docselec3) {
+        this.docselec3 = docselec3;
+    }
+
+    public List getDocselec4() {
+        return docselec4;
+    }
+
+    public void setDocselec4(List docselec4) {
+        this.docselec4 = docselec4;
+    }
+
+    public Map<String, String> getSeleccion2() {
+        return seleccion2;
+    }
+
+    public void setSeleccion2(Map<String, String> seleccion2) {
+        this.seleccion2 = seleccion2;
     }
 
 }

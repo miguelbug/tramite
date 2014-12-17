@@ -16,66 +16,112 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="DOCUMENTOS PROPIOS" id="tab1_1">
-                            <p:dataTable value="" var="item" paginator="true" rows="15" id="tablasdocpropios" 
+                            <center>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Escoger Tipo de Documento: "/>
+                                    <p:panelGrid columns="2">
+                                        <p:selectOneMenu value="#{documentoUsuarioBean.tipodocupropio}">
+                                            <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                            <f:selectItem itemLabel="INFORME" itemValue="1"/>
+                                            <f:selectItem itemLabel="OFICIO" itemValue="2"/>
+                                            <f:selectItem itemLabel="CARTA" itemValue="4"/>
+                                            <f:selectItem itemLabel="MEMOS" itemValue="7"/>
+                                        </p:selectOneMenu>
+                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios"/>
+                                    </p:panelGrid>
+                                </p:panelGrid>
+                                <br></br>
+                                <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios"/>
+                            </center>
+                            <br></br>
+                            <br></br>
+                            <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue=""
-                                         rowKey="">
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec3}"
+                                         rowKey="#{item.iddoc}">
 
-                                <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="#" width="1">
+                                    <h:outputText value="#{item.iddoc}"/>
                                 </p:column>
-                                <p:column headerText="ASUNTO" width="3" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
-                                </p:column>
-                                <p:column headerText="AREA RESP." width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}"/>
-                                </p:column>
-                                <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}" />
-                                </p:column>
-                                <p:column headerText="FIRMA" width="5" sortBy="#{item.firma}" filterBy="#{item.firma}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.firma}" />
-                                </p:column>
-                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.resp}" filterBy="#{item.resp}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.resp}" />
-                                </p:column>
-                                <p:column style="width:32px;text-align: center">
-                                    <p:commandButton update=":form:tabladetalloficcirc" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
-                                        <f:setPropertyActionListener value="#{item}" target="#{oficioBean.seleccion}"/>
-                                    </p:commandButton>
-                                </p:column>
-                            </p:dataTable>
-                        </p:tab>
-                        <p:tab title="OFICIOS CIRCULARES" id="tab1_2">
-                            <p:dataTable value="" id="tablasoficcirc" var="item" paginator="true" rows="10" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue=""
-                                         rowKey="" style="margin-bottom: 0">
-
-                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
-                                </p:column>
-                                <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tramnum}"/>
-                                </p:column>
-                                <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}"/>
-                                </p:column>
-                                <p:column headerText="REFERENCIA" width="5" sortBy="#{item.referencia}" filterBy="#{item.referencia}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.referencia}"/>
+                                <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.documento}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <h:outputText value="#{item.asunto}"/>
                                 </p:column>
+                                <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}" />
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}" />
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}" />
+                                </p:column>
+                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.usuario}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:tab>
+                        <p:tab title="DOCUMENTOS CIRCULARES" id="tab1_2">
+                            <center>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Escoger Tipo de Documento: "/>
+                                    <p:panelGrid columns="2">
+                                        <p:selectOneMenu value="#{documentoUsuarioBean.tipodocupropio2}">
+                                            <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                            <f:selectItem itemLabel="OFICIO CIRCULAR" itemValue="3"/>
+                                            <f:selectItem itemLabel="INFORME CIRCULAR" itemValue="5"/>
+                                        </p:selectOneMenu>
+                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosCircXtipo()}" update="tablasoficcirc"/>
+                                    </p:panelGrid>
+                                </p:panelGrid>
+                                <br></br>
+                                <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosCirc()}" update="tablasoficcirc"/>
+                            </center>
+                            <br></br>
+                            <br></br>
+                            <p:dataTable value="#{documentoUsuarioBean.listadocpropioscir}" id="tablasoficcirc" var="item" paginator="true" rows="10" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus2}" selection="#{documentoUsuarioBean.docselec4}"
+                                         rowKey="#{item.documento}" style="margin-bottom: 0">
+
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="DOCUMENTO" width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.documento}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="1" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asunto}"/>
+                                </p:column>
+                                <p:column headerText="FECH. REG." width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecha}"/>
+                                </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origen}"/>
                                 </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
+                                <p:column headerText="FIRMA" width="5" sortBy="#{item.firma}" filterBy="#{item.firma}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.firma}"/>
+                                </p:column>
+                                <p:column headerText="RESP." width="5" sortBy="#{item.responsable}" filterBy="#{item.responsable}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.responsable}"/>
+                                </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <p:commandButton process="tablasoficcirc" update=":form:tabladetalloficcirc2" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
+                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}"/>
+                                    </p:commandButton>
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
+                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc2" >
+                            <p:column headerText="DESTINO">
+                                <h:outputText value="#{car.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
                     <br></br>
                     <br></br>	
                 </h:form>

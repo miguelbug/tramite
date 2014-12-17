@@ -19,4 +19,5 @@ public interface DocusInternosDAO {
     public List getDocInternos(String usu);
     public List getDocInternosXtipo(String usu, String tipo);
     public List getCircularesOficInterna(String usu);
+    public List getCircularesOficInternaXtipo(String usu, String tipo);
 }

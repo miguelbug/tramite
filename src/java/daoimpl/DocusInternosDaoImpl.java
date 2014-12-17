@@ -23,8 +23,62 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
     Session session;
 
     @Override
+    public List getCircularesOficInternaXtipo(String usu, String tipo) {
+        List circulares = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get circulares");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+                    + "OFI.ASUNTO,\n"
+                    + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+                    + "D1.NOMBRE as origen,\n"
+                    + "OFI.FIRMA,\n"
+                    + "OFI.RESPONSABLE\n"
+                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, Oficina oficina, TIPOS_DOCUMENTOS TD\n"
+                    + "WHERE OFI.CODIGO=D1.CODIGO\n"
+                    + "and D1.Nombre=oficina.nombre_oficina\n"
+                    + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND OFI.RESPONSABLE='"+usu+"'\n"
+                    + "AND OFI.ID_DOCUMENTO='"+tipo+"'\n"
+                    + "ORDER BY OFI.CORRELA_OFICIC DESC");
+            circulares = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal circulares");
+            System.out.println(e.getMessage());
+        }
+        return circulares;
+    }
+
+    @Override
     public List getCircularesOficInterna(String usu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List circulares = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get circulares");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+                    + "OFI.ASUNTO,\n"
+                    + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+                    + "D1.NOMBRE as origen,\n"
+                    + "OFI.FIRMA,\n"
+                    + "OFI.RESPONSABLE\n"
+                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, Oficina oficina, TIPOS_DOCUMENTOS TD\n"
+                    + "WHERE OFI.CODIGO=D1.CODIGO\n"
+                    + "and D1.Nombre=oficina.nombre_oficina\n"
+                    + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND OFI.RESPONSABLE='"+usu+"'\n"
+                    + "ORDER BY OFI.CORRELA_OFICIC DESC");
+            circulares = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal circulares");
+            System.out.println(e.getMessage());
+        }
+        return circulares;
     }
 
     @Override
@@ -34,7 +88,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get DOCUS INTERNOS");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
+            Query query = session.createSQLQuery("SELECT DOIF.ID_DOCOFINT,\n"
+                    + "TD.NOMBRE_DOCU||' N°-'||DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
                     + "DOIF.ASUNTO,\n"
                     + "TO_CHAR(DOIF.FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
@@ -45,8 +100,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND DOIF.CODIGO=D1.CODIGO\n"
                     + "AND DOIF.CODIGO1=D2.CODIGO\n"
                     + "AND DOIF.USU=USUA.USU\n"
-                    + "AND DOIF.USU='"+usu+"'\n"
-                    + "AND DOIF.ID_DOCUMENTO='"+tipo+"'"
+                    + "AND DOIF.USU='" + usu + "'\n"
+                    + "AND DOIF.ID_DOCUMENTO='" + tipo + "'\n"
                     + "ORDER BY DOIF.CORRELATIVO_DOCOFINT DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
@@ -65,7 +120,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get DOCUS INTERNOS");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
+            Query query = session.createSQLQuery("SELECT DOIF.ID_DOCOFINT,\n"
+                    + "TD.NOMBRE_DOCU||' N°-'||DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
                     + "DOIF.ASUNTO,\n"
                     + "TO_CHAR(DOIF.FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
@@ -76,7 +132,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND DOIF.CODIGO=D1.CODIGO\n"
                     + "AND DOIF.CODIGO1=D2.CODIGO\n"
                     + "AND DOIF.USU=USUA.USU\n"
-                    + "AND DOIF.USU='"+usu+"'"
+                    + "AND DOIF.USU='" + usu + "'\n"
                     + "ORDER BY DOIF.CORRELATIVO_DOCOFINT DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
