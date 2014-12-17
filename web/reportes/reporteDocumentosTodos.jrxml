@@ -17,7 +17,7 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
@@ -30,8 +30,9 @@
 		<defaultValueExpression ><![CDATA["VERANO COLP, LUDOVICO PEDRO"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="oficina" isForPrompting="false" class="java.lang.String"/>
-	<queryString><![CDATA[SELECT DI.TRAM_NUM,
-TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,
+	<queryString><![CDATA[SELECT DI.DOCU_NOMBREINT||' N°-'||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||TO_CHAR(DI.FECHAREGISTRO,'YYYY') AS DOCUMENTO,
+DI.TRAM_NUM,
+TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY') AS FECHA,
 OFI.NOMBRE_OFICINA AS ORIGEN,
 DI.DOCU_ASUNTO,
 USUA.USU_NOMBRE
@@ -39,9 +40,9 @@ FROM DOCUS_INTERNOS DI, USUARIO USUA, OFICINA OFI, TIPOS_DOCUMENTOS TD
 WHERE DI.USU=USUA.USU
 AND USUA.ID_OFICINA=OFI.ID_OFICINA
 AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO
-AND USUA.USU_NOMBRE=$P{usuario}
 ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 
+	<field name="DOCUMENTO" class="java.lang.String"/>
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="FECHA" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
@@ -72,9 +73,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="12"
+						x="121"
 						y="25"
-						width="143"
+						width="125"
 						height="20"
 						key="staticText-7"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -90,9 +91,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="155"
+						x="246"
 						y="25"
-						width="116"
+						width="118"
 						height="20"
 						key="staticText-8"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -108,9 +109,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="271"
+						x="364"
 						y="25"
-						width="174"
+						width="162"
 						height="20"
 						key="staticText-9"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -126,9 +127,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="445"
+						x="526"
 						y="25"
-						width="329"
+						width="248"
 						height="20"
 						key="staticText-10"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -141,6 +142,24 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[ASUNTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="12"
+						y="25"
+						width="109"
+						height="20"
+						key="staticText-11"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
 				</staticText>
 			</band>
 			</groupHeader>
@@ -272,9 +291,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="12"
-						y="-1"
-						width="143"
+						x="121"
+						y="-2"
+						width="125"
 						height="30"
 						key="textField-14"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -290,9 +309,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="155"
-						y="-1"
-						width="116"
+						x="246"
+						y="-2"
+						width="118"
 						height="30"
 						key="textField-15"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -308,9 +327,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="271"
-						y="-1"
-						width="174"
+						x="364"
+						y="-2"
+						width="162"
 						height="30"
 						key="textField-16"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -327,9 +346,9 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="445"
-						y="-1"
-						width="329"
+						x="526"
+						y="-2"
+						width="248"
 						height="30"
 						key="textField-17"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -342,6 +361,24 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{DOCU_ASUNTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="12"
+						y="-2"
+						width="109"
+						height="30"
+						key="textField-18"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{DOCUMENTO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

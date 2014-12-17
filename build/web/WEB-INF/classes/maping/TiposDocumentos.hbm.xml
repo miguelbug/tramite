@@ -44,5 +44,11 @@
             </key>
             <one-to-many class="maping.DocusExtint" />
         </set>
+        <set name="oficCirc" table="OFIC_CIRC" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="38" scale="0" />
+            </key>
+            <one-to-many class="maping.OficCirc" />
+        </set>
     </class>
 </hibernate-mapping>

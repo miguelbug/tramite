@@ -128,11 +128,13 @@ public class OficioBean {
             mostrarofCirc();
         }
     }
-    public void abrirOficioUnico(){
+
+    public void abrirOficioUnico() {
         getAnio();
         generarFecha();
-        
+
     }
+
     public void ObtenerTiposDocus2() {
         System.out.println("listando tipos docus");
         tiposdocus.clear();
@@ -412,17 +414,17 @@ public class OficioBean {
         FacesMessage message = null;
         try {
             Oficios ofi = new Oficios();
-             ofi.setAsuntoOficio(asunto);
-             ofi.setCorrelativoOficio(correlativo2);
-             ofi.setFechaOficio(fecha);
-             ofi.setDependenciaByCodigo(deriv.getDep(origen));
-             ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
-             ofi.setReferenciaOficio(null);
-             ofi.setTramiteDatos(null);
-             ofi.setUsuario(usu);
-             System.out.println(escogido2);
-             ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
-             dd.guardarOficio2(ofi);
+            ofi.setAsuntoOficio(asunto);
+            ofi.setCorrelativoOficio(correlativo2);
+            ofi.setFechaOficio(fecha);
+            ofi.setDependenciaByCodigo(deriv.getDep(origen));
+            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
+            ofi.setReferenciaOficio(null);
+            ofi.setTramiteDatos(null);
+            ofi.setUsuario(usu);
+            System.out.println(escogido2);
+            ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
+            dd.guardarOficio2(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
@@ -474,6 +476,7 @@ public class OficioBean {
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
+            ofi.setTiposDocumentos(deriv.getTipoDocIndix(escogido));
             od.guardarOficioCircular(ofi);
             mostrar();
             ver = true;

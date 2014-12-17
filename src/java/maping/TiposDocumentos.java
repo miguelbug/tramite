@@ -19,6 +19,7 @@ public class TiposDocumentos implements java.io.Serializable {
     private Set<Oficios> oficioses = new HashSet<Oficios>(0);
     private Set<DocumentosOfiint> documentosOfiints = new HashSet<DocumentosOfiint>(0);
     private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
+    private Set<OficCirc> oficCirc = new HashSet<OficCirc>(0);
 
     public TiposDocumentos() {
     }
@@ -27,7 +28,7 @@ public class TiposDocumentos implements java.io.Serializable {
         this.idDocumento = idDocumento;
     }
 
-    public TiposDocumentos(BigDecimal idDocumento, String nombreDocu, String flag, Set<DetallOficcirc> detallOficcircs, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Oficios> oficioses, Set<DocumentosOfiint> documentosOfiints, Set<DocusExtint> docusExtints) {
+    public TiposDocumentos(BigDecimal idDocumento, String nombreDocu, String flag, Set<DetallOficcirc> detallOficcircs, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Oficios> oficioses, Set<DocumentosOfiint> documentosOfiints, Set<DocusExtint> docusExtints, Set<OficCirc> oficCirc) {
         this.idDocumento = idDocumento;
         this.nombreDocu = nombreDocu;
         this.flag = flag;
@@ -37,6 +38,7 @@ public class TiposDocumentos implements java.io.Serializable {
         this.oficioses = oficioses;
         this.documentosOfiints = documentosOfiints;
         this.docusExtints = docusExtints;
+        this.oficCirc = oficCirc;
     }
 
     public BigDecimal getIdDocumento() {
@@ -109,6 +111,14 @@ public class TiposDocumentos implements java.io.Serializable {
 
     public void setDocusExtints(Set<DocusExtint> docusExtints) {
         this.docusExtints = docusExtints;
+    }
+
+    public Set<OficCirc> getOficCirc() {
+        return oficCirc;
+    }
+
+    public void setOficCirc(Set<OficCirc> oficCirc) {
+        this.oficCirc = oficCirc;
     }
 
 }

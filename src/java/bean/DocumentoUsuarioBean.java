@@ -43,7 +43,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados;
+    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, docselec, detalle, docselec2, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -66,6 +66,8 @@ public class DocumentoUsuarioBean {
         designados = new ArrayList<String>();
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
+        listadocspropios = new ArrayList<Map<String, String>>();
+        listadocpropioscir = new ArrayList<Map<String, String>>();
         detalle = new ArrayList<Map<String, String>>();
         di = new DocusInternosDaoImpl();
         confirmadosderivados = new ArrayList<Map<String, String>>();
@@ -80,6 +82,10 @@ public class DocumentoUsuarioBean {
 
         }
 
+    }
+
+    public void listarDocPropios() {
+        
     }
 
     public void abrirAsignacion() {
@@ -782,6 +788,22 @@ public class DocumentoUsuarioBean {
 
     public void setFechanio(String fechanio) {
         this.fechanio = fechanio;
+    }
+
+    public List getListadocspropios() {
+        return listadocspropios;
+    }
+
+    public void setListadocspropios(List listadocspropios) {
+        this.listadocspropios = listadocspropios;
+    }
+
+    public List getListadocpropioscir() {
+        return listadocpropioscir;
+    }
+
+    public void setListadocpropioscir(List listadocpropioscir) {
+        this.listadocpropioscir = listadocpropioscir;
     }
 
 }

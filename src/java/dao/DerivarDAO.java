@@ -88,5 +88,7 @@ public interface DerivarDAO {
 
     public TiposDocumentos getTipoDoc(String tipo);
     
+    public TiposDocumentos getTipoDocIndix(String indice);
+    
     public String getCorrelativoOficinaInterna(Usuario usu, String tipo);
 }

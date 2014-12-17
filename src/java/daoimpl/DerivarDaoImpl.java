@@ -528,6 +528,26 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public TiposDocumentos getTipoDocIndix(String indice) {
+        System.out.println("entra a actualizar");
+        TiposDocumentos td= new TiposDocumentos();
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql="FROM TiposDocumentos where idDocumento='"+indice+"'";
+        try {
+            session.beginTransaction();
+            td=(TiposDocumentos)session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        }
+        catch(Exception e) {
+            System.out.println("mal confirmar");
+            System.out.println(e.getMessage());
+        }finally {
+            session.close();
+        }
+        return td;
+    }
+
+    @Override
     public TiposDocumentos getTipoDoc(String tipo) {
         System.out.println("entra a actualizar");
         TiposDocumentos td= new TiposDocumentos();

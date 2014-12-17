@@ -308,6 +308,8 @@ public class objxUnidadController implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         System.out.println(sdf.format(date1));
         System.out.println(sdf.format(date2));
+        System.out.println(tipodocumento);
+        System.out.println(getUSUARIO());
         parametros.put("usuario", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());

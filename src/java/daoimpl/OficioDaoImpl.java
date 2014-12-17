@@ -41,7 +41,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.close();
         }
     }
-    
+
     @Override
     public TiposDocumentos getTipoDocu(String nombre) {
         System.out.println("get tipodocu");
@@ -88,9 +88,9 @@ public class OficioDaoImpl implements OficioDAO {
         //String sql = "select max(correlativoOficio) from Oficios where usuario.usu='" + usu + "' and tiposDocumentos.nombreDocu='" + tipodocu + "'";
         String sql = "SELECT MAX(OFI.CORRELATIVO_OFICIO) FROM OFICIOS OFI, TIPOS_DOCUMENTOS td, USUARIO USUA\n"
                 + "WHERE td.ID_DOCUMENTO=OFI.ID_DOCUMENTO\n"
-                + "AND TD.NOMBRE_DOCU='"+tipodocu+"'\n"
+                + "AND TD.NOMBRE_DOCU='" + tipodocu + "'\n"
                 + "AND USUA.USU=OFI.USU\n"
-                + "AND OFI.USU='"+usu+"'";
+                + "AND OFI.USU='" + usu + "'";
         try {
             session.beginTransaction();
             index = (String) session.createSQLQuery(sql).uniqueResult();
@@ -374,15 +374,16 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficioscirculares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT 'Oficio Circular N° '||CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(fecha,'YYYY') as documento,\n"
-                    + "ASUNTO,\n"
-                    + "to_char(FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+                    + "OFI.ASUNTO,\n"
+                    + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE,\n"
-                    + "FIRMA,\n"
-                    + "RESPONSABLE\n"
-                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, Oficina oficina\n"
+                    + "OFI.FIRMA,\n"
+                    + "OFI.RESPONSABLE\n"
+                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, Oficina oficina, TIPOS_DOCUMENTOS TD\n"
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
                     + "and D1.Nombre=oficina.nombre_oficina\n"
+                    + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             oficioscirc = query.list();
             session.beginTransaction().commit();
