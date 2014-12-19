@@ -203,6 +203,7 @@ public class OficioBean {
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        
     }
 
     public List Detalles() {
