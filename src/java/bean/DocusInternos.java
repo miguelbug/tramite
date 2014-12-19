@@ -49,7 +49,18 @@ public class DocusInternos implements Serializable{
         docusinternos = new ArrayList<HashMap<String,String>>();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
-        mostrarDocusInternos();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+        boolean isdocumentosrspta2= (currentPage.lastIndexOf("pruebafecha.xhtml")>-1);
+        boolean isdocumentosrspta = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
+        if(isdocumentosrspta){
+            mostrarDocusInternos();
+        }else{
+            if(isdocumentosrspta2){
+                mostrarDocusInternos();
+            }
+        }
+        
         
     }
     public void actualizarLista(){

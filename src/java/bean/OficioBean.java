@@ -108,6 +108,9 @@ public class OficioBean {
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
 
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+
         oficiosSinExp = new ArrayList<Map<String, String>>();
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
@@ -115,10 +118,22 @@ public class OficioBean {
         cities2 = new ArrayList<String>();
 
         llenardepes();
+        
+        boolean isofcirc = (currentPage.lastIndexOf("Oficios_Circulares.xhtml") > -1);
+        boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
+        boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
-        mostrarofCirc();
-        mostrarOficiosSinExp();
-        mostrarOficioConExp();
+        if(isofcirc){
+            mostrarofCirc();
+        }else{
+            if(isoficsinexp){
+                mostrarOficiosSinExp();
+            }else{
+                if(isoficconexp){
+                    mostrarOficioConExp();
+                }
+            }
+        }
         ObtenerTiposDocus2();
 
     }
@@ -476,12 +491,16 @@ public class OficioBean {
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
-            ofi.setTiposDocumentos(deriv.getTipoDocIndix(escogido));
+            ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
             od.guardarOficioCircular(ofi);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO CIRCULAR");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             mostrar();
             ver = true;
             nover = false;
         } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO CIRCULAR");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             ver = false;
             nover = true;
             System.out.println(e.getMessage());

@@ -69,12 +69,18 @@ public class DerivarBean {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+        
         this.estado = "EN PROCESO";
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
         anio = new Date();
         seguimientolista2 = new ArrayList<Map<String, String>>();
         confirmadosderivados = new ArrayList<Map<String, String>>();
+        
+        boolean isderivar = (currentPage.lastIndexOf("documentos.xhtml") > -1);
         MostrarConfirmadosDerivados();
     }
 

@@ -28,16 +28,17 @@
                                             <f:selectItem itemLabel="MEMOS" itemValue="7"/>
                                         </p:selectOneMenu>
                                         <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios"/>
+                                        <p:outputLabel value="Todos los Documentos:"/>
+                                        <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios"/>
                                     </p:panelGrid>
                                 </p:panelGrid>
                                 <br></br>
-                                <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios"/>
                             </center>
                             <br></br>
                             <br></br>
                             <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec3}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{objxUnidadController.docselec1}"
                                          rowKey="#{item.iddoc}">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -63,7 +64,14 @@
                                     <h:outputText value="#{item.usuario}" />
                                 </p:column>
                             </p:dataTable>
-
+                            <br></br>
+                            <center>
+                                <p:panelGrid columns="3">
+                                    <p:commandButton id="repor0" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
+                                    <p:commandButton id="repor1" value="Reporte Todos Doc." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
+                                    <p:commandButton id="repor2" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
+                                </p:panelGrid>
+                            </center>
                         </p:tab>
                         <p:tab title="DOCUMENTOS CIRCULARES" id="tab1_2">
                             <center>
@@ -77,15 +85,15 @@
                                         </p:selectOneMenu>
                                         <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosCircXtipo()}" update="tablasoficcirc"/>
                                     </p:panelGrid>
+                                    <p:outputLabel value="Todos los Documentos:"/>
+                                    <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropiosCirc()}" update="tablasoficcirc"/>
                                 </p:panelGrid>
-                                <br></br>
-                                <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosCirc()}" update="tablasoficcirc"/>
                             </center>
                             <br></br>
                             <br></br>
                             <p:dataTable value="#{documentoUsuarioBean.listadocpropioscir}" id="tablasoficcirc" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus2}" selection="#{documentoUsuarioBean.docselec4}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus2}" selection="#{objxUnidadController.docselec3}"
                                          rowKey="#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -113,14 +121,73 @@
                                     </p:commandButton>
                                 </p:column>
                             </p:dataTable>
+                            <br></br>
+                            <center>
+                                <p:panelGrid columns="3">
+                                    <p:commandButton id="repor4" value="Reporte Todos Doc." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos()}" ajax="false"/>
+                                    <p:commandButton id="repor5" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionados()}" ajax="false"/>
+                                </p:panelGrid>
+                            </center>
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc2" >
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles_Circ()}" id="tabladetalloficcirc2" >
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>
                         </p:dataTable>
+                    </p:dialog>
+                    <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <center>
+                            <br></br>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Tipo de Documento:"/>
+                                <p:selectOneMenu value="#{objxUnidadController.tipodocumento1}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItem itemLabel="INFORME" itemValue="1"/>
+                                    <f:selectItem itemLabel="OFICIO" itemValue="2"/>
+                                    <f:selectItem itemLabel="CARTA" itemValue="4"/>
+                                    <f:selectItem itemLabel="MEMOS" itemValue="7"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Desde:"/>
+                                <p:calendar value="#{objxUnidadController.date3}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                                <p:outputLabel value="Hasta:"/>
+                                <p:calendar value="#{objxUnidadController.date4}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+
+                            </p:panelGrid>
+                            <br></br>
+                            <p:commandButton id="mostrado1" value="Exportar" actionListener="#{objxUnidadController.mostrarReporteFecha2()}" ajax="false" title="Reporte">
+                                <f:ajax event="click" onevent="reporteDialog1.close()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <center>
+                            <br></br>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Tipo de Documento:"/>
+                                <p:selectOneMenu value="#{objxUnidadController.tipodocumento2}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItem itemLabel="OFICIOS CIRCULARES" itemValue="3"/>
+                                    <f:selectItem itemLabel="INFORMES CIRCULARES" itemValue="5"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel value="Desde:"/>
+                                <p:calendar value="#{objxUnidadController.date5}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+                                <p:outputLabel value="Hasta:"/>
+                                <p:calendar value="#{objxUnidadController.date6}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
+
+                            </p:panelGrid>
+                            <br></br>
+                            <p:commandButton id="mostrado2" value="Exportar" actionListener="#{objxUnidadController.mostrarReporteFecha3()}" ajax="false" title="Reporte">
+                                <f:ajax event="click" onevent="reporteDialog2.close()"/>
+                            </p:commandButton>
+                        </center>
                     </p:dialog>
                     <br></br>
                     <br></br>	

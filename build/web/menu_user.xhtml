@@ -87,22 +87,38 @@
                 </p:panelGrid>
                 <br></br>
                 <center>
-                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc">
+                    <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,avisooficcircdialog" oncomplete="PF('avisoOfCircDialog').show()">
                         <f:ajax event="click" onevent="DocCircdialog.hide()"/>
                     </p:commandButton>
                 </center>
             </p:dialog>
 
+            <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="avisooficcircdialog" style="width: 150px">
+                <center>
+                    <p:outputLabel value="EL OFICIO CIRCULAR N° #{oficioBean.correlativo} SE HA CREADO" rendered="#{oficioBean.ver}"/>
+                    <br></br>
+                    <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarReporteOficioCircular()}" ajax="false" rendered="#{oficioBean.ver}">
+                        <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
+                    </p:commandButton>
+
+                    <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{oficioBean.nover}"/>
+                    <br></br>
+                    <p:commandButton value="Aceptar" rendered="#{oficioBean.nover}">
+                        <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
+                    </p:commandButton>
+                </center>
+            </p:dialog>
+            
             <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docudialog">
                 <p:panelGrid columns="2" id="panelOfUn2">
-                    
+
                     <p:outputLabel value="Tipo de Documento:"/>
                     <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{oficioBean.tiposdocus}"/>
                         <p:ajax event="change" update="panelOfUn2" listener="#{oficioBean.generarCorrelativo2()}"/>
                     </p:selectOneMenu>
-                    
+
                     <p:outputLabel value="Documento:"/>
                     <p:outputLabel value="#{oficioBean.escogido2} N°#{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
 

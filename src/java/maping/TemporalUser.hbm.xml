@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.TemporalUser" table="TEMPORAL_USER" schema="MIGUEL">
+        <id name="idTempu" type="long">
+            <column name="ID_TEMPU" precision="10" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="documento" type="string">
+            <column name="DOCUMENTO" length="100" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="300" />
+        </property>
+        <property name="origen" type="string">
+            <column name="ORIGEN" length="100" />
+        </property>
+        <property name="destino" type="string">
+            <column name="DESTINO" length="100" />
+        </property>
+        <property name="responsable" type="string">
+            <column name="RESSPONSABLE" length="100" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="impreso" type="string">
+            <column name="IMPRESO" length="10" />
+        </property>
+        <property name="reimpreso" type="string">
+            <column name="REIMPRESO" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

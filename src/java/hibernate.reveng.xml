@@ -23,4 +23,5 @@
     <table-filter match-name="OFICINA"/>
     <table-filter match-name="DOCUMENTOS_OFIINT"/>
     <table-filter match-name="TEMPORAL_DI"/>
+    <table-filter match-name="TEMPORAL_USER"/>
 </hibernate-reverse-engineering>

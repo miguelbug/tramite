@@ -50,22 +50,26 @@ public class objxUnidadController implements Serializable {
     private DocumentoDAO dd;
     private Date date1;
     private Date date2;
+    private Date date3;
+    private Date date4;
+    private Date date5;
+    private Date date6;
     private String USUARIO;
     private reporteDAO rpda;
-    private String tipodocumento;
-    private List docselec;
+    private String tipodocumento, tipodocumento1, tipodocumento2;
+    private List docselec,docselec1,docselec2,docselec3;
     private TemporaldiDao tdi;
 
     public objxUnidadController() {
         dd = new DocumentoDaoImpl();
         rpda = new reporteDaoImpl();
-        tdi= new TemporalDiDaoImpl();
+        tdi = new TemporalDiDaoImpl();
     }
-    
-    public void GuardarDatos() throws ParseException{
+
+    public void GuardarDatos() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        for(int i=0;i<docselec.size();i++){
-            TemporalDi tldi= new TemporalDi();
+        for (int i = 0; i < docselec.size(); i++) {
+            TemporalDi tldi = new TemporalDi();
             Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
             tldi.setAsunto(hm.get("asunto").toString());
             tldi.setFechaReg(formatter.parse(hm.get("fechareg").toString()));
@@ -77,14 +81,67 @@ public class objxUnidadController implements Serializable {
             tldi.setReimpreso("0");
             tdi.guardarTemporalDi(tldi);
         }
+    }
+
+    public void guardarDatos2() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (int i = 0; i < docselec1.size(); i++) {
+            TemporalUser tldi = new TemporalUser();
+            Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+            tldi.setDocumento(hm.get("documento"));
+            tldi.setAsunto(hm.get("asunto"));
+            tldi.setFecha(formatter.parse(hm.get("fecha").toString()));
+            tldi.setOrigen(hm.get("origen"));
+            tldi.setDestino(hm.get("destino"));
+            tldi.setResponsable(hm.get("usuario"));
+            tldi.setImpreso("1");
+            tldi.setReimpreso("0");
+            tdi.guardarTemporalUser(tldi);
+        }
+    }
+    
+    public void ImpresionSeleccionadosUser() throws ParseException {
+        guardarDatos2();
+        mostrarReporSeleccionadosUser();
+        tdi.actualizarTemporalUser();
         
     }
-    public void ImpresionSeleccionados() throws ParseException{
+    public void ImpresionSeleccionados() throws ParseException {
         GuardarDatos();
         mostrarReporSeleccionados();
         tdi.actualizarTemporalDi();
     }
     
+    public void mostrarReporSeleccionadosUser() {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("reporteDocumentosSeleccionadosUser");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     public void mostrarReporSeleccionados() {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -114,7 +171,7 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void mostrarReporRegModPres() {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -288,6 +345,79 @@ public class objxUnidadController implements Serializable {
         }
     }
 
+    public void mostrarReporteFecha3() {
+
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("reporteDocumentos");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println(sdf.format(date1));
+        System.out.println(sdf.format(date2));
+        System.out.println(tipodocumento);
+        System.out.println(getUSUARIO());
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("fechain", sdf.format(date5));
+        parametros.put("fechafin", sdf.format(date6));
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("tipo", tipodocumento);
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public void mostrarReporteFecha2() {
+
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("reporteDocumentosUser2");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("fechain", sdf.format(date3));
+        parametros.put("fechafin", sdf.format(date4));
+        parametros.put("usuario", this.getUsu());
+        parametros.put("tipo", tipodocumento1);
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     public void mostrarReporteFecha() {
 
         context = FacesContext.getCurrentInstance();
@@ -359,8 +489,37 @@ public class objxUnidadController implements Serializable {
         }
     }
 
+    public void mostrarReporteTodos2() {
+
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("reporteDocumentosTodosUsuario1");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("usuario", this.getUsu());
+        // parametros.put("USUARIO","miguel" ); 
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     /////////////////////////////////////
-    
     public void mostrarReporteSeguimiento() {
         String tramite = "";
         tramite = DocumentosBean.tranum;
@@ -443,7 +602,7 @@ public class objxUnidadController implements Serializable {
         System.out.println(DocumentosBean.tranum);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("oficioCircular");
+        repor = ReporteController.getInstance("oficioCircular2");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
@@ -523,6 +682,15 @@ public class objxUnidadController implements Serializable {
         return nombre;
     }
 
+    public String getUsu() {
+        String nombre = "";
+        context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
+        nombre = usu.getUsu();
+        return nombre;
+    }
+
     public String getOficina() {
         String nomOfi = "";
         Oficina ofi;
@@ -586,6 +754,38 @@ public class objxUnidadController implements Serializable {
         return date2;
     }
 
+    public Date getDate3() {
+        return date3;
+    }
+
+    public void setDate3(Date date3) {
+        this.date3 = date3;
+    }
+
+    public Date getDate4() {
+        return date4;
+    }
+
+    public void setDate4(Date date4) {
+        this.date4 = date4;
+    }
+
+    public Date getDate5() {
+        return date5;
+    }
+
+    public void setDate5(Date date5) {
+        this.date5 = date5;
+    }
+
+    public Date getDate6() {
+        return date6;
+    }
+
+    public void setDate6(Date date6) {
+        this.date6 = date6;
+    }
+
     public void setDate2(Date date2) {
         this.date2 = date2;
     }
@@ -612,6 +812,54 @@ public class objxUnidadController implements Serializable {
 
     public void setDocselec(List docselec) {
         this.docselec = docselec;
+    }
+
+    public String getTipodocumento1() {
+        return tipodocumento1;
+    }
+
+    public void setTipodocumento1(String tipodocumento1) {
+        this.tipodocumento1 = tipodocumento1;
+    }
+
+    public String getTipodocumento2() {
+        return tipodocumento2;
+    }
+
+    public void setTipodocumento2(String tipodocumento2) {
+        this.tipodocumento2 = tipodocumento2;
+    }
+
+    public TemporaldiDao getTdi() {
+        return tdi;
+    }
+
+    public void setTdi(TemporaldiDao tdi) {
+        this.tdi = tdi;
+    }
+
+    public List getDocselec1() {
+        return docselec1;
+    }
+
+    public void setDocselec1(List docselec1) {
+        this.docselec1 = docselec1;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
+    }
+
+    public List getDocselec3() {
+        return docselec3;
+    }
+
+    public void setDocselec3(List docselec3) {
+        this.docselec3 = docselec3;
     }
 
 }

@@ -30,5 +30,6 @@
     <mapping resource="maping/TiposDocumentos.hbm.xml"/>
     <mapping resource="maping/DocumentosOfiint.hbm.xml"/>
     <mapping resource="maping/TemporalDi.hbm.xml"/>
+    <mapping resource="maping/TemporalUser.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

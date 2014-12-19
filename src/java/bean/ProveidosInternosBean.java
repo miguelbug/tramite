@@ -55,9 +55,20 @@ public class ProveidosInternosBean {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
         pid = new ProveidosInternosDaoImpl();
-        getLista();
-        getProveidosInternos();
+        boolean isproveidointerno = (currentPage.lastIndexOf("Proveidos_internos.xhtml") > -1);
+        boolean isproveidointerno2 = (currentPage.lastIndexOf("Proveidos_internos.xhtml") > -1);
+        if(isproveidointerno){
+            getLista();
+        }else{
+            if(isproveidointerno2){
+                getProveidosInternos();
+            }
+        }
+        
+        
     }
 
     public void getLista() {

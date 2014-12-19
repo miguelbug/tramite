@@ -66,6 +66,8 @@ public class SeguimientoBean {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         log = new LoginDaoImpl();
@@ -74,8 +76,17 @@ public class SeguimientoBean {
         seguimientolista2 = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
         tdaux2 = new ArrayList<Map<String, String>>();
-        MostrarParaUsuario();
-        MostrarDocusInternos();
+        boolean isdocumentosuser = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
+        boolean isdocumentosrspta = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
+        if(isdocumentosuser){
+            MostrarParaUsuario();
+        }else{
+            if(isdocumentosrspta){
+                MostrarDocusInternos();
+            }
+        }
+        
+        
 
     }
 

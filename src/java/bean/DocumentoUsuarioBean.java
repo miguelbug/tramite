@@ -43,8 +43,8 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
-    private Map<String, String> seleccion,seleccion2;
+    private List detallecirc2, designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
@@ -62,8 +62,11 @@ public class DocumentoUsuarioBean {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
         seguimientolista2 = new ArrayList<Map<String, String>>();
         designados = new ArrayList<String>();
+        detallecirc2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         listadocspropios = new ArrayList<Map<String, String>>();
@@ -73,7 +76,11 @@ public class DocumentoUsuarioBean {
         confirmadosderivados = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
-        MostrarParaUsuario();
+        boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
+        if(isdocumentosUsuario){
+            MostrarParaUsuario();
+        }
+        
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -82,6 +89,35 @@ public class DocumentoUsuarioBean {
 
         }
 
+    }
+
+    public List Detalles_Circ() {
+        System.out.println("listando detalles");
+        detallecirc2.clear();
+        try {
+            List lista = new ArrayList<String>();
+            System.out.println(seleccion2.get("documento").toString().substring(19, 24));
+            lista = ofi.getOficoCircDetal(partirColumnas(seleccion2.get("documento").toString()));
+            for (int i = 0; i < lista.size(); i++) {
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("nombre", lista.get(i).toString());
+                detallecirc2.add(listaaux);
+            }
+            System.out.println("entra aca >.<");
+        } catch (Exception e) {
+            System.out.println("error aca");
+            System.out.println(e.getMessage());
+        }
+        return detallecirc2;
+    }
+
+    public String partirColumnas(String aPartir) {
+        List<String> subcadenas = new ArrayList<String>();
+        StringTokenizer tokens = new StringTokenizer(aPartir, "-");
+        while (tokens.hasMoreTokens()) {
+            subcadenas.add(tokens.nextToken());
+        }
+        return subcadenas.get(1);
     }
 
     public void listarDocPropiosCircXtipo() {
@@ -952,6 +988,14 @@ public class DocumentoUsuarioBean {
 
     public void setSeleccion2(Map<String, String> seleccion2) {
         this.seleccion2 = seleccion2;
+    }
+
+    public List getDetallecirc2() {
+        return detallecirc2;
+    }
+
+    public void setDetallecirc2(List detallecirc2) {
+        this.detallecirc2 = detallecirc2;
     }
 
 }
