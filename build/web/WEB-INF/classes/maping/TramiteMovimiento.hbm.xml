@@ -33,6 +33,9 @@
         <property name="fechaIngr" type="date">
             <column name="FECHA_INGR" length="7" />
         </property>
+        <property name="fechaDeriv" type="date">
+            <column name="FECHA_DERIVACION" length="7" />
+        </property>
         <property name="moviObs" type="string">
             <column name="MOVI_OBS" length="250" />
         </property>

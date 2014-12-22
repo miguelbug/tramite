@@ -32,26 +32,30 @@
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["00254"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[SELECT P.CORRELATIVOD,
+	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
 DE.NUMERODOC,
+DE.CORRELATIVOD,
 DE.ASUNTO,
-TO_CHAR(DE.FECHA,'DD/MM/YYYY HH:MM:SS') AS FECHA,
-D1.NOMBRE AS ORIGEN,
-D2.NOMBRE AS DESTINO,
-U.USU_NOMBRE
-FROM DOCUS_EXTINT DE, USUARIO U,PROVEIDO P, DEPENDENCIA D1, DEPENDENCIA D2
-WHERE DE.USU=U.USU
-AND DE.ID=P.ID
-AND P.CORRELATIVOD=$P{correlativo}
-AND D1.CODIGO=DE.CODIGO
-AND D2.CODIGO=DE.CODIGO1]]></queryString>
+M1.NOMBRE AS ORIGEN,
+M2.NOMBRE AS DESTINO,
+to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,
+USUA.USU_NOMBRE
+from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina
+WHERE DE.CODIGO=M1.CODIGO
+AND DE.CODIGO1=M2.CODIGO
+AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO
+AND DE.USU=$P{usuario}
+AND DE.CORRELATIVOD=$P{correlativo}
+AND USUA.ID_OFICINA=oficina.ID_OFICINA
+ORDER BY DE.ID DESC]]></queryString>
 
-	<field name="CORRELATIVOD" class="java.lang.String"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
 	<field name="NUMERODOC" class="java.lang.String"/>
+	<field name="CORRELATIVOD" class="java.lang.String"/>
 	<field name="ASUNTO" class="java.lang.String"/>
-	<field name="FECHA" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
 	<field name="USU_NOMBRE" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">

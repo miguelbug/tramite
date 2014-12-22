@@ -54,6 +54,7 @@ public class DocusExternosBean implements Serializable {
     private String codigoexp;
     public boolean a1;
     public boolean a2;
+    private boolean ver,nover;
     public String auxfecha;
     public String auxanio;
     public List documentosext;
@@ -65,6 +66,7 @@ public class DocusExternosBean implements Serializable {
     private String tipodestino;
     private String tipoorigen;
     private String siglas;
+    public static String correlativo_impresion;
     
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
@@ -163,6 +165,7 @@ public class DocusExternosBean implements Serializable {
         ObtenerTiposDocus();
         generarCorrelativo();
         siglas=deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        correlativo_impresion = correlativo;
 
     }
 
@@ -267,9 +270,8 @@ public class DocusExternosBean implements Serializable {
     public void Guardar_ProvExt() {
         System.out.println("SE HA GUARDADO");
         DocusExtint di = new DocusExtint();
-        FacesMessage message = null;
         try {
-            di.setNumerodoc(codigoexp);
+            di.setNumerodoc(documento+"-"+codigoexp);
             di.setAsunto(asunto);
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
@@ -278,19 +280,18 @@ public class DocusExternosBean implements Serializable {
             di.setUsuario(usu);
             di.setCorrelativod(correlativo);
             di.setFechaEnvio(fechaprov);
-            di.setTiposDocumentos(deriv.getTipoDoc(documento));
+            di.setTiposDocumentos(deriv.getTipoDoc("PROVEIDOS"));
             di.setExtInt("pe");
             deriv.guardarDocusExt(di);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se ha guardado el documento");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ver=true;
+            nover=false;
             Limpiar();
             MostrarDocusExt();
         } catch (Exception e) {
+            ver=false;
+            nover=true;
             System.out.println("PROBLEMAS PROVEIDO EXTERNO");
             System.out.println(e.getMessage());
-            e.printStackTrace();
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Problemas al guardar");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -504,6 +505,22 @@ public class DocusExternosBean implements Serializable {
 
     public void setSiglas(String siglas) {
         this.siglas = siglas;
+    }
+
+    public boolean isVer() {
+        return ver;
+    }
+
+    public void setVer(boolean ver) {
+        this.ver = ver;
+    }
+
+    public boolean isNover() {
+        return nover;
+    }
+
+    public void setNover(boolean nover) {
+        this.nover = nover;
     }
 
 }

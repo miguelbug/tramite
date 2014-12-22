@@ -66,7 +66,7 @@ public interface DerivarDAO {
 
     public String getCorreProv();
 
-    public void ActualizarTramite(String tramaux, String movimiento);
+    public void ActualizarTramite(String tramaux, String movimiento, Date fecha);
 
     public String getCorrelativoOficio();
 

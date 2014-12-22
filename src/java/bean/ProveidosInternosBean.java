@@ -38,6 +38,7 @@ public class ProveidosInternosBean {
 
     private List documentos_internos, docselec, docselec2, otrosdocus, otrosdocus2, proveidos_internos;
     private ProveidosInternosDao pid;
+    public static String correlativo_impresion;
     private Usuario usu;
     private final FacesContext faceContext;
     private Date fechaprov;
@@ -71,7 +72,7 @@ public class ProveidosInternosBean {
         if (event.getTab().getTitle().equals("DOCUMENTOS INTERNOS")) {
             getLista();
         } else {
-            if (event.getTab().getTitle().equals("PROVEIDOS INTERNOS")) {
+            if (event.getTab().getTitle().equals("PROVEIDOS")) {
                 getProveidosInternos();
             }
         }
@@ -88,8 +89,7 @@ public class ProveidosInternosBean {
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("nombredocu", String.valueOf(obj[0]));
-                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("documento", String.valueOf(obj[0]) + " N°-" + String.valueOf(obj[1]));
                 listaaux.put("asunto", String.valueOf(obj[2]));
                 listaaux.put("fecha", String.valueOf(obj[3]));
                 listaaux.put("origen", String.valueOf(obj[4]));
@@ -110,7 +110,7 @@ public class ProveidosInternosBean {
             List lista = new ArrayList();
             lista = pid.getProveidosinternos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[8];
+            Object obj[] = new Object[7];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -120,8 +120,7 @@ public class ProveidosInternosBean {
                 listaaux.put("origen", String.valueOf(obj[3]));
                 listaaux.put("destino", String.valueOf(obj[4]));
                 listaaux.put("fecha", String.valueOf(obj[5]));
-                listaaux.put("nombdocu", String.valueOf(obj[6]));
-                listaaux.put("usuario", String.valueOf(obj[7]));
+                listaaux.put("usuario", String.valueOf(obj[6]));
                 proveidos_internos.add(listaaux);
             }
         } catch (Exception e) {
@@ -142,6 +141,7 @@ public class ProveidosInternosBean {
         origen_prov = hm.get("origen").toString();
         destino_prov = hm.get("destino").toString();
         asunto = hm.get("asunto").toString();
+        correlativo_impresion = correlativo_proveido;
         tranum = correlativo_proveido;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf2.format(fechaprov);
@@ -205,7 +205,7 @@ public class ProveidosInternosBean {
             di.setDependenciaByCodigo(deriv.getDep(origen_prov));
             di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
             di.setMovimientoDext(Long.parseLong("1"));
-            di.setUsuario(pid.getUsuario(usuario));
+            di.setUsuario(pid.getUsuario(usu.getUsuNombre()));
             di.setCorrelativod(correlativo_proveido);
             di.setExtInt("pi");
             di.setTiposDocumentos(td);

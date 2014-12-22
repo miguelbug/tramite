@@ -76,13 +76,12 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         System.out.println("get docus internos (oficios)");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
+            Query query = session.createSQLQuery("select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
                     + "DE.NUMERODOC,\n"
                     + "DE.ASUNTO,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
                     + "to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,\n"
-                    + "TD.NOMBRE_DOCU,\n"
                     + "USUA.USU_NOMBRE\n"
                     + "from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina\n"
                     + "WHERE DE.CODIGO=M1.CODIGO\n"
@@ -90,7 +89,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + "AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "AND DE.USU=USUA.USU\n"
                     + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
-                    + "AND DE.EXT_INT='pi'\n"
+                    + "AND DE.EXT_INT IN ('pe','pi')\n"
                     + "ORDER BY DE.ID DESC");
             proveidos = query.list();
             session.beginTransaction().commit();

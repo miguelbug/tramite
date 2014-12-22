@@ -48,13 +48,14 @@ public class DocumentoUsuarioBean {
     private DocumentoDAO dd;
     private Date fecha, anio;
     private Usuario usu;
-    private String tipodocupropio, tipodocupropio2, asignado, fechadia, fechanio = "", fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", docunombre, estado, tramaux, llego, confirme, docresp, docofic;
+    private String tipodocupropio, tipodocupropio2, asignado, fechadia, fechanio = "", fechahora, motivo = "", usuario = "", codinterno, numtramaux, asunto, siglasdocus, correlativo = "", correlativoaux, docunombre, estado, tramaux, llego, confirme, docresp, docofic;
     private final FacesContext faceContext;
     private SeguimientoDAO sgd;
     private DerivarDAO deriv;
-    private boolean confirmar = false, aparecer;
+    private boolean confirmar = false, aparecer, ver, nover;
     private DocusInternosDAO di;
     private OficioDAO ofi;
+    public static String correla_exportar, tramnum_exportar, fecha_exportar;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -77,10 +78,10 @@ public class DocumentoUsuarioBean {
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
-        if(isdocumentosUsuario){
+        if (isdocumentosUsuario) {
             MostrarParaUsuario();
         }
-        
+
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -372,7 +373,6 @@ public class DocumentoUsuarioBean {
         asunto = "";
         estado = "";
         codinterno = "";
-        correlativo = "";
         docunombre = "";
         siglasdocus = "";
     }
@@ -473,6 +473,10 @@ public class DocumentoUsuarioBean {
                 Motivo();
                 System.out.println("entra a usuarioselec");
                 UsuarioSelec();
+                HashMap<String,String> hm= (HashMap<String,String>)docselec2.get(0);
+                tramnum_exportar = hm.get("numerotramite").toString();
+                fecha_exportar = hm.get("fechaenvio").toString();
+                
             }
         } catch (Exception e) {
             System.out.println("error derivar");
@@ -531,10 +535,15 @@ public class DocumentoUsuarioBean {
             this.estado = "EN PROCESO";
         }
         correlativo = generarCorrelativo();
+        correla_exportar = correlativo;
+        this.correlativoaux=correlativo;
+        System.out.println("correlativo exportar: "+correla_exportar);
+
     }
 
     public void Guardar() {
         FacesMessage message = null;
+        Date fechaactual = new Date();
         try {
             System.out.println("entra a guardar");
 
@@ -544,17 +553,17 @@ public class DocumentoUsuarioBean {
             Indicador in = deriv.getIndic(docunombre);
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())));
+                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fechaactual);
                 deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
                 deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto);
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "DERIVADO: " + numtramaux, "DOCUMENTO DE RESPUESTA: " + correlativo);
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
             limpiar();
             MostrarParaUsuario();
+            ver = true;
+            nover = false;
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO DERIVAR");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            nover = true;
+            ver = false;
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -998,4 +1007,27 @@ public class DocumentoUsuarioBean {
         this.detallecirc2 = detallecirc2;
     }
 
+    public boolean isVer() {
+        return ver;
+    }
+
+    public void setVer(boolean ver) {
+        this.ver = ver;
+    }
+
+    public boolean isNover() {
+        return nover;
+    }
+
+    public void setNover(boolean nover) {
+        this.nover = nover;
+    }
+
+    public String getCorrelativoaux() {
+        return correlativoaux;
+    }
+
+    public void setCorrelativoaux(String correlativoaux) {
+        this.correlativoaux = correlativoaux;
+    }
 }

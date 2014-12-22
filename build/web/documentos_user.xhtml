@@ -78,7 +78,7 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.abrirAsignacion()}"
                                                          update=":form:asignados" oncomplete="PF('asignadosDialog').show()"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
-                                                         oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
+                                                         oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv,:form:respuestaImprimirDialog"/>
                                     </f:facet>
                                 </p:dataTable>
                             </center>
@@ -274,8 +274,24 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl,:form:">
+                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl,:form:,respuestaImprimirDialog" oncomplete="PF('respuestaImprimir').show()">
                                 <f:ajax event="click" onevent="derivarDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+
+                    <p:dialog header="Aviso" widgetVar="respuestaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="respuestaImprimirDialog" >
+                        <center>
+                            <p:outputLabel value="LA CONSTANCIA N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
+                            <br></br>
+                            <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarRepRespuestas()}" ajax="false" rendered="#{documentoUsuarioBean.ver}">
+                                <f:ajax event="click" onevent="respuestaImprimirDialog.hide()"/>
+                            </p:commandButton>
+
+                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{documentoUsuarioBean.nover}"/>
+                            <br></br>
+                            <p:commandButton value="Aceptar" rendered="#{documentoUsuarioBean.nover}">
+                                <f:ajax event="click" onevent="respuestaImprimir.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>

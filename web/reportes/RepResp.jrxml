@@ -32,31 +32,38 @@
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["00254"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
-DE.NUMERODOC,
-DE.CORRELATIVOD,
-DE.ASUNTO,
-M1.NOMBRE AS ORIGEN,
-M2.NOMBRE AS DESTINO,
-to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,
-USUA.USU_NOMBRE
-from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina
-WHERE DE.CODIGO=M1.CODIGO
-AND DE.CODIGO1=M2.CODIGO
-AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO
-AND DE.USU=$P{usuario}
-AND DE.CORRELATIVOD=$P{correlativo}
-AND USUA.ID_OFICINA=oficina.ID_OFICINA
-ORDER BY DE.ID DESC]]></queryString>
+	<parameter name="tramnum" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="fechaenvio" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT DI.DOCU_NOMBREINT||' N°-'||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT as DOCUMENTO,
+TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,
+DI.TRAM_NUM AS NUMERO_TRAMITE,
+TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA_ENVIO,
+TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHAREGISTRO,
+TO_CHAR(TM.FECHA_DERIVACION,'DD/MM/YYYY HH:MI:SS') AS FECHA_DERIVADO,
+D1.NOMBRE AS ORIGEN,
+D2.NOMBRE AS DESTINO,
+USUA.USU_NOMBRE AS USUARIO,
+DI.DOCU_ASUNTO AS ASUNTO
+FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2
+WHERE DI.TRAM_NUM=$P{tramnum}
+AND DI.TRAM_FECHA=$P{fechaenvio}
+AND TM.CODIGO=D1.CODIGO
+AND TM.CODIGO1=D2.CODIGO
+AND D2.CODIGO NOT IN('1001871','1001870','1001872','1001868','1001869')
+AND DI.USU=$P{usuario}
+AND DI.DOCU_CORRELAINT=$P{correlativo}
+ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 
 	<field name="DOCUMENTO" class="java.lang.String"/>
-	<field name="NUMERODOC" class="java.lang.String"/>
-	<field name="CORRELATIVOD" class="java.lang.String"/>
-	<field name="ASUNTO" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="NUMERO_TRAMITE" class="java.lang.String"/>
+	<field name="FECHA_ENVIO" class="java.lang.String"/>
+	<field name="FECHAREGISTRO" class="java.lang.String"/>
+	<field name="FECHA_DERIVADO" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
-	<field name="FECHA" class="java.lang.String"/>
-	<field name="USU_NOMBRE" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="ASUNTO" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -111,22 +118,22 @@ ORDER BY DE.ID DESC]]></queryString>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="420"
+						x="392"
 						y="13"
-						width="110"
+						width="123"
 						height="13"
 						key="textField-1"/>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{USU_NOMBRE}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{usuario}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy   h:mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="420"
+						x="392"
 						y="0"
-						width="110"
+						width="123"
 						height="13"
 						key="textField-2"/>
 					<box></box>
@@ -137,9 +144,9 @@ ORDER BY DE.ID DESC]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="355"
+						x="339"
 						y="0"
-						width="65"
+						width="50"
 						height="13"
 						key="staticText-3"/>
 					<box></box>
@@ -150,9 +157,9 @@ ORDER BY DE.ID DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="355"
+						x="339"
 						y="13"
-						width="65"
+						width="50"
 						height="13"
 						key="staticText-4"/>
 					<box></box>
@@ -163,22 +170,22 @@ ORDER BY DE.ID DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="355"
+						x="340"
 						y="30"
-						width="65"
+						width="49"
 						height="15"
 						key="staticText-6"/>
 					<box></box>
 					<textElement>
 						<font size="9"/>
 					</textElement>
-				<text><![CDATA[Proveido: ]]></text>
+				<text><![CDATA[Correlativo:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="420"
+						x="393"
 						y="30"
-						width="110"
+						width="122"
 						height="15"
 						key="textField-3"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -188,9 +195,9 @@ ORDER BY DE.ID DESC]]></queryString>
 					<rightPen lineWidth="0.25"/>
 </box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9"/>
+						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CORRELATIVOD}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
@@ -225,21 +232,8 @@ ORDER BY DE.ID DESC]]></queryString>
 				</line>
 				<staticText>
 					<reportElement
-						x="0"
-						y="29"
-						width="90"
-						height="19"
-						key="staticText-7"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<text><![CDATA[Documento]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="0"
-						y="48"
+						x="1"
+						y="42"
 						width="90"
 						height="18"
 						key="staticText-8"/>
@@ -247,12 +241,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<text><![CDATA[Asunto]]></text>
+				<text><![CDATA[Asunto:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="0"
-						y="67"
+						x="1"
+						y="62"
 						width="90"
 						height="19"
 						key="staticText-10"/>
@@ -260,12 +254,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<text><![CDATA[Fec. Ingreso]]></text>
+				<text><![CDATA[Fec. Envio:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="0"
-						y="87"
+						x="1"
+						y="83"
 						width="90"
 						height="19"
 						key="staticText-11"/>
@@ -273,12 +267,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<text><![CDATA[Origen]]></text>
+				<text><![CDATA[Origen:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="0"
-						y="108"
+						x="1"
+						y="103"
 						width="90"
 						height="18"
 						key="staticText-12"/>
@@ -286,25 +280,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<text><![CDATA[Fec. Registro]]></text>
+				<text><![CDATA[Fec. Registro:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="27"
-						width="420"
-						height="20"
-						key="textField-4"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NUMERODOC}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="101"
-						y="48"
+						y="42"
 						width="420"
 						height="19"
 						key="textField-5"/>
@@ -317,7 +298,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="67"
+						y="62"
 						width="310"
 						height="20"
 						key="textField-7"/>
@@ -325,12 +306,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA_ENVIO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="88"
+						y="83"
 						width="420"
 						height="19"
 						key="textField-8"/>
@@ -343,7 +324,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="100"
-						y="108"
+						y="103"
 						width="420"
 						height="20"
 						key="textField-9"/>
@@ -351,12 +332,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHAREGISTRO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
 						x="0"
-						y="143"
+						y="148"
 						width="529"
 						height="0"
 						key="line-2"/>
@@ -365,7 +346,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="128"
+						y="130"
 						width="530"
 						height="15"
 						key="staticText-13"/>
@@ -378,7 +359,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="187"
+						y="201"
 						width="90"
 						height="18"
 						key="staticText-14"/>
@@ -391,7 +372,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="168"
+						y="177"
 						width="90"
 						height="19"
 						key="staticText-15"/>
@@ -404,7 +385,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="149"
+						y="154"
 						width="90"
 						height="19"
 						key="staticText-16"/>
@@ -417,7 +398,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="168"
+						y="176"
 						width="310"
 						height="20"
 						key="textField-10"/>
@@ -425,12 +406,12 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA_DERIVADO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="149"
+						y="155"
 						width="310"
 						height="19"
 						key="textField-11"/>
@@ -443,7 +424,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="101"
-						y="190"
+						y="200"
 						width="430"
 						height="50"
 						key="staticText-17"/>
@@ -498,6 +479,32 @@ ORDER BY DE.ID DESC]]></queryString>
 					</textElement>
 				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="21"
+						width="90"
+						height="19"
+						key="staticText-20"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Numero de Trámite:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="101"
+						y="21"
+						width="420"
+						height="20"
+						key="textField-13"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NUMERO_TRAMITE}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>
