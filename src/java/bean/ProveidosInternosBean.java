@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import maping.DocusExtint;
 import maping.TiposDocumentos;
 import maping.Usuario;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -35,7 +36,7 @@ import maping.Usuario;
 @ViewScoped
 public class ProveidosInternosBean {
 
-    private List documentos_internos, docselec, otrosdocus, proveidos_internos;
+    private List documentos_internos, docselec, docselec2, otrosdocus, otrosdocus2, proveidos_internos;
     private ProveidosInternosDao pid;
     private Usuario usu;
     private final FacesContext faceContext;
@@ -59,16 +60,21 @@ public class ProveidosInternosBean {
         String currentPage = facesContext.getViewRoot().getViewId();
         pid = new ProveidosInternosDaoImpl();
         boolean isproveidointerno = (currentPage.lastIndexOf("Proveidos_internos.xhtml") > -1);
-        boolean isproveidointerno2 = (currentPage.lastIndexOf("Proveidos_internos.xhtml") > -1);
-        if(isproveidointerno){
+        if (isproveidointerno) {
             getLista();
-        }else{
-            if(isproveidointerno2){
+            getProveidosInternos();
+        }
+
+    }
+
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getTitle().equals("DOCUMENTOS INTERNOS")) {
+            getLista();
+        } else {
+            if (event.getTab().getTitle().equals("PROVEIDOS INTERNOS")) {
                 getProveidosInternos();
             }
         }
-        
-        
     }
 
     public void getLista() {
@@ -393,6 +399,22 @@ public class ProveidosInternosBean {
 
     public void setProveidos_internos(List proveidos_internos) {
         this.proveidos_internos = proveidos_internos;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
+    }
+
+    public List getOtrosdocus2() {
+        return otrosdocus2;
+    }
+
+    public void setOtrosdocus2(List otrosdocus2) {
+        this.otrosdocus2 = otrosdocus2;
     }
 
 }

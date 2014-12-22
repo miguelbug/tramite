@@ -118,18 +118,18 @@ public class OficioBean {
         cities2 = new ArrayList<String>();
 
         llenardepes();
-        
+
         boolean isofcirc = (currentPage.lastIndexOf("Oficios_Circulares.xhtml") > -1);
         boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
-        if(isofcirc){
+        if (isofcirc) {
             mostrarofCirc();
-        }else{
-            if(isoficsinexp){
+        } else {
+            if (isoficsinexp) {
                 mostrarOficiosSinExp();
-            }else{
-                if(isoficconexp){
+            } else {
+                if (isoficconexp) {
                     mostrarOficioConExp();
                 }
             }
@@ -186,6 +186,16 @@ public class OficioBean {
 
     }
 
+    public void abrirDocumentoUnico() {
+        getAnio();
+        generarFecha();
+        generarCorrelativoOfiUnico();
+        ObtenerTiposDocus();
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        origen = dd.getOficina(usu);
+
+    }
+
     public void agregardestinos() {
         destinos = dd.getDependencias(tipodestino);
     }
@@ -203,7 +213,7 @@ public class OficioBean {
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
-        
+
     }
 
     public List Detalles() {
@@ -272,6 +282,46 @@ public class OficioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }    
+
+    public void generarCorrelativoOfiUnico() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (auxanio.equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                System.out.println("aumentando el correlativo: " + corr);
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
+
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
+        }
+        correlativo2 = aux;
     }
 
     public void generarCorrelativo2() {
@@ -451,7 +501,7 @@ public class OficioBean {
         }
         getAnio();
         generarFecha();
-        generarCorrelativo2();
+        this.abrirDocumentoUnico();
         this.asunto = "";
     }
 

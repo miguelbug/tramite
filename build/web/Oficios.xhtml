@@ -19,7 +19,7 @@
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficiotodos" var="item" paginator="true" rows="15" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0"><!--rowKey="#{item.NUMEROTRAMITE}"--->
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                     <h:outputText value="#{item.correlativo}"/>
@@ -44,7 +44,7 @@
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
-                                                     update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirDocumento()}"/>
+                                                     update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirDocumentoUnico()}"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>

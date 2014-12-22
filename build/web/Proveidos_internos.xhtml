@@ -15,11 +15,12 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <p:tabView>
+                         <p:ajax event="tabChange" listener="#{proveidosInternosBean.onTabChange}" update=":form:"/>
                         <p:tab title="DOCUMENTOS INTERNOS">
                             <p:dataTable value="#{proveidosInternosBean.documentos_internos}" var="item" paginator="true" rows="15" id="tablainternos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus}" selection="#{proveidosInternosBean.docselec}"
-                                         rowKey="#{item.documento}" style="margin-bottom: 0">
+                                         rowKey="#{item.nombredocu}-#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
                                 <p:column headerText="NOMB. DOC." width="5" sortBy="#{item.nombredocu}" filterBy="#{item.nombredocu}" filterMatchMode="contains">
@@ -53,11 +54,11 @@
                         <p:tab title="PROVEIDOS INTERNOS">
                             <p:dataTable value="#{proveidosInternosBean.proveidos_internos}" var="item" paginator="true" rows="15" id="tablaproveidosinternos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus}" selection="#{proveidosInternosBean.docselec}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus2}" selection="#{proveidosInternosBean.docselec2}"
                                          rowKey="#{item.documento}" style="margin-bottom: 0">
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
-                                
+
                                 <p:column headerText="NOMB. DOC." width="2" sortBy="#{item.nombdocu}" filterBy="#{item.nombdocu}" filterMatchMode="contains">
                                     <h:outputText value="#{item.nombdocu}"/>
                                 </p:column>

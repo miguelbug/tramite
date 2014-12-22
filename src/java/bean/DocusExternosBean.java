@@ -64,6 +64,7 @@ public class DocusExternosBean implements Serializable {
     private OficioDAO od;
     private String tipodestino;
     private String tipoorigen;
+    private String siglas;
     
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
@@ -161,6 +162,7 @@ public class DocusExternosBean implements Serializable {
         getAnio();
         ObtenerTiposDocus();
         generarCorrelativo();
+        siglas=deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
 
     }
 
@@ -494,6 +496,14 @@ public class DocusExternosBean implements Serializable {
 
     public void setDependenciasprov2(List dependenciasprov2) {
         this.dependenciasprov2 = dependenciasprov2;
+    }
+
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
     }
 
 }

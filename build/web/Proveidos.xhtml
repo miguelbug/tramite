@@ -53,7 +53,7 @@
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Proveido - #{docusExternosBean.correlativo}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
+                    <p:dialog header="Proveido - N° #{docusExternosBean.correlativo}-#{docusExternosBean.siglas}-#{docusExternosBean.auxanio}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
                         <p:panelGrid columns="2" id="panelProv">
                             <p:outputLabel value="Documento: "/>
                             <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
