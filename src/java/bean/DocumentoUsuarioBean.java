@@ -55,7 +55,7 @@ public class DocumentoUsuarioBean {
     private boolean confirmar = false, aparecer, ver, nover;
     private DocusInternosDAO di;
     private OficioDAO ofi;
-    public static String correla_exportar, tramnum_exportar, fecha_exportar;
+    public static String correla_exportar, tramnum_exportar, fecha_exportar,movimiento_exportar;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -476,6 +476,8 @@ public class DocumentoUsuarioBean {
                 HashMap<String,String> hm= (HashMap<String,String>)docselec2.get(0);
                 tramnum_exportar = hm.get("numerotramite").toString();
                 fecha_exportar = hm.get("fechaenvio").toString();
+                movimiento_exportar=hm.get("movimnum").toString();
+                System.out.println("ESTA ES LA FECHA DE ENVIO: "+fecha_exportar+" Mov: "+movimiento_exportar);
                 
             }
         } catch (Exception e) {

@@ -221,12 +221,16 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
         boolean rpt = false;
+        int movimiento=Integer.valueOf(DocumentoUsuarioBean.movimiento_exportar)+1;
+        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+" fechaexport: "+DocumentoUsuarioBean.fecha_exportar+"  movimiento: "+movimiento);
         parametros.put("usuario", getUsu());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("coorelativo", DocumentoUsuarioBean.correla_exportar);
         parametros.put("tramnum",DocumentoUsuarioBean.tramnum_exportar);
         parametros.put("fechaenvio", DocumentoUsuarioBean.fecha_exportar);
+        parametros.put("movimiento",String.valueOf(movimiento));
+        parametros.put("fechaderivado", getFechaDerivado());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
         if (!rpt && message == null) {
@@ -235,7 +239,10 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+    public String getFechaDerivado(){
+        String fecha=this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
+        return fecha;
+    }
     public void mostrarReporteNotasDeriv() {
 
         context = FacesContext.getCurrentInstance();

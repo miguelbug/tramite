@@ -34,36 +34,38 @@
 	</parameter>
 	<parameter name="tramnum" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="fechaenvio" isForPrompting="false" class="java.lang.String"/>
-	<queryString><![CDATA[SELECT DI.DOCU_NOMBREINT||' N°-'||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT as DOCUMENTO,
-TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,
-DI.TRAM_NUM AS NUMERO_TRAMITE,
-TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA_ENVIO,
-TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHAREGISTRO,
-TO_CHAR(TM.FECHA_DERIVACION,'DD/MM/YYYY HH:MI:SS') AS FECHA_DERIVADO,
+	<parameter name="movimiento" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="fechaderivado" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT TD.NOMBRE_DOCU||' N°-'||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT as documento,
+TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MM:SS') AS FECHAREGISTRO,
+USUA.USU_NOMBRE,
+DI.DOCU_ASUNTO,
+DI.TRAM_NUM,
 D1.NOMBRE AS ORIGEN,
 D2.NOMBRE AS DESTINO,
-USUA.USU_NOMBRE AS USUARIO,
-DI.DOCU_ASUNTO AS ASUNTO
-FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2
-WHERE DI.TRAM_NUM=$P{tramnum}
-AND DI.TRAM_FECHA=$P{fechaenvio}
-AND TM.CODIGO=D1.CODIGO
-AND TM.CODIGO1=D2.CODIGO
-AND D2.CODIGO NOT IN('1001871','1001870','1001872','1001868','1001869')
+TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY HH:MM:SS') AS FECHATRAMITE
+FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2
+WHERE DI.USU=USUA.USU
 AND DI.USU=$P{usuario}
-AND DI.DOCU_CORRELAINT=$P{correlativo}
+AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO
+AND TM.TRAM_NUM=DI.TRAM_NUM
+AND TM.TRAM_FECHA=DI.TRAM_FECHA
+AND D1.CODIGO=TM.CODIGO
+AND D2.CODIGO=TM.CODIGO1
+AND TM.CODIGO1 NOT IN ('1001871','1001870','1001872','1001868','1001869')
+AND DI.TRAM_NUM=$P{tramnum}
+and TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY HH:mm:ss')=$P{fechaenvio}
+AND TM.MOVI_NUM=$P{movimiento}
 ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 
 	<field name="DOCUMENTO" class="java.lang.String"/>
-	<field name="FECHA" class="java.lang.String"/>
-	<field name="NUMERO_TRAMITE" class="java.lang.String"/>
-	<field name="FECHA_ENVIO" class="java.lang.String"/>
 	<field name="FECHAREGISTRO" class="java.lang.String"/>
-	<field name="FECHA_DERIVADO" class="java.lang.String"/>
+	<field name="USU_NOMBRE" class="java.lang.String"/>
+	<field name="DOCU_ASUNTO" class="java.lang.String"/>
+	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
-	<field name="USUARIO" class="java.lang.String"/>
-	<field name="ASUNTO" class="java.lang.String"/>
+	<field name="FECHATRAMITE" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -293,7 +295,7 @@ ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASUNTO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCU_ASUNTO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -306,7 +308,7 @@ ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA_ENVIO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHATRAMITE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -406,7 +408,7 @@ ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA_DERIVADO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{fechaderivado}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -503,7 +505,7 @@ ORDER BY DI.DOCU_CORRELAINT DESC]]></queryString>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NUMERO_TRAMITE}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TRAM_NUM}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

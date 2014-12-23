@@ -285,7 +285,7 @@
                             <p:outputLabel value="LA CONSTANCIA N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
                             <br></br>
                             <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarRepRespuestas()}" ajax="false" rendered="#{documentoUsuarioBean.ver}">
-                                <f:ajax event="click" onevent="respuestaImprimirDialog.hide()"/>
+                                <f:ajax event="click" onevent="respuestaImprimir.hide()"/>
                             </p:commandButton>
 
                             <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{documentoUsuarioBean.nover}"/>

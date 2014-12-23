@@ -12,4 +12,5 @@ package dao;
  */
 public interface reporteDAO {
     public void ActualizarTemporal();
+    public String getfechaderivado(String tramnum, String movimiento);
 }
