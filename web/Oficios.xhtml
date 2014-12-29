@@ -19,7 +19,7 @@
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficiotodos" var="item" paginator="true" rows="15" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0"><!--rowKey="#{item.NUMEROTRAMITE}"--->
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                     <h:outputText value="#{item.correlativo}"/>

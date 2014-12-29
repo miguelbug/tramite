@@ -62,7 +62,13 @@ public class ConstanciaBean {
         faceContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
-        mostrarConstancias();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+        boolean isconstancias = (currentPage.lastIndexOf("Constancias.xhtml") > -1);
+        if(isconstancias){
+            mostrarConstancias();
+        }
+        
     }
 
     public void abrirconstancia() {

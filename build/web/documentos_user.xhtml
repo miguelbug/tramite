@@ -282,7 +282,7 @@
 
                     <p:dialog header="Aviso" widgetVar="respuestaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="respuestaImprimirDialog" >
                         <center>
-                            <p:outputLabel value="LA CONSTANCIA N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
+                            <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
                             <br></br>
                             <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarRepRespuestas()}" ajax="false" rendered="#{documentoUsuarioBean.ver}">
                                 <f:ajax event="click" onevent="respuestaImprimir.hide()"/>

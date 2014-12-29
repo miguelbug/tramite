@@ -6,6 +6,12 @@
 
 package dao;
 
+import java.util.List;
+import maping.Dependencia;
+import maping.Jefatura;
+import maping.Oficina;
+import maping.Profesion;
+import maping.TipoContrato;
 import maping.Usuario;
 
 /**
@@ -15,4 +21,15 @@ import maping.Usuario;
 public interface GestionUsuarioDAO {
     public Usuario ValidarClave(String clave, String usu);
     public void Cambiar(Usuario usu);
+    public List getOficinas();
+    public List getProfesion();
+    public List getContrato();
+    public Usuario getUsuario(String nombre);
+    public Dependencia getDependencia(String nombre);
+    public Oficina getOficina(String nombre);
+    public Profesion getProfesion(String nombre);
+    public TipoContrato getContrato(String nombre);
+    public void GuardarJefatura(Jefatura jefatura, Usuario usu);
+    public void GuardarUsuario(Usuario usu);
+    public void GuardarJefe(Jefatura jefe);
 }

@@ -32,16 +32,17 @@
                     <p:menuitem value="Respuesta a Expediente" action="documentos_respta?faces-redirect=true"/>
                     <p:menuitem value="Oficios-OGPL" action="Oficios?faces-redirect=true"/>
                     <p:menuitem value="Oficios Circulares-OGPL" action="Oficios_Circulares?faces-redirect=true"/>
-                    <p:submenu label="Proveidos" icon="ui-icon-pencil">
-                        <p:menuitem value="Proveidos Externos" action="Proveidos?faces-redirect=true" />
-                        <p:menuitem value="Proveidos Internos" action="Proveidos_internos?faces-redirect=true" />
-                    </p:submenu>
-                    
+                    <p:menuitem value="Proveidos" action="Proveidos_internos?faces-redirect=true"/>
                     <p:menuitem value="Constancias" action="Constancias?faces-redirect=true"/>
                 </p:submenu>
 
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
+                </p:submenu>
+
+                <p:submenu label="Mantenimiento" icon="ui-icon-pencil" styleClass="conf">
+                    <p:menuitem value="Nueva Dependencia" oncomplete="PF('GUNuevaDep').show()"/>
+                    <p:menuitem value="Nuevo Usuario" oncomplete="PF('GUNuevoUsu').show()" actionListener="#{gestionUsuarioBean.listar()}" update="gunuevousu"/>
                 </p:submenu>
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
@@ -49,7 +50,86 @@
                 </p:submenu>
             </p:menubar>
 
+            <p:dialog header="Gestión Nuevas Dependencias" widgetVar="GUNuevaDep" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gunuevadep">
 
+                <p:panelGrid columns="2" id="paneldepe">
+                    <p:outputLabel value="Código de Dependencia:"/>
+                    <p:inputText value="#{gestionDependenciaBean.codigodep}"/>
+
+                    <p:outputLabel value="Nombre de Dependencia:"/>
+                    <p:inputText value="#{gestionDependenciaBean.nombredep}"/>
+
+                    <p:outputLabel value="Tipo de Dependencia:"/>
+                    <p:selectOneMenu id="tipodepe" value="#{gestionDependenciaBean.tipodep}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                        <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
+                        <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <br></br>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="#{gestionDependenciaBean.guardarDependencia()}">
+                        <f:ajax event="click" onevent="GUNuevaDep.hide()"/>
+                    </p:commandButton>
+                </center>
+            </p:dialog>
+
+            <p:dialog header="Gestión Nuevos Usuarios" widgetVar="GUNuevoUsu" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gunuevousu">
+                <p:panelGrid columns="2" id="panelusu">
+                    <p:outputLabel value="Nombre:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevonomb}"/>
+
+                    <p:outputLabel value="Apellidos:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevoapell}"/>
+
+                    <p:outputLabel value="DNI:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevodni}"/>
+
+                    <p:outputLabel value="Oficina:"/>
+                    <p:selectOneMenu id="oficinatipo" value="#{gestionUsuarioBean.nuevoofi}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Profesión:"/>
+                    <p:selectOneMenu id="profesiontipo" value="#{gestionUsuarioBean.nuevaprof}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{gestionUsuarioBean.profesion}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Contrato:"/>
+                    <p:selectOneMenu id="contratotipo" value="#{gestionUsuarioBean.nuevocontrato}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{gestionUsuarioBean.contrato}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Usuario:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevousuario}"/>
+
+                    <p:outputLabel value="Telefono:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevotelefono}"/>
+
+                    <p:outputLabel value="Anexo:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevoanexo}"/>
+
+                    <p:outputLabel value="Cargo:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevocargo}"/>
+
+                    <p:outputLabel value="Grado:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevogrado}"/>
+
+                    <p:outputLabel value="Correo:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevocorreo}"/>
+                    
+                </p:panelGrid>
+                <br></br>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}">
+                        <f:ajax event="click" onevent="GUNuevoUsu.hide()"/>
+                    </p:commandButton>
+                </center>
+            </p:dialog>
 
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">

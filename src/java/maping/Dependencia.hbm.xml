@@ -6,7 +6,7 @@
     <class name="maping.Dependencia" table="DEPENDENCIA" schema="MIGUEL">
         <id name="codigo" type="long">
             <column name="CODIGO" precision="10" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="nombre" type="string">
             <column name="NOMBRE" length="300" />

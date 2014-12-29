@@ -6,7 +6,7 @@
     <class name="maping.Usuario" table="USUARIO" schema="MIGUEL">
         <id name="usu" type="string">
             <column name="USU" length="30" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="oficina" class="maping.Oficina" fetch="select">
             <column name="ID_OFICINA" length="20" />
