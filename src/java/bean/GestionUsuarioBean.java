@@ -46,8 +46,11 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas, profesion, contrato;
+    private List oficinas, profesion, contrato, jefes;
     //////////////
+    private String nuevousu_usuario;
+    private String nuevousu_nombre;
+    private String nuevousu_oficina;
 
     public GestionUsuarioBean() {
         gu = new GestionUsuarioDaoImpl();
@@ -57,6 +60,7 @@ public class GestionUsuarioBean implements Serializable {
         oficinas = new ArrayList<String>();
         profesion = new ArrayList<String>();
         contrato = new ArrayList<String>();
+        jefes = new ArrayList<String>();
     }
 
     public void Guardar() {
@@ -91,17 +95,14 @@ public class GestionUsuarioBean implements Serializable {
         listarContrato();
     }
 
+    public void listarJefatura() {
+        jefes = gu.listarJefes();
+    }
+
     public void guardarJefatura() {
         FacesMessage message = null;
         try {
             Jefatura jefatura = new Jefatura();
-            Usuario usuario = new Usuario();
-            usuario.setUsuNombre(nuevoapell + ", " + nuevonomb);
-            usuario.setClave("123");
-            usuario.setOficina(gu.getOficina(nuevoofi));
-            usuario.setEstado("activo");
-            usuario.setUsu(nuevousuario);
-            gu.GuardarUsuario(usuario);
             jefatura.setNombre(nuevonomb);
             jefatura.setApellidos(nuevoapell);
             jefatura.setTelefono(nuevotelefono);
@@ -115,12 +116,51 @@ public class GestionUsuarioBean implements Serializable {
             jefatura.setDependencia(gu.getDependencia(nuevoofi));
             jefatura.setTipoContrato(gu.getContrato(nuevocontrato));
             gu.GuardarJefe(jefatura);
+            limpiarjefatura();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha Guardado");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
         }
         RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+
+    public void limpiarjefatura() {
+        nuevonomb = "";
+        nuevoapell = "";
+        nuevotelefono = "";
+        nuevoanexo = "";
+        nuevocargo = "";
+        nuevogrado = "";
+        nuevocorreo = "";
+        nuevodni = "";
+        nuevaprof = " ";
+        nuevoofi = " ";
+        nuevocontrato = " ";
+    }
+
+    public void limpiarUsuario() {
+        nuevousu_nombre="";
+        nuevousu_oficina=" ";
+        nuevousu_usuario="";
+    }
+
+    public void guardarUsuario() {
+        FacesMessage message = null;
+        try {
+            Usuario usuario = new Usuario();
+            usuario.setUsuNombre(nuevousu_nombre);
+            usuario.setClave("123");
+            usuario.setOficina(gu.getOficina(nuevousu_oficina));
+            usuario.setEstado("activo");
+            usuario.setUsu(nuevousu_usuario);
+            gu.GuardarUsuario(usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha Guardado");
+            limpiarUsuario();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
+        }
     }
 
     public void listarOficinas() {
@@ -298,6 +338,38 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setContrato(List contrato) {
         this.contrato = contrato;
+    }
+
+    public List getJefes() {
+        return jefes;
+    }
+
+    public void setJefes(List jefes) {
+        this.jefes = jefes;
+    }
+
+    public String getNuevousu_usuario() {
+        return nuevousu_usuario;
+    }
+
+    public void setNuevousu_usuario(String nuevousu_usuario) {
+        this.nuevousu_usuario = nuevousu_usuario;
+    }
+
+    public String getNuevousu_nombre() {
+        return nuevousu_nombre;
+    }
+
+    public void setNuevousu_nombre(String nuevousu_nombre) {
+        this.nuevousu_nombre = nuevousu_nombre;
+    }
+
+    public String getNuevousu_oficina() {
+        return nuevousu_oficina;
+    }
+
+    public void setNuevousu_oficina(String nuevousu_oficina) {
+        this.nuevousu_oficina = nuevousu_oficina;
     }
 
 }

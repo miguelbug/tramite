@@ -76,7 +76,7 @@
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
-                        <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" id="avisohecho">
+                        <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" position="center center" id="avisohecho">
                             <center>
                                 <p:outputLabel value="SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.hecho}"/>
                                 <p:outputLabel value="NO SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.nohecho}"/>
@@ -87,7 +87,7 @@
                             </center>
                         </p:dialog>
 
-                        <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                        <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
                                 <p:column headerText="fecha">
                                     <h:outputText value="#{car.fecha}" />
@@ -106,7 +106,7 @@
                                 </p:column>
                             </p:dataTable>
                         </p:dialog>
-                        <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Seguimiento" widgetVar="seguimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
                             <p:dataTable var="seg" value="#{documentosBean.seguimientolista}" id="tablaseguim" >
                                 <p:column headerText="Num. Tramite">
                                     <h:outputText value="#{seg.numerotramite}" />

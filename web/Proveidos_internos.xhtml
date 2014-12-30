@@ -83,7 +83,7 @@
                         </p:tab>
                     </p:tabView>
 
-                    <p:dialog header="Proveido-N° #{proveidosInternosBean.correlativo_proveido}-#{proveidosInternosBean.siglasdocus}-#{proveidosInternosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="proveidoExpediente">
+                    <p:dialog header="Proveido-N° #{proveidosInternosBean.correlativo_proveido}-#{proveidosInternosBean.siglasdocus}-#{proveidosInternosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="proveidoExpediente">
                         <center>
                             <p:panelGrid columns="2" id="panelProvExp">
                                 <p:outputLabel value="Documento:"/>
@@ -107,7 +107,7 @@
                         </center>
                     </p:dialog>
                     
-                    <p:dialog header="Proveido - N° #{docusExternosBean.correlativo}-#{docusExternosBean.siglas}-#{docusExternosBean.auxanio}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docextpanel">
+                    <p:dialog header="Proveido - N° #{docusExternosBean.correlativo}-#{docusExternosBean.siglas}-#{docusExternosBean.auxanio}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="docextpanel">
                         <p:panelGrid columns="2" id="panelProv">
                             <p:outputLabel value="Documento: "/>
                             <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
@@ -162,7 +162,7 @@
                         </center>
                     </p:dialog>
                     
-                    <p:dialog header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="mensajeImprimir">
+                    <p:dialog header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{proveidosInternosBean.correlativo_proveido} CREADO" rendered="#{proveidosInternosBean.ver}"/>
                             <br></br>
@@ -177,7 +177,7 @@
                         </center>
                     </p:dialog>
                     
-                    <p:dialog header="Mensaje" widgetVar="dialogMensajeExterno" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="mensajeImprimir2">
+                    <p:dialog header="Mensaje" widgetVar="dialogMensajeExterno" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir2">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{docusExternosBean.correlativo} CREADO" rendered="#{docusExternosBean.ver}"/>
                             <br></br>

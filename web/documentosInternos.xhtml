@@ -50,7 +50,7 @@
                         <p:tab title="DOCUMENTOS CON EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficConExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus1}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
@@ -80,7 +80,7 @@
                         <p:tab title="DOCUMENTOS SIN EXPEDIENTES">
                             <p:dataTable value="#{oficioBean.oficiosSinExp}" id="oficSinExp" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus2}"
                                          rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">

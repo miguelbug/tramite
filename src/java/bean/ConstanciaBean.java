@@ -48,7 +48,7 @@ public class ConstanciaBean {
     private FacesContext faceContext;
     private Usuario usu;
     private List constancias;
-    private List otrosdocus;
+    private List otrosdocus,otrosdocus1;
     private Date fechaactual;
     private static String correlativo2;
     private boolean ver,nover;
@@ -365,6 +365,14 @@ public class ConstanciaBean {
 
     public void setNover(boolean nover) {
         this.nover = nover;
+    }
+
+    public List getOtrosdocus1() {
+        return otrosdocus1;
+    }
+
+    public void setOtrosdocus1(List otrosdocus1) {
+        this.otrosdocus1 = otrosdocus1;
     }
 
 }

@@ -84,7 +84,7 @@
                             </center>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Asignación" widgetVar="asignadosDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="asignados">
+                    <p:dialog header="Asignación" widgetVar="asignadosDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="asignados">
                         <center>
                             <p:outputLabel value="Asignando a:"/>
                             <br></br>
@@ -97,7 +97,7 @@
                         </center>
 
                     </p:dialog>
-                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" >
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
                             <p:column headerText="FECHA REGISTRO">
                                 <h:outputText value="#{car.FECHAENVIO}" />
@@ -114,7 +114,7 @@
                         </p:dataTable>
 
                     </p:dialog>
-                    <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial2">
+                    <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial2">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
@@ -145,7 +145,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="segdial">
+                    <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
@@ -176,7 +176,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
                         <p:panelGrid columns="2" id="panelProv">
 
                             <p:outputLabel value="Documento: "/>
@@ -225,7 +225,7 @@
                         </center>
                     </p:dialog>
 
-                    <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
                         <p:panelGrid columns="2" id="panelDeriv">
 
                             <p:outputLabel value="Tipo de Documento: "/>
@@ -280,7 +280,7 @@
                         </center>
                     </p:dialog>
 
-                    <p:dialog header="Aviso" widgetVar="respuestaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="respuestaImprimirDialog" >
+                    <p:dialog header="Aviso" widgetVar="respuestaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="respuestaImprimirDialog" >
                         <center>
                             <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
                             <br></br>
