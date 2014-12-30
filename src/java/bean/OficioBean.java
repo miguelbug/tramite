@@ -51,7 +51,7 @@ public class OficioBean {
     private DerivarDAO deriv;
     private String correlativo = "";
     private String correlativo2 = "";
-    private List otrosdocus;
+    private List otrosdocus,otrosdocus1,otrosdocus2;
     private List docselec;
     public List depe2;
     private List depe;
@@ -1037,5 +1037,22 @@ public class OficioBean {
     public void setEscogido2(String escogido2) {
         this.escogido2 = escogido2;
     }
+
+    public List getOtrosdocus1() {
+        return otrosdocus1;
+    }
+
+    public void setOtrosdocus1(List otrosdocus1) {
+        this.otrosdocus1 = otrosdocus1;
+    }
+
+    public List getOtrosdocus2() {
+        return otrosdocus2;
+    }
+
+    public void setOtrosdocus2(List otrosdocus2) {
+        this.otrosdocus2 = otrosdocus2;
+    }
+
 
 }

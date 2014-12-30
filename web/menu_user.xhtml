@@ -33,11 +33,39 @@
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
+                <p:submenu label="Mantenimiento" icon="ui-icon-wrench" styleClass="conf">
+                    <p:menuitem value="Usuarios" actionListener="#{gestionUsuarioBean.listarJefesUser()}" oncomplete="PF('GUNuevoUsuario').show()" update="gunuevousuario" />
+                </p:submenu>
+
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
                     <p:menuitem value="Cambiar Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
                 </p:submenu>            
             </p:menubar>
+            
+            <p:dialog header="Gestión Usuario" widgetVar="GUNuevoUsuario" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="gunuevousuario">
+                <p:panelGrid columns="2" id="panelusu">
+                    <p:outputLabel value="Personal: "/>
+                    <p:selectOneMenu value="#{gestionUsuarioBean.nuevousu_nombre}" id="listaJefatura">
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{gestionUsuarioBean.jefesuser}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Usuario: "/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevousu_usuario}"/>
+                    <p:outputLabel value="Oficina: "/>
+                    <p:selectOneMenu value="#{gestionUsuarioBean.nuevousu_oficina}" id="listaoficina">
+                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <br></br>
+                <center>
+                    <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarUsuario()}" update="panelusu">
+                        <f:ajax event="click" onevent="GUNuevoUsu.hide()"/>
+                    </p:commandButton>
+                </center>
+            </p:dialog>
+            
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">
                     <p:outputLabel value="Contraseña Antigua:"/>
@@ -52,7 +80,7 @@
                 </center>
             </p:dialog>
 
-            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="doccircdialog" style="width: 150px">
+            <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="doccircdialog" style="width: 150px">
                 <p:panelGrid columns="2" id="formuloficCirc">
                     <p:outputLabel value="Tipo de Documento:"/>
                     <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
@@ -93,7 +121,7 @@
                 </center>
             </p:dialog>
 
-            <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="avisooficcircdialog" style="width: 150px">
+            <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="avisooficcircdialog" style="width: 150px">
                 <center>
                     <p:outputLabel value="EL OFICIO CIRCULAR N° #{oficioBean.correlativo} SE HA CREADO" rendered="#{oficioBean.ver}"/>
                     <br></br>
@@ -108,8 +136,8 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
-            <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="docudialog">
+
+            <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog">
                 <p:panelGrid columns="2" id="panelOfUn2">
 
                     <p:outputLabel value="Tipo de Documento:"/>

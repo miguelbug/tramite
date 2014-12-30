@@ -18,7 +18,7 @@
                         <p:tab title="CONSTANCIAS">
                             <p:dataTable value="#{constanciaBean.constancias}" id="constanciastablas" var="item" paginator="true" rows="15" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus1}"
                                          rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
                                 <p:column headerText="NUM. CORR." width="1" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
@@ -49,7 +49,7 @@
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constdialog" >
+                    <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="constdialog" >
                         <p:panelGrid columns="2" id="panelconst">
                             <p:outputLabel value="N° Correlativo:"/>
                             <p:outputLabel value="#{constanciaBean.correlativo}"/>
@@ -84,7 +84,7 @@
                         </center>
                     </p:dialog>
                     
-                    <p:dialog header="Aviso" widgetVar="constanciaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="constanciaImprimirDialog" >
+                    <p:dialog header="Aviso" widgetVar="constanciaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="constanciaImprimirDialog" >
                         <center>
                             <p:outputLabel value="LA CONSTANCIA N° #{constanciaBean.correlativo} SE HA CREADO" rendered="#{constanciaBean.ver}"/>
                             <br></br>

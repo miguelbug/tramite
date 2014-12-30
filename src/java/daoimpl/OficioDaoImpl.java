@@ -457,7 +457,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficiodocumento");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT DECODE(CORRELATIVO_OFICIO,NULL,' ',CORRELATIVO_OFICIO) AS CORRELA"
+        String sql = "SELECT DECODE(CORRELATIVO_OFICIO,NULL,'SIN OFICIO',CORRELATIVO_OFICIO) AS CORRELA"
                 + " from OFICIOS where TRAM_NUM='" + tramnum + "'";
         try {
             session.beginTransaction();
@@ -469,6 +469,10 @@ public class OficioDaoImpl implements OficioDAO {
             e.printStackTrace();
         } finally {
             session.close();
+        }
+        System.out.println("INDEX: "+index);
+        if(index == null){
+            index="SIN OFICIO";
         }
         return index;
     }
