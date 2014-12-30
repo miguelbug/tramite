@@ -117,6 +117,24 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
     }
 
     @Override
+    public List listarJefesUser(String id) {
+        List<String> jefesuser = new ArrayList<String>();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get JEFES");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA WHERE CARGO='JEFE DE UNIDAD' AND CODIGO='"+id+"'");
+            jefesuser = (ArrayList<String>)query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal GET JEFES");
+            System.out.println(e.getMessage());
+        }
+        return jefesuser;
+    }
+    
+    @Override
     public List listarJefes() {
         List<String> jefes = new ArrayList<String>();
         session = HibernateUtil.getSessionFactory().openSession();

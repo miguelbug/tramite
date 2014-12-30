@@ -46,7 +46,7 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas, profesion, contrato, jefes;
+    private List oficinas, profesion, contrato, jefes, jefesuser;
     //////////////
     private String nuevousu_usuario;
     private String nuevousu_nombre;
@@ -61,6 +61,7 @@ public class GestionUsuarioBean implements Serializable {
         profesion = new ArrayList<String>();
         contrato = new ArrayList<String>();
         jefes = new ArrayList<String>();
+        jefesuser = new ArrayList<String>();
     }
 
     public void Guardar() {
@@ -97,6 +98,11 @@ public class GestionUsuarioBean implements Serializable {
 
     public void listarJefatura() {
         jefes = gu.listarJefes();
+    }
+
+    public void listarJefesUser() {
+        jefesuser= gu.listarJefesUser(usu.getOficina().getIdOficina());
+        listarOficinas();
     }
 
     public void guardarJefatura() {
@@ -140,9 +146,9 @@ public class GestionUsuarioBean implements Serializable {
     }
 
     public void limpiarUsuario() {
-        nuevousu_nombre="";
-        nuevousu_oficina=" ";
-        nuevousu_usuario="";
+        nuevousu_nombre = "";
+        nuevousu_oficina = " ";
+        nuevousu_usuario = "";
     }
 
     public void guardarUsuario() {
@@ -164,14 +170,17 @@ public class GestionUsuarioBean implements Serializable {
     }
 
     public void listarOficinas() {
+        oficinas.clear();
         oficinas = gu.getOficinas();
     }
 
     public void listarProfesion() {
+        profesion.clear();
         profesion = gu.getProfesion();
     }
 
     public void listarContrato() {
+        contrato.clear();
         contrato = gu.getContrato();
     }
 
@@ -370,6 +379,14 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setNuevousu_oficina(String nuevousu_oficina) {
         this.nuevousu_oficina = nuevousu_oficina;
+    }
+
+    public List getJefesuser() {
+        return jefesuser;
+    }
+
+    public void setJefesuser(List jefesuser) {
+        this.jefesuser = jefesuser;
     }
 
 }
