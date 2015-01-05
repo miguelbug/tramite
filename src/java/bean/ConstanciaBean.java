@@ -126,7 +126,7 @@ public class ConstanciaBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(cons.getIndice());
+                corr = Integer.parseInt(cons.getIndice(auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {

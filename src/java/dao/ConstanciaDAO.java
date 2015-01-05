@@ -14,7 +14,7 @@ import maping.Constancias;
  * @author OGPL
  */
 public interface ConstanciaDAO {
-    public String getIndice();
+    public String getIndice(String anio);
     public List getJefatura();
     public String getContrato(String nombre);
     public void guardarConstancia(Constancias c);

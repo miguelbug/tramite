@@ -40,4 +40,6 @@ public interface DocumentoDAO {
     public void EliminarTemporal(String tramnum, String fecha);
     
     public List documentosCorregir();
+    
+    public void guardarNuevoAnio(String anio);
 }

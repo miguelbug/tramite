@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import dao.DocumentoDAO;
+import maping.Anios;
 import maping.Oficios;
 import maping.Usuario;
 import util.HibernateUtil;
@@ -21,6 +22,23 @@ import util.HibernateUtil;
 public class DocumentoDaoImpl implements DocumentoDAO {
 
     Session session;
+
+    @Override
+    public void guardarNuevoAnio(String anio) {
+        System.out.println("guardar anio");
+        Anios anios= new Anios();
+        anios.setAnio(anio);
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.save(anios);
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal guardar anio");
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void guardarOficio2(Oficios ofi) {

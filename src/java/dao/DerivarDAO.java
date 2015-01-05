@@ -22,7 +22,7 @@ import maping.Usuario;
  */
 public interface DerivarDAO {
 
-    public String getIndice(String tramnum, String tipodocu);
+    public String getIndice(String tramnum, String tipodocu, String anio);
 
     public String getSiglas(String ofi, String usu);
 
@@ -64,11 +64,11 @@ public interface DerivarDAO {
 
     public String getDocExt(String n);
 
-    public String getCorreProv();
+    public String getCorreProv(String anio);
 
     public void ActualizarTramite(String tramaux, String movimiento, Date fecha);
 
-    public String getCorrelativoOficio();
+    public String getCorrelativoOficio(String anio);
 
     public Usuario getUsuario(String oficina);
 
@@ -90,5 +90,5 @@ public interface DerivarDAO {
     
     public TiposDocumentos getTipoDocIndix(String indice);
     
-    public String getCorrelativoOficinaInterna(Usuario usu, String tipo);
+    public String getCorrelativoOficinaInterna(Usuario usu, String tipo, String anio);
 }

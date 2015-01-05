@@ -27,10 +27,10 @@ public interface OficioDAO {
     public String getAreaResponsable(String usuario);
     public void guardarOficioCircular(OficCirc ofi);
     public Dependencia getDependencias2(String nombre);
-    public Long getIndice(String correlativo);
+    public Long getIndice(String correlativo, String anio);
     public void guardarDetalleOfCirc(DetallOficcirc deofi);
-    public OficCirc getOficioCircular(String correla);
-    public String getCorrelativo();
+    public OficCirc getOficioCircular(String correla, String anio);
+    public String getCorrelativo(String anio);
     public Long getCodigo(String nombre);
     public List getOficioUnicoExpediente();
     public List getOficioUnicoNoExp();

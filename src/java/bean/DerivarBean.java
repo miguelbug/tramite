@@ -203,7 +203,7 @@ public class DerivarBean {
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre));
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre,getAnio()));
                 corr = corr + 1;
                 if (corr < 10) {
                     aux = "0000" + corr;

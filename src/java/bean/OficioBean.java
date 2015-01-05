@@ -290,7 +290,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                corr = Integer.parseInt(deriv.getCorrelativoOficio(auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -330,7 +330,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2));
+                corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2,auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -349,6 +349,7 @@ public class OficioBean {
                     aux = String.valueOf(corr);
                 }
             } else {
+                dd.guardarNuevoAnio(auxanio);
                 System.out.println("lleno 2");
                 corr = corr + 1;
                 aux = "0000" + corr;
@@ -459,13 +460,13 @@ public class OficioBean {
 
     public void mostrar() {
         try {
-            Long indice = od.getIndice(correlativo);
+            Long indice = od.getIndice(correlativo,auxanio);
             System.out.println("entra a mostrar");
             for (int i = 0; i < cities.getTarget().size(); i++) {
 
                 DetallOficcirc dof = new DetallOficcirc();
                 dof.setDependencia(od.getDependencias2(cities.getTarget().get(i)));
-                dof.setOficCirc(od.getOficioCircular(correlativo));
+                dof.setOficCirc(od.getOficioCircular(correlativo,auxanio));
                 System.out.println(escogido);
                 dof.setTiposDocumentos(od.getTipoDocu(escogido));
                 od.guardarDetalleOfCirc(dof);
@@ -544,14 +545,10 @@ public class OficioBean {
             ofi.setResponsable(responsable);
             ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
             od.guardarOficioCircular(ofi);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO CIRCULAR");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
             mostrar();
             ver = true;
             nover = false;
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO CIRCULAR");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
             ver = false;
             nover = true;
             System.out.println(e.getMessage());
@@ -623,7 +620,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(od.getCorrelativo());
+                corr = Integer.parseInt(od.getCorrelativo(auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {

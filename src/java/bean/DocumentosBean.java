@@ -116,7 +116,7 @@ public class DocumentosBean implements Serializable {
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorreProv());
+                corr = Integer.parseInt(deriv.getCorreProv(getAnio()));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -287,7 +287,7 @@ public class DocumentosBean implements Serializable {
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficio());
+                corr = Integer.parseInt(deriv.getCorrelativoOficio(getAnio()));
                 corr = corr + 1;
                 if (corr < 10) {
                     aux = "0000" + corr;
@@ -305,6 +305,7 @@ public class DocumentosBean implements Serializable {
                     aux = String.valueOf(corr);
                 }
             } else {
+                dd.guardarNuevoAnio(getAnio());
                 System.out.println("lleno 2");
                 corr = corr + 1;
                 aux = "0000" + corr;

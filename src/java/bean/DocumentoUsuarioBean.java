@@ -494,7 +494,7 @@ public class DocumentoUsuarioBean {
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre));
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre,getAnio()));
                 System.out.println("numerocorrelativo:" + corr);
                 corr = corr + 1;
                 if (corr < 10) {

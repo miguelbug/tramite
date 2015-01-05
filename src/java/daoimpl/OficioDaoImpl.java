@@ -194,14 +194,14 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
-    public String getCorrelativo() {
+    public String getCorrelativo(String anio) {
         System.out.println("get correlativo");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(correlaOficic) from OficCirc";
+        String sql = "select max(correla_Oficic) from Ofic_Circ where TO_CHAR(FECHA,'YYYY')='"+anio+"'";
         try {
             session.beginTransaction();
-            index = (String) session.createQuery(sql).uniqueResult();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
             session.beginTransaction().commit();
         } catch (Exception e) {
             System.out.println("mal get corre ");
@@ -214,12 +214,12 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
-    public OficCirc getOficioCircular(String correla) {
+    public OficCirc getOficioCircular(String correla, String anio) {
         OficCirc ofi = null;
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "'");
+            Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "' and to_char(fecha,'YYYY')='"+anio+"'");
             ofi = (OficCirc) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
@@ -231,15 +231,16 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
-    public Long getIndice(String correlativo) {
+    public Long getIndice(String correlativo, String anio) {
         Long depe = 12321L;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get indice");
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select idOfcirc\n"
-                    + "from OficCirc\n"
-                    + "WHERE correlaOficic='" + correlativo + "'");
+            Query query = session.createSQLQuery("select id_Ofcirc\n"
+                    + "from Ofic_Circ\n"
+                    + "WHERE correla_Oficic='" + correlativo + "'\n"
+                    + "AND to_char(fecha,'YYYY')='"+anio+"'");
             depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();

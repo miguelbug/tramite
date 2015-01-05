@@ -22,11 +22,11 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
     Session session;
 
     @Override
-    public String getIndice() {
+    public String getIndice(String anio) {
         System.out.println("getConstanciaoficio");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(correlativo) from Constancias";
+        String sql = "select max(correlativo) from Constancias where to_char(fecha_registro,'YYYY')='"+anio+"'";
         try {
             session.beginTransaction();
             index = (String) session.createQuery(sql).uniqueResult();
