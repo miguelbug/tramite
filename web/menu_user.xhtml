@@ -26,7 +26,7 @@
                     <p:menuitem value="Documentos Propios" action="documentos_internosUsuario?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label="Registro" icon="ui-icon-pencil">
-                    <p:menuitem value="Documentos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
+                    <p:menuitem value="Documentos Internos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
 
                 </p:submenu>
@@ -89,21 +89,21 @@
                         <p:ajax event="change" update="formuloficCirc"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Documento:"/>
-                    <p:outputLabel value="#{oficioBean.escogido} N° #{oficioBean.correlativo}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
+                    <p:outputLabel value="#{oficioBean.escogido} N° #{oficioBean.correlativo}-OGPL-#{oficioBean.auxanio}"/>
 
-                    <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}" >
+                    <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}">
                         <f:selectItem itemLabel="Destino" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
                         <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
                         <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
                         <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":f3:pickList"/>
                     </p:selectOneMenu>
-                    <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px">
+                    <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px" >
                         <p:ajax process="pickList" event="transfer"/>
                     </p:pickList>
 
                     <p:outputLabel value="Asunto:"/>
-                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33"/>
+                    <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33" style="text-transform:uppercase;"/>
                     <p:outputLabel value="Fecha:"/>
                     <p:outputLabel value="#{oficioBean.auxfecha}"/>
                     <p:outputLabel value="Firma:"/>
@@ -139,9 +139,8 @@
 
             <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog">
                 <p:panelGrid columns="2" id="panelOfUn2">
-
                     <p:outputLabel value="Tipo de Documento:"/>
-                    <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}" >
+                    <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}">
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{oficioBean.tiposdocus}"/>
                         <p:ajax event="change" update="panelOfUn2" listener="#{oficioBean.generarCorrelativo2()}"/>
@@ -151,7 +150,7 @@
                     <p:outputLabel value="#{oficioBean.escogido2} N°#{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
 
                     <p:outputLabel value="Asunto:"/>
-                    <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}"/>
+                    <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 
                     <p:outputLabel value="Fecha:"/>
                     <p:outputLabel value="#{oficioBean.auxfecha}"/>
@@ -161,7 +160,7 @@
 
                     <p:outputLabel value="Tipo Destino:"/>
 
-                    <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}">
+                    <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
                         <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>

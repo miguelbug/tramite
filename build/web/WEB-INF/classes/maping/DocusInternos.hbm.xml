@@ -15,9 +15,18 @@
             <column name="TRAM_NUM" length="42" />
             <column name="TRAM_FECHA" length="7" />
         </many-to-one>
+        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO1" precision="10" scale="0" />
+        </many-to-one>
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
         </many-to-one>
+        <property name="numeroMovi" type="string">
+            <column name="NUMERO_MOVI" length="20"/>
+        </property>
         <property name="docuCorrelaint" type="string">
             <column name="DOCU_CORRELAINT" length="20" not-null="true" />
         </property>

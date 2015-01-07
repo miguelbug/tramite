@@ -249,8 +249,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE R.FECHAING in (' ')\n"
                     + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
                     + "and R.TRAM_NUM||'-'||to_char(R.MOVI_FEC_ENV,'dd/MM/yyyy')  not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy') from tramite_datos)\n"
-                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
-                    + "GROUP BY R.TRAM_NUM,R.MOVI_NUM,R.MOVI_ORIGEN,R.MOVI_DESTINO,R.FECHAENVIO,R.FECHAING,R.INDI_NOMBRE,R.OBSERVACION,R.DOCUNOMBRE,R.ESTA_NOMBRE,R.DOCUPRIC");
+                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n");
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();

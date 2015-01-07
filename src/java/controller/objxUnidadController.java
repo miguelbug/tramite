@@ -222,15 +222,15 @@ public class objxUnidadController implements Serializable {
         FacesMessage message = null;
         boolean rpt = false;
         int movimiento=Integer.valueOf(DocumentoUsuarioBean.movimiento_exportar)+1;
-        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+" fechaexport: "+DocumentoUsuarioBean.fecha_exportar+"  movimiento: "+movimiento);
+        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento);
         parametros.put("usuario", getUsu());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("coorelativo", DocumentoUsuarioBean.correla_exportar);
         parametros.put("tramnum",DocumentoUsuarioBean.tramnum_exportar);
-        parametros.put("fechaenvio", DocumentoUsuarioBean.fecha_exportar);
         parametros.put("movimiento",String.valueOf(movimiento));
         parametros.put("fechaderivado", getFechaDerivado());
+        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento+" fechaderivado: "+getFechaDerivado());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
         if (!rpt && message == null) {

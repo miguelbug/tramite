@@ -197,7 +197,7 @@
                             <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}"/>
+                            <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}" style="text-transform:uppercase;"/>
 
                             <p:outputLabel value="Dep. Origen: "/>
                             <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px" >
@@ -241,7 +241,7 @@
                             <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativo}-#{documentoUsuarioBean.siglasdocus}-#{documentoUsuarioBean.fechanio}"/>
 
                             <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}"/>
+                            <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}" style="text-transform:uppercase;"/>
 
                             <p:outputLabel value="Referencia: "/>
                             <p:outputLabel value="Expediente(s) #{documentoUsuarioBean.numtramaux}"/>

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>DOCUMENTOS INTERNOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form" >
+                    <p:growl id="messages" showDetail="true" />
+                    <h:panelGrid >
+                        <br></br>
+                        <center>
+                            <p:schedule id="schedule" value="#{calendarioBean.eventModel}" widgetVar="myschedule" timeZone="GMT-5" locale="es" style="width: 65%;position: absolute; right: 15%">
+                                <p:ajax event="dateSelect" listener="#{calendarioBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventSelect" listener="#{calendarioBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventMove" listener="#{calendarioBean.onEventMove}" update="messages" />
+                                <p:ajax event="eventResize" listener="#{calendarioBean.onEventResize}" update="messages" />
+                            </p:schedule>
+                        </center>
+
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <h:outputLabel for="title" value="Título:" />
+                            <p:inputText id="title" value="#{calendarioBean.event.title}" required="true" />
+
+                            <h:outputLabel for="from" value="Desde:" />
+                            <p:inputMask id="from" value="#{calendarioBean.event.startDate}" mask="99/99/9999">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            </p:inputMask>
+
+                            <h:outputLabel for="to" value="Hasta:" />
+                            <p:inputMask id="to" value="#{calendarioBean.event.endDate}" mask="99/99/9999">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            </p:inputMask>
+
+                            <h:outputLabel for="allDay" value="All Day:" />
+                            <h:selectBooleanCheckbox id="allDay" value="#{calendarioBean.event.allDay}" />
+
+                            <p:commandButton type="reset" value="Refrescar" />
+                            <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                        </h:panelGrid>
+                    </p:dialog>    
+                    <script type="text/javascript">
+                        PrimeFaces.locales['es'] = {
+                            closeText: 'Cerrar',
+                            prevText: 'Anterior',
+                            nextText: 'Siguiente',
+                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                            weekHeader: 'Semana',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            timeOnlyTitle: 'Sólo hora',
+                            timeText: 'Tiempo',
+                            hourText: 'Hora',
+                            minuteText: 'Minuto',
+                            secondText: 'Segundo',
+                            currentText: 'Fecha actual',
+                            ampm: false,
+                            month: 'Mes',
+                            week: 'Semana',
+                            day: 'Día',
+                            allDayText: 'Todo el día'
+                        };
+                    </script>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

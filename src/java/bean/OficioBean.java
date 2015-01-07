@@ -31,6 +31,7 @@ import maping.DocumentosOfiint;
 import maping.OficCirc;
 import maping.Oficios;
 import maping.Usuario;
+import maping.DocusInternos;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DualListModel;
@@ -51,7 +52,7 @@ public class OficioBean {
     private DerivarDAO deriv;
     private String correlativo = "";
     private String correlativo2 = "";
-    private List otrosdocus,otrosdocus1,otrosdocus2;
+    private List otrosdocus, otrosdocus1, otrosdocus2;
     private List docselec;
     public List depe2;
     private List depe;
@@ -177,11 +178,16 @@ public class OficioBean {
     }
 
     public void abrirDocumento() {
+        System.out.println("get anio");
         getAnio();
+        System.out.println("get fecha");
         generarFecha();
+        System.out.println("get correlativo");
         generarCorrelativo2();
+        System.out.println("get tipos docus");
         ObtenerTiposDocus();
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        System.out.println("SIGLAS: " + siglasdocus);
         origen = dd.getOficina(usu);
 
     }
@@ -201,12 +207,19 @@ public class OficioBean {
     }
 
     public void abriroficio() {
+        System.out.println("get tiposdocus2");
         ObtenerTiposDocus2();
+        System.out.println("get anio");
         getAnio();
+        System.out.println("get fecha");
         generarFecha();
+        System.out.println("get correlativo");
         generarCorrelativo();
+        System.out.println("get responsable");
         responsable();
+        System.out.println("get arearesponsable");
         arearesponsable();
+        System.out.println("get firma");
         firma();
 
         System.out.println("ESTAMOS EN ABRIR OFICIO");
@@ -282,7 +295,7 @@ public class OficioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }    
+    }
 
     public void generarCorrelativoOfiUnico() {
         int corr = 0;
@@ -330,7 +343,8 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2,auxanio));
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2,auxanio));
+                //corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2, auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -460,13 +474,13 @@ public class OficioBean {
 
     public void mostrar() {
         try {
-            Long indice = od.getIndice(correlativo,auxanio);
+            Long indice = od.getIndice(correlativo, auxanio);
             System.out.println("entra a mostrar");
             for (int i = 0; i < cities.getTarget().size(); i++) {
 
                 DetallOficcirc dof = new DetallOficcirc();
                 dof.setDependencia(od.getDependencias2(cities.getTarget().get(i)));
-                dof.setOficCirc(od.getOficioCircular(correlativo,auxanio));
+                dof.setOficCirc(od.getOficioCircular(correlativo, auxanio));
                 System.out.println(escogido);
                 dof.setTiposDocumentos(od.getTipoDocu(escogido));
                 od.guardarDetalleOfCirc(dof);
@@ -509,7 +523,20 @@ public class OficioBean {
     public void guardar_documentoOfiInt() {
         FacesMessage message = null;
         try {
-            DocumentosOfiint doif = new DocumentosOfiint();
+            DocusInternos di= new DocusInternos();
+            di.setDocuAsunto(asunto);
+            di.setDocuCorrelaint(correlativo2);
+            di.setFecharegistro(fecha);
+            di.setDependenciaByCodigo(deriv.getDep(origen));
+            di.setDependenciaByCodigo1(deriv.getDep(this.destino));
+            di.setTiposDocumentos(od.getTipoDocu(escogido2));
+            di.setDocuSiglasint(siglasdocus);
+            di.setDocuNombreint(escogido2);
+            di.setDocuAnioint(auxanio);
+            di.setUsuario(usu);
+            di.setDocuPricint("1");
+            od.GuardarDocumentoOfiInt(di);
+            /*DocumentosOfiint doif = new DocumentosOfiint();
             doif.setAsunto(asunto);
             doif.setCorrelativoDocofint(correlativo2);
             doif.setFecha(fecha);
@@ -518,11 +545,11 @@ public class OficioBean {
             doif.setTiposDocumentos(od.getTipoDocu(escogido2));
             doif.setSiglas(siglasdocus);
             doif.setUsuario(usu);
-            od.GuardarDocumentoOfiInt(doif);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            od.GuardarDocumentoOfiInt(doif);*/
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL "+escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL "+escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficiounico");
             System.out.println(e.getMessage());
@@ -531,6 +558,8 @@ public class OficioBean {
         generarFecha();
         generarCorrelativo2();
         this.asunto = "";
+        this.escogido2=" ";
+        this.tipodestino=" ";
     }
 
     public void guardar() {
@@ -620,7 +649,11 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(od.getCorrelativo(auxanio));
+                if (od.getCorrelativo(auxanio) == null) {
+                    corr = 0;
+                } else {
+                    corr = Integer.parseInt(od.getCorrelativo(auxanio));
+                }
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -1050,6 +1083,5 @@ public class OficioBean {
     public void setOtrosdocus2(List otrosdocus2) {
         this.otrosdocus2 = otrosdocus2;
     }
-
 
 }

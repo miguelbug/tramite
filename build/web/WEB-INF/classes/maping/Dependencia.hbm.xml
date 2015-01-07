@@ -78,5 +78,17 @@
             </key>
             <one-to-many class="maping.DocusExtint" />
         </set>
+        <set name="docusInternosForCodigo" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.DocusInternos" />
+        </set>
+        <set name="docusInternosForCodigo1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO1" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.DocusInternos" />
+        </set>
     </class>
 </hibernate-mapping>

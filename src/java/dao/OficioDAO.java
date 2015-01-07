@@ -10,6 +10,7 @@ import java.util.List;
 import maping.Dependencia;
 import maping.DetallOficcirc;
 import maping.DocumentosOfiint;
+import maping.DocusInternos;
 import maping.OficCirc;
 import maping.Oficina;
 import maping.TiposDocumentos;
@@ -39,5 +40,5 @@ public interface OficioDAO {
     public List getTiposDocus(String flag);
     public TiposDocumentos getTipoDocu(String nombre);
     public String getOficioDocumento(String tramnum);
-    public void GuardarDocumentoOfiInt(DocumentosOfiint doif);
+    public void GuardarDocumentoOfiInt(DocusInternos di);
 }
