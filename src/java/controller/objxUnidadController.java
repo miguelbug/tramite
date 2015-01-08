@@ -23,7 +23,9 @@ import javax.faces.application.FacesMessage;
 import javax.servlet.ServletContext;
 import bean.DocusInternos;
 import bean.ProveidosInternosBean;
+import dao.DerivarDAO;
 import dao.TemporaldiDao;
+import daoimpl.DerivarDaoImpl;
 import daoimpl.TemporalDiDaoImpl;
 import java.text.ParseException;
 //
@@ -51,6 +53,7 @@ public class objxUnidadController implements Serializable {
     private int mesFin;
     private int mesActual;
     private DocumentoDAO dd;
+    private DerivarDAO deriv;
     private Date date1;
     private Date date2;
     private Date date3;
@@ -67,6 +70,7 @@ public class objxUnidadController implements Serializable {
         dd = new DocumentoDaoImpl();
         rpda = new reporteDaoImpl();
         tdi = new TemporalDiDaoImpl();
+        deriv = new DerivarDaoImpl();
     }
 
     public void GuardarDatos() throws ParseException {
@@ -79,7 +83,7 @@ public class objxUnidadController implements Serializable {
             tldi.setNombDocu(hm.get("numerotramite").toString());
             tldi.setTramNum(hm.get("tramnum").toString());
             System.out.println(hm.get("tramnum").toString());
-            tldi.setUsuario(hm.get("usu").toString());
+            tldi.setUsuario(hm.get("asignado").toString());
             tldi.setImpreso("1");
             tldi.setReimpreso("0");
             tdi.guardarTemporalDi(tldi);
@@ -492,6 +496,8 @@ public class objxUnidadController implements Serializable {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
         ReporteController repor;
         HashMap<String, Object> parametros = new HashMap<String, Object>();
         parametros.clear();
@@ -504,6 +510,7 @@ public class objxUnidadController implements Serializable {
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
+        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         boolean rpt = false;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         parametros.put("logo", getLogo());
@@ -512,6 +519,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("fechafin", sdf.format(date4));
         parametros.put("usuario", this.getUsu());
         parametros.put("tipo", tipodocumento1);
+        parametros.put("siglas",siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -566,6 +574,8 @@ public class objxUnidadController implements Serializable {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
         ReporteController repor;
         HashMap<String, Object> parametros = new HashMap<String, Object>();
         parametros.clear();
@@ -579,10 +589,12 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
         boolean rpt = false;
+        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         parametros.put("usuario", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("usuario", getUSUARIO());
+        parametros.put("siglas",siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -597,6 +609,8 @@ public class objxUnidadController implements Serializable {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
         ReporteController repor;
         HashMap<String, Object> parametros = new HashMap<String, Object>();
         parametros.clear();
@@ -609,10 +623,12 @@ public class objxUnidadController implements Serializable {
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
+        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         boolean rpt = false;
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("usuario", this.getUsu());
+        parametros.put("siglas",siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -797,7 +813,6 @@ public class objxUnidadController implements Serializable {
 
     public String getOficina() {
         String nomOfi = "";
-        Oficina ofi;
         context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Usuario usu = (Usuario) session.getAttribute("sesionUsuario");

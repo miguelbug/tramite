@@ -6,7 +6,9 @@
 
 package bean;
 
+import dao.DerivarDAO;
 import dao.DocusInternosDAO;
+import daoimpl.DerivarDaoImpl;
 import daoimpl.DocusInternosDaoImpl;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,7 @@ public class DocusInternos implements Serializable{
     public static Date fecha1;
     public static Date fecha2;
     private String tipodocumento;
+    private DerivarDAO deriv;
     
     
     public DocusInternos() {
@@ -49,6 +52,7 @@ public class DocusInternos implements Serializable{
         docusinternos = new ArrayList<HashMap<String,String>>();
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
+        deriv = new DerivarDaoImpl();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
         boolean isdocumentosrspta2= (currentPage.lastIndexOf("pruebafecha.xhtml")>-1);
@@ -71,8 +75,10 @@ public class DocusInternos implements Serializable{
         System.out.println("listando docus internos");
         docusinternos.clear();
         try {
+            System.out.println(usu.getOficina().getIdOficina()+"-"+usu.getUsu());
+            System.out.println(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             List lista = new ArrayList();
-            lista = did.getDocusInternos(usu.getUsu());
+            lista = did.getDocusInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[9];
             while (ite.hasNext()) {
@@ -82,13 +88,14 @@ public class DocusInternos implements Serializable{
                 listaaux.put("numerotramite",String.valueOf(obj[2])+"-"+String.valueOf(obj[1])+"-"+String.valueOf(obj[3])+"-"+String.valueOf(obj[4]));
                 listaaux.put("fechareg", String.valueOf(obj[5]));
                 listaaux.put("tramnum", String.valueOf(obj[6]));
-                listaaux.put("usu", String.valueOf(obj[7]));
-                listaaux.put("asunto", String.valueOf(obj[8]));
+                listaaux.put("asunto", String.valueOf(obj[7]));
+                listaaux.put("asignado", String.valueOf(obj[8]));
                 docusinternos.add(listaaux);
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     public List getDocusinternos() {
@@ -171,6 +178,14 @@ public class DocusInternos implements Serializable{
 
     public void setFecha2_2(Date fecha2_2) {
         this.fecha2_2 = fecha2_2;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
     }
     
 }

@@ -24,9 +24,7 @@
 
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         
-                        <p:column headerText="#" width="1">
-                            <h:outputText value="#{item.posi}"/>
-                        </p:column>
+                        
                         <p:column headerText="NOMB. DOCU" width="2" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                             <h:outputText value="#{item.numerotramite}"/>
                         </p:column>
@@ -36,11 +34,14 @@
                         <p:column headerText="TRAM. NUM." width="2" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
                             <h:outputText value="#{item.tramnum}"/>
                         </p:column>
-                        <p:column headerText="USUARIO" width="2" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
-                            <h:outputText value="#{item.usu}"/>
-                        </p:column>
                         <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                             <h:outputText value="#{item.asunto}"/>
+                        </p:column>
+                        <p:column headerText="ASIGNADO" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                            <h:outputText value="#{item.asignado}"/>
+                        </p:column>
+                        <p:column headerText="#" width="1">
+                            <h:outputText value="#{item.posi}"/>
                         </p:column>
                     </p:dataTable>
                     <br></br>

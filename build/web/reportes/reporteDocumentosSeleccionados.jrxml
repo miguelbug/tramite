@@ -33,7 +33,8 @@
 	<queryString><![CDATA[SELECT NOMB_DOCU,
 TO_CHAR(FECHA_REG,'DD/MM/YYYY HH:MI:SS') AS FECHA,
 TRAM_NUM,
-ASUNTO
+ASUNTO,
+USUARIO
 FROM TEMPORAL_DI
 WHERE IMPRESO='1'
 AND REIMPRESO='0'
@@ -43,6 +44,7 @@ ORDER BY FECHA_REG DESC]]></queryString>
 	<field name="FECHA" class="java.lang.String"/>
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="ASUNTO" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -70,7 +72,7 @@ ORDER BY FECHA_REG DESC]]></queryString>
 					<reportElement
 						x="12"
 						y="25"
-						width="143"
+						width="122"
 						height="20"
 						key="staticText-7"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -86,9 +88,9 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="155"
+						x="134"
 						y="25"
-						width="116"
+						width="137"
 						height="20"
 						key="staticText-8"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -106,7 +108,7 @@ ORDER BY FECHA_REG DESC]]></queryString>
 					<reportElement
 						x="271"
 						y="25"
-						width="174"
+						width="144"
 						height="20"
 						key="staticText-9"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -122,9 +124,9 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="445"
+						x="415"
 						y="25"
-						width="329"
+						width="234"
 						height="20"
 						key="staticText-10"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -137,6 +139,24 @@ ORDER BY FECHA_REG DESC]]></queryString>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[ASUNTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="649"
+						y="25"
+						width="125"
+						height="20"
+						key="staticText-11"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ASIGNADO]]></text>
 				</staticText>
 			</band>
 			</groupHeader>
@@ -269,8 +289,8 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="12"
-						y="-1"
-						width="143"
+						y="-2"
+						width="122"
 						height="30"
 						key="textField-14"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -286,9 +306,9 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="155"
-						y="-1"
-						width="116"
+						x="134"
+						y="-2"
+						width="137"
 						height="30"
 						key="textField-15"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -305,8 +325,8 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="271"
-						y="-1"
-						width="174"
+						y="-2"
+						width="144"
 						height="30"
 						key="textField-16"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -323,9 +343,9 @@ ORDER BY FECHA_REG DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="445"
-						y="-1"
-						width="329"
+						x="415"
+						y="-2"
+						width="234"
 						height="30"
 						key="textField-17"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -338,6 +358,25 @@ ORDER BY FECHA_REG DESC]]></queryString>
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{ASUNTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="649"
+						y="-2"
+						width="124"
+						height="30"
+						key="textField-18"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{USUARIO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

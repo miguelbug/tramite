@@ -20,16 +20,16 @@
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="Escoger Tipo de Documento: "/>
                                     <p:panelGrid columns="2">
-                                        <p:selectOneMenu value="#{documentoUsuarioBean.tipodocupropio}">
+                                        <p:selectOneMenu value="#{documentoUsuarioBean.tipodocupropio}" id="tipodoculista">
                                             <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                             <f:selectItem itemLabel="INFORME" itemValue="1"/>
                                             <f:selectItem itemLabel="OFICIO" itemValue="2"/>
                                             <f:selectItem itemLabel="CARTA" itemValue="4"/>
                                             <f:selectItem itemLabel="MEMOS" itemValue="7"/>
                                         </p:selectOneMenu>
-                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios"/>
+                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
                                         <p:outputLabel value="Todos los Documentos:"/>
-                                        <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios"/>
+                                        <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios,tipodoculista"/>
                                     </p:panelGrid>
                                 </p:panelGrid>
                                 <br></br>
@@ -42,9 +42,7 @@
                                          rowKey="#{item.iddoc}">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                <p:column headerText="#" width="1">
-                                    <h:outputText value="#{item.iddoc}"/>
-                                </p:column>
+                                
                                 <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
                                 </p:column>
@@ -63,12 +61,15 @@
                                 <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                     <h:outputText value="#{item.usuario}" />
                                 </p:column>
+                                <p:column headerText="#" width="1">
+                                    <h:outputText value="#{item.iddoc}"/>
+                                </p:column>
                             </p:dataTable>
                             <br></br>
                             <center>
                                 <p:panelGrid columns="3">
                                     <p:commandButton id="repor0" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
-                                    <p:commandButton id="repor1" value="Reporte Todos Doc." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
+                                    <p:commandButton id="repor1" value="Reporte Todos Docu." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
                                     <p:commandButton id="repor2" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
                                 </p:panelGrid>
                             </center>
@@ -122,12 +123,6 @@
                                 </p:column>
                             </p:dataTable>
                             <br></br>
-                            <center>
-                                <p:panelGrid columns="3">
-                                    <p:commandButton id="repor4" value="Reporte Todos Doc." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos()}" ajax="false"/>
-                                    <p:commandButton id="repor5" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionados()}" ajax="false"/>
-                                </p:panelGrid>
-                            </center>
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >

@@ -178,7 +178,7 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
-            lista = di.getDocInternos(usu.getUsu());
+            lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[7];
             while (ite.hasNext()) {
@@ -205,7 +205,7 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
-            lista = di.getDocInternosXtipo(usu.getUsu(), this.tipodocupropio);
+            lista = di.getDocInternosXtipo(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
             Iterator ite = lista.iterator();
             Object obj[] = new Object[7];
             while (ite.hasNext()) {
@@ -223,6 +223,7 @@ public class DocumentoUsuarioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        tipodocupropio=" ";
     }
 
     public void abrirAsignacion() {
