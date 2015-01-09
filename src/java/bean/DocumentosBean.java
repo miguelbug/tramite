@@ -578,16 +578,15 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = sgd.tramiteDatos(tramnum);
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[6];
+            Object obj[] = new Object[5];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
-                listaaux.put("fecha", String.valueOf(obj[1]));
-                listaaux.put("codigo", String.valueOf(obj[2]));
-                listaaux.put("observacion", String.valueOf(obj[3]));
-                listaaux.put("estado", String.valueOf(obj[4]));
-                listaaux.put("usuario", String.valueOf(obj[5]));
+                listaaux.put("codigo", String.valueOf(obj[1]));
+                listaaux.put("observacion", String.valueOf(obj[2]));
+                listaaux.put("estado", String.valueOf(obj[3]));
+                listaaux.put("usuario", String.valueOf(obj[4]));
                 tdaux.add(listaaux);
             }
         } catch (Exception e) {
@@ -605,12 +604,12 @@ public class DocumentosBean implements Serializable {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
                 System.out.println("llena numerotramite");
                 nuevoid.setTramNum(hm.get("numerotramite").toString());
-                System.out.println("entra a fecha envio td");
+                /*System.out.println("entra a fecha envio td");
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date nf = new Date();
                 System.out.println(hm.get("fecha").toString().substring(0, 19));
                 nf = formato.parse(hm.get("fecha").toString().substring(0, 19));
-                nuevoid.setTramFecha(nf);
+                nuevoid.setTramFecha(nf);*/
                 nuevo.setId(nuevoid);
                 System.out.println("llena codigo td");
                 nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
@@ -677,7 +676,7 @@ public class DocumentosBean implements Serializable {
                 if (aux.indexOf("OGPL") != -1) {
                     System.out.println("ENTRA A OGPL");
                     td = getTramiteDato(aux);
-                    tdoc = getTipodocumento(aux, td);
+                    
                     movimiento.setTramiteDatos(td);
                     movimiento.setMoviNum(Short.parseShort(hm.get("movimiento").toString()));
                     movimiento.setEstaNombre(hm.get("estado").toString());
@@ -692,6 +691,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("LA FECHA DE ENVIO OGPL ES: " + hm.get("fenvio").toString());
                     nf = formato.parse(hm.get("fenvio").toString());
                     movimiento.setFechaEnvio(nf);
+                    td.getId().setTramFecha(nf);
                     t.setFecha(nf);
                     System.out.println("sale fecha envio");
                     System.out.println("entra a fecha ing");
@@ -710,6 +710,7 @@ public class DocumentosBean implements Serializable {
                     movimiento.setMoviObs(hm.get("observacion").toString());
                     t.setAsunto(hm.get("observacion").toString());
                     t.setTiposdocumentos(hm.get("docunomb").toString());
+                    tdoc = getTipodocumento(aux, td);
                     //}
                 } else {
                     if (aux.indexOf("OGPL") == -1) {

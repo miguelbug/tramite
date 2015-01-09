@@ -306,7 +306,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TRAM_NUM,TRAM_FECHA,DEPE_COD,TRAM_OBS,ESTA_DESCRIP,USU\n"
+            Query query = session.createSQLQuery("SELECT TRAM_NUM,DEPE_COD,TRAM_OBS,ESTA_DESCRIP,USU\n"
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
                     + "where TRAM_NUM='" + tramnum + "'\n"
                     + "AND DOCU_PRIC='1'");

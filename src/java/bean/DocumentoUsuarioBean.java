@@ -470,6 +470,7 @@ public class DocumentoUsuarioBean {
             } else {
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+                docunombre="INFORME";
                 correlativo = generarCorrelativo();
                 System.out.println("entra a iniciar fecha");
                 IniciarFecha();
@@ -482,6 +483,7 @@ public class DocumentoUsuarioBean {
                 fecha_exportar = hm.get("fechaenvio").toString();
                 movimiento_exportar=hm.get("movimnum").toString();
                 System.out.println("ESTA ES LA FECHA DE ENVIO: "+fecha_exportar+" Mov: "+movimiento_exportar);
+                estado="EN PROCESO";
                 
             }
         } catch (Exception e) {
