@@ -32,7 +32,7 @@ public interface DerivarDAO {
 
     public void InsertarMovimiento(Usuario usu, int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i);
 
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto);
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto, String movi);
 
     public TramiteDatos getTramite(String tramite);
 

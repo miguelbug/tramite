@@ -549,30 +549,32 @@ public class DocumentoUsuarioBean {
 
     public void Guardar() {
         FacesMessage message = null;
-        Date fechaactual = new Date();
+        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             System.out.println("entra a guardar");
-
+            SimpleDateFormat sdf2= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            fecha=sdf2.parse(fechadia+" "+fechahora);
             DateFormat d = new SimpleDateFormat("yyyy");
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fechaactual);
+                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fecha);
                 deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto);
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto,hm.get("movimnum").toString());
             }
-            limpiar();
-            MostrarParaUsuario();
-            ver = true;
-            nover = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL "+docunombre);
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            
         } catch (Exception e) {
-            nover = true;
-            ver = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL "+docunombre);
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        limpiar();
+        MostrarParaUsuario();
     }
 
     public Date getFechaIng() {

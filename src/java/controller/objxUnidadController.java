@@ -209,7 +209,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarRepRespuestas() {
+   /* public void mostrarRepRespuestas() {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -242,7 +242,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-    }
+    }*/
     public String getFechaDerivado(){
         String fecha=this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
         return fecha;

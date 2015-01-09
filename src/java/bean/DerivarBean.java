@@ -249,7 +249,7 @@ public class DerivarBean {
         }
     }
 
-    public void Guardar() {
+    /*public void Guardar() {
         FacesMessage message = null;
         try {
             System.out.println("entra a guardar");
@@ -270,7 +270,7 @@ public class DerivarBean {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void limpiar() {
         numtramaux = "";

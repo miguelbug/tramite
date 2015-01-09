@@ -169,7 +169,6 @@ public class DocumentosBean implements Serializable {
     public void Guardar_prov() {
         System.out.println("ENTRA LA P....");
         DocusExtint di = new DocusExtint();
-        FacesMessage message = null;
         try {
             System.out.println(asunto);
             di.setNumerodoc(tramnum);

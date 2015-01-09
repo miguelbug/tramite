@@ -78,7 +78,7 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{documentoUsuarioBean.abrirAsignacion()}"
                                                          update=":form:asignados" oncomplete="PF('asignadosDialog').show()"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
-                                                         oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv,:form:respuestaImprimirDialog"/>
+                                                         oncomplete="PF('derivarDialog').show()" update=":form:panelDeriv"/>
                                     </f:facet>
                                 </p:dataTable>
                             </center>
@@ -176,54 +176,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Doc. Externo" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
-                        <p:panelGrid columns="2" id="panelProv">
-
-                            <p:outputLabel value="Documento: "/>
-                            <p:selectOneMenu id="documentos" value="#{docusExternosBean.documento}">
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItem itemLabel="Oficio" itemValue="1"/>
-                                <f:selectItem itemLabel="Informes" itemValue="2"/>
-                                <f:selectItem itemLabel="Informes Circulares" itemValue="3"/>
-                                <f:selectItem itemLabel="Proveidos" itemValue="4"/>
-                                <f:selectItem itemLabel="Memos" itemValue="5"/>
-                                <f:selectItem itemLabel="Cartas" itemValue="6"/>
-                                <f:selectItem itemLabel="Otros" itemValue="7"/>
-                                <p:ajax event="change" listener="#{docusExternosBean.Cambios()}" update="panelProv"/>
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Nro. Doc: "/>
-                            <p:outputLabel value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a1}"/>
-                            <p:inputText value="#{docusExternosBean.correlativo}" rendered="#{docusExternosBean.a2}"/>
-
-                            <p:outputLabel value="Asunto: "/>
-                            <p:inputTextarea  rows="2" cols="45" value="#{docusExternosBean.asunto}" style="text-transform:uppercase;"/>
-
-                            <p:outputLabel value="Dep. Origen: "/>
-                            <p:selectOneMenu id="deporigen" value="#{docusExternosBean.origen}" filter="true" style="width:160px" >
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                              
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Dep. Destino: "/>
-                            <p:selectOneMenu id="depdestino" value="#{docusExternosBean.destino}" filter="true" style="width:160px">
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Fecha: "/>
-                            <p:outputLabel value="#{docusExternosBean.fechaactual()}"/>
-
-                            <p:outputLabel value="Usuario: "/>
-                            <p:outputLabel value="#{docusExternosBean.usu.usuNombre}"/>
-                        </p:panelGrid>
-                        <br></br>
-                        <center>
-                            <p:commandButton value="Guardar" actionListener="#{docusExternosBean.guardar()}" update="panelProv">
-                                <f:ajax event="click" onevent="provDialog.hide()"/>
-                            </p:commandButton>
-                        </center>
-                    </p:dialog>
+                    
 
                     <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
                         <p:panelGrid columns="2" id="panelDeriv">
@@ -260,7 +213,7 @@
 
 
                             <p:outputLabel value="Fecha: "/>
-                            <p:outputLabel value="#{documentoUsuarioBean.fechadia}" />
+                            <p:inputText value="#{documentoUsuarioBean.fechadia}" />
 
                             <p:outputLabel value="Hora: " />
                             <p:outputLabel value="#{documentoUsuarioBean.fechahora}" />
@@ -273,27 +226,13 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl,:form:,respuestaImprimirDialog" oncomplete="PF('respuestaImprimir').show()">
-                                <f:ajax event="click" onevent="derivarDialog.hide()"/>
+                            <p:commandButton value="Guardar" actionListener="#{documentoUsuarioBean.Guardar()}" update="growl,:form:">
+                               <f:ajax event="click" onevent="derivarDialog.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>
 
-                    <p:dialog header="Aviso" widgetVar="respuestaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="respuestaImprimirDialog" >
-                        <center>
-                            <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativoaux} SE HA CREADO" rendered="#{documentoUsuarioBean.ver}"/>
-                            <br></br>
-                            <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarRepRespuestas()}" ajax="false" rendered="#{documentoUsuarioBean.ver}">
-                                <f:ajax event="click" onevent="respuestaImprimir.hide()"/>
-                            </p:commandButton>
-
-                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{documentoUsuarioBean.nover}"/>
-                            <br></br>
-                            <p:commandButton value="Aceptar" rendered="#{documentoUsuarioBean.nover}">
-                                <f:ajax event="click" onevent="respuestaImprimir.hide()"/>
-                            </p:commandButton>
-                        </center>
-                    </p:dialog>
+                    
                     <br></br>
                     <br></br>
                 </h:form>
