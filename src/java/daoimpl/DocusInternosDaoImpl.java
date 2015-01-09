@@ -209,7 +209,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
     }
     
     @Override
-    public String getRespuesta(String tramnum) {
+    public String getRespuesta(String tramnum, String movi) {
         String correlaresp = "";
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get respuestas");
@@ -218,6 +218,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             Query query = session.createSQLQuery("SELECT DOCU_NOMBREINT||' N°'||DOCU_CORRELAINT||'-'||DOCU_SIGLASINT||'-'||DOCU_ANIOINT\n"
                     + "FROM DOCUS_INTERNOS\n"
                     + "WHERE TRAM_NUM='" + tramnum + "'\n"
+                    + "AND NUMERO_MOVI='"+movi+"'\n"
                     + "ORDER BY DOCU_CORRELAINT DESC");
             correlaresp = (String) query.uniqueResult();
             session.beginTransaction().commit();

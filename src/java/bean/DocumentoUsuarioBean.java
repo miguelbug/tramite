@@ -288,7 +288,9 @@ public class DocumentoUsuarioBean {
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
-
+        Date anio= new Date();
+        SimpleDateFormat sdf= new SimpleDateFormat("YYYY");
+        String auxanio=sdf.format(anio);
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -309,7 +311,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 listaaux.put("estadDoc", String.valueOf(obj[9]));
-                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0])));
+                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0]),String.valueOf(obj[1])));
                 listaaux.put("usuario", String.valueOf(obj[10]));
                 seguimientolista2.add(listaaux);
             }
@@ -326,11 +328,12 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println(seleccion.get("numerotramite").toString());
             System.out.println(seleccion.get("fechaenvio").toString());
+            System.out.println(seleccion.get("movimnum").toString());
             System.out.println(seleccion.get("fechaingr").toString());
             Map<String, String> listaaux = new HashMap<String, String>();
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
-            listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString()));
+            listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString(),seleccion.get("movimnum").toString()));
             listaaux.put("OFICIO", "N° " + ofi.getOficioDocumento(seleccion.get("numerotramite").toString()) + "-OGPL-" + sdf.format(anio));
             detalle.add(listaaux);
             // }

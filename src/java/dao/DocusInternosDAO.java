@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface DocusInternosDAO {
     public List getDocusInternos(String usu);
-    public String getRespuesta(String tramnum);
+    public String getRespuesta(String tramnum, String movi);
     public List getDocInternos(String usu);
     public List getDocInternosXtipo(String usu, String tipo);
     public List getCircularesOficInterna(String usu);
