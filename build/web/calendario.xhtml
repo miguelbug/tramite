@@ -18,7 +18,7 @@
                     <h:panelGrid >
                         <br></br>
                         <center>
-                            <p:schedule id="schedule" value="#{calendarioBean.eventModel}" widgetVar="myschedule" timeZone="GMT-5" locale="es" style="width: 65%;position: absolute; right: 15%">
+                            <p:schedule id="schedule" value="#{calendarioBean.eventModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es" style="width: 65%;position: absolute; right: 15%">
                                 <p:ajax event="dateSelect" listener="#{calendarioBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                 <p:ajax event="eventSelect" listener="#{calendarioBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                 <p:ajax event="eventMove" listener="#{calendarioBean.onEventMove}" update="messages" />
@@ -45,7 +45,7 @@
 
                             <p:outputLabel for="hora" value="Hora:"/>
                             <p:inputMask id="hora" value="#{calendarioBean.horas}" mask="99:99:99">
-                                <f:convertDateTime pattern="hh:mm:ss" timeZone="GMT-5"/>
+                                
                             </p:inputMask>
                             
                             <h:outputLabel for="allDay" value="Todo el Día:" />

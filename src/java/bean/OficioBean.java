@@ -290,8 +290,7 @@ public class OficioBean {
                 listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("tramnum", String.valueOf(obj[1]));
                 listaaux.put("fecha", String.valueOf(obj[2]));
-                listaaux.put("referencia", String.valueOf(obj[3]));
-                listaaux.put("asunto", String.valueOf(obj[4]));
+                listaaux.put("asunto", String.valueOf(obj[3])+" - "+String.valueOf(obj[4]));
                 listaaux.put("origen", String.valueOf(obj[5]));
                 listaaux.put("destino", String.valueOf(obj[6]));
                 oficiosConExp.add(listaaux);

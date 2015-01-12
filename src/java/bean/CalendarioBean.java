@@ -147,10 +147,6 @@ public class CalendarioBean {
         String cadena[]=getNuevasHoras();
         if (event.getId() == null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            /*calendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(cadena[0]));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(cadena[1]));
-            calendar.set(Calendar.SECOND, Integer.parseInt(cadena[2]));*/
-            System.out.println(cadena[0]+" "+cadena[1]+" "+cadena[2]);
             eventModel.addEvent(event);
             System.out.println("agrega");
             System.out.println(event.getId());
