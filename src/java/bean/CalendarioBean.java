@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.StringTokenizer;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +38,7 @@ public class CalendarioBean {
 
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
+    private String horas;
 
     public CalendarioBean() {
         eventModel = new DefaultScheduleModel();
@@ -141,8 +143,14 @@ public class CalendarioBean {
     }
 
     public void addEvent(ActionEvent actionEvent) {
+        Calendar calendar= Calendar.getInstance();
+        String cadena[]=getNuevasHoras();
         if (event.getId() == null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            /*calendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(cadena[0]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(cadena[1]));
+            calendar.set(Calendar.SECOND, Integer.parseInt(cadena[2]));*/
+            System.out.println(cadena[0]+" "+cadena[1]+" "+cadena[2]);
             eventModel.addEvent(event);
             System.out.println("agrega");
             System.out.println(event.getId());
@@ -156,7 +164,16 @@ public class CalendarioBean {
 
         event = new DefaultScheduleEvent();
     }
-
+    public String[] getNuevasHoras(){
+        String [] cadena= new String[3];
+        int i=0;
+        StringTokenizer tokens=new StringTokenizer(horas,":");
+        while(tokens.hasMoreTokens()){
+            cadena[i]=tokens.nextToken();
+            i++;
+        }
+        return cadena;
+    }
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
     }
@@ -180,4 +197,13 @@ public class CalendarioBean {
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public String getHoras() {
+        return horas;
+    }
+
+    public void setHoras(String horas) {
+        this.horas = horas;
+    }
+    
 }

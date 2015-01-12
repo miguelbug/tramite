@@ -30,19 +30,23 @@
                     <br></br>
                     <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" resizable="false" position="center center">
                         <h:panelGrid id="eventDetails" columns="2">
-                            <h:outputLabel for="title" value="Título:" />
+                            <p:outputLabel for="title" value="Título:" />
                             <p:inputText id="title" value="#{calendarioBean.event.title}" required="true" />
 
-                            <h:outputLabel for="from" value="Desde:" />
+                            <p:outputLabel for="from" value="Desde:" />
                             <p:inputMask id="from" value="#{calendarioBean.event.startDate}" mask="99/99/9999">
                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                             </p:inputMask>
 
-                            <h:outputLabel for="to" value="Hasta:" />
+                            <p:outputLabel for="to" value="Hasta:" />
                             <p:inputMask id="to" value="#{calendarioBean.event.endDate}" mask="99/99/9999">
                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                             </p:inputMask>
 
+                            <p:outputLabel for="hora" value="Hora:"/>
+                            <p:inputMask id="hora" value="#{calendarioBean.horas}" mask="99:99:99">
+                                <f:convertDateTime pattern="hh:mm:ss" timeZone="GMT-5"/>
+                            </p:inputMask>
                             
                             <h:outputLabel for="allDay" value="Todo el Día:" />
                             <h:selectBooleanCheckbox id="allDay" value="#{calendarioBean.event.allDay}" />

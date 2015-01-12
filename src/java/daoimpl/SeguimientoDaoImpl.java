@@ -224,7 +224,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "AND TM.USU=USUA.USU");
+                    + "AND TM.USU=USUA.USU\n"
+                    + "ORDER BY FECHA_ENVIO DESC");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
