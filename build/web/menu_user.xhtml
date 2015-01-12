@@ -104,8 +104,10 @@
 
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33" style="text-transform:uppercase;"/>
-                    <p:outputLabel value="Fecha:"/>
-                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
+                    <p:outputLabel value="Día:"/>
+                    <p:inputText value="#{oficioBean.fechadia}"/>
+                    <p:outputLabel value="Hora:"/>
+                    <p:outputLabel value="#{oficioBean.fechahora}"/>
                     <p:outputLabel value="Firma:"/>
                     <p:outputLabel value="#{oficioBean.firma}"/>
                     <p:outputLabel value="Responsable:"/>
@@ -152,9 +154,12 @@
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 
-                    <p:outputLabel value="Fecha:"/>
-                    <p:outputLabel value="#{oficioBean.auxfecha}"/>
+                    <p:outputLabel value="Día:"/>
+                    <p:inputText value="#{oficioBean.fechadia}"/>
 
+                    <p:outputLabel value="Hora:"/>
+                    <p:outputLabel value="#{oficioBean.fechahora}"/>
+                    
                     <p:outputLabel value="Origen:"/>
                     <p:outputLabel value="#{oficioBean.origen}"/>
 
@@ -170,7 +175,7 @@
 
                     <p:outputLabel value="Destino:"/>
                     <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                        <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="OFICINA GENERAL DE PLANIFICACION"/>
                         <f:selectItems value="#{oficioBean.destinos}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>

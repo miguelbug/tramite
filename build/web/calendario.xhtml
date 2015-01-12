@@ -25,9 +25,10 @@
                                 <p:ajax event="eventResize" listener="#{calendarioBean.onEventResize}" update="messages" />
                             </p:schedule>
                         </center>
-
                     </h:panelGrid>
-                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+
+                    <br></br>
+                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" resizable="false" position="center center">
                         <h:panelGrid id="eventDetails" columns="2">
                             <h:outputLabel for="title" value="Título:" />
                             <p:inputText id="title" value="#{calendarioBean.event.title}" required="true" />
@@ -42,11 +43,16 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                             </p:inputMask>
 
-                            <h:outputLabel for="allDay" value="All Day:" />
+                            
+                            <h:outputLabel for="allDay" value="Todo el Día:" />
                             <h:selectBooleanCheckbox id="allDay" value="#{calendarioBean.event.allDay}" />
-
-                            <p:commandButton type="reset" value="Refrescar" />
-                            <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                            <br></br>
+                            <center>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton type="reset" value="Refrescar" />
+                                    <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                                </p:panelGrid>
+                            </center>
                         </h:panelGrid>
                     </p:dialog>    
                     <script type="text/javascript">

@@ -29,7 +29,9 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["VERANO COLP, LUDOVICO PEDRO"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="oficina" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["OGPL-OFICINA DE PRESUPUESTO"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[SELECT DOCUMENTO,
 to_char(FECHA,'DD/MM/YYYY HH:MI:SS') as fecha,
 ORIGEN,
@@ -39,6 +41,7 @@ RESSPONSABLE
 FROM TEMPORAL_USER
 WHERE IMPRESO='1'
 AND REIMPRESO='0'
+AND ORIGEN=$P{oficina}
 ORDER BY FECHA DESC]]></queryString>
 
 	<field name="DOCUMENTO" class="java.lang.String"/>
@@ -473,7 +476,7 @@ ORDER BY FECHA DESC]]></queryString>
 			</band>
 		</lastPageFooter>
 		<summary>
-			<band height="50"  isSplitAllowed="true" >
+			<band height="55"  isSplitAllowed="true" >
 			</band>
 		</summary>
 </jasperReport>

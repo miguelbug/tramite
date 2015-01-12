@@ -12,6 +12,7 @@ import dao.OficioDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.OficioDaoImpl;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -59,6 +61,8 @@ public class OficioBean {
     private String[] escojidos;
     private String asunto;
     private Date fecha;
+    private String fechadia;
+    private String fechahora;
     private String firma;
     private String responsable;
     private String arearesponsable;
@@ -225,7 +229,7 @@ public class OficioBean {
         System.out.println("ESTAMOS EN ABRIR OFICIO");
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
-        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        siglasdocus = "OGPL";
 
     }
 
@@ -343,7 +347,7 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2,auxanio));
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2, auxanio));
                 //corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2, auxanio));
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
@@ -520,12 +524,15 @@ public class OficioBean {
         this.asunto = "";
     }
 
-    public void guardar_documentoOfiInt() {
+    public void guardar_documentoOfiInt() throws ParseException {
         FacesMessage message = null;
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
         try {
-            DocusInternos di= new DocusInternos();
+            DocusInternos di = new DocusInternos();
             di.setDocuAsunto(asunto);
             di.setDocuCorrelaint(correlativo2);
+            fecha = sdf2.parse(fechadia + " " + fechahora);
             di.setFecharegistro(fecha);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(this.destino));
@@ -537,19 +544,19 @@ public class OficioBean {
             di.setDocuPricint("1");
             od.GuardarDocumentoOfiInt(di);
             /*DocumentosOfiint doif = new DocumentosOfiint();
-            doif.setAsunto(asunto);
-            doif.setCorrelativoDocofint(correlativo2);
-            doif.setFecha(fecha);
-            doif.setDependenciaByCodigo(deriv.getDep(origen));
-            doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
-            doif.setTiposDocumentos(od.getTipoDocu(escogido2));
-            doif.setSiglas(siglasdocus);
-            doif.setUsuario(usu);
-            od.GuardarDocumentoOfiInt(doif);*/
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL "+escogido2);
+             doif.setAsunto(asunto);
+             doif.setCorrelativoDocofint(correlativo2);
+             doif.setFecha(fecha);
+             doif.setDependenciaByCodigo(deriv.getDep(origen));
+             doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
+             doif.setTiposDocumentos(od.getTipoDocu(escogido2));
+             doif.setSiglas(siglasdocus);
+             doif.setUsuario(usu);
+             od.GuardarDocumentoOfiInt(doif);*/
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL "+escogido2);
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("mal guardar oficiounico");
             System.out.println(e.getMessage());
@@ -558,17 +565,20 @@ public class OficioBean {
         generarFecha();
         generarCorrelativo2();
         this.asunto = "";
-        this.escogido2=" ";
-        this.tipodestino=" ";
+        this.escogido2 = " ";
+        this.tipodestino = " ";
     }
 
-    public void guardar() {
+    public void guardar() throws ParseException {
         FacesMessage message = null;
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
             ofi.setAsunto(asunto2);
             ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
+            fecha = sdf2.parse(fechadia + " " + fechahora);
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
@@ -622,9 +632,18 @@ public class OficioBean {
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
-        auxfecha = sdf.format(fecha);
-        System.out.println(auxfecha);
+        fechadia = "";
+        fechahora = "";
 
+        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia.equals("")) {
+                fechadia = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
     }
 
     public void crearOficio() {
@@ -1082,6 +1101,22 @@ public class OficioBean {
 
     public void setOtrosdocus2(List otrosdocus2) {
         this.otrosdocus2 = otrosdocus2;
+    }
+
+    public String getFechadia() {
+        return fechadia;
+    }
+
+    public void setFechadia(String fechadia) {
+        this.fechadia = fechadia;
+    }
+
+    public String getFechahora() {
+        return fechahora;
+    }
+
+    public void setFechahora(String fechahora) {
+        this.fechahora = fechahora;
     }
 
 }

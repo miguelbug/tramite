@@ -8,6 +8,7 @@ package bean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -141,9 +142,16 @@ public class CalendarioBean {
 
     public void addEvent(ActionEvent actionEvent) {
         if (event.getId() == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             eventModel.addEvent(event);
+            System.out.println("agrega");
+            System.out.println(event.getId());
+            System.out.println(event.getTitle());
+            System.out.println(sdf.format(event.getStartDate()));
+            System.out.println(sdf.format(event.getEndDate()));
         } else {
             eventModel.updateEvent(event);
+            System.out.println("actualiza");
         }
 
         event = new DefaultScheduleEvent();
