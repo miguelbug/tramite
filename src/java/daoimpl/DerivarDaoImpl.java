@@ -403,7 +403,7 @@ public class DerivarDaoImpl implements DerivarDAO {
 
     @Override
     public void ConfirmarTramites(String numtram, int movimiento, Date fechaing) {
-        Confirmar(numtram, movimiento);
+        Confirmar(numtram, movimiento,fechaing);
         //GuardarConfirmados(movi);
     }
 
@@ -569,9 +569,8 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void Confirmar(String numtram, int movimiento) {
+    public void Confirmar(String numtram, int movimiento, Date nuevFech) {
         int i = 0;
-        Date nuevFech = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String fechita = formato.format(nuevFech);
         System.out.println(fechita);

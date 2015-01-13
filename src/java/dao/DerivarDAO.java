@@ -46,7 +46,7 @@ public interface DerivarDAO {
 
     public List getConfirmados(String oficina);
 
-    public void Confirmar(String numtram, int movimiento);
+    public void Confirmar(String numtram, int movimiento, Date fecha);
 
     public Indicador getIndic(String codigo);
 
