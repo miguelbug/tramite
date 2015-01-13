@@ -115,7 +115,7 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
                     + "FROM CONSTANCIAS CO, OFICINA oficina, USUARIO USUA\n"
                     + "where oficina.ID_OFICINA = USUA.ID_OFICINA\n"
                     + "AND CO.USU= USUA.USU\n"
-                    + "order by correlativo desc");
+                    + "order by co.fecha_emision desc");
             constancias = query.list();
             session.beginTransaction().commit();
             session.close();

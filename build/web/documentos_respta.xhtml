@@ -114,8 +114,8 @@
                                 <p:selectOneMenu id="tipodestino" value="#{documentosBean.tipodestino}">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                                    <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
-                                    <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                                    <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
+                                    <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
                                     <p:ajax event="change" listener="#{documentosBean.getDependencias()}" update="documentosOfioUnic"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Destino:"/>

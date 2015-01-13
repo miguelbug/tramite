@@ -94,8 +94,8 @@
                     <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}">
                         <f:selectItem itemLabel="Destino" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
                         <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":f3:pickList"/>
                     </p:selectOneMenu>
                     <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px" >
@@ -168,8 +168,8 @@
                     <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
                         <p:ajax event="change" listener="#{oficioBean.agregardestinos()}" update="documentosOfioUnic"/>
                     </p:selectOneMenu>
 

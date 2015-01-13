@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/TramiteDatosId.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DocumentoDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/SeguimientoDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/OficioDaoImpl.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Oficios.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
         </group>
     </open-files>
 </project-private>

@@ -60,8 +60,8 @@
                             <p:selectOneMenu value="#{oficioBean.tipodestino}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                                <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
-                                <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                                <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
+                                <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
                                 <p:ajax event="change" listener="#{oficioBean.agregardestinos()}" update="documentosOfioUnic"/>
                             </p:selectOneMenu>
 
