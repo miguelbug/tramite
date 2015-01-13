@@ -113,11 +113,18 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get firma");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+            Query query = session.createSQLQuery("select R.documento,\n"
+                    + "       R.tramite,\n"
+                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       R.referencia,\n"
+                    + "       R.asunto,\n"
+                    + "       R.origen,\n"
+                    + "       R.destino\n"
+                    + "       From (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
-                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:MI:SS') as fecha,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
-                    + "ofi.ASUNTO_OFICIO,\n"
+                    + "ofi.ASUNTO_OFICIO as asunto,\n"
                     + "d1.nombre as origen,\n"
                     + "d2.nombre as destino\n"
                     + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
@@ -128,7 +135,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "union\n"
                     + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
-                    + "TO_CHAR(ofi.FECHA_OFICIO,'DD/MM/YYYY HH:MI:SS') as fecha,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
                     + "d1.nombre as origen,\n"
@@ -137,7 +144,8 @@ public class OficioDaoImpl implements OficioDAO {
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is null\n"
-                    + "and d1.nombre=oficina.nombre_oficina");
+                    + "and d1.nombre=oficina.nombre_oficina) R\n"
+                    + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();
             session.close();
@@ -199,7 +207,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get correlativo");
         String index = " ";
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select max(correla_Oficic) from Ofic_Circ where TO_CHAR(FECHA,'YYYY')='"+anio+"'";
+        String sql = "select max(correla_Oficic) from Ofic_Circ where TO_CHAR(FECHA,'YYYY')='" + anio + "'";
         try {
             session.beginTransaction();
             index = (String) session.createSQLQuery(sql).uniqueResult();
@@ -220,7 +228,7 @@ public class OficioDaoImpl implements OficioDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "' and to_char(fecha,'YYYY')='"+anio+"'");
+            Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "' and to_char(fecha,'YYYY')='" + anio + "'");
             ofi = (OficCirc) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
@@ -241,7 +249,7 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery("select id_Ofcirc\n"
                     + "from Ofic_Circ\n"
                     + "WHERE correla_Oficic='" + correlativo + "'\n"
-                    + "AND to_char(fecha,'YYYY')='"+anio+"'");
+                    + "AND to_char(fecha,'YYYY')='" + anio + "'");
             depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
@@ -386,7 +394,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
                     + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "ORDER BY OFI.CORRELA_OFICIC DESC");
+                    + "ORDER BY OFI.FECHA DESC");
             oficioscirc = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -472,9 +480,9 @@ public class OficioDaoImpl implements OficioDAO {
         } finally {
             session.close();
         }
-        System.out.println("INDEX: "+index);
-        if(index == null){
-            index="SIN OFICIO";
+        System.out.println("INDEX: " + index);
+        if (index == null) {
+            index = "SIN OFICIO";
         }
         return index;
     }

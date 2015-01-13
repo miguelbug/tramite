@@ -26,7 +26,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public void guardarNuevoAnio(String anio) {
         System.out.println("guardar anio");
-        Anios anios= new Anios();
+        Anios anios = new Anios();
         anios.setAnio(anio);
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -126,7 +126,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select nombre from Dependencia where tipodepe='"+tipo+"' order by nombre");
+            Query query = session.createSQLQuery("select nombre from Dependencia where tipodepe='" + tipo + "' order by nombre");
             docus = (List) query.list();
             session.beginTransaction().commit();
             session.close();
@@ -309,22 +309,22 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println("getdocusinternos");
             session.beginTransaction();
             System.out.println("despues de begin");
-            Query query = session.createSQLQuery("select tm.tram_num,"
-                    + "tm.movi_num,"
+            Query query = session.createSQLQuery("select tm.tram_num,\n"
+                    + "tm.movi_num,\n"
                     + "DECODE(to_char(tm.FECHA_ENVIO,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
-                    + "D1.NOMBRE AS ORIGEN,"
+                    + "D1.NOMBRE AS ORIGEN,\n"
                     + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
-                    + "D2.NOMBRE AS DESTINO,"
-                    + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
-                    + "tm.ESTA_NOMBRE,"
-                    + "I.INDI_NOMBRE,"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,\n"
+                    + "tm.ESTA_NOMBRE,\n"
+                    + "I.INDI_NOMBRE,\n"
                     + "tm.ESTAD_CONFRIRM\n"
                     + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
                     + "and tm.CODIGO1=D2.CODIGO\n"
-                    + "and D2.NOMBRE='OFICINA GENERAL DE PLANIFICACION'"
-                    + "order by D2.NOMBRE");
+                    + "and D2.NOMBRE='OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "order by tm.FECHA_ENVIO desc");
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");
             session.beginTransaction().commit();
@@ -522,14 +522,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void EliminarTD(String tramnum, String fecha) {
         System.out.println("ENTRA A ELIMINAR TD");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql ="DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= :tramitenum AND ";
-        try{
+        String sql = "DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= :tramitenum AND ";
+        try {
             session.beginTransaction();
-            int i=session.createSQLQuery("DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= '"+tramnum+"' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='"+fecha+"'").executeUpdate();
+            int i = session.createSQLQuery("DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= '" + tramnum + "' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='" + fecha + "'").executeUpdate();
             session.beginTransaction().commit();
             session.close();
-            System.out.println("eliminados: "+i);
-        }catch(Exception e){
+            System.out.println("eliminados: " + i);
+        } catch (Exception e) {
             System.out.println("mal eliminar TD");
             System.out.println(e.getMessage());
         }
@@ -539,14 +539,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void EliminarTipDocu(String tramnum, String fecha) {
         System.out.println("ENTRA A ELIMINAR TIPO DOCU");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql ="DELETE FROM TIPO_DOCU WHERE TRAM_NUM='"+tramnum+"' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='"+fecha+"'";
-        try{
+        String sql = "DELETE FROM TIPO_DOCU WHERE TRAM_NUM='" + tramnum + "' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='" + fecha + "'";
+        try {
             session.beginTransaction();
-            int i=session.createSQLQuery(sql).executeUpdate();
+            int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             session.close();
-            System.out.println("eliminados: "+i);
-        }catch(Exception e){
+            System.out.println("eliminados: " + i);
+        } catch (Exception e) {
             System.out.println("mal eliminar TIPO DOCU");
             System.out.println(e.getMessage());
         }
@@ -556,14 +556,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void EliminarTramMov(String tramnum, String fecha) {
         System.out.println("ENTRA A ELIMINAR TM");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql ="DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='"+tramnum+"' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='"+fecha+"'";
-        try{
+        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='" + fecha + "'";
+        try {
             session.beginTransaction();
-            int i=session.createSQLQuery(sql).executeUpdate();
+            int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             session.close();
-            System.out.println("eliminados: "+i);
-        }catch(Exception e){
+            System.out.println("eliminados: " + i);
+        } catch (Exception e) {
             System.out.println("mal eliminar TM");
             System.out.println(e.getMessage());
         }
@@ -573,14 +573,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void EliminarTemporal(String tramnum, String fecha) {
         System.out.println("ENTRA A ELIMINAR TEMPORAL");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql ="DELETE FROM TEMPORAL WHERE TRAM_NUM='"+tramnum+"' AND to_char(FECHA,'dd/MM/yyyy')='"+fecha+"'";
-        try{
+        String sql = "DELETE FROM TEMPORAL WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA,'dd/MM/yyyy')='" + fecha + "'";
+        try {
             session.beginTransaction();
-            int i=session.createSQLQuery(sql).executeUpdate();
+            int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             session.close();
-            System.out.println("eliminados: "+i);
-        }catch(Exception e){
+            System.out.println("eliminados: " + i);
+        } catch (Exception e) {
             System.out.println("mal eliminar TEMPORAL");
             System.out.println(e.getMessage());
         }

@@ -42,7 +42,7 @@ public class DocusExtDaoImpl implements DocusExtDAO {
                     + "AND DE.USU=USUA.USU\n"
                     + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
                     + "AND DE.EXT_INT='pe'\n"
-                    + "ORDER BY DE.ID DESC");
+                    + "ORDER BY DE.FECHA DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();
