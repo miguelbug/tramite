@@ -246,7 +246,7 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto, String movi) {
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1) {
         try {
             System.out.println("entra a guardar tipo docus");
             DocusInternos di = new DocusInternos();
@@ -261,6 +261,8 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setUsuario(usu);
             di.setDocuAsunto(asunto);
             di.setNumeroMovi(movi);
+            di.setDependenciaByCodigo(d);
+            di.setDependenciaByCodigo1(d1);
 
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -780,4 +782,24 @@ public class DerivarDaoImpl implements DerivarDAO {
         return usu;
     }
 
+    @Override
+    public String getCodigoUsuario(String usu) {
+        System.out.println("get codigo usuario");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select oficina.idOficina from Usuario where usu='"+usu+"'";
+        try {
+            session.beginTransaction();
+            index = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get corre");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+    
 }

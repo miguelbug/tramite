@@ -42,7 +42,7 @@ import org.primefaces.event.TabChangeEvent;
 @ManagedBean
 @ViewScoped
 public class DocumentoUsuarioBean {
-
+    
     private List detallecirc2, designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
@@ -55,8 +55,8 @@ public class DocumentoUsuarioBean {
     private boolean confirmar = false, aparecer, ver, nover;
     private DocusInternosDAO di;
     private OficioDAO ofi;
-    public static String correla_exportar, tramnum_exportar, fecha_exportar,movimiento_exportar;
-
+    public static String correla_exportar, tramnum_exportar, fecha_exportar, movimiento_exportar;
+    
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
         ofi = new OficioDaoImpl();
@@ -81,17 +81,17 @@ public class DocumentoUsuarioBean {
         if (isdocumentosUsuario) {
             MostrarParaUsuario();
         }
-
+        
     }
-
+    
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getTitle().equals("Sin Confirmar")) {
             MostrarParaUsuario();
-
+            
         }
-
+        
     }
-
+    
     public List Detalles_Circ() {
         System.out.println("listando detalles");
         detallecirc2.clear();
@@ -111,7 +111,7 @@ public class DocumentoUsuarioBean {
         }
         return detallecirc2;
     }
-
+    
     public String partirColumnas(String aPartir) {
         List<String> subcadenas = new ArrayList<String>();
         StringTokenizer tokens = new StringTokenizer(aPartir, "-");
@@ -120,7 +120,7 @@ public class DocumentoUsuarioBean {
         }
         return subcadenas.get(1);
     }
-
+    
     public void listarDocPropiosCircXtipo() {
         System.out.println("listando documentos2");
         listadocpropioscir.clear();
@@ -145,7 +145,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void listarDocPropiosCirc() {
         System.out.println("listando documentos2");
         listadocpropioscir.clear();
@@ -170,11 +170,11 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void listarDocPropios() {
         System.out.println("listando documentos2");
         listadocspropios.clear();
-
+        
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -197,11 +197,11 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void listarDocPropiosXtipo() {
         System.out.println("listando documentos2");
         listadocspropios.clear();
-
+        
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -223,13 +223,13 @@ public class DocumentoUsuarioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        tipodocupropio=" ";
+        tipodocupropio = " ";
     }
-
+    
     public void abrirAsignacion() {
         llenarDesignados();
     }
-
+    
     public void ConfirmarAsignar() {
         Confirmar();
         System.out.println("\nENTRA A ASIGNAR\n");
@@ -237,11 +237,11 @@ public class DocumentoUsuarioBean {
         System.out.println("\nSALE DE ASIGNAR\n");
         docselec2.clear();
     }
-
+    
     public void llenarDesignados() {
         designados = sgd.getDesignados(usu.getOficina().getIdOficina());
     }
-
+    
     public Usuario getusuario(String nombre) {
         Usuario usu = new Usuario();
         List lista = new ArrayList();
@@ -258,12 +258,12 @@ public class DocumentoUsuarioBean {
         }
         return usu;
     }
-
+    
     public void Asignar() {
         System.out.println(docselec2);
         FacesMessage message = null;
         try {
-
+            
             String ntram = "";
             int movi = 0;
             for (int i = 0; i < docselec2.size(); i++) {
@@ -282,15 +282,15 @@ public class DocumentoUsuarioBean {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
         }
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-
+        
     }
-
+    
     public void MostrarParaUsuario() {
         System.out.println("listando documentos2");
         seguimientolista2.clear();
-        Date anio= new Date();
-        SimpleDateFormat sdf= new SimpleDateFormat("YYYY");
-        String auxanio=sdf.format(anio);
+        Date anio = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
+        String auxanio = sdf.format(anio);
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -311,7 +311,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
                 listaaux.put("estadDoc", String.valueOf(obj[9]));
-                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0]),String.valueOf(obj[1])));
+                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[1])));
                 listaaux.put("usuario", String.valueOf(obj[10]));
                 seguimientolista2.add(listaaux);
             }
@@ -319,7 +319,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public List Detalles() {
         System.out.println("listando detalles");
         detalle.clear();
@@ -333,7 +333,7 @@ public class DocumentoUsuarioBean {
             Map<String, String> listaaux = new HashMap<String, String>();
             listaaux.put("FECHAENVIO", seleccion.get("fechaenvio").toString());
             listaaux.put("FECHAINGR", seleccion.get("fechaingr").toString());
-            listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString(),seleccion.get("movimnum").toString()));
+            listaaux.put("RESP", di.getRespuesta(seleccion.get("numerotramite").toString(), seleccion.get("movimnum").toString()));
             listaaux.put("OFICIO", "N° " + ofi.getOficioDocumento(seleccion.get("numerotramite").toString()) + "-OGPL-" + sdf.format(anio));
             detalle.add(listaaux);
             // }
@@ -342,7 +342,7 @@ public class DocumentoUsuarioBean {
         }
         return detalle;
     }
-
+    
     public void Confirmar() {
         try {
             System.out.println("ENTRA A CONFIRMAR");
@@ -354,11 +354,11 @@ public class DocumentoUsuarioBean {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 ntram = hm.get("numerotramite").toString();
                 movi = Integer.parseInt(hm.get("movimnum").toString());
-
+                
                 Date nuevFech = new Date();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
+                
                 deriv.ConfirmarTramites(ntram, movi, formato2.parse(formato.format(nuevFech)));
                 ntram = "";
             }
@@ -371,7 +371,7 @@ public class DocumentoUsuarioBean {
             e.printStackTrace();
         }
     }
-
+    
     public void limpiar() {
         numtramaux = "";
         asunto = "";
@@ -380,12 +380,12 @@ public class DocumentoUsuarioBean {
         docunombre = "";
         siglasdocus = "";
     }
-
+    
     public String getNombOficina() {
         String oficina = dd.getOficina(usu);
         return oficina;
     }
-
+    
     public void IniciarFecha() {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         DateFormat formato2 = new SimpleDateFormat("yyyy");
@@ -404,7 +404,7 @@ public class DocumentoUsuarioBean {
         }
         fechanio = formato2.format(fecha);
     }
-
+    
     public void UsuarioSelec() {
         try {
             usuario = usu.getUsuNombre();
@@ -425,12 +425,12 @@ public class DocumentoUsuarioBean {
                 System.out.println(e.getValue().toString());
                 MostrarSeguimiento(e.getValue().toString());
             }
-
+            
         }
         docselec2.clear();
-
+        
     }
-
+    
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista2.clear();
@@ -457,7 +457,7 @@ public class DocumentoUsuarioBean {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void Derivar() {
         numtramaux = "";
         FacesMessage message = null;
@@ -466,7 +466,7 @@ public class DocumentoUsuarioBean {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Advertencia", "Primero debe Confirmar");
                 System.out.println("entra a derivar null");
                 aparecer = false;
-
+                
             } else {
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
@@ -477,21 +477,21 @@ public class DocumentoUsuarioBean {
                 Motivo();
                 System.out.println("entra a usuarioselec");
                 UsuarioSelec();
-                HashMap<String,String> hm= (HashMap<String,String>)docselec2.get(0);
+                HashMap<String, String> hm = (HashMap<String, String>) docselec2.get(0);
                 tramnum_exportar = hm.get("numerotramite").toString();
                 fecha_exportar = hm.get("fechaenvio").toString();
-                movimiento_exportar=hm.get("movimnum").toString();
-                System.out.println("ESTA ES LA FECHA DE ENVIO: "+fecha_exportar+" Mov: "+movimiento_exportar);
-                estado="EN PROCESO";
+                movimiento_exportar = hm.get("movimnum").toString();
+                System.out.println("ESTA ES LA FECHA DE ENVIO: " + fecha_exportar + " Mov: " + movimiento_exportar);
+                estado = "EN PROCESO";
                 
             }
         } catch (Exception e) {
             System.out.println("error derivar");
             System.out.println(e.getMessage());
         }
-
+        
     }
-
+    
     public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
@@ -499,7 +499,7 @@ public class DocumentoUsuarioBean {
         try {
             if (getAnio().equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre,getAnio()));
+                corr = Integer.parseInt(deriv.getIndice(siglasdocus, docunombre, getAnio()));
                 System.out.println("numerocorrelativo:" + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -529,12 +529,12 @@ public class DocumentoUsuarioBean {
         }
         return aux;
     }
-
+    
     public String getAnio() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(anio);
     }
-
+    
     public void RealizarCambio() {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
@@ -543,33 +543,35 @@ public class DocumentoUsuarioBean {
         }
         correlativo = generarCorrelativo();
         correla_exportar = correlativo;
-        this.correlativoaux=correlativo;
-        System.out.println("correlativo exportar: "+correla_exportar);
-
+        this.correlativoaux = correlativo;
+        System.out.println("correlativo exportar: " + correla_exportar);
+        
     }
-
+    
     public void Guardar() {
         FacesMessage message = null;
-        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             System.out.println("entra a guardar");
-            SimpleDateFormat sdf2= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            fecha=sdf2.parse(fechadia+" "+fechahora);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            fecha = sdf2.parse(fechadia + " " + fechahora);
             DateFormat d = new SimpleDateFormat("yyyy");
             System.out.println("entra a confirmar true");
             System.out.println(docunombre);
             Indicador in = deriv.getIndic(docunombre);
+            String codigo = deriv.getCodigoUsuario(usu.getUsu());
+            System.out.println("El codigo es: "+codigo);
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fecha);
                 deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto,hm.get("movimnum").toString());
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL "+docunombre);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + docunombre);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL "+docunombre);
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + docunombre);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -577,7 +579,7 @@ public class DocumentoUsuarioBean {
         limpiar();
         MostrarParaUsuario();
     }
-
+    
     public Date getFechaIng() {
         Date fecha = null;
         try {
@@ -590,16 +592,16 @@ public class DocumentoUsuarioBean {
                     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     fecha = formato.parse(e.getValue().toString());
                 }
-
+                
             }
-
+            
         } catch (Exception e) {
             System.out.println("error fecha");
             System.out.println(e.getMessage());
         }
         return fecha;
     }
-
+    
     public void Motivo() {
         try {
             for (int i = 0; i < docselec2.size(); i++) {
@@ -613,14 +615,14 @@ public class DocumentoUsuarioBean {
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
                 }
             }
-
+            
         } catch (Exception e) {
             System.out.println("errormotivo");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
-
+    
     public String getFechaIngr() {
         String fecha = "";
         System.out.println(docselec2);
@@ -643,399 +645,399 @@ public class DocumentoUsuarioBean {
         return fecha;
     }
     /*----DERIVACION---------*/
-
+    
     public DerivarDAO getDeriv() {
         return deriv;
     }
-
+    
     public void setDeriv(DerivarDAO deriv) {
         this.deriv = deriv;
     }
-
+    
     public String getCorrelativo() {
         return correlativo;
     }
-
+    
     public void setCorrelativo(String correlativo) {
         this.correlativo = correlativo;
     }
-
+    
     public List getSeguimientolista2() {
         return seguimientolista2;
     }
-
+    
     public void setSeguimientolista2(List seguimientolista2) {
         this.seguimientolista2 = seguimientolista2;
     }
-
+    
     public List getOtrosdocus() {
         return otrosdocus;
     }
-
+    
     public void setOtrosdocus(List otrosdocus) {
         this.otrosdocus = otrosdocus;
     }
-
+    
     public List getDocselec() {
         return docselec;
     }
-
+    
     public void setDocselec(List docselec) {
         this.docselec = docselec;
     }
-
+    
     public Map<String, String> getSeleccion() {
         return seleccion;
     }
-
+    
     public void setSeleccion(Map<String, String> seleccion) {
         this.seleccion = seleccion;
     }
-
+    
     public DocumentoDAO getDd() {
         return dd;
     }
-
+    
     public void setDd(DocumentoDAO dd) {
         this.dd = dd;
     }
-
+    
     public Date getFecha() {
         return fecha;
     }
-
+    
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
+    
     public Usuario getUsu() {
         return usu;
     }
-
+    
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
-
+    
     public String getFechadia() {
         return fechadia;
     }
-
+    
     public void setFechadia(String fechadia) {
         this.fechadia = fechadia;
     }
-
+    
     public String getFechahora() {
         return fechahora;
     }
-
+    
     public void setFechahora(String fechahora) {
         this.fechahora = fechahora;
     }
-
+    
     public String getMotivo() {
         return motivo;
     }
-
+    
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
-
+    
     public String getUsuario() {
         return usuario;
     }
-
+    
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-
+    
     public String getCodinterno() {
         return codinterno;
     }
-
+    
     public void setCodinterno(String codinterno) {
         this.codinterno = codinterno;
     }
-
+    
     public List getDetalle() {
         return detalle;
     }
-
+    
     public void setDetalle(List detalle) {
         this.detalle = detalle;
     }
-
+    
     public SeguimientoDAO getSgd() {
         return sgd;
     }
-
+    
     public void setSgd(SeguimientoDAO sgd) {
         this.sgd = sgd;
     }
-
+    
     public List getSeguimientolista() {
         return seguimientolista;
     }
-
+    
     public void setSeguimientolista(List seguimientolista) {
         this.seguimientolista = seguimientolista;
     }
-
+    
     public String getNumtramaux() {
         return numtramaux;
     }
-
+    
     public void setNumtramaux(String numtramaux) {
         this.numtramaux = numtramaux;
     }
-
+    
     public String getAsunto() {
         return asunto;
     }
-
+    
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }
-
+    
     public String getSiglasdocus() {
         return siglasdocus;
     }
-
+    
     public void setSiglasdocus(String siglasdocus) {
         this.siglasdocus = siglasdocus;
     }
-
+    
     public String getDocunombre() {
         return docunombre;
     }
-
+    
     public void setDocunombre(String docunombre) {
         this.docunombre = docunombre;
     }
-
+    
     public String getEstado() {
         return estado;
     }
-
+    
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
+    
     public boolean isConfirmar() {
         return confirmar;
     }
-
+    
     public void setConfirmar(boolean confirmar) {
         this.confirmar = confirmar;
     }
-
+    
     public boolean isAparecer() {
         return aparecer;
     }
-
+    
     public void setAparecer(boolean aparecer) {
         this.aparecer = aparecer;
     }
-
+    
     public List getConfirmados() {
         return confirmados;
     }
-
+    
     public void setConfirmados(List confirmados) {
         this.confirmados = confirmados;
     }
-
+    
     public List getDocselec2() {
         return docselec2;
     }
-
+    
     public void setDocselec2(List docselec2) {
         this.docselec2 = docselec2;
     }
-
+    
     public List getConfirmadosderivados() {
         return confirmadosderivados;
     }
-
+    
     public void setConfirmadosderivados(List confirmadosderivados) {
         this.confirmadosderivados = confirmadosderivados;
     }
-
+    
     public void setAnio(Date anio) {
         this.anio = anio;
     }
-
+    
     public String getTramaux() {
         return tramaux;
     }
-
+    
     public void setTramaux(String tramaux) {
         this.tramaux = tramaux;
     }
-
+    
     public String getLlego() {
         return llego;
     }
-
+    
     public void setLlego(String llego) {
         this.llego = llego;
     }
-
+    
     public String getConfirme() {
         return confirme;
     }
-
+    
     public void setConfirme(String confirme) {
         this.confirme = confirme;
     }
-
+    
     public String getDocresp() {
         return docresp;
     }
-
+    
     public void setDocresp(String docresp) {
         this.docresp = docresp;
     }
-
+    
     public String getDocofic() {
         return docofic;
     }
-
+    
     public void setDocofic(String docofic) {
         this.docofic = docofic;
     }
-
+    
     public DocusInternosDAO getDi() {
         return di;
     }
-
+    
     public void setDi(DocusInternosDAO di) {
         this.di = di;
     }
-
+    
     public List getDesignados() {
         return designados;
     }
-
+    
     public void setDesignados(List designados) {
         this.designados = designados;
     }
-
+    
     public String getAsignado() {
         return asignado;
     }
-
+    
     public void setAsignado(String asignado) {
         this.asignado = asignado;
     }
-
+    
     public OficioDAO getOfi() {
         return ofi;
     }
-
+    
     public void setOfi(OficioDAO ofi) {
         this.ofi = ofi;
     }
-
+    
     public String getFechanio() {
         return fechanio;
     }
-
+    
     public void setFechanio(String fechanio) {
         this.fechanio = fechanio;
     }
-
+    
     public List getListadocspropios() {
         return listadocspropios;
     }
-
+    
     public void setListadocspropios(List listadocspropios) {
         this.listadocspropios = listadocspropios;
     }
-
+    
     public List getListadocpropioscir() {
         return listadocpropioscir;
     }
-
+    
     public void setListadocpropioscir(List listadocpropioscir) {
         this.listadocpropioscir = listadocpropioscir;
     }
-
+    
     public String getTipodocupropio() {
         return tipodocupropio;
     }
-
+    
     public void setTipodocupropio(String tipodocupropio) {
         this.tipodocupropio = tipodocupropio;
     }
-
+    
     public List getOtrosdocus2() {
         return otrosdocus2;
     }
-
+    
     public void setOtrosdocus2(List otrosdocus2) {
         this.otrosdocus2 = otrosdocus2;
     }
-
+    
     public String getTipodocupropio2() {
         return tipodocupropio2;
     }
-
+    
     public void setTipodocupropio2(String tipodocupropio2) {
         this.tipodocupropio2 = tipodocupropio2;
     }
-
+    
     public List getDocselec3() {
         return docselec3;
     }
-
+    
     public void setDocselec3(List docselec3) {
         this.docselec3 = docselec3;
     }
-
+    
     public List getDocselec4() {
         return docselec4;
     }
-
+    
     public void setDocselec4(List docselec4) {
         this.docselec4 = docselec4;
     }
-
+    
     public Map<String, String> getSeleccion2() {
         return seleccion2;
     }
-
+    
     public void setSeleccion2(Map<String, String> seleccion2) {
         this.seleccion2 = seleccion2;
     }
-
+    
     public List getDetallecirc2() {
         return detallecirc2;
     }
-
+    
     public void setDetallecirc2(List detallecirc2) {
         this.detallecirc2 = detallecirc2;
     }
-
+    
     public boolean isVer() {
         return ver;
     }
-
+    
     public void setVer(boolean ver) {
         this.ver = ver;
     }
-
+    
     public boolean isNover() {
         return nover;
     }
-
+    
     public void setNover(boolean nover) {
         this.nover = nover;
     }
-
+    
     public String getCorrelativoaux() {
         return correlativoaux;
     }
-
+    
     public void setCorrelativoaux(String correlativoaux) {
         this.correlativoaux = correlativoaux;
     }
