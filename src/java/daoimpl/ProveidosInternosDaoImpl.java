@@ -28,19 +28,14 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         System.out.println("get docus internos (oficios)");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU,\n"
-                    + "DOIF.CORRELATIVO_DOCOFINT||'-'||DOIF.SIGLAS||'-'||TO_CHAR(DOIF.FECHA,'YYYY') AS DOCUMENTO,\n"
-                    + "DOIF.ASUNTO,\n"
-                    + "TO_CHAR(DOIF.FECHA,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
-                    + "D1.NOMBRE AS ORIGEN,\n"
-                    + "D2.NOMBRE AS DESTINO,\n"
-                    + "U.USU_NOMBRE\n"
-                    + "FROM DOCUMENTOS_OFIINT DOIF, USUARIO U, DEPENDENCIA D1, DEPENDENCIA D2, TIPOS_DOCUMENTOS TD\n"
-                    + "WHERE DOIF.USU=U.USU\n"
-                    + "AND DOIF.CODIGO=D1.CODIGO\n"
-                    + "AND DOIF.CODIGO1=D2.CODIGO\n"
-                    + "AND DOIF.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "ORDER BY DOIF.CORRELATIVO_DOCOFINT DESC");
+            Query query = session.createSQLQuery("SELECT DI.DOCU_NOMBREINT||' N° '|| DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
+                    + "       D1.NOMBRE AS ORIGEN,\n"
+                    + "       DI.DOCU_ASUNTO AS ASUNTO\n"
+                    + "       FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
+                    + "       WHERE DI.CODIGO=D1.CODIGO\n"
+                    + "       AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "       ORDER BY DI.FECHAREGISTRO DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();

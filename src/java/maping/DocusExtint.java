@@ -20,6 +20,7 @@ public class DocusExtint implements java.io.Serializable {
     private Long movimientoDext;
     private String correlativod;
     private Date fechaEnvio;
+    private Date fechaDerivado;
     private String extInt;
     private TiposDocumentos tiposDocumentos;
 
@@ -30,7 +31,7 @@ public class DocusExtint implements java.io.Serializable {
         this.id = id;
     }
 
-    public DocusExtint(long id, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String numerodoc, String asunto, Date fecha, Long movimientoDext, String correlativod, TiposDocumentos tiposDocumentos) {
+    public DocusExtint(long id, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, String numerodoc, String asunto, Date fecha, Long movimientoDext, String correlativod, TiposDocumentos tiposDocumentos, Date fechaDerivado) {
         this.id = id;
         this.tramiteDatos = tramiteDatos;
         this.dependenciaByCodigo1 = dependenciaByCodigo1;
@@ -42,6 +43,7 @@ public class DocusExtint implements java.io.Serializable {
         this.movimientoDext = movimientoDext;
         this.correlativod = correlativod;
         this.tiposDocumentos = tiposDocumentos;
+        this.fechaDerivado = fechaDerivado;
     }
 
     public long getId() {
@@ -146,6 +148,14 @@ public class DocusExtint implements java.io.Serializable {
 
     public void setExtInt(String extInt) {
         this.extInt = extInt;
+    }
+
+    public Date getFechaDerivado() {
+        return fechaDerivado;
+    }
+
+    public void setFechaDerivado(Date fechaDerivado) {
+        this.fechaDerivado = fechaDerivado;
     }
 
 }

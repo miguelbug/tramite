@@ -85,16 +85,14 @@ public class ProveidosInternosBean {
             List lista = new ArrayList();
             lista = pid.getDocumentosInternos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[4];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("documento", String.valueOf(obj[0]) + " N°-" + String.valueOf(obj[1]));
-                listaaux.put("asunto", String.valueOf(obj[2]));
-                listaaux.put("fecha", String.valueOf(obj[3]));
-                listaaux.put("origen", String.valueOf(obj[4]));
-                listaaux.put("destino", String.valueOf(obj[5]));
-                listaaux.put("usuario", String.valueOf(obj[6]));
+                listaaux.put("documento", String.valueOf(obj[0]));
+                listaaux.put("fecha", String.valueOf(obj[1]));
+                listaaux.put("origen", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]));
                 documentos_internos.add(listaaux);
             }
         } catch (Exception e) {
@@ -139,13 +137,12 @@ public class ProveidosInternosBean {
         tramnum = hm.get("documento").toString();
         generarCorrelativo_proveido();
         origen_prov = hm.get("origen").toString();
-        destino_prov = hm.get("destino").toString();
+        destino_prov = "OFICINA GENERAL DE PLANIFICACION";
         asunto = hm.get("asunto").toString();
         correlativo_impresion = correlativo_proveido;
         tranum = correlativo_proveido;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf2.format(fechaprov);
-        usuario = hm.get("usuario").toString();
     }
 
     public void generarCorrelativo_proveido() {

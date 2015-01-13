@@ -41,5 +41,8 @@
         <property name="extInt" type="string">
             <column name="EXT_INT" length="30" />
         </property>
+        <property name="fechaDerivado" type="date">
+            <column name="FECHA_DERIVADO" length="7" />
+        </property>
     </class>
 </hibernate-mapping>
