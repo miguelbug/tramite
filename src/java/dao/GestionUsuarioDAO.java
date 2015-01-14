@@ -34,4 +34,6 @@ public interface GestionUsuarioDAO {
     public void GuardarJefe(Jefatura jefe);
     public List listarJefes();
     public List listarJefesUser(String id);
+    public List listarPersonal();
+    
 }

@@ -9,7 +9,10 @@ import dao.GestionUsuarioDAO;
 import daoimpl.GestionUsuarioDaoImpl;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -46,11 +49,12 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas, profesion, contrato, jefes, jefesuser;
+    private List oficinas, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec;
     //////////////
     private String nuevousu_usuario;
     private String nuevousu_nombre;
     private String nuevousu_oficina;
+    private String nuevo_celular;
 
     public GestionUsuarioBean() {
         gu = new GestionUsuarioDaoImpl();
@@ -62,8 +66,38 @@ public class GestionUsuarioBean implements Serializable {
         contrato = new ArrayList<String>();
         jefes = new ArrayList<String>();
         jefesuser = new ArrayList<String>();
+        listapersonal= new ArrayList<String>();
+        mostrarListaPersonal();
     }
-
+    public void mostrarListaPersonal(){
+        System.out.println("listando documentos");
+        listapersonal.clear();
+        try {
+            List lista = new ArrayList();
+            lista = gu.listarPersonal();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[12];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("nombre", String.valueOf(obj[0]));
+                listaaux.put("usuario", String.valueOf(obj[1]));
+                listaaux.put("telefono", String.valueOf(obj[2]));
+                listaaux.put("anexo", String.valueOf(obj[3]));
+                listaaux.put("cargo", String.valueOf(obj[4]));
+                listaaux.put("grado", String.valueOf(obj[5]));
+                listaaux.put("correo", String.valueOf(obj[6]));
+                listaaux.put("dni", String.valueOf(obj[7]));
+                listaaux.put("celular", String.valueOf(obj[8]));
+                listaaux.put("profesion", String.valueOf(obj[9]));
+                listaaux.put("oficina", String.valueOf(obj[10]));
+                listaaux.put("contrato", String.valueOf(obj[11]));
+                listapersonal.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void Guardar() {
         FacesMessage message = null;
         Usuario aux = gu.ValidarClave(antiguapass, usu.getUsu());
@@ -121,6 +155,7 @@ public class GestionUsuarioBean implements Serializable {
             jefatura.setProfesion(gu.getProfesion(nuevaprof));
             jefatura.setDependencia(gu.getDependencia(nuevoofi));
             jefatura.setTipoContrato(gu.getContrato(nuevocontrato));
+            jefatura.setCelular(nuevo_celular);
             gu.GuardarJefe(jefatura);
             limpiarjefatura();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha Guardado");
@@ -387,6 +422,38 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setJefesuser(List jefesuser) {
         this.jefesuser = jefesuser;
+    }
+
+    public String getNuevo_celular() {
+        return nuevo_celular;
+    }
+
+    public void setNuevo_celular(String nuevo_celular) {
+        this.nuevo_celular = nuevo_celular;
+    }
+
+    public List getListapersonal() {
+        return listapersonal;
+    }
+
+    public void setListapersonal(List listapersonal) {
+        this.listapersonal = listapersonal;
+    }
+
+    public List getOtrosdocus() {
+        return otrosdocus;
+    }
+
+    public void setOtrosdocus(List otrosdocus) {
+        this.otrosdocus = otrosdocus;
+    }
+
+    public List getDocselec() {
+        return docselec;
+    }
+
+    public void setDocselec(List docselec) {
+        this.docselec = docselec;
     }
 
 }

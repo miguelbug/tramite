@@ -385,7 +385,7 @@ public class OficioDaoImpl implements OficioDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
-                    + "OFI.ASUNTO,\n"
+                    + "DECODE(OFI.ASUNTO,NULL,'SIN ASUNTO',OFI.ASUNTO) AS ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE,\n"
                     + "OFI.FIRMA,\n"

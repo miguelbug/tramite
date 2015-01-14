@@ -191,11 +191,19 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void ActualizarTramite(String tramaux, String movimiento, Date fecha) {
+    public void ActualizarTramite(String tramaux, String movimiento, Date fecha, String tipodocu) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String fechita = formato.format(fecha);
         System.out.println("actualizar tramite movimiento");
-        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' , ESTA_NOMBRE='FINALIZADO',\n"
+        String nuevotipo="",nuevotipo2="";
+        if(tipodocu.equals("ARCHIVO")){
+            nuevotipo="ARCHIVADO";
+            nuevotipo2="ARCHIVADO";
+        }else{
+            nuevotipo="FINALIZADO";
+            nuevotipo2="DERIVADO";
+    }
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='"+nuevotipo2+"' , ESTA_NOMBRE='"+nuevotipo+"',\n"
                 + " FECHA_DERIVACION=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;

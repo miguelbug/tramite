@@ -44,5 +44,8 @@
         <property name="dni" type="string">
             <column name="DNI" length="10" />
         </property>
+        <property name="celular" type="string">
+            <column name="CELULAR" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
