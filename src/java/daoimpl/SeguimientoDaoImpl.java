@@ -42,6 +42,23 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     }
 
     @Override
+    public String getContadorTemporal() {
+        String contador = "";
+        String sql = "SELECT MAX(CONTADOR) FROM TEMPORAL";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            contador = (String) session.createSQLQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("problemas get contador");
+            System.out.println(e.getMessage());
+        }
+        return contador;
+    }
+
+    @Override
     public List getSeguimientoGrande1(String tramnum) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -222,7 +239,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
                     + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
-                    + "WHERE TM.CODIGO1='"+oficina+"' \n"
+                    + "WHERE TM.CODIGO1='" + oficina + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"
                     + "AND TM.CODIGO1=M2.CODIGO\n"
                     + "AND TM.INDI_COD=I.INDI_COD\n"

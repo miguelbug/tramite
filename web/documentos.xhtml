@@ -67,15 +67,24 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
-                                                         update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"
-                                                         />
-                                        
+                                                         update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"/>
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Reimprimir" style="position:absolute; left:310px; height:26px" oncomplete="PF('reimpresion').show()"
+                                                         update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{objxUnidadController.abrirReimpresion()}"/>
                                     </f:facet>
                                 </p:dataTable>
                             </p:tab>
                         </p:tabView>
+                        <p:dialog header="Reimpresion" modal="true" showEffect="fade" widgetVar="reimpresion" hideEffect="fade" resizable="false" position="center center" id="reimpresionDialog">
+                            <center>
+                                <p:outputLabel value="Lote: "/>
+                                <p:inputText value="#{objxUnidadController.loteinput}"/>
+                                <br></br>
+                                    <p:commandButton id="reporte" value="Reporte Reimpres."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.mostrarReimpresion()}" title="Reporte">
+                                    <f:ajax event="click" onevent="reimpresion.hide()"/>
+                                </p:commandButton>
+                            </center>
+                        </p:dialog>
                         <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" position="center center" id="avisohecho">
                             <center>
                                 <p:outputLabel value="SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.hecho}"/>

@@ -29,6 +29,9 @@
         <property name="destino" type="string">
             <column name="DESTINO" length="300" />
         </property>
+        <property name="contador" type="string">
+            <column name="CONTADOR" length="20" />
+        </property>
         <property name="siglas" type="string">
             <column name="SIGLAS" length="30" />
         </property>

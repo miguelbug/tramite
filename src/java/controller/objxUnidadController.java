@@ -24,8 +24,10 @@ import javax.servlet.ServletContext;
 import bean.DocusInternos;
 import bean.ProveidosInternosBean;
 import dao.DerivarDAO;
+import dao.SeguimientoDAO;
 import dao.TemporaldiDao;
 import daoimpl.DerivarDaoImpl;
+import daoimpl.SeguimientoDaoImpl;
 import daoimpl.TemporalDiDaoImpl;
 import java.text.ParseException;
 //
@@ -63,14 +65,17 @@ public class objxUnidadController implements Serializable {
     private String USUARIO;
     private reporteDAO rpda;
     private String tipodocumento, tipodocumento1, tipodocumento2;
-    private List docselec,docselec1,docselec2,docselec3;
+    private List docselec, docselec1, docselec2, docselec3;
     private TemporaldiDao tdi;
+    private String loteinput;
+    private SeguimientoDAO sgd;
 
     public objxUnidadController() {
         dd = new DocumentoDaoImpl();
         rpda = new reporteDaoImpl();
         tdi = new TemporalDiDaoImpl();
         deriv = new DerivarDaoImpl();
+        sgd = new SeguimientoDaoImpl();
     }
 
     public void GuardarDatos() throws ParseException {
@@ -106,19 +111,53 @@ public class objxUnidadController implements Serializable {
             tdi.guardarTemporalUser(tldi);
         }
     }
-    
+
     public void ImpresionSeleccionadosUser() throws ParseException {
         guardarDatos2();
         mostrarReporSeleccionadosUser();
         tdi.actualizarTemporalUser();
-        
+
     }
+
     public void ImpresionSeleccionados() throws ParseException {
         GuardarDatos();
         mostrarReporSeleccionados();
         tdi.actualizarTemporalDi();
     }
-    
+
+    public void abrirReimpresion() {
+        this.loteinput = sgd.getContadorTemporal();
+    }
+
+    public void mostrarReimpresion() {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("Reimpresion");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("lote", loteinput);
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     public void mostrarReporSeleccionadosUser() {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -209,44 +248,45 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-   /* public void mostrarRepRespuestas() {
-        context = FacesContext.getCurrentInstance();
-        serveltcontext = (ServletContext) context.getExternalContext().getContext();
-        ReporteController repor;
-        HashMap<String, Object> parametros = new HashMap<String, Object>();
-        parametros.clear();
-        FacesContext context = FacesContext.getCurrentInstance();
-        System.out.println("context" + context);
-        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
-        System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("RepResp");
-        categoriaServicio categoriaServicio = new categoriaServicio();
-        repor.setConexion(categoriaServicio.getConexion());
-        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
-        FacesMessage message = null;
-        boolean rpt = false;
-        int movimiento=Integer.valueOf(DocumentoUsuarioBean.movimiento_exportar)+1;
-        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento);
-        parametros.put("usuario", getUsu());
-        parametros.put("logo", getLogo());
-        parametros.put("oficina", getOficina());
-        parametros.put("coorelativo", DocumentoUsuarioBean.correla_exportar);
-        parametros.put("tramnum",DocumentoUsuarioBean.tramnum_exportar);
-        parametros.put("movimiento",String.valueOf(movimiento));
-        parametros.put("fechaderivado", getFechaDerivado());
-        System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento+" fechaderivado: "+getFechaDerivado());
-        repor.addMapParam(parametros);
-        rpt = repor.ejecutaReporte(context, serveltcontext);
-        if (!rpt && message == null) {
-            //no tiene hojas	
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }*/
-    public String getFechaDerivado(){
-        String fecha=this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
+    /* public void mostrarRepRespuestas() {
+     context = FacesContext.getCurrentInstance();
+     serveltcontext = (ServletContext) context.getExternalContext().getContext();
+     ReporteController repor;
+     HashMap<String, Object> parametros = new HashMap<String, Object>();
+     parametros.clear();
+     FacesContext context = FacesContext.getCurrentInstance();
+     System.out.println("context" + context);
+     ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+     System.out.println("sc = " + sc.getRealPath("/reportes/"));
+     repor = ReporteController.getInstance("RepResp");
+     categoriaServicio categoriaServicio = new categoriaServicio();
+     repor.setConexion(categoriaServicio.getConexion());
+     repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+     FacesMessage message = null;
+     boolean rpt = false;
+     int movimiento=Integer.valueOf(DocumentoUsuarioBean.movimiento_exportar)+1;
+     System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento);
+     parametros.put("usuario", getUsu());
+     parametros.put("logo", getLogo());
+     parametros.put("oficina", getOficina());
+     parametros.put("coorelativo", DocumentoUsuarioBean.correla_exportar);
+     parametros.put("tramnum",DocumentoUsuarioBean.tramnum_exportar);
+     parametros.put("movimiento",String.valueOf(movimiento));
+     parametros.put("fechaderivado", getFechaDerivado());
+     System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento+" fechaderivado: "+getFechaDerivado());
+     repor.addMapParam(parametros);
+     rpt = repor.ejecutaReporte(context, serveltcontext);
+     if (!rpt && message == null) {
+     //no tiene hojas	
+     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+     FacesContext.getCurrentInstance().addMessage(null, message);
+     }
+     }*/
+    public String getFechaDerivado() {
+        String fecha = this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
         return fecha;
     }
+
     public void mostrarReporteNotasDeriv() {
 
         context = FacesContext.getCurrentInstance();
@@ -324,7 +364,7 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void mostrarRepProveido3() {
 
         context = FacesContext.getCurrentInstance();
@@ -356,7 +396,7 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void mostrarRepProveido2() {
 
         context = FacesContext.getCurrentInstance();
@@ -388,7 +428,7 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void mostrarRepProveido() {
 
         context = FacesContext.getCurrentInstance();
@@ -510,7 +550,7 @@ public class objxUnidadController implements Serializable {
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
-        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        String siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         boolean rpt = false;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         parametros.put("logo", getLogo());
@@ -519,7 +559,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("fechafin", sdf.format(date4));
         parametros.put("usuario", this.getUsu());
         parametros.put("tipo", tipodocumento1);
-        parametros.put("siglas",siglas);
+        parametros.put("siglas", siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -589,12 +629,12 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
         boolean rpt = false;
-        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        String siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         parametros.put("usuario", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("usuario", getUSUARIO());
-        parametros.put("siglas",siglas);
+        parametros.put("siglas", siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -623,12 +663,12 @@ public class objxUnidadController implements Serializable {
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
-        String siglas= deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        String siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         boolean rpt = false;
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("usuario", this.getUsu());
-        parametros.put("siglas",siglas);
+        parametros.put("siglas", siglas);
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -979,6 +1019,30 @@ public class objxUnidadController implements Serializable {
 
     public void setDocselec3(List docselec3) {
         this.docselec3 = docselec3;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public String getLoteinput() {
+        return loteinput;
+    }
+
+    public void setLoteinput(String loteinput) {
+        this.loteinput = loteinput;
+    }
+
+    public SeguimientoDAO getSgd() {
+        return sgd;
+    }
+
+    public void setSgd(SeguimientoDAO sgd) {
+        this.sgd = sgd;
     }
 
 }
