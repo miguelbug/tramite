@@ -43,7 +43,7 @@
                                          rowKey="#{item.iddoc}">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                                
+
                                 <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
                                 </p:column>
@@ -188,6 +188,34 @@
                     </p:dialog>
                     <br></br>
                     <br></br>	
+                    <script type="text/javascript">
+                        PrimeFaces.locales['es'] = {
+                            closeText: 'Cerrar',
+                            prevText: 'Anterior',
+                            nextText: 'Siguiente',
+                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                            dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                            weekHeader: 'Semana',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            timeOnlyTitle: 'Sólo hora',
+                            timeText: 'Tiempo',
+                            hourText: 'Hora',
+                            minuteText: 'Minuto',
+                            secondText: 'Segundo',
+                            currentText: 'Fecha actual',
+                            ampm: false,
+                            month: 'Mes',
+                            week: 'Semana',
+                            day: 'Día',
+                            allDayText: 'Todo el día'
+                        };
+                    </script>
                 </h:form>
             </ui:define>
         </ui:composition>
