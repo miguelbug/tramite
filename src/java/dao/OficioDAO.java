@@ -42,4 +42,5 @@ public interface OficioDAO {
     public String getOficioDocumento(String tramnum);
     public void GuardarDocumentoOfiInt(DocusInternos di);
     public List obtenerTiposDocusOfCirc(String f);
+    public List gettipos(String g);
 }

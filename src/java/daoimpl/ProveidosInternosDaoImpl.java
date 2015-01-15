@@ -29,13 +29,14 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT DI.DOCU_NOMBREINT||' N° '|| DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
-                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
-                    + "       D1.NOMBRE AS ORIGEN,\n"
-                    + "       DI.DOCU_ASUNTO AS ASUNTO\n"
-                    + "       FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
-                    + "       WHERE DI.CODIGO=D1.CODIGO\n"
-                    + "       AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "       ORDER BY DI.FECHAREGISTRO DESC");
+                    + " TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
+                    + " D1.NOMBRE AS ORIGEN,\n"
+                    + " DI.DOCU_ASUNTO AS ASUNTO\n"
+                    + " FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
+                    + " WHERE DI.CODIGO=D1.CODIGO\n"
+                    + " AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + " AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + " ORDER BY DI.FECHAREGISTRO DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
             session.close();

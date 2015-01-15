@@ -175,7 +175,7 @@ public class OficioBean {
         tiposdocus.clear();
         try {
             System.out.println("OBTENER TIPOS DOCUS");
-            tiposdocus = od.getTiposDocus("0");
+            tiposdocus = od.gettipos("0");
         } catch (Exception e) {
             System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
