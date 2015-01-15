@@ -77,10 +77,12 @@
                         </p:tabView>
                         <p:dialog header="Reimpresion" modal="true" showEffect="fade" widgetVar="reimpresion" hideEffect="fade" resizable="false" position="center center" id="reimpresionDialog">
                             <center>
-                                <p:outputLabel value="Lote: "/>
-                                <p:inputText value="#{objxUnidadController.loteinput}"/>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Lote: "/>
+                                    <p:inputText value="#{objxUnidadController.loteinput}"/>
+                                </p:panelGrid>
                                 <br></br>
-                                    <p:commandButton id="reporte" value="Reporte Reimpres."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.mostrarReimpresion()}" title="Reporte">
+                                <p:commandButton id="reporte" value="Reporte Reimpres."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.mostrarReimpresion()}" title="Reporte">
                                     <f:ajax event="click" onevent="reimpresion.hide()"/>
                                 </p:commandButton>
                             </center>
