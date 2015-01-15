@@ -574,7 +574,7 @@ public class OficioBean {
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        
+        System.out.println("HORA Y FECHA: "+fechadia+"-"+fechahora);
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
