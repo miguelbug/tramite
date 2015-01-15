@@ -27,11 +27,46 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
     private Session session;
 
     @Override
+    public List listarPersonal() {
+        List oficinas = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get lista personal");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT J.APELLIDOS||', '||J.NOMBRE AS NOMBRE,\n"
+                    + "DECODE(J.USU,NULL,'SIN USUARIO',J.USU) AS USUARIO,\n"
+                    + "DECODE(J.TELEFONO,NULL,'SIN TELEFONO',J.TELEFONO) AS TELEFONO,\n"
+                    + "DECODE(J.ANEXO,NULL,'SIN ANEXO',J.ANEXO) AS ANEXO,\n"
+                    + "DECODE(J.CARGO,NULL,'SIN CARGO',J.CARGO) AS CARGO,\n"
+                    + "DECODE(J.GRADO,NULL,'SIN GRADO',J.GRADO) AS GRADO,\n"
+                    + "DECODE(J.CORREO,NULL,'SIN CORREO',J.CORREO) AS CORREO,\n"
+                    + "DECODE(J.DNI,NULL,'SIN DNI',J.DNI) AS DNI,\n"
+                    + "DECODE(J.CELULAR,NULL,'SIN CELULAR',J.CELULAR) AS CELULAR,\n"
+                    + "P.PROFESION_NOMBRE AS PROFESION,\n"
+                    + "D1.NOMBRE AS OFICINA,\n"
+                    + "TP.NOMBRE_CONTRATO AS CONTRATO\n"
+                    + "\n"
+                    + "FROM JEFATURA J, PROFESION P, DEPENDENCIA D1, TIPO_CONTRATO TP\n"
+                    + "WHERE J.ID_PROFESION=P.ID_PROFESION\n"
+                    + "AND J.CODIGO=D1.CODIGO\n"
+                    + "AND J.ID_CONTRATO=TP.ID_CONTRATO\n"
+                    + "ORDER BY J.APELLIDOS ASC");
+            oficinas = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal GET personal");
+            System.out.println(e.getMessage());
+        }
+        return oficinas;
+    }
+
+    @Override
     public Usuario ValidarClave(String clave, String usua) {
         System.out.println("validar clave");
         Usuario aux = null;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "FROM Usuario WHERE clave='" + clave + "' and usu='" + usua+ "'";
+        String sql = "FROM Usuario WHERE clave='" + clave + "' and usu='" + usua + "'";
         try {
             session.beginTransaction();
             aux = (Usuario) session.createQuery(sql).uniqueResult();
@@ -70,7 +105,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT NOMBRE_OFICINA FROM OFICINA");
-            oficinas = (ArrayList<String>)query.list();
+            oficinas = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -88,7 +123,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT PROFESION_NOMBRE FROM PROFESION");
-            profesion = (ArrayList<String>)query.list();
+            profesion = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -106,7 +141,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT NOMBRE_CONTRATO FROM TIPO_CONTRATO");
-            contrato = (ArrayList<String>)query.list();
+            contrato = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -123,8 +158,8 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         System.out.println("get JEFES");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA WHERE CARGO='JEFE DE UNIDAD' AND CODIGO='"+id+"'");
-            jefesuser = (ArrayList<String>)query.list();
+            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA WHERE CARGO='JEFE DE UNIDAD' AND CODIGO='" + id + "'");
+            jefesuser = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -133,7 +168,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         }
         return jefesuser;
     }
-    
+
     @Override
     public List listarJefes() {
         List<String> jefes = new ArrayList<String>();
@@ -142,7 +177,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA");
-            jefes = (ArrayList<String>)query.list();
+            jefes = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -159,8 +194,8 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         System.out.println("get contrato");
         try {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Usuario where usuNombre='"+nombre+"'");
-            usuario = (Usuario)query.uniqueResult();
+            Query query = session.createQuery("FROM Usuario where usuNombre='" + nombre + "'");
+            usuario = (Usuario) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {

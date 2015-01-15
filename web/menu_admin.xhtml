@@ -43,8 +43,7 @@
 
                 <p:submenu label="Mantenimiento" icon="ui-icon-pencil" styleClass="conf">
                     <p:menuitem value="Dependencias" oncomplete="PF('GUNuevaDep').show()"/>
-                    <p:menuitem value="Personal" oncomplete="PF('GUNuevoPers').show()" actionListener="#{gestionUsuarioBean.listar()}" update="gunuevopers"/>
-                    <p:menuitem value="Usuarios" oncomplete="PF('GUNuevoUsu').show()" actionListener="#{gestionUsuarioBean.listarJefatura()}" update="gunuevousu"/>
+                    <p:menuitem value="Personal" action="listaPersonal?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />
@@ -66,8 +65,8 @@
                     <p:selectOneMenu id="tipodepe" value="#{gestionDependenciaBean.tipodep}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="1"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <br></br>
@@ -103,6 +102,7 @@
 
             <p:dialog header="Gestión Nuevo Personal" widgetVar="GUNuevoPers" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="gunuevopers">
                 <p:panelGrid columns="2" id="panelpers">
+                    
                     <p:outputLabel value="Nombre:"/>
                     <p:inputText value="#{gestionUsuarioBean.nuevonomb}" style="text-transform:uppercase;"/>
 
@@ -112,20 +112,16 @@
                     <p:outputLabel value="DNI:"/>
                     <p:inputText value="#{gestionUsuarioBean.nuevodni}"/>
 
-                    <p:outputLabel value="Oficina:"/>
-                    <p:selectOneMenu id="oficinatipo" value="#{gestionUsuarioBean.nuevoofi}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                        <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
-                    </p:selectOneMenu>
+                    
 
                     <p:outputLabel value="Profesión:"/>
-                    <p:selectOneMenu id="profesiontipo" value="#{gestionUsuarioBean.nuevaprof}" >
+                    <p:selectOneMenu id="profesiontipo" value="#{gestionUsuarioBean.nuevaprof}">
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{gestionUsuarioBean.profesion}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Contrato:"/>
-                    <p:selectOneMenu id="contratotipo" value="#{gestionUsuarioBean.nuevocontrato}" >
+                    <p:selectOneMenu id="contratotipo" value="#{gestionUsuarioBean.nuevocontrato}">
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItems value="#{gestionUsuarioBean.contrato}"/>
                     </p:selectOneMenu>
@@ -144,11 +140,13 @@
 
                     <p:outputLabel value="Correo:"/>
                     <p:inputText value="#{gestionUsuarioBean.nuevocorreo}"/>
-
+                    
+                    <p:outputLabel value="Celular:"/>
+                    <p:inputText value="#{gestionUsuarioBean.nuevo_celular}"/>
                 </p:panelGrid>
                 <br></br>
                 <center>
-                    <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers">
+                    <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers" >
                         <f:ajax event="click" onevent="GUNuevoPers.hide()"/>
                     </p:commandButton>
                 </center>

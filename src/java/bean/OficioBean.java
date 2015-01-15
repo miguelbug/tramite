@@ -82,7 +82,7 @@ public class OficioBean {
     private String origen;
     private Map<String, String> seleccion;
     private String seleccionado;
-
+    private List listausuarios;
     private DualListModel<String> cities;
     List<String> citiesSource = new ArrayList<String>();
     List<String> citiesTarget = new ArrayList<String>();
@@ -101,6 +101,7 @@ public class OficioBean {
     private static String correlativo_exportar;
     private boolean ver, nover;
     private String siglasdocus = "";
+    private String responsableDI;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -115,7 +116,7 @@ public class OficioBean {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
-
+        listausuarios = new ArrayList<String>();
         oficiosSinExp = new ArrayList<Map<String, String>>();
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
@@ -193,6 +194,7 @@ public class OficioBean {
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         System.out.println("SIGLAS: " + siglasdocus);
         origen = dd.getOficina(usu);
+        listausuarios= deriv.listaUsuarios(usu.getOficina().getIdOficina());
 
     }
 
@@ -540,6 +542,7 @@ public class OficioBean {
             di.setDocuNombreint(escogido2);
             di.setDocuAnioint(auxanio);
             di.setUsuario(usu);
+            di.setUsuario1(deriv.getUsuarioDI(responsableDI));
             di.setDocuPricint("1");
             od.GuardarDocumentoOfiInt(di);
             /*DocumentosOfiint doif = new DocumentosOfiint();
@@ -571,7 +574,7 @@ public class OficioBean {
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        
+        System.out.println("HORA Y FECHA: "+fechadia+"-"+fechahora);
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
@@ -1116,6 +1119,22 @@ public class OficioBean {
 
     public void setFechahora(String fechahora) {
         this.fechahora = fechahora;
+    }
+
+    public List getListausuarios() {
+        return listausuarios;
+    }
+
+    public void setListausuarios(List listausuarios) {
+        this.listausuarios = listausuarios;
+    }
+
+    public String getResponsableDI() {
+        return responsableDI;
+    }
+
+    public void setResponsableDI(String responsableDI) {
+        this.responsableDI = responsableDI;
     }
 
 }

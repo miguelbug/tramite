@@ -66,7 +66,7 @@ public interface DerivarDAO {
 
     public String getCorreProv(String anio);
 
-    public void ActualizarTramite(String tramaux, String movimiento, Date fecha);
+    public void ActualizarTramite(String tramaux, String movimiento, Date fecha, String tipodocu);
 
     public String getCorrelativoOficio(String anio);
 
@@ -93,4 +93,8 @@ public interface DerivarDAO {
     public String getCorrelativoOficinaInterna(Usuario usu, String tipo, String anio);
     
     public String getCodigoUsuario(String usu);
+    
+    public List listaUsuarios(String oficina);
+    
+    public Usuario getUsuarioDI(String nombre);
 }

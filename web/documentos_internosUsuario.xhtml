@@ -26,6 +26,7 @@
                                             <f:selectItem itemLabel="OFICIO" itemValue="2"/>
                                             <f:selectItem itemLabel="CARTA" itemValue="4"/>
                                             <f:selectItem itemLabel="MEMOS" itemValue="7"/>
+                                            <f:selectItem itemLabel="ARCHIVO" itemValue="9"/>
                                         </p:selectOneMenu>
                                         <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
                                         <p:outputLabel value="Todos los Documentos:"/>
@@ -58,8 +59,8 @@
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <h:outputText value="#{item.destino}" />
                                 </p:column>
-                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.usuario}" />
+                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asignado}" />
                                 </p:column>
                                 <p:column headerText="#" width="1">
                                     <h:outputText value="#{item.iddoc}"/>

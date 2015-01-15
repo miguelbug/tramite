@@ -96,6 +96,29 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public List listaUsuarios(String oficina) {
+        List listausurio= new ArrayList<String>();
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT USU_NOMBRE \n"
+                + "FROM USUARIO\n"
+                + "WHERE ID_OFICINA = '"+oficina+"' \n"
+                + "AND ESTADO='activo'\n"
+                + "ORDER BY USU_NOMBRE ASC\n";
+        try {
+            session.beginTransaction();
+            listausurio = (List) session.createSQLQuery(sql).list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal listausuario");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return listausurio;
+    }
+    
+    @Override
     public String getCorrelativoOficinaInterna(Usuario usu, String tipo, String anio) {
         System.out.println("getcorrelativooficinainterna");
         String index = " ";
@@ -191,11 +214,19 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void ActualizarTramite(String tramaux, String movimiento, Date fecha) {
+    public void ActualizarTramite(String tramaux, String movimiento, Date fecha, String tipodocu) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String fechita = formato.format(fecha);
         System.out.println("actualizar tramite movimiento");
-        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='DERIVADO' , ESTA_NOMBRE='FINALIZADO',\n"
+        String nuevotipo="",nuevotipo2="";
+        if(tipodocu.equals("ARCHIVO")){
+            nuevotipo="ARCHIVADO";
+            nuevotipo2="ARCHIVADO";
+        }else{
+            nuevotipo="FINALIZADO";
+            nuevotipo2="DERIVADO";
+    }
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='"+nuevotipo2+"' , ESTA_NOMBRE='"+nuevotipo+"',\n"
                 + " FECHA_DERIVACION=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
@@ -778,6 +809,26 @@ public class DerivarDaoImpl implements DerivarDAO {
         usu.setClave(String.valueOf(lista.get(2)));
         usu.setEstado(String.valueOf(lista.get(3)));
         usu.setOficina(getOficina(String.valueOf(lista.get(4))));
+        return usu;
+    }
+
+    @Override
+    public Usuario getUsuarioDI(String nombre) {
+        Usuario usu = null;
+        System.out.println("get usuario");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "FROM Usuario where usuNombre='" + nombre + "'";
+        try {
+            session.beginTransaction();
+            usu = (Usuario) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal getofics");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
         return usu;
     }
 

@@ -12,6 +12,7 @@ public class DocusInternos implements java.io.Serializable {
     private TiposDocumentos tiposDocumentos;
     private TramiteDatos tramiteDatos;
     private Usuario usuario;
+    private Usuario usuario1;
     private String docuCorrelaint;
     private String docuPricint;
     private String docuNombreint;
@@ -33,11 +34,12 @@ public class DocusInternos implements java.io.Serializable {
         this.docuNombreint = docuNombreint;
     }
 
-    public DocusInternos(int idtip, TiposDocumentos tiposDocumentos, TramiteDatos tramiteDatos, Usuario usuario, String docuCorrelaint, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint, Date fecharegistro, String docuAsunto, Dependencia dependenciaByCodigo, Dependencia dependenciaByCodigo1, String numeroMovi) {
+    public DocusInternos(int idtip, TiposDocumentos tiposDocumentos, TramiteDatos tramiteDatos, Usuario usuario, Usuario usuario1, String docuCorrelaint, String docuPricint, String docuNombreint, String docuSiglasint, String docuAnioint, Date fecharegistro, String docuAsunto, Dependencia dependenciaByCodigo, Dependencia dependenciaByCodigo1, String numeroMovi) {
         this.idtip = idtip;
         this.tiposDocumentos = tiposDocumentos;
         this.tramiteDatos = tramiteDatos;
         this.usuario = usuario;
+        this.usuario1 = usuario1;
         this.docuCorrelaint = docuCorrelaint;
         this.docuPricint = docuPricint;
         this.docuNombreint = docuNombreint;
@@ -160,6 +162,14 @@ public class DocusInternos implements java.io.Serializable {
 
     public void setNumeroMovi(String numeroMovi) {
         this.numeroMovi = numeroMovi;
+    }
+
+    public Usuario getUsuario1() {
+        return usuario1;
+    }
+
+    public void setUsuario1(Usuario usuario1) {
+        this.usuario1 = usuario1;
     }
 
 }

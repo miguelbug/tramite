@@ -53,10 +53,10 @@
                                     <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
-                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                  <!--  <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estado}" />
-                                    </p:column>
-                                    <p:column headerText="ESTADO DOC." width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
+                                    </p:column>-->
+                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadDoc}" />
                                     </p:column>
                                     <p:column headerText="MOV." width="5" style="text-align: center">
@@ -64,6 +64,12 @@
                                     </p:column>
                                     <p:column headerText="ASIGN." width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                         <h:outputText value="#{item.usuario}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIG. PRINC." width="5" sortBy="#{item.origenp}" filterBy="#{item.origenp}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.origenp}"/>
+                                    </p:column>
+                                    <p:column headerText="DOCU. PRINC." width="5" sortBy="#{item.docup}" filterBy="#{item.docup}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docup}"/>
                                     </p:column>
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton process="tabladocumentos" update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
@@ -190,6 +196,7 @@
                                 <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
                                 <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
                                 <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
+                                <f:selectItem itemLabel="CARTA" itemValue="CARTA"/>
                                 <p:ajax event="change" listener="#{documentoUsuarioBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
 

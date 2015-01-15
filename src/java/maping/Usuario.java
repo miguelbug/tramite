@@ -20,6 +20,7 @@ public class Usuario  implements java.io.Serializable {
      private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
      private Set<Constancias> constanciases = new HashSet<Constancias>(0);
      private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
+     private Set<DocusInternos> docusInternoses1 = new HashSet<DocusInternos>(0);
      private Set<Jefatura> jefaturas = new HashSet<Jefatura>(0);
 
     public Usuario() {
@@ -31,7 +32,7 @@ public class Usuario  implements java.io.Serializable {
         this.usuNombre = usuNombre;
         this.clave = clave;
     }
-    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteDatos> tramiteDatoses, Set<DocusExtint> docusExtints, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Jefatura> jefaturas) {
+    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteDatos> tramiteDatoses, Set<DocusExtint> docusExtints, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Jefatura> jefaturas, Set<DocusInternos> docusInternoses1) {
        this.usu = usu;
        this.oficina = oficina;
        this.usuNombre = usuNombre;
@@ -42,6 +43,7 @@ public class Usuario  implements java.io.Serializable {
        this.constanciases = constanciases;
        this.docusInternoses = docusInternoses;
        this.jefaturas = jefaturas;
+       this.docusInternoses1 = docusInternoses1;
     }
    
     public String getUsu() {
@@ -113,6 +115,14 @@ public class Usuario  implements java.io.Serializable {
     
     public void setJefaturas(Set<Jefatura> jefaturas) {
         this.jefaturas = jefaturas;
+    }
+
+    public Set<DocusInternos> getDocusInternoses1() {
+        return docusInternoses1;
+    }
+
+    public void setDocusInternoses1(Set<DocusInternos> docusInternoses1) {
+        this.docusInternoses1 = docusInternoses1;
     }
 
 
