@@ -70,7 +70,7 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get tipos docus");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='" + f + "'");
+            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG2='" + f + "'");
             depes = (List) query.list();
             session.beginTransaction().commit();
             session.close();

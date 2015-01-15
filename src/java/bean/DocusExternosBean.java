@@ -149,7 +149,7 @@ public class DocusExternosBean implements Serializable {
         System.out.println("listando tipos docus");
         tiposdocus.clear();
         try {
-            tiposdocus = od.getTiposDocus("0");
+            tiposdocus = od.getTiposDocus("p");
         } catch (Exception e) {
             System.out.println("MAL");
             e.printStackTrace();
