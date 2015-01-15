@@ -201,12 +201,17 @@ public class OficioBean {
 
     public void abrirDocumentoUnico() {
         getAnio();
-        generarFecha();
+        generarFecha4();
         generarCorrelativoOfiUnico();
         ObtenerTiposDocus();
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         origen = dd.getOficina(usu);
-
+    }
+    
+    public void generarFecha4(){
+        fecha= new Date();
+        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        auxfecha=sdf.format(fecha);
     }
 
     public void agregardestinos() {
@@ -510,7 +515,7 @@ public class OficioBean {
             ofi.setTramiteDatos(null);
             ofi.setUsuario(usu);
             System.out.println(escogido2);
-            ofi.setTiposDocumentos(od.getTipoDocu(escogido2));
+            ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
             dd.guardarOficio2(ofi);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -640,7 +645,7 @@ public class OficioBean {
 
         StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
-            if (fechadia.equals("")) {
+            if (fechadia2.equals("")) {
                 fechadia2 = tokens.nextToken();
             }
             if (fechahora.equals("")) {
