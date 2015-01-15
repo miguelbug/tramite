@@ -223,7 +223,7 @@ public class DocumentosBean implements Serializable {
         }
     }
 
-    public void guardaroficio() {
+    /*public void guardaroficio() {
         FacesMessage message = null;
         System.out.println("guardar oficio");
         try {
@@ -265,7 +265,7 @@ public class DocumentosBean implements Serializable {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void limpiar() {
         this.tramnum = "";
