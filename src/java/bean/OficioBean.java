@@ -640,13 +640,14 @@ public class OficioBean {
 
         StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
-            if (fechadia.equals("")) {
+            if (fechadia2.equals("")) {
                 fechadia2 = tokens.nextToken();
             }
             if (fechahora.equals("")) {
                 fechahora = tokens.nextToken();
             }
         }
+        auxfecha=sdf.format(fecha);
     }
 
     public void crearOficio() {
