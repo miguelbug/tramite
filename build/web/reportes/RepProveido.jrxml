@@ -444,7 +444,7 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement>
 						<font size="7"/>
 					</textElement>
-				<text><![CDATA[Sistema de Tramite Documentario - PROYECTO OGPL]]></text>
+				<text><![CDATA[Sistema de Trámite Documentario OGPL]]></text>
 				</staticText>
 			</band>
 		</detail>

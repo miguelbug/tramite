@@ -223,11 +223,8 @@ public class DocumentosBean implements Serializable {
         }
     }
 
-<<<<<<< HEAD
-    /*public void guardaroficio() {
-=======
+
    /* public void guardaroficio() {
->>>>>>> origin/master
         FacesMessage message = null;
         System.out.println("guardar oficio");
         try {
