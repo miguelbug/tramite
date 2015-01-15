@@ -22,7 +22,6 @@
             <p:menubar>
                 <p:submenu label="Ver" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos_user?faces-redirect=true"/>
-                    <p:menuitem value="Respuestas" action="pruebafecha?faces-redirect=true"/>
                     <p:menuitem value="Documentos Propios" action="documentos_internosUsuario?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label="Registro" icon="ui-icon-pencil">
@@ -162,9 +161,14 @@
                     
                     <p:outputLabel value="Origen:"/>
                     <p:outputLabel value="#{oficioBean.origen}"/>
-
+                    
+                    <p:outputLabel value="Responsable:"/>
+                    <p:selectOneMenu id="listausuarios" value="#{oficioBean.responsableDI}">
+                        <f:selectItem itemLabel="Seleccione Usuario" itemValue=" "/>
+                        <f:selectItems value="#{oficioBean.listausuarios}"/>
+                    </p:selectOneMenu>
+                    
                     <p:outputLabel value="Tipo Destino:"/>
-
                     <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>

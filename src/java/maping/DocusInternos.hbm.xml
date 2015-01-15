@@ -24,6 +24,9 @@
         <many-to-one name="usuario" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
         </many-to-one>
+        <many-to-one name="usuario1" class="maping.Usuario" fetch="select">
+            <column name="USU1" length="30" />
+        </many-to-one>
         <property name="numeroMovi" type="string">
             <column name="NUMERO_MOVI" length="20"/>
         </property>

@@ -44,6 +44,14 @@
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
+        
+        <set name="docusInternoses1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU" length="30" />
+            </key>
+            <one-to-many class="maping.DocusInternos" />
+        </set>
+        
         <set name="jefaturas" table="JEFATURA" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="USU" length="30" />
