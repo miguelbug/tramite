@@ -652,6 +652,7 @@ public class OficioBean {
                 fechahora = tokens.nextToken();
             }
         }
+        auxfecha=sdf.format(fecha);
     }
 
     public void crearOficio() {
