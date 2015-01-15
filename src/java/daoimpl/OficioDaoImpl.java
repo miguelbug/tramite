@@ -82,6 +82,24 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
+    public List obtenerTiposDocusOfCirc(String f) {
+        List depes = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get tipos docus");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='" + f + "'");
+            depes = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal tiposdocus");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
+
+    @Override
     public String getCorrela(String usu, String tipodocu) {
         System.out.println("get correlat");
         String index = " ";

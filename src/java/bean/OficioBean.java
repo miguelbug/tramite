@@ -62,6 +62,7 @@ public class OficioBean {
     private String asunto;
     private Date fecha;
     private String fechadia;
+    private String fechadia2;
     private String fechahora;
     private String firma;
     private String responsable;
@@ -161,7 +162,7 @@ public class OficioBean {
         tiposdocus.clear();
         try {
             System.out.println("OBTENER TIPOS DOCUS");
-            tiposdocus = od.getTiposDocus("1");
+            tiposdocus = od.obtenerTiposDocusOfCirc("1");
         } catch (Exception e) {
             System.out.println("obtener tipo doccus ERROR 2");
             System.out.println(e.getMessage());
@@ -574,13 +575,13 @@ public class OficioBean {
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println("HORA Y FECHA: "+fechadia+"-"+fechahora);
+        System.out.println("HORA Y FECHA: "+fechadia2+"-"+fechahora);
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
             ofi.setAsunto(asunto2);
             ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
-            fecha = sdf2.parse(fechadia + " " + fechahora);
+            fecha = sdf2.parse(fechadia2 + " " + fechahora);
             ofi.setFecha(fecha);
             ofi.setFirma(firma);
             ofi.setResponsable(responsable);
@@ -634,13 +635,13 @@ public class OficioBean {
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         fecha = new Date();
-        fechadia = "";
+        fechadia2 = "";
         fechahora = "";
 
         StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
         while (tokens.hasMoreTokens()) {
             if (fechadia.equals("")) {
-                fechadia = tokens.nextToken();
+                fechadia2 = tokens.nextToken();
             }
             if (fechahora.equals("")) {
                 fechahora = tokens.nextToken();
@@ -1135,6 +1136,14 @@ public class OficioBean {
 
     public void setResponsableDI(String responsableDI) {
         this.responsableDI = responsableDI;
+    }
+
+    public String getFechadia2() {
+        return fechadia2;
+    }
+
+    public void setFechadia2(String fechadia2) {
+        this.fechadia2 = fechadia2;
     }
 
 }
