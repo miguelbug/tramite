@@ -47,17 +47,20 @@
                                 <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
                                 </p:column>
+                                <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.expediente}"/>
+                                </p:column>
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <h:outputText value="#{item.asunto}"/>
                                 </p:column>
                                 <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
                                 </p:column>
-                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}" />
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origenprinc}" filterBy="#{item.origenprinc}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origenprinc}" />
                                 </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}" />
+                                <p:column headerText="DOC. PRINC." width="5" sortBy="#{item.docuprinc}" filterBy="#{item.docuprinc}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.docuprinc}" />
                                 </p:column>
                                 <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
                                     <h:outputText value="#{item.asignado}" />

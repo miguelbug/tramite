@@ -101,11 +101,10 @@ public class objxUnidadController implements Serializable {
             TemporalUser tldi = new TemporalUser();
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tldi.setDocumento(hm.get("documento"));
-            tldi.setAsunto(hm.get("asunto"));
+            tldi.setDocumentoPrinc(hm.get("docuprinc"));
             tldi.setFecha(formatter.parse(hm.get("fecha").toString()));
-            tldi.setOrigen(hm.get("origen"));
-            tldi.setDestino(hm.get("destino"));
-            tldi.setResponsable(hm.get("usuario"));
+            tldi.setTramNum(hm.get("expediente"));
+            tldi.setOrigenPrinc(hm.get("origenprinc"));
             tldi.setImpreso("1");
             tldi.setReimpreso("0");
             tdi.guardarTemporalUser(tldi);
@@ -545,7 +544,7 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosUser2");
+        repor = ReporteController.getInstance("reporteDocumentosUserFechas");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
@@ -658,7 +657,7 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosTodosUsuario1");
+        repor = ReporteController.getInstance("reporteDocumentosUserTodos");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05

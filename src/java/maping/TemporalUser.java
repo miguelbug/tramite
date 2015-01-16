@@ -16,12 +16,11 @@ public class TemporalUser {
     private long idTempu;
     private String documento;
     private Date fecha;
-    private String asunto;
-    private String origen;
-    private String destino;
-    private String responsable;
+    private String origenPrinc;
+    private String documentoPrinc;
     private String impreso;
     private String reimpreso;
+    private String tramNum;
 
     public TemporalUser() {
     }
@@ -30,16 +29,15 @@ public class TemporalUser {
         this.idTempu = idTempu;
     }
 
-    public TemporalUser(long idTempu, String documento, Date fecha, String asunto, String origen, String destino, String responsable, String impreso, String reimpreso) {
+    public TemporalUser(long idTempu, String documento, Date fecha, String origenPrinc, String documentoPrinc, String impreso, String reimpreso, String tramNum) {
         this.idTempu = idTempu;
         this.documento = documento;
         this.fecha = fecha;
-        this.asunto = asunto;
-        this.origen = origen;
-        this.destino = destino;
-        this.responsable = responsable;
+        this.origenPrinc = origenPrinc;
+        this.documentoPrinc = documentoPrinc;
         this.impreso = impreso;
         this.reimpreso = reimpreso;
+        this.tramNum = tramNum;
     }
 
     public long getIdTempu() {
@@ -66,36 +64,20 @@ public class TemporalUser {
         this.fecha = fecha;
     }
 
-    public String getAsunto() {
-        return asunto;
+    public String getOrigenPrinc() {
+        return origenPrinc;
     }
 
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
+    public void setOrigenPrinc(String origenPrinc) {
+        this.origenPrinc = origenPrinc;
     }
 
-    public String getOrigen() {
-        return origen;
+    public String getDocumentoPrinc() {
+        return documentoPrinc;
     }
 
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
+    public void setDocumentoPrinc(String documentoPrinc) {
+        this.documentoPrinc = documentoPrinc;
     }
 
     public String getImpreso() {
@@ -113,6 +95,15 @@ public class TemporalUser {
     public void setReimpreso(String reimpreso) {
         this.reimpreso = reimpreso;
     }
+
+    public String getTramNum() {
+        return tramNum;
+    }
+
+    public void setTramNum(String tramNum) {
+        this.tramNum = tramNum;
+    }
+    
     
     
 }

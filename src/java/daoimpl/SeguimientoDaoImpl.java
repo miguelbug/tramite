@@ -247,7 +247,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
                     + "                                                        SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
                     + "                                                        FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
-                    + "                                                        WHERE TM2.CODIGO1='1001872'\n"
+                    + "                                                        WHERE TM2.CODIGO1='"+oficina+"'\n"
                     + "                                                        AND INDI_NOMBRE='ARCHIVO'\n"
                     + "                                                        AND TM.INDI_COD=I.INDI_COD )\n"
                     + "AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"

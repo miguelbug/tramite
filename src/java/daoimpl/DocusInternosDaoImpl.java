@@ -82,69 +82,150 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
     }
 
     @Override
-    public List getDocInternosXtipo(String usu, String tipo) {
+    public List getDocInternosXtipo_1(String usu, String tipo) {
         List docinternos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("get DOCUS INTERNOS");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select R.I_D,\n"
-                    + "       R.DOCUMENTO,\n"
-                    + "       R.NOMBREDOCU,\n"
-                    + "       R.CORRELA,\n"
-                    + "       R.ANIO,\n"
-                    + "       R.SIGLAS,\n"
-                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') as FECHA,\n"
-                    + "       DECODE(R.TRAM_NUM,NULL,'SIN TRAM. NUM.',R.TRAM_NUM) AS EXPEDIENTE,\n"
-                    + "       R.ASUNTO,\n"
-                    + "       R.ORIGEN,\n"
-                    + "       R.DESTINO,\n"
-                    + "       R.ASIGNADO,\n"
-                    + "       R.IDDOCUMENTO\n"
-                    + "       FROM (SELECT DI.IDTIP AS I_D,\n"
+            Query query = session.createSQLQuery("SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
-                    + "DI.DOCU_NOMBREINT AS NOMBREDOCU,\n"
-                    + "DI.DOCU_CORRELAINT AS CORRELA,\n"
-                    + "DI.DOCU_ANIOINT AS ANIO,\n"
-                    + "DI.FECHAREGISTRO AS FECHA,\n"
-                    + "DI.DOCU_SIGLASINT AS SIGLAS,\n"
                     + "DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "DI.DOCU_ASUNTO AS ASUNTO,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
                     + "D2.NOMBRE AS DESTINO,\n"
                     + "USUA.USU_NOMBRE AS ASIGNADO,\n"
-                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO\n"
-                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "D3.NOMBRE AS ORIGEN_PRINCIPAL\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, TIPO_DOCU TDOCU, TRAMITE_DATOS TDAT, DEPENDENCIA D3\n"
                     + "WHERE TM.USU=USUA.USU\n"
                     + "AND DI.CODIGO=D1.CODIGO\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
                     + "AND DI.TRAM_NUM IS NOT NULL\n"
                     + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
                     + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
-                    + "UNION\n"
-                    + "SELECT DI.IDTIP AS I_D,\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "AND DI.ID_DOCUMENTO='" + tipo + "'\n"
+                    + "ORDER BY DI.FECHAREGISTRO DESC");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+        }
+        return docinternos;
+    }
+
+    @Override
+    public List getDocInternosXtipo_2(String usu, String tipo) {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
-                    + "DI.DOCU_NOMBREINT AS NOMBREDOCU,\n"
-                    + "DI.DOCU_CORRELAINT AS CORRELA,\n"
-                    + "DI.DOCU_ANIOINT AS ANIO,\n"
-                    + "DI.FECHAREGISTRO AS FECHA,\n"
-                    + "DI.DOCU_SIGLASINT AS SIGLAS,\n"
-                    + "DI.TRAM_NUM,\n"
+                    + "DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "DI.DOCU_ASUNTO AS ASUNTO,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
                     + "D2.NOMBRE AS DESTINO,\n"
                     + "USUA.USU_NOMBRE AS ASIGNADO,\n"
                     + "DI.ID_DOCUMENTO AS IDDOCUMENTO\n"
+                    + "\n"
                     + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "AND DI.CODIGO=D1.CODIGO\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
                     + "AND DI.USU1=USUA.USU\n"
                     + "AND DI.TRAM_NUM IS NULL\n"
-                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')) R\n"
-                    + "where R.SIGLAS='"+usu+"'\n"
-                    + "AND R.IDDOCUMENTO='"+tipo+"'\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "AND DI.ID_DOCUMENTO='" + tipo + "'");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+        }
+        return docinternos;
+    }
+
+    @Override
+    public List getDocInternosXtipo(String usu, String tipo) {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT R.I_D,\n"
+                    + "       R.DOCUMENTO,\n"
+                    + "       R.TRAM_NUM,\n"
+                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       R.ASUNTO,\n"
+                    + "       R.ORIGEN,\n"
+                    + "       R.DESTINO,\n"
+                    + "       R.ASIGNADO,\n"
+                    + "       R.IDDOCUMENTO,\n"
+                    + "       R.DOCUMENTO_PRINCIPAL,\n"
+                    + "       R.ORIGEN_PRINCIPAL\n"
+                    + "       FROM (SELECT DI.IDTIP AS I_D,\n"
+                    + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "DI.FECHAREGISTRO AS FECHA,\n"
+                    + "DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "D3.NOMBRE AS ORIGEN_PRINCIPAL\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, TIPO_DOCU TDOCU, TRAMITE_DATOS TDAT, DEPENDENCIA D3\n"
+                    + "WHERE TM.USU=USUA.USU\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.TRAM_NUM IS NOT NULL\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='"+usu+"'\n"
+                    + "AND DI.ID_DOCUMENTO='"+tipo+"'\n"
+                    + "UNION\n"
+                    + "SELECT DI.IDTIP AS I_D,\n"
+                    + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "DI.FECHAREGISTRO AS FECHA,\n"
+                    + "DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "'SIN DOCUMENTO' AS DOCUMENTO_PRINCIPAL,\n"
+                    + "'SIN ORIGEN' AS ORIGEN_PRINCIPAL\n"
+                    + "\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.USU1=USUA.USU\n"
+                    + "AND DI.TRAM_NUM IS NULL\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='"+usu+"'\n"
+                    + "AND DI.ID_DOCUMENTO='"+tipo+"') R\n"
+                    + "\n"
                     + "ORDER BY R.FECHA DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
@@ -163,60 +244,141 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get DOCUS INTERNOS");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select R.I_D,\n"
+            Query query = session.createSQLQuery("SELECT R.I_D,\n"
                     + "       R.DOCUMENTO,\n"
-                    + "       R.NOMBREDOCU,\n"
-                    + "       R.CORRELA,\n"
-                    + "       R.ANIO,\n"
-                    + "       R.SIGLAS,\n"
-                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') as FECHA,\n"
-                    + "       DECODE(R.TRAM_NUM,NULL,'SIN TRAM. NUM.',R.TRAM_NUM) AS EXPEDIENTE,\n"
+                    + "       R.TRAM_NUM,\n"
+                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "       R.ASUNTO,\n"
                     + "       R.ORIGEN,\n"
                     + "       R.DESTINO,\n"
-                    + "       R.ASIGNADO\n"
+                    + "       R.ASIGNADO,\n"
+                    + "       R.DOCUMENTO_PRINCIPAL,\n"
+                    + "       R.ORIGEN_PRINCIPAL\n"
                     + "       FROM (SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
-                    + "DI.DOCU_NOMBREINT AS NOMBREDOCU,\n"
-                    + "DI.DOCU_CORRELAINT AS CORRELA,\n"
-                    + "DI.DOCU_ANIOINT AS ANIO,\n"
-                    + "DI.FECHAREGISTRO AS FECHA,\n"
-                    + "DI.DOCU_SIGLASINT AS SIGLAS,\n"
                     + "DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "DI.FECHAREGISTRO AS FECHA,\n"
                     + "DI.DOCU_ASUNTO AS ASUNTO,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
                     + "D2.NOMBRE AS DESTINO,\n"
-                    + "USUA.USU_NOMBRE AS ASIGNADO\n"
-                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "D3.NOMBRE AS ORIGEN_PRINCIPAL\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, TIPO_DOCU TDOCU, TRAMITE_DATOS TDAT, DEPENDENCIA D3\n"
                     + "WHERE TM.USU=USUA.USU\n"
                     + "AND DI.CODIGO=D1.CODIGO\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
                     + "AND DI.TRAM_NUM IS NOT NULL\n"
                     + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
                     + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='" + siglas + "'\n"
                     + "UNION\n"
                     + "SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
-                    + "DI.DOCU_NOMBREINT AS NOMBREDOCU,\n"
-                    + "DI.DOCU_CORRELAINT AS CORRELA,\n"
-                    + "DI.DOCU_ANIOINT AS ANIO,\n"
+                    + "DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
                     + "DI.FECHAREGISTRO AS FECHA,\n"
-                    + "DI.DOCU_SIGLASINT AS SIGLAS,\n"
-                    + "DI.TRAM_NUM,\n"
                     + "DI.DOCU_ASUNTO AS ASUNTO,\n"
                     + "D1.NOMBRE AS ORIGEN,\n"
                     + "D2.NOMBRE AS DESTINO,\n"
-                    + "USUA.USU_NOMBRE AS ASIGNADO\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "'SIN DOCUMENTO' AS DOCUMENTO_PRINCIPAL,\n"
+                    + "'SIN ORIGEN' AS ORIGEN_PRINCIPAL\n"
+                    + "\n"
                     + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "AND DI.CODIGO=D1.CODIGO\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
                     + "AND DI.USU1=USUA.USU\n"
                     + "AND DI.TRAM_NUM IS NULL\n"
-                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')) R\n"
-                    + "WHERE R.SIGLAS='" + siglas + "'\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='" + siglas + "') R\n"
+                    + "\n"
                     + "ORDER BY R.FECHA DESC");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+        }
+        return docinternos;
+    }
+
+    @Override
+    public List getDocInternos1(String usu) {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS 1");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT DI.IDTIP AS I_D,\n"
+                    + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "D3.NOMBRE AS ORIGEN_PRINCIPAL\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, TIPO_DOCU TDOCU, TRAMITE_DATOS TDAT, DEPENDENCIA D3\n"
+                    + "WHERE TM.USU=USUA.USU\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.TRAM_NUM IS NOT NULL\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "ORDER BY DI.FECHAREGISTRO DESC");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+        }
+        return docinternos;
+    }
+
+    @Override
+    public List getDocInternos2(String usu) {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT DI.IDTIP AS I_D,\n"
+                    + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO\n"
+                    + "\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.USU1=USUA.USU\n"
+                    + "AND DI.TRAM_NUM IS NULL\n"
+                    + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "ORDER BY DI.FECHAREGISTRO DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
             session.close();

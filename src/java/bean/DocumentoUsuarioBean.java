@@ -176,26 +176,65 @@ public class DocumentoUsuarioBean {
         listadocspropios.clear();
 
         try {
+            /*System.out.println("lista por tipo");
+            List lista1 = new ArrayList();
+            List lista2 = new ArrayList();
+            lista1=di.getDocInternos1((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
+            lista2=di.getDocInternos2((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
+            Iterator ite1 = lista1.iterator();
+            Iterator ite2 = lista2.iterator();
+            Object obj1[] = new Object[11];
+            Object obj2[] = new Object[9];
+            while (ite1.hasNext()) {
+                obj1 = (Object[]) ite1.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj1[0]));
+                listaaux.put("documento", String.valueOf(obj1[1]));
+                listaaux.put("expediente", String.valueOf(obj1[2]));
+                listaaux.put("fechaexp", String.valueOf(obj1[3]));
+                listaaux.put("asunto", String.valueOf(obj1[4]));
+                listaaux.put("origen", String.valueOf(obj1[5]));
+                listaaux.put("destino", String.valueOf(obj1[6]));
+                listaaux.put("asignado", String.valueOf(obj1[7]));
+                listaaux.put("iddocumento", String.valueOf(obj1[8]));
+                listaaux.put("docprincipal", String.valueOf(obj1[9]));
+                listaaux.put("origprincipal", String.valueOf(obj1[10]));
+                listadocspropios.add(listaaux);
+            }
+            while (ite2.hasNext()) {
+                obj2 = (Object[]) ite2.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj2[0]));
+                listaaux.put("documento", String.valueOf(obj2[1]));
+                listaaux.put("expediente", String.valueOf(obj2[2]));
+                listaaux.put("fechaexp", String.valueOf(obj2[3]));
+                listaaux.put("asunto", String.valueOf(obj2[4]));
+                listaaux.put("origen", String.valueOf(obj2[5]));
+                listaaux.put("destino", String.valueOf(obj2[6]));
+                listaaux.put("asignado", String.valueOf(obj2[7]));
+                listaaux.put("iddocumento", String.valueOf(obj2[8]));
+                listaaux.put("docprincipal", "SIN DOCUMENTO");
+                listaaux.put("origprincipal", "SIN ORIGEN");
+                listadocspropios.add(listaaux);
+            }*/
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[12];
+            Object obj[] = new Object[10];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("iddoc", String.valueOf(obj[0]));
                 listaaux.put("documento", String.valueOf(obj[1]));
-                listaaux.put("nombredocu", String.valueOf(obj[2]));
-                listaaux.put("correla", String.valueOf(obj[3]));
-                listaaux.put("anio", String.valueOf(obj[4]));
-                listaaux.put("siglas", String.valueOf(obj[5]));
-                listaaux.put("fecha", String.valueOf(obj[6]));
-                listaaux.put("expediente", String.valueOf(obj[7]));
-                listaaux.put("asunto", String.valueOf(obj[8]));
-                listaaux.put("origen", String.valueOf(obj[9]));
-                listaaux.put("destino", String.valueOf(obj[10]));
-                listaaux.put("asignado", String.valueOf(obj[11]));
+                listaaux.put("expediente", String.valueOf(obj[2]));
+                listaaux.put("fecha", String.valueOf(obj[3]));
+                listaaux.put("asunto", String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
+                listaaux.put("docuprinc", String.valueOf(obj[8]));
+                listaaux.put("origenprinc", String.valueOf(obj[9]));
                 listadocspropios.add(listaaux);
             }
         } catch (Exception e) {
@@ -208,27 +247,66 @@ public class DocumentoUsuarioBean {
         listadocspropios.clear();
 
         try {
+            /*System.out.println("lista por tipo");
+            List lista1 = new ArrayList();
+            List lista2 = new ArrayList();
+            lista1=di.getDocInternosXtipo_1(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
+            lista2=di.getDocInternosXtipo_2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
+            Iterator ite1 = lista1.iterator();
+            Iterator ite2 = lista2.iterator();
+            Object obj1[] = new Object[11];
+            Object obj2[] = new Object[9];
+            while (ite1.hasNext()) {
+                obj1 = (Object[]) ite1.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj1[0]));
+                listaaux.put("documento", String.valueOf(obj1[1]));
+                listaaux.put("expediente", String.valueOf(obj1[2]));
+                listaaux.put("fechaexp", String.valueOf(obj1[3]));
+                listaaux.put("asunto", String.valueOf(obj1[4]));
+                listaaux.put("origen", String.valueOf(obj1[5]));
+                listaaux.put("destino", String.valueOf(obj1[6]));
+                listaaux.put("asignado", String.valueOf(obj1[7]));
+                listaaux.put("iddocumento", String.valueOf(obj1[8]));
+                listaaux.put("docprincipal", String.valueOf(obj1[9]));
+                listaaux.put("origprincipal", String.valueOf(obj1[10]));
+                listadocspropios.add(listaaux);
+            }
+            while (ite2.hasNext()) {
+                obj2 = (Object[]) ite2.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("iddoc", String.valueOf(obj2[0]));
+                listaaux.put("documento", String.valueOf(obj2[1]));
+                listaaux.put("expediente", String.valueOf(obj2[2]));
+                listaaux.put("fechaexp", String.valueOf(obj2[3]));
+                listaaux.put("asunto", String.valueOf(obj2[4]));
+                listaaux.put("origen", String.valueOf(obj2[5]));
+                listaaux.put("destino", String.valueOf(obj2[6]));
+                listaaux.put("asignado", String.valueOf(obj2[7]));
+                listaaux.put("iddocumento", String.valueOf(obj2[8]));
+                listaaux.put("docprincipal", "SIN DOCUMENTO");
+                listaaux.put("origprincipal", "SIN ORIGEN");
+                listadocspropios.add(listaaux);
+            }*/
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             lista = di.getDocInternosXtipo(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[13];
+            Object obj[] = new Object[11];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("iddoc", String.valueOf(obj[0]));
                 listaaux.put("documento", String.valueOf(obj[1]));
-                listaaux.put("nombredocu", String.valueOf(obj[2]));
-                listaaux.put("correla", String.valueOf(obj[3]));
-                listaaux.put("anio", String.valueOf(obj[4]));
-                listaaux.put("siglas", String.valueOf(obj[5]));
-                listaaux.put("fecha", String.valueOf(obj[6]));
-                listaaux.put("expediente", String.valueOf(obj[7]));
-                listaaux.put("asunto", String.valueOf(obj[8]));
-                listaaux.put("origen", String.valueOf(obj[9]));
-                listaaux.put("destino", String.valueOf(obj[10]));
-                listaaux.put("asignado", String.valueOf(obj[11]));
-                listaaux.put("idtipo", String.valueOf(obj[12]));
+                listaaux.put("expediente", String.valueOf(obj[2]));
+                listaaux.put("fecha", String.valueOf(obj[3]));
+                listaaux.put("asunto", String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
+                listaaux.put("iddocu", String.valueOf(obj[8]));
+                listaaux.put("docuprinc", String.valueOf(obj[9]));
+                listaaux.put("origenprinc", String.valueOf(obj[10]));
                 listadocspropios.add(listaaux);
             }
         } catch (Exception e) {
