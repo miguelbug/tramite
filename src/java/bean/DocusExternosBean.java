@@ -54,7 +54,7 @@ public class DocusExternosBean implements Serializable {
     private String codigoexp;
     public boolean a1;
     public boolean a2;
-    private boolean ver,nover;
+    private boolean ver, nover;
     public String auxfecha;
     public String auxanio;
     public List documentosext;
@@ -67,7 +67,8 @@ public class DocusExternosBean implements Serializable {
     private String tipoorigen;
     private String siglas;
     public static String correlativo_impresion;
-    
+    private String siglasdocu;
+
     public DocusExternosBean() {
         dd = new DocumentoDaoImpl();
         ded = new DocusExtDaoImpl();
@@ -82,15 +83,15 @@ public class DocusExternosBean implements Serializable {
         deriv = new DerivarDaoImpl();
         dd = new DocumentoDaoImpl();
         od = new OficioDaoImpl();
-        tiposdocus= new ArrayList<String>();
+        tiposdocus = new ArrayList<String>();
         ObtenerDepIndic();
         a1 = true;
         a2 = false;
         boolean isproveidos = (currentPage.lastIndexOf("Proveidos.xhtml") > -1);
-        if(isproveidos){
+        if (isproveidos) {
             MostrarDocusExt();
         }
-        
+
     }
 
     public void MostrarDocusExt() {
@@ -158,13 +159,13 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void Proveidoo() {
-        
+
         System.out.println("entra aca 1");
         fechaactual();
         getAnio();
         ObtenerTiposDocus();
         generarCorrelativo();
-        siglas=deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         correlativo_impresion = correlativo;
 
     }
@@ -173,7 +174,8 @@ public class DocusExternosBean implements Serializable {
         dependenciasprov.clear();
         dependenciasprov = dd.getDependencias(tipodestino);
     }
-    public void ObtenerDepIndic2(){
+
+    public void ObtenerDepIndic2() {
         dependenciasprov.clear();
         dependenciasprov2 = dd.getDependencias(tipoorigen);
     }
@@ -267,11 +269,15 @@ public class DocusExternosBean implements Serializable {
 
     }
 
+    public void modificarNumeroDoc() {
+        codigoexp= documento+" N° "+codigoexp;
+    }
+
     public void Guardar_ProvExt() {
         System.out.println("SE HA GUARDADO");
         DocusExtint di = new DocusExtint();
         try {
-            di.setNumerodoc(documento+"-"+codigoexp);
+            di.setNumerodoc(documento + "-" + codigoexp);
             di.setAsunto(asunto);
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
@@ -283,13 +289,13 @@ public class DocusExternosBean implements Serializable {
             di.setTiposDocumentos(deriv.getTipoDoc("PROVEIDOS"));
             di.setExtInt("pe");
             deriv.guardarDocusExt(di);
-            ver=true;
-            nover=false;
+            ver = true;
+            nover = false;
             Limpiar();
             MostrarDocusExt();
         } catch (Exception e) {
-            ver=false;
-            nover=true;
+            ver = false;
+            nover = true;
             System.out.println("PROBLEMAS PROVEIDO EXTERNO");
             System.out.println(e.getMessage());
         }
@@ -521,6 +527,14 @@ public class DocusExternosBean implements Serializable {
 
     public void setNover(boolean nover) {
         this.nover = nover;
+    }
+
+    public String getSiglasdocu() {
+        return siglasdocu;
+    }
+
+    public void setSiglasdocu(String siglasdocu) {
+        this.siglasdocu = siglasdocu;
     }
 
 }
