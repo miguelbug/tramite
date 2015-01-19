@@ -42,4 +42,6 @@ public interface DocumentoDAO {
     public List documentosCorregir();
     
     public void guardarNuevoAnio(String anio);
+    
+    public String getFlag(String dependencia);
 }

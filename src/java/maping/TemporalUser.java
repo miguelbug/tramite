@@ -21,6 +21,7 @@ public class TemporalUser {
     private String impreso;
     private String reimpreso;
     private String tramNum;
+    private String codigo;
 
     public TemporalUser() {
     }
@@ -29,7 +30,7 @@ public class TemporalUser {
         this.idTempu = idTempu;
     }
 
-    public TemporalUser(long idTempu, String documento, Date fecha, String origenPrinc, String documentoPrinc, String impreso, String reimpreso, String tramNum) {
+    public TemporalUser(long idTempu, String documento, Date fecha, String origenPrinc, String documentoPrinc, String impreso, String reimpreso, String tramNum, String codigo) {
         this.idTempu = idTempu;
         this.documento = documento;
         this.fecha = fecha;
@@ -38,6 +39,7 @@ public class TemporalUser {
         this.impreso = impreso;
         this.reimpreso = reimpreso;
         this.tramNum = tramNum;
+        this.codigo = codigo;
     }
 
     public long getIdTempu() {
@@ -102,6 +104,14 @@ public class TemporalUser {
 
     public void setTramNum(String tramNum) {
         this.tramNum = tramNum;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     

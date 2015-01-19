@@ -44,7 +44,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     @Override
     public String getContadorTemporal() {
         String contador = "";
-        String sql = "SELECT MAX(CONTADOR) FROM TEMPORAL";
+        String sql = "SELECT MAX(TO_NUMBER(CONTADOR)) AS CONTADOR FROM TEMPORAL";
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();

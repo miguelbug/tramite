@@ -89,6 +89,7 @@ public class objxUnidadController implements Serializable {
             tldi.setTramNum(hm.get("tramnum").toString());
             System.out.println(hm.get("tramnum").toString());
             tldi.setUsuario(hm.get("asignado").toString());
+            
             tldi.setImpreso("1");
             tldi.setReimpreso("0");
             tdi.guardarTemporalDi(tldi);
@@ -98,7 +99,7 @@ public class objxUnidadController implements Serializable {
     public void guardarDatos2() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (int i = 0; i < docselec1.size(); i++) {
-            TemporalUser tldi = new TemporalUser();
+            /*TemporalUser tldi = new TemporalUser();
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tldi.setDocumento(hm.get("documento"));
             tldi.setDocumentoPrinc(hm.get("docuprinc"));
@@ -107,7 +108,19 @@ public class objxUnidadController implements Serializable {
             tldi.setOrigenPrinc(hm.get("origenprinc"));
             tldi.setImpreso("1");
             tldi.setReimpreso("0");
-            tdi.guardarTemporalUser(tldi);
+            tdi.guardarTemporalUser(tldi);*/
+            TemporalUser tluser = new TemporalUser();
+            Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+            tluser.setDocumento(hm.get("documento").toString());
+            tluser.setTramNum(hm.get("expediente").toString());
+            tluser.setDocumentoPrinc(hm.get("docuprinc").toString());
+            tluser.setFecha(formatter.parse(hm.get("fecha").toString()));
+            tluser.setOrigenPrinc(hm.get("origenprinc").toString());
+            tluser.setCodigo(dd.getFlag(hm.get("origenprinc").toString()));
+            tluser.setImpreso("1");
+            tluser.setReimpreso("0");
+            tdi.guardarTemporalUser(tluser);
+            
         }
     }
 
@@ -168,7 +181,8 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosSeleccionadosUser");
+        //repor = ReporteController.getInstance("reporteDocumentosSeleccionadosUser");
+        repor = ReporteController.getInstance("seleccionados");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);

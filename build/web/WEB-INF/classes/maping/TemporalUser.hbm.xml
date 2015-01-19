@@ -29,5 +29,8 @@
         <property name="tramNum" type="string">
             <column name="TRAM_NUM" length="100" />
         </property>
+        <property name="codigo" type="string">
+            <column name="CODIGO" length="20" />
+        </property>
     </class>
 </hibernate-mapping>

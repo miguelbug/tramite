@@ -24,6 +24,28 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public String getFlag(String dependencia) {
+        System.out.println("get tipodepe");
+        String tipodepe="";
+        String sql = "SELECT TIPODEPE FROM DEPENDENCIA WHERE NOMBRE= '"+dependencia+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            tipodepe=(String)session.createSQLQuery(sql).uniqueResult();
+            session.getTransaction().commit();
+            System.out.println("terminó gettipodepe");
+        } catch (Exception e) {
+            System.out.println("mal gettipodepe");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return tipodepe;
+    }
+
+    @Override
     public void guardarNuevoAnio(String anio) {
         System.out.println("guardar anio");
         Anios anios = new Anios();
