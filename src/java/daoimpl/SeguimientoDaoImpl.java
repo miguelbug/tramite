@@ -6,6 +6,7 @@
 package daoimpl;
 
 import dao.SeguimientoDAO;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import maping.Temporal;
@@ -48,7 +49,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            contador = (Integer) session.createSQLQuery(sql).uniqueResult();
+            contador =Integer.parseInt(String.valueOf((BigDecimal)session.createSQLQuery(sql).uniqueResult())) ;
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {

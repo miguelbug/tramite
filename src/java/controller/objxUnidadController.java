@@ -138,7 +138,7 @@ public class objxUnidadController implements Serializable {
     }
 
     public void abrirReimpresion() {
-        this.loteinput = sgd.getContadorTemporal();
+        this.loteinput = String.valueOf(sgd.getContadorTemporal());
     }
 
     public void mostrarReimpresion() {
