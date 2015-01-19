@@ -196,7 +196,7 @@ public class DocumentosBean implements Serializable {
         codinterno = "100392";
     }
 
-    public void mostrarOficio() {
+    /*public void mostrarOficio() {
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
@@ -206,7 +206,7 @@ public class DocumentosBean implements Serializable {
         referencia = dd.getMotivo(tramnum);
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
-    }
+    }*/
 
     public void Eliminar() {
         FacesMessage message = null;

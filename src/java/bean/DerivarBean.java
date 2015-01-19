@@ -89,7 +89,7 @@ public class DerivarBean {
         return oficina;
     }
 
-    public void Derivar() {
+    /*public void Derivar() {
         numtramaux = "";
         FacesMessage message = null;
         try {
@@ -114,7 +114,7 @@ public class DerivarBean {
             System.out.println(e.getMessage());
         }
 
-    }
+    }¨/
 
     public Date getFechaIng() {
         Date fecha = null;
@@ -139,7 +139,7 @@ public class DerivarBean {
         return fecha;
     }
 
-    public void Motivo() {
+    /*public void Motivo() {
         try {
             Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
             Iterator it = hm.entrySet().iterator();
@@ -148,7 +148,7 @@ public class DerivarBean {
                 if (e.getKey().toString().equals("numerotramite")) {
                     System.out.println(e.getValue().toString());
                     numtramaux = e.getValue().toString();
-                    motivo = dd.getMotivo(e.getValue().toString());
+                    motivo = dd.getMotivo(e.getValue().toString(),);
                 }
 
             }
@@ -159,7 +159,7 @@ public class DerivarBean {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     public String getFechaIngr() {
         String fecha = "";

@@ -27,10 +27,13 @@
 		<defaultValueExpression ><![CDATA["escudo_reporte.jpg"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["usuarioParametro"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["kpios"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["00254"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["00012"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["22/12/014 12:12:04"]]></defaultValueExpression>
 	</parameter>
 	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
 DE.NUMERODOC,
@@ -44,8 +47,10 @@ from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUAR
 WHERE DE.CODIGO=M1.CODIGO
 AND DE.CODIGO1=M2.CODIGO
 AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO
+AND DE.USU=USUA.USU
 AND DE.USU=$P{usuario}
 AND DE.CORRELATIVOD=$P{correlativo}
+AND to_char(DE.FECHA,'DD/MM/YYYY')=$P{fecha}
 AND USUA.ID_OFICINA=oficina.ID_OFICINA
 ORDER BY DE.ID DESC]]></queryString>
 

@@ -66,7 +66,7 @@ public class DocusExternosBean implements Serializable {
     private String tipodestino;
     private String tipoorigen;
     private String siglas;
-    public static String correlativo_impresion;
+    public static String correlativo_impresion,fecha_auxiliar;
     private String siglasdocu;
 
     public DocusExternosBean() {
@@ -167,7 +167,8 @@ public class DocusExternosBean implements Serializable {
         generarCorrelativo();
         siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         correlativo_impresion = correlativo;
-
+        fecha_auxiliar=auxfecha;
+        System.out.println("FECHA AUX: "+fecha_auxiliar);
     }
 
     public void ObtenerDepIndic() {
@@ -270,6 +271,7 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void modificarNumeroDoc() {
+        codigoexp="";
         codigoexp= documento+" N° "+codigoexp;
     }
 
@@ -277,7 +279,7 @@ public class DocusExternosBean implements Serializable {
         System.out.println("SE HA GUARDADO");
         DocusExtint di = new DocusExtint();
         try {
-            di.setNumerodoc(documento + "-" + codigoexp);
+            di.setNumerodoc(codigoexp);
             di.setAsunto(asunto);
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));

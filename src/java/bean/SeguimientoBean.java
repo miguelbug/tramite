@@ -265,12 +265,12 @@ public class SeguimientoBean {
         }
     }
 
-    public void Derivar() {
+   /* public void Derivar() {
         System.out.println("entra a derivar");
         IniciarFecha();
         Motivo();
         UsuarioSelec();
-    }
+    }*/
 
     public void IniciarFecha() {
         System.out.println("entra a fecha");
@@ -289,7 +289,7 @@ public class SeguimientoBean {
         }
     }
 
-    public void Motivo() {
+    /*public void Motivo() {
         System.out.println("entra a motivo");
         try {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
@@ -308,7 +308,7 @@ public class SeguimientoBean {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void UsuarioSelec() {
         System.out.println("entra a usuario");

@@ -15,7 +15,10 @@
             <column name="TIPODEPE" length="30" />
         </property>
         <property name="flac" type="string">
-            <column name="FLAC" length="5" />
+            <column name="FLAC" length="10" />
+        </property>
+        <property name="flac2" type="string">
+            <column name="FLAC2" length="10" />
         </property>
         <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
             <key>

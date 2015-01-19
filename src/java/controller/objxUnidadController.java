@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -398,6 +399,7 @@ public class objxUnidadController implements Serializable {
         System.out.println(DocumentosBean.tranum);
         parametros.put("usuario", this.getUsu());
         parametros.put("correlativo", DocusExternosBean.correlativo_impresion);
+        parametros.put("fecha", partir(DocusExternosBean.fecha_auxiliar));
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         // parametros.put("USUARIO","miguel" ); 
@@ -409,7 +411,17 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-
+    public String partir(String nombre){
+        String[] cadena= new String[2];
+        int i=0;
+        StringTokenizer tokens=new StringTokenizer(nombre);
+        while(tokens.hasMoreTokens()){
+            cadena[i]=tokens.nextToken();
+            i++;
+        }
+        return cadena[0];
+        
+    }
     public void mostrarRepProveido2() {
 
         context = FacesContext.getCurrentInstance();
