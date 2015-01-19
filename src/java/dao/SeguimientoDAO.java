@@ -30,6 +30,6 @@ public interface SeguimientoDAO {
     public void GuardarTramiteMovimiento(TramiteMovimiento tm);
     public void temporal(Temporal t);
     public List getDesignados(String oficina);
-    public String getContadorTemporal();
+    public int getContadorTemporal();
     
 }

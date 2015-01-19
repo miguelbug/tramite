@@ -663,12 +663,12 @@ public class DocumentosBean implements Serializable {
             String ntram = "";
             int movi = 0;
             String aux = "";
-            String contador = sgd.getContadorTemporal();
+            int contador = sgd.getContadorTemporal();
             int cont = 0;
-            if (contador == null) {
+            if (contador == 0) {
                 cont = 1;
             } else {
-                cont = Integer.parseInt(contador);
+                cont = contador;
                 cont++;
             }
             for (int i = 0; i < docselec.size(); i++) {
