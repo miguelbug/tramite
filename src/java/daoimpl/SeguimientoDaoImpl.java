@@ -292,7 +292,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tramitedatos" + e);
             System.out.println(e.getMessage());
-            session.getTransaction().rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -309,7 +309,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tramitedatos" + e);
             System.out.println(e.getMessage());
-            session.getTransaction().rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -326,7 +326,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tipodocus" + e);
             System.out.println(e.getMessage());
-            session.getTransaction().rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }

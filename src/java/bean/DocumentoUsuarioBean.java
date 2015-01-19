@@ -719,7 +719,7 @@ public class DocumentoUsuarioBean {
                 if (i == 0) {
                     System.out.println(hm.get("numerotramite").toString());
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
-                    motivo = dd.getMotivo(hm.get("numerotramite").toString());
+                    motivo = dd.getMotivo(hm.get("numerotramite").toString(),hm.get("fechaenvio").toString());
                     asunto = motivo;
                 } else {
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();

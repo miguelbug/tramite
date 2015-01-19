@@ -23,7 +23,7 @@ public interface DocumentoDAO {
     public String getSQL(String[] a);
     public List getDetalle(String tramnum);
     public List getDeatalle2(String tramnum);
-    public String getMotivo(String tramnum);
+    public String getMotivo(String tramnum, String fecha);
     public String getOficina(Usuario usu);
     public List getDocusInternos();
     public List getDependencias(String tipos);

@@ -492,14 +492,15 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public String getMotivo(String tramnum) {
+    public String getMotivo(String tramnum, String fecha) {
         String codigos = "";
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TD.TRAM_OBS \n"
                     + "FROM TRAMITE_DATOS TD\n"
-                    + "WHERE TD.TRAM_NUM='" + tramnum + "' ");
+                    + "WHERE TD.TRAM_NUM='" + tramnum + "'\n"
+                    + "AND TO_CHAR(TD.TRAM_FECHA,'dd/MM/yyyy HH24:MI:SS')='"+fecha+"'");
             codigos = (String) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
