@@ -33,7 +33,7 @@
             <column name="ANEXO" length="4" />
         </property>
         <property name="cargo" type="string">
-            <column name="CARGO" length="50" />
+            <column name="CARGO" length="300" />
         </property>
         <property name="grado" type="string">
             <column name="GRADO" length="100" />
