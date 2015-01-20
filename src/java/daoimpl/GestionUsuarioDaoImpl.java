@@ -176,7 +176,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         System.out.println("get JEFES");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA");
+            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA ORDER BY APELLIDOS ASC");
             jefes = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
