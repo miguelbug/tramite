@@ -49,7 +49,7 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec;
+    private List oficinas,oficinas2, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec;
     //////////////
     private String nuevousu_usuario;
     private String nuevousu_nombre;
@@ -62,6 +62,7 @@ public class GestionUsuarioBean implements Serializable {
         HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
         usu = (Usuario) session.getAttribute("sesionUsuario");
         oficinas = new ArrayList<String>();
+        oficinas2 = new ArrayList<String>();
         profesion = new ArrayList<String>();
         contrato = new ArrayList<String>();
         jefes = new ArrayList<String>();
@@ -132,6 +133,7 @@ public class GestionUsuarioBean implements Serializable {
 
     public void listarJefatura() {
         jefes = gu.listarJefes();
+        this.listarOficinas2();
     }
 
     public void listarJefesUser() {
@@ -196,6 +198,7 @@ public class GestionUsuarioBean implements Serializable {
             usuario.setEstado("activo");
             usuario.setUsu(nuevousu_usuario);
             gu.GuardarUsuario(usuario);
+            gu.ActualizarJefe(nuevousu_usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Realizado", "Se ha Guardado");
             limpiarUsuario();
         } catch (Exception e) {
@@ -208,7 +211,10 @@ public class GestionUsuarioBean implements Serializable {
         oficinas.clear();
         oficinas = gu.getOficinas();
     }
-
+    public void listarOficinas2(){
+        oficinas2.clear();
+        oficinas2=gu.getOficinas();
+    }
     public void listarProfesion() {
         profesion.clear();
         profesion = gu.getProfesion();
@@ -454,6 +460,14 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setDocselec(List docselec) {
         this.docselec = docselec;
+    }
+
+    public List getOficinas2() {
+        return oficinas2;
+    }
+
+    public void setOficinas2(List oficinas2) {
+        this.oficinas2 = oficinas2;
     }
 
 }

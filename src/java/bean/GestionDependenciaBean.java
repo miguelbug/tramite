@@ -27,7 +27,9 @@ public class GestionDependenciaBean {
     public GestionDependenciaBean() {
         gdd = new GestionDependenciaDaoImpl();
     }
-
+    public void abrirCuadroNuevaDep(){
+        codigodep=String.valueOf(gdd.getMaxCodigo()+1);
+    }
     public void guardarDependencia() {
         try {
             Dependencia d = new Dependencia();

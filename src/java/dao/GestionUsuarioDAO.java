@@ -35,5 +35,7 @@ public interface GestionUsuarioDAO {
     public List listarJefes();
     public List listarJefesUser(String id);
     public List listarPersonal();
+    public void ActualizarJefe(String nombre);
+    public Usuario getUsuario2(String usu);
     
 }

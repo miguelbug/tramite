@@ -79,8 +79,6 @@
                             <p:outputLabel value="DNI:"/>
                             <p:inputText value="#{gestionUsuarioBean.nuevodni}"/>
 
-
-
                             <p:outputLabel value="Profesión:"/>
                             <p:selectOneMenu id="profesiontipo" value="#{gestionUsuarioBean.nuevaprof}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -92,7 +90,13 @@
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{gestionUsuarioBean.contrato}"/>
                             </p:selectOneMenu>
-
+                            
+                            <p:outputLabel value="Oficina:"/>
+                            <p:selectOneMenu id="oficinas" value="#{gestionUsuarioBean.nuevoofi}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
+                            </p:selectOneMenu>
+                            
                             <p:outputLabel value="Telefono:"/>
                             <p:inputText value="#{gestionUsuarioBean.nuevotelefono}"/>
 
@@ -130,7 +134,7 @@
                             <p:outputLabel value="Oficina: "/>
                             <p:selectOneMenu value="#{gestionUsuarioBean.nuevousu_oficina}" id="listaoficina">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
+                                <f:selectItems value="#{gestionUsuarioBean.oficinas2}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <br></br>

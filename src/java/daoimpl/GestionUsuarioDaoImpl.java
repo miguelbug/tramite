@@ -206,6 +206,24 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
     }
 
     @Override
+    public Usuario getUsuario2(String usu) {
+        Usuario usuario = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get usu");
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Usuario where usu='" + usu + "'");
+            usuario = (Usuario) query.uniqueResult();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal GET usu");
+            System.out.println(e.getMessage());
+        }
+        return usuario;
+    }
+
+    @Override
     public Oficina getOficina(String nombre) {
         System.out.println("gettramite");
         Oficina oficina = null;
@@ -304,6 +322,26 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             System.out.println("mal guardar usuario");
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void ActualizarJefe(String nombre) {
+        Usuario usu=this.getUsuario2(nombre);
+        System.out.println("actualizar jefe");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "UPDATE Jefatura SET usuario='" +usu.getUsu()+ "' WHERE concat(apellidos,', ',nombre)='"+usu.getUsuNombre()+"'";
+        int i=0;
+        try {
+            session.beginTransaction();
+            i = session.createQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get contrato");
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("actualizados: "+i);
     }
 
     @Override

@@ -14,4 +14,5 @@ import maping.Dependencia;
  */
 public interface GestionDependenciaDao {
     public void GuardarDependencia(Dependencia d);
+    public int getMaxCodigo();
 }

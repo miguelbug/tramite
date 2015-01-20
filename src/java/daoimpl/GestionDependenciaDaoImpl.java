@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package daoimpl;
 
 import dao.GestionDependenciaDao;
 import maping.Dependencia;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -15,8 +15,10 @@ import util.HibernateUtil;
  *
  * @author OGPL
  */
-public class GestionDependenciaDaoImpl implements GestionDependenciaDao{
+public class GestionDependenciaDaoImpl implements GestionDependenciaDao {
+
     Session session;
+
     @Override
     public void GuardarDependencia(Dependencia d) {
         session = HibernateUtil.getSessionFactory().openSession();
@@ -32,5 +34,23 @@ public class GestionDependenciaDaoImpl implements GestionDependenciaDao{
             session.close();
         }
     }
-    
+
+    @Override
+    public int getMaxCodigo() {
+        int codigo = 0;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT MAX(CODIGO) FROM DEPENDENCIA";
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery(sql);
+            codigo = Integer.parseInt(String.valueOf(query.uniqueResult()));
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal get respuestas");
+            System.out.println(e.getMessage());
+        }
+        return codigo;
+    }
+
 }
