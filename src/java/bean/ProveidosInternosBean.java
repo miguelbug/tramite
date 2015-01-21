@@ -195,9 +195,9 @@ public class ProveidosInternosBean {
         td.setNombreDocu("PROVEIDOS");
         td.setIdDocumento(BigDecimal.valueOf(6));
         try {
-            System.out.println(asunto);
+            System.out.println(asunto.toUpperCase());
             di.setNumerodoc(tramnum);
-            di.setAsunto(asunto);
+            di.setAsunto(asunto.toUpperCase());
             di.setFecha(fechaprov);
             di.setFechaEnvio(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen_prov));

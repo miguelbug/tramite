@@ -18,30 +18,62 @@
                         <p:tab title="OFICIOS">
                             <p:dataTable value="#{oficioBean.oficiosConExp}" id="oficiotodos" var="item" paginator="true" rows="15" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}" selection="#{oficioBean.docselec2}"
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0" editable="true">
+
+                                <p:ajax event="rowEdit" listener="#{oficioBean.onEdit}"/>
+                                <p:ajax event="rowEditCancel" listener="#{oficioBean.onCancel}" />
+                                
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
+                                    <p:outputLabel value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tramnum}"/>
+                                    <p:outputLabel value="#{item.tramnum}"/>
                                 </p:column>
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}"/>
+                                    <p:outputLabel value="#{item.fecha}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="3" cols="100" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+
                                 </p:column>
                                 <p:column headerText="OFIC. RESP." width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asignado}"/>
+                                    <p:outputLabel value="#{item.asignado}"/>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{item.destino}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{item.destino}">
+                                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392"/>
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PRESUPUESTO" itemValue="1001868"/>
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE RACIONALIZACION" itemValue="1001869"/>
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870"/>
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" itemValue="1001871"/>
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
                                                      update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirDocumentoUnico()}"/>
+                                    <p:commandButton process="oficiotodos" icon="ui-icon-extlink" value="Eliminar Oficio" style="position:absolute; left:190px; height:26px "
+                                                     update=":form:" actionListener="#{oficioBean.delete()}"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
@@ -58,7 +90,7 @@
 
                             <p:outputLabel value="Origen:"/>
                             <p:outputLabel value="#{oficioBean.origen}"/>
-                            
+
                             <p:outputLabel value="Área Responsable:"/>
                             <p:selectOneMenu value="#{oficioBean.arearesponsable2}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>

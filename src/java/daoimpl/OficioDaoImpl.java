@@ -28,6 +28,46 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public void ActualizarOficio(String correla, String asunto, String destino) {
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + destino + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar oficio");
+        } catch (Exception e) {
+            System.out.println("mal actualizar oficio");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
+    public void DeleteOficio(String correlativo) {
+        String sql = "DELETE FROM OFICIOS WHERE CORRELATIVO_OFICIO='"+correlativo+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó delete oficio");
+        } catch (Exception e) {
+            System.out.println("mal delete oficio");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
     public void GuardarDocumentoOfiInt(DocusInternos di) {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -104,7 +144,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is null\n"
                     + "and d1.nombre=oficina.nombre_oficina) R\n"
-                    + "where R.responsable='"+user+"'\n"
+                    + "where R.responsable='" + user + "'\n"
                     + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();

@@ -280,7 +280,7 @@ public class DocusExternosBean implements Serializable {
         DocusExtint di = new DocusExtint();
         try {
             di.setNumerodoc(codigoexp);
-            di.setAsunto(asunto);
+            di.setAsunto(asunto.toUpperCase());
             di.setFecha(fechaprov);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(destino));

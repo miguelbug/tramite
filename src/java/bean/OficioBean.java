@@ -35,6 +35,7 @@ import maping.Oficios;
 import maping.Usuario;
 import maping.DocusInternos;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DualListModel;
 
@@ -54,7 +55,7 @@ public class OficioBean {
     private DerivarDAO deriv;
     private String correlativo = "";
     private String correlativo2 = "";
-    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser;
+    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2;
     private List docselec;
     public List depe2;
     private List depe;
@@ -143,7 +144,7 @@ public class OficioBean {
                 if (isoficconexp) {
                     mostrarOficioConExp();
                 } else {
-                    if(isoficogpluser){
+                    if (isoficogpluser) {
                         MostrarOficiosOgplUser();
                     }
                 }
@@ -151,6 +152,34 @@ public class OficioBean {
         }
         ObtenerTiposDocus2();
 
+    }
+
+    public void onEdit(RowEditEvent event) {
+        String correlativo=String.valueOf(((HashMap)event.getObject()).get("correlativo"));
+        String asunto=String.valueOf(((HashMap)event.getObject()).get("asunto"));
+        String destino=String.valueOf(((HashMap)event.getObject()).get("destino"));
+        System.out.println(correlativo+" "+asunto+" "+destino);
+        od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino);
+        mostrarOficioConExp();
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap)event.getObject()).get("correlativo")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+
+    public void onCancel(RowEditEvent event) {
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", String.valueOf(((HashMap)event.getObject()).get("correlativo")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+    
+    public void delete(){
+        for(int i=0;i<docselec2.size();i++){
+            Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+            od.DeleteOficio(hm.get("correlativo").toString().substring(10, 15));
+        }
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA(N) ELIMINADO EL(LOS) OFICIO(S)");
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -544,7 +573,7 @@ public class OficioBean {
         FacesMessage message = null;
         try {
             Oficios ofi = new Oficios();
-            ofi.setAsuntoOficio(asunto);
+            ofi.setAsuntoOficio(asunto.toUpperCase());
             ofi.setCorrelativoOficio(correlativo2);
             ofi.setFechaOficio(fecha);
             ofi.setDependenciaByCodigo(deriv.getDep(origen));
@@ -624,7 +653,7 @@ public class OficioBean {
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
-            ofi.setAsunto(asunto2);
+            ofi.setAsunto(asunto2.toUpperCase());
             ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
             fecha = sdf2.parse(fechadia2 + " " + fechahora);
             ofi.setFecha(fecha);
@@ -1214,6 +1243,14 @@ public class OficioBean {
 
     public void setOficiosOGPLuser(List oficiosOGPLuser) {
         this.oficiosOGPLuser = oficiosOGPLuser;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
     }
 
 }
