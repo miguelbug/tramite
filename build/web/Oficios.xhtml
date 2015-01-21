@@ -33,6 +33,9 @@
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <h:outputText value="#{item.asunto}"/>
                                 </p:column>
+                                <p:column headerText="OFIC. RESP." width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asignado}"/>
+                                </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <h:outputText value="#{item.destino}"/>
                                 </p:column>
@@ -55,6 +58,12 @@
 
                             <p:outputLabel value="Origen:"/>
                             <p:outputLabel value="#{oficioBean.origen}"/>
+                            
+                            <p:outputLabel value="Área Responsable:"/>
+                            <p:selectOneMenu value="#{oficioBean.arearesponsable2}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{oficioBean.areasResp}"/>
+                            </p:selectOneMenu>
 
                             <p:outputLabel value="Tipo Destino:"/>
                             <p:selectOneMenu value="#{oficioBean.tipodestino}">

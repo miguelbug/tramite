@@ -23,6 +23,7 @@
                 <p:submenu label="Ver" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos" action="documentos_user?faces-redirect=true"/>
                     <p:menuitem value="Documentos Propios" action="documentos_internosUsuario?faces-redirect=true"/>
+                    <p:menuitem value="Oficios OGPL" action="oficios_ogpl?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label="Registro" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos Internos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>

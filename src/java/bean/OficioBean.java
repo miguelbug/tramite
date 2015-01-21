@@ -54,7 +54,7 @@ public class OficioBean {
     private DerivarDAO deriv;
     private String correlativo = "";
     private String correlativo2 = "";
-    private List otrosdocus, otrosdocus1, otrosdocus2;
+    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser;
     private List docselec;
     public List depe2;
     private List depe;
@@ -67,6 +67,7 @@ public class OficioBean {
     private String firma;
     private String responsable;
     private String arearesponsable;
+    private String arearesponsable2;
     private List seleccionados;
     private boolean aparece;
     private String auxfecha;
@@ -123,12 +124,15 @@ public class OficioBean {
         detallecirc = new ArrayList<Map<String, String>>();
         tiposdocus = new ArrayList<String>();
         cities2 = new ArrayList<String>();
+        this.oficiosOGPLuser = new ArrayList<Map<String, String>>();
+        this.areasResp = new ArrayList<String>();
 
         llenardepes();
 
         boolean isofcirc = (currentPage.lastIndexOf("Oficios_Circulares.xhtml") > -1);
         boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
+        boolean isoficogpluser = (currentPage.lastIndexOf("oficios_ogpl.xhtml") > -1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
         if (isofcirc) {
             mostrarofCirc();
@@ -138,6 +142,10 @@ public class OficioBean {
             } else {
                 if (isoficconexp) {
                     mostrarOficioConExp();
+                } else {
+                    if(isoficogpluser){
+                        MostrarOficiosOgplUser();
+                    }
                 }
             }
         }
@@ -155,6 +163,30 @@ public class OficioBean {
         getAnio();
         generarFecha();
 
+    }
+
+    public void MostrarOficiosOgplUser() {
+        oficiosOGPLuser.clear();
+        try {
+            List lista = new ArrayList();
+            lista = od.getOficOgplUser(od.getAreaResponsable(usu.getOficina().getIdOficina()));
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("tramnum", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]) + " - " + String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
+                oficiosOGPLuser.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void ObtenerTiposDocus2() {
@@ -195,7 +227,7 @@ public class OficioBean {
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         System.out.println("SIGLAS: " + siglasdocus);
         origen = dd.getOficina(usu);
-        listausuarios= deriv.listaUsuarios(usu.getOficina().getIdOficina());
+        listausuarios = deriv.listaUsuarios(usu.getOficina().getIdOficina());
 
     }
 
@@ -204,14 +236,19 @@ public class OficioBean {
         generarFecha4();
         generarCorrelativoOfiUnico();
         ObtenerTiposDocus();
+        ObtenerAreasResp();
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         origen = dd.getOficina(usu);
     }
-    
-    public void generarFecha4(){
-        fecha= new Date();
-        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        auxfecha=sdf.format(fecha);
+
+    public void ObtenerAreasResp() {
+        this.areasResp = od.getDependencias("1");
+    }
+
+    public void generarFecha4() {
+        fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        auxfecha = sdf.format(fecha);
     }
 
     public void agregardestinos() {
@@ -291,16 +328,17 @@ public class OficioBean {
             List lista = new ArrayList();
             lista = od.getOficioUnicoExpediente();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[7];
+            Object obj[] = new Object[8];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("correlativo", String.valueOf(obj[0]));
                 listaaux.put("tramnum", String.valueOf(obj[1]));
                 listaaux.put("fecha", String.valueOf(obj[2]));
-                listaaux.put("asunto", String.valueOf(obj[3])+" - "+String.valueOf(obj[4]));
+                listaaux.put("asunto", String.valueOf(obj[3]) + " - " + String.valueOf(obj[4]));
                 listaaux.put("origen", String.valueOf(obj[5]));
                 listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
                 oficiosConExp.add(listaaux);
             }
         } catch (Exception e) {
@@ -514,6 +552,7 @@ public class OficioBean {
             ofi.setReferenciaOficio(null);
             ofi.setTramiteDatos(null);
             ofi.setUsuario(usu);
+            ofi.setResponsable(arearesponsable2);
             System.out.println(escogido2);
             ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
             dd.guardarOficio2(ofi);
@@ -529,6 +568,7 @@ public class OficioBean {
         generarFecha();
         this.abrirDocumentoUnico();
         this.asunto = "";
+        this.arearesponsable2 = " ";
     }
 
     public void guardar_documentoOfiInt() throws ParseException {
@@ -580,7 +620,7 @@ public class OficioBean {
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println("HORA Y FECHA: "+fechadia2+"-"+fechahora);
+        System.out.println("HORA Y FECHA: " + fechadia2 + "-" + fechahora);
         try {
             OficCirc ofi = new OficCirc();
             ofi.setCorrelaOficic(correlativo);
@@ -652,7 +692,7 @@ public class OficioBean {
                 fechahora = tokens.nextToken();
             }
         }
-        auxfecha=sdf.format(fecha);
+        auxfecha = sdf.format(fecha);
     }
 
     public void crearOficio() {
@@ -1150,6 +1190,30 @@ public class OficioBean {
 
     public void setFechadia2(String fechadia2) {
         this.fechadia2 = fechadia2;
+    }
+
+    public String getArearesponsable2() {
+        return arearesponsable2;
+    }
+
+    public void setArearesponsable2(String arearesponsable2) {
+        this.arearesponsable2 = arearesponsable2;
+    }
+
+    public List getAreasResp() {
+        return areasResp;
+    }
+
+    public void setAreasResp(List areasResp) {
+        this.areasResp = areasResp;
+    }
+
+    public List getOficiosOGPLuser() {
+        return oficiosOGPLuser;
+    }
+
+    public void setOficiosOGPLuser(List oficiosOGPLuser) {
+        this.oficiosOGPLuser = oficiosOGPLuser;
     }
 
 }

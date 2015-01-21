@@ -43,4 +43,7 @@ public interface OficioDAO {
     public void GuardarDocumentoOfiInt(DocusInternos di);
     public List obtenerTiposDocusOfCirc(String f);
     public List gettipos(String g);
+    public List getDependencias(String tipo);
+    public String getNombreOfi(String usu);
+    public List getOficOgplUser(String user);
 }

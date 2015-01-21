@@ -59,7 +59,7 @@
                     <p:inputText value="#{gestionDependenciaBean.codigodep}"/>
 
                     <p:outputLabel value="Nombre de Dependencia:"/>
-                    <p:inputText value="#{gestionDependenciaBean.nombredep}" style="text-transform:uppercase;"/>
+                    <p:inputTextarea  rows="2" cols="45" value="#{gestionDependenciaBean.nombredep}" style="text-transform:uppercase;"/>
 
                     <p:outputLabel value="Tipo de Dependencia:"/>
                     <p:selectOneMenu id="tipodepe" value="#{gestionDependenciaBean.tipodep}" >
@@ -71,6 +71,10 @@
                         <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
                         <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
                     </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Siglas:"/>
+                    <p:inputText value="#{gestionDependenciaBean.siglas}"/>
+                    
                 </p:panelGrid>
                 <br></br>
                 <center>

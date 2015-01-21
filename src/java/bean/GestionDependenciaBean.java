@@ -22,6 +22,7 @@ public class GestionDependenciaBean {
     private String codigodep;
     private String nombredep;
     private String tipodep;
+    private String siglas;
     private GestionDependenciaDao gdd;
 
     public GestionDependenciaBean() {
@@ -36,6 +37,7 @@ public class GestionDependenciaBean {
             d.setCodigo(Long.valueOf(codigodep));
             d.setNombre(nombredep);
             d.setTipodepe(tipodep);
+            d.setFlac(siglas);
             gdd.GuardarDependencia(d);
             limpiar();
         } catch (Exception e) {
@@ -71,6 +73,22 @@ public class GestionDependenciaBean {
 
     public void setTipodep(String tipodep) {
         this.tipodep = tipodep;
+    }
+
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
+    public GestionDependenciaDao getGdd() {
+        return gdd;
+    }
+
+    public void setGdd(GestionDependenciaDao gdd) {
+        this.gdd = gdd;
     }
 
 }

@@ -36,5 +36,8 @@
         <property name="asuntoOficio" type="string">
             <column name="ASUNTO_OFICIO" length="300" />
         </property>
+        <property name="responsable" type="string">
+            <column name="RESPONSABLE" length="300" />
+        </property>
     </class>
 </hibernate-mapping>

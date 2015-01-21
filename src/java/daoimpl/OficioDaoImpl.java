@@ -44,6 +44,79 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
+    public String getNombreOfi(String usu) {
+        String nombreofi = "";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT NOMBRE_OFICINA FROM OFICINA WHERE ID_OFICINA='" + usu + "'";
+        try {
+            session.beginTransaction();
+            nombreofi = (String) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal get nombre ofi ");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return nombreofi;
+    }
+
+    @Override
+    public List getOficOgplUser(String user) {
+        List depes = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get firma");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select R.documento,\n"
+                    + "       R.tramite,\n"
+                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       R.referencia,\n"
+                    + "       R.asunto,\n"
+                    + "       R.origen,\n"
+                    + "       R.destino,\n"
+                    + "       R.responsable\n"
+                    + "       From (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
+                    + "ofi.ASUNTO_OFICIO as asunto,\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is not null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + "union\n"
+                    + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
+                    + "ofi.ASUNTO_OFICIO,\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is null\n"
+                    + "and d1.nombre=oficina.nombre_oficina) R\n"
+                    + "where R.responsable='"+user+"'\n"
+                    + "order by R.fecha desc");
+            depes = (List) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal firma");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
+
+    @Override
     public TiposDocumentos getTipoDocu(String nombre) {
         System.out.println("get tipodocu");
         TiposDocumentos tipodocu = null;
@@ -155,14 +228,16 @@ public class OficioDaoImpl implements OficioDAO {
                     + "       R.referencia,\n"
                     + "       R.asunto,\n"
                     + "       R.origen,\n"
-                    + "       R.destino\n"
+                    + "       R.destino,\n"
+                    + "       R.responsable\n"
                     + "       From (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
                     + "ofi.FECHA_OFICIO as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
                     + "ofi.ASUNTO_OFICIO as asunto,\n"
                     + "d1.nombre as origen,\n"
-                    + "d2.nombre as destino\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
                     + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"
@@ -175,7 +250,8 @@ public class OficioDaoImpl implements OficioDAO {
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
                     + "ofi.ASUNTO_OFICIO,\n"
                     + "d1.nombre as origen,\n"
-                    + "d2.nombre as destino\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
                     + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"
@@ -472,6 +548,26 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("select NOMBRE,TIPODEPE\n"
                     + "from DEPENDENCIA");
+            depes = (List<String>) query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal dependencias");
+            System.out.println(e.getMessage());
+        }
+        return depes;
+    }
+
+    @Override
+    public List getDependencias(String tipo) {
+        List<String> depes = new ArrayList<String>();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get dependencias 3");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select NOMBRE\n"
+                    + "from DEPENDENCIA\n"
+                    + "where TIPODEPE='" + tipo + "'");
             depes = (List<String>) query.list();
             session.beginTransaction().commit();
             session.close();
