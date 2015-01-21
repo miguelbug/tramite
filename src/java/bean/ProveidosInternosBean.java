@@ -38,7 +38,7 @@ public class ProveidosInternosBean {
 
     private List documentos_internos, docselec, docselec2, otrosdocus, otrosdocus2, proveidos_internos;
     private ProveidosInternosDao pid;
-    public static String correlativo_impresion;
+    public static String correlativo_impresion, fecha_auxiliar;
     private Usuario usu;
     private final FacesContext faceContext;
     private Date fechaprov;
@@ -141,6 +141,7 @@ public class ProveidosInternosBean {
         asunto = hm.get("asunto").toString();
         correlativo_impresion = correlativo_proveido;
         tranum = correlativo_proveido;
+        fecha_auxiliar=fechaaux;
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf2.format(fechaprov);
     }

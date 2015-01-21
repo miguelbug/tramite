@@ -41,7 +41,7 @@
                     <p:menuitem value="Cambiar Contraseña" icon="ui-icon-wrench" oncomplete="PF('GUdialog').show()"/>
                 </p:submenu>            
             </p:menubar>
-            
+
             <p:dialog header="Gestión Usuario" widgetVar="GUNuevoUsuario" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="gunuevousuario">
                 <p:panelGrid columns="2" id="panelusu">
                     <p:outputLabel value="Personal: "/>
@@ -64,7 +64,7 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
+
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">
                     <p:outputLabel value="Contraseña Antigua:"/>
@@ -93,8 +93,11 @@
                     <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}">
                         <f:selectItem itemLabel="Destino" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
+                        <f:selectItem itemLabel="Oficina Interna" itemValue="1"/>
+                        <f:selectItem itemLabel="Institución Externa" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
+                        <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
+                        <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
                         <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":f3:pickList"/>
                     </p:selectOneMenu>
                     <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px" >
@@ -154,26 +157,29 @@
                     <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 
                     <p:outputLabel value="Día:"/>
-                    <p:inputText value="#{oficioBean.fechadia}"/>
+                    <p:inputText value="#{oficioBean.fechadia2}"/>
 
                     <p:outputLabel value="Hora:"/>
                     <p:outputLabel value="#{oficioBean.fechahora}"/>
-                    
+
                     <p:outputLabel value="Origen:"/>
                     <p:outputLabel value="#{oficioBean.origen}"/>
-                    
+
                     <p:outputLabel value="Responsable:"/>
                     <p:selectOneMenu id="listausuarios" value="#{oficioBean.responsableDI}">
                         <f:selectItem itemLabel="Seleccione Usuario" itemValue=" "/>
                         <f:selectItems value="#{oficioBean.listausuarios}"/>
                     </p:selectOneMenu>
-                    
+
                     <p:outputLabel value="Tipo Destino:"/>
                     <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}" >
                         <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                         <f:selectItem itemLabel="Facultad" itemValue="0"/>
-                        <f:selectItem itemLabel="Dependencia Externa" itemValue="2"/>
-                        <f:selectItem itemLabel="Dependencia Interna" itemValue="1"/>
+                        <f:selectItem itemLabel="Oficina Interna" itemValue="1"/>
+                        <f:selectItem itemLabel="Institución Externa" itemValue="2"/>
+                        <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
+                        <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
+                        <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
                         <p:ajax event="change" listener="#{oficioBean.agregardestinos()}" update="documentosOfioUnic"/>
                     </p:selectOneMenu>
 

@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import dao.DocumentoDAO;
+import java.util.StringTokenizer;
 import maping.Anios;
 import maping.Oficios;
 import maping.Usuario;
@@ -26,13 +27,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getFlag(String dependencia) {
         System.out.println("get tipodepe");
-        String tipodepe="";
-        String sql = "SELECT TIPODEPE FROM DEPENDENCIA WHERE NOMBRE= '"+dependencia+"'";
+        String tipodepe = "";
+        String sql = "SELECT TIPODEPE FROM DEPENDENCIA WHERE NOMBRE= '" + dependencia + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
             session.beginTransaction();
-            tipodepe=(String)session.createSQLQuery(sql).uniqueResult();
+            tipodepe = (String) session.createSQLQuery(sql).uniqueResult();
             session.getTransaction().commit();
             System.out.println("terminó gettipodepe");
         } catch (Exception e) {
@@ -500,7 +501,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             Query query = session.createSQLQuery("SELECT TD.TRAM_OBS \n"
                     + "FROM TRAMITE_DATOS TD\n"
                     + "WHERE TD.TRAM_NUM='" + tramnum + "'\n"
-                    + "AND TO_CHAR(TD.TRAM_FECHA,'dd/MM/yyyy HH24:MI:SS')='"+fecha+"'");
+                    + "AND TO_CHAR(TD.TRAM_FECHA,'dd/MM/yyyy')='" + partir(fecha) + "'");
             codigos = (String) query.uniqueResult();
             session.beginTransaction().commit();
             session.close();
@@ -510,6 +511,18 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             System.out.println(e.getMessage());
         }
         return codigos;
+    }
+
+    public String partir(String fecha) {
+        String[] cadena = new String[2];
+        int i = 0;
+        StringTokenizer tokens = new StringTokenizer(fecha);
+        while (tokens.hasMoreTokens()) {
+            cadena[i] = tokens.nextToken();
+            i++;
+        }
+        return cadena[0];
+
     }
 
     @Override

@@ -196,17 +196,18 @@ public class DocumentosBean implements Serializable {
         codinterno = "100392";
     }
 
-    /*public void mostrarOficio() {
+    public void mostrarOficio() {
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
         fechaaux = sdf.format(fecha);
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
-        referencia = dd.getMotivo(tramnum);
+        referencia = hm.get("observacion");
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
-    }*/
+    }
 
     public void Eliminar() {
         FacesMessage message = null;

@@ -444,6 +444,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("correlativo", ProveidosInternosBean.correlativo_impresion);
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
+        parametros.put("fecha", partir(ProveidosInternosBean.fecha_auxiliar));
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
