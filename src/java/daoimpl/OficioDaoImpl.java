@@ -28,8 +28,28 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public List getAllDependencias() {
+        List lista= new ArrayList();
+        String sql = "SELECT NOMBRE FROM DEPENDENCIA\n"
+                + "ORDER BY TIPODEPE ASC";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery(sql);
+            lista=(List)query.list();
+             session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("mal get all depe");
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+
+    @Override
     public void ActualizarOficio(String correla, String asunto, String destino) {
-        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + destino + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        String codigo=String.valueOf(this.getDependencias2(destino).getCodigo());
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
@@ -49,7 +69,7 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public void DeleteOficio(String correlativo) {
-        String sql = "DELETE FROM OFICIOS WHERE CORRELATIVO_OFICIO='"+correlativo+"'";
+        String sql = "DELETE FROM OFICIOS WHERE CORRELATIVO_OFICIO='" + correlativo + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {

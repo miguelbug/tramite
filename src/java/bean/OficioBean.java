@@ -55,7 +55,7 @@ public class OficioBean {
     private DerivarDAO deriv;
     private String correlativo = "";
     private String correlativo2 = "";
-    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2;
+    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar;
     private List docselec;
     public List depe2;
     private List depe;
@@ -125,9 +125,10 @@ public class OficioBean {
         detallecirc = new ArrayList<Map<String, String>>();
         tiposdocus = new ArrayList<String>();
         cities2 = new ArrayList<String>();
+        this.listaeditar = new ArrayList<String>();
         this.oficiosOGPLuser = new ArrayList<Map<String, String>>();
         this.areasResp = new ArrayList<String>();
-
+        listaeditar = od.getAllDependencias();
         llenardepes();
 
         boolean isofcirc = (currentPage.lastIndexOf("Oficios_Circulares.xhtml") > -1);
@@ -155,25 +156,25 @@ public class OficioBean {
     }
 
     public void onEdit(RowEditEvent event) {
-        String correlativo=String.valueOf(((HashMap)event.getObject()).get("correlativo"));
-        String asunto=String.valueOf(((HashMap)event.getObject()).get("asunto"));
-        String destino=String.valueOf(((HashMap)event.getObject()).get("destino"));
-        System.out.println(correlativo+" "+asunto+" "+destino);
+        String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
+        String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
+        String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
+        System.out.println(correlativo + " " + asunto + " " + destino);
         od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino);
         mostrarOficioConExp();
         FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap)event.getObject()).get("correlativo")));
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public void onCancel(RowEditEvent event) {
         FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", String.valueOf(((HashMap)event.getObject()).get("correlativo")));
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
-    
-    public void delete(){
-        for(int i=0;i<docselec2.size();i++){
+
+    public void delete() {
+        for (int i = 0; i < docselec2.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
             od.DeleteOficio(hm.get("correlativo").toString().substring(10, 15));
         }
@@ -1251,6 +1252,14 @@ public class OficioBean {
 
     public void setDocselec2(List docselec2) {
         this.docselec2 = docselec2;
+    }
+
+    public List getListaeditar() {
+        return listaeditar;
+    }
+
+    public void setListaeditar(List listaeditar) {
+        this.listaeditar = listaeditar;
     }
 
 }

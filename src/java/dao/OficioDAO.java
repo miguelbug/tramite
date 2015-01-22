@@ -48,4 +48,5 @@ public interface OficioDAO {
     public List getOficOgplUser(String user);
     public void ActualizarOficio(String correla, String asunto, String destino);
     public void DeleteOficio(String correlativo);
+    public List getAllDependencias();
 }

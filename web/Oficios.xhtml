@@ -46,7 +46,7 @@
                                     </p:cellEditor>
 
                                 </p:column>
-                                <p:column headerText="OFIC. RESP." width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                <p:column headerText="OFIC. RESP." width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
                                     <p:outputLabel value="#{item.asignado}"/>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
@@ -55,13 +55,8 @@
                                             <p:outputLabel value="#{item.destino}"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:selectOneMenu value="#{item.destino}">
-                                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392"/>
-                                                <f:selectItem itemLabel="OGPL - OFICINA DE PRESUPUESTO" itemValue="1001868"/>
-                                                <f:selectItem itemLabel="OGPL - OFICINA DE RACIONALIZACION" itemValue="1001869"/>
-                                                <f:selectItem itemLabel="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870"/>
-                                                <f:selectItem itemLabel="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" itemValue="1001871"/>
-                                                <f:selectItem itemLabel="OGPL - OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872"/>
+                                            <p:selectOneMenu value="#{item.destino}" filter="true" filterMatchMode="contains">
+                                                <f:selectItems value="#{oficioBean.listaeditar}"/>
                                             </p:selectOneMenu>
                                         </f:facet>
                                     </p:cellEditor>
