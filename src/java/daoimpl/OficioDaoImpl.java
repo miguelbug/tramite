@@ -47,9 +47,9 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
-    public void ActualizarOficio(String correla, String asunto, String destino) {
+    public void ActualizarOficio(String correla, String asunto, String destino, String asignado) {
         String codigo=String.valueOf(this.getDependencias2(destino).getCodigo());
-        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', RESPONSABLE='"+asignado+"' WHERE CORRELATIVO_OFICIO='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
@@ -556,15 +556,14 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficioscirculares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
                     + "DECODE(OFI.ASUNTO,NULL,'SIN ASUNTO',OFI.ASUNTO) AS ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE,\n"
                     + "OFI.FIRMA,\n"
                     + "OFI.RESPONSABLE\n"
-                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, Oficina oficina, TIPOS_DOCUMENTOS TD\n"
+                    + "FROM OFIC_CIRC OFI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
-                    + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "ORDER BY OFI.FECHA DESC");
             oficioscirc = query.list();

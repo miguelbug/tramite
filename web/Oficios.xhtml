@@ -35,19 +35,33 @@
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <p:outputLabel value="#{item.fecha}"/>
                                 </p:column>
-                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                <p:column headerText="ASUNTO" width="10" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <p:cellEditor>
                                         <f:facet name="output">
                                             <p:outputLabel value="#{item.asunto}"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputTextarea rows="3" cols="100" value="#{item.asunto}"/>
+                                            <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
                                         </f:facet>
                                     </p:cellEditor>
 
                                 </p:column>
-                                <p:column headerText="OFIC. RESP." width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
-                                    <p:outputLabel value="#{item.asignado}"/>
+                                <p:column headerText="AREA RESP." width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{item.asignado}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{item.asignado}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="OFICINA GENERAL DE PLANIFICACION" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PLANES Y PROGRAMAS" itemValue="OGPL - OFICINA DE PLANES Y PROGRAMAS" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PRESUPUESTO" itemValue="OGPL - OFICINA DE PRESUPUESTO" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE RACIONALIZACION" itemValue="OGPL - OFICINA DE RACIONALIZACION" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" itemValue="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" itemValue="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <p:cellEditor>
