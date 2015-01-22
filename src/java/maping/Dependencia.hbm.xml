@@ -20,6 +20,9 @@
         <property name="flac2" type="string">
             <column name="FLAC2" length="10" />
         </property>
+        <property name="flac3" type="string">
+            <column name="FLAC3" length="20" />
+        </property>
         <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />

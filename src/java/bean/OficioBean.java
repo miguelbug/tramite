@@ -161,6 +161,9 @@ public class OficioBean {
         String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
         String asignado = String.valueOf(((HashMap) event.getObject()).get("asignado"));
         System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado);
+        if(asunto.indexOf("SIN REFERENCIA -")!=-1){
+            asunto = asunto.substring(17, asunto.length());
+        }
         od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino, asignado);
         mostrarOficioConExp();
         FacesMessage message = null;
@@ -263,6 +266,7 @@ public class OficioBean {
     }
 
     public void abrirDocumentoUnico() {
+        arearesponsable2="OFICINA GENERAL DE PLANIFICACION";
         getAnio();
         generarFecha4();
         generarCorrelativoOfiUnico();
