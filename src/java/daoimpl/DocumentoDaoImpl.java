@@ -25,6 +25,26 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public String getTram_Fecha(String tramnum, String movi) {
+        String tramfecha = "";
+        String sql = "SELECT TO_CHAR(TRAM_FECHA,'dd/MM/yyyy HH:mm:ss') FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM= '" + tramnum + "' AND MOVI_NUM='"+movi+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            tramfecha = (String) session.createSQLQuery(sql).uniqueResult();
+            session.getTransaction().commit();
+            System.out.println("terminó tramfecha");
+        } catch (Exception e) {
+            System.out.println("mal tramfecha");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return tramfecha;
+    }
+
+    @Override
     public String getFlag(String dependencia) {
         System.out.println("get tipodepe");
         String tipodepe = "";
@@ -304,7 +324,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,"
                     + "tm.ESTA_NOMBRE,"
                     + "I.INDI_NOMBRE,"
-                    + "tm.ESTAD_CONFRIRM\n"
+                    + "tm.ESTAD_CONFRIRM,\n"
+                    + "tm.tram_fecha"
                     + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"

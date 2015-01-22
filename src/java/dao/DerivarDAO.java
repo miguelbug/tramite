@@ -30,11 +30,11 @@ public interface DerivarDAO {
 
     public int getMovimiento(String tramnum);
 
-    public void InsertarMovimiento(Usuario usu, int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String origen, String destino, Indicador i);
+    public void InsertarMovimiento(Usuario usu, int movimiento, Date fechaenvio, String asunto, String estado, String numtram, String tramfecha, String origen, String destino, Indicador i);
 
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1);
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, String tramfecha, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1);
 
-    public TramiteDatos getTramite(String tramite);
+    public TramiteDatos getTramite(String tramite, String tramfecha);
 
     public Dependencia getDependencia(String nombre);
 
@@ -87,14 +87,14 @@ public interface DerivarDAO {
     public TramiteMovimiento getTramiteMovimiento(String numtram, String movi);
 
     public TiposDocumentos getTipoDoc(String tipo);
-    
+
     public TiposDocumentos getTipoDocIndix(String indice);
-    
+
     public String getCorrelativoOficinaInterna(Usuario usu, String tipo, String anio);
-    
+
     public String getCodigoUsuario(String usu);
-    
+
     public List listaUsuarios(String oficina);
-    
+
     public Usuario getUsuarioDI(String nombre);
 }

@@ -44,4 +44,5 @@ public interface DocumentoDAO {
     public void guardarNuevoAnio(String anio);
     
     public String getFlag(String dependencia);
+    public String getTram_Fecha(String tramnum, String movi);
 }

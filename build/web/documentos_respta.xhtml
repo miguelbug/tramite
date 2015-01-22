@@ -103,13 +103,15 @@
                                 <p:outputLabel value="Expediente:"/>
                                 <p:outputLabel value="#{documentosBean.tramnum}" />
                                 <p:outputLabel value="Asunto:"/>
-                                <p:outputLabel value="#{documentosBean.referencia}"/>
+                                <p:outputLabel value="#{documentosBean.referencia}" style=""/>
                                 <p:outputLabel value="Observación"/>
                                 <p:inputTextarea  rows="2" cols="45" value="#{documentosBean.asunto}" style="text-transform:uppercase;"/>
                                 <p:outputLabel value="Fecha:"/>
                                 <p:outputLabel value="#{documentosBean.fechaaux}"/>
                                 <p:outputLabel value="Origen:"/>
                                 <p:outputLabel value="OFICINA GENERAL DE PLANIFICACION"/>
+                                <p:outputLabel value="Responsable:"/>
+                                <p:outputLabel value="#{documentosBean.responsable}"/>
                                 <p:outputLabel value="Tipo de Destino:"/>
                                 <p:selectOneMenu id="tipodestino" value="#{documentosBean.tipodestino}">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>

@@ -177,46 +177,46 @@ public class DocumentoUsuarioBean {
 
         try {
             /*System.out.println("lista por tipo");
-            List lista1 = new ArrayList();
-            List lista2 = new ArrayList();
-            lista1=di.getDocInternos1((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
-            lista2=di.getDocInternos2((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
-            Iterator ite1 = lista1.iterator();
-            Iterator ite2 = lista2.iterator();
-            Object obj1[] = new Object[11];
-            Object obj2[] = new Object[9];
-            while (ite1.hasNext()) {
-                obj1 = (Object[]) ite1.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("iddoc", String.valueOf(obj1[0]));
-                listaaux.put("documento", String.valueOf(obj1[1]));
-                listaaux.put("expediente", String.valueOf(obj1[2]));
-                listaaux.put("fechaexp", String.valueOf(obj1[3]));
-                listaaux.put("asunto", String.valueOf(obj1[4]));
-                listaaux.put("origen", String.valueOf(obj1[5]));
-                listaaux.put("destino", String.valueOf(obj1[6]));
-                listaaux.put("asignado", String.valueOf(obj1[7]));
-                listaaux.put("iddocumento", String.valueOf(obj1[8]));
-                listaaux.put("docprincipal", String.valueOf(obj1[9]));
-                listaaux.put("origprincipal", String.valueOf(obj1[10]));
-                listadocspropios.add(listaaux);
-            }
-            while (ite2.hasNext()) {
-                obj2 = (Object[]) ite2.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("iddoc", String.valueOf(obj2[0]));
-                listaaux.put("documento", String.valueOf(obj2[1]));
-                listaaux.put("expediente", String.valueOf(obj2[2]));
-                listaaux.put("fechaexp", String.valueOf(obj2[3]));
-                listaaux.put("asunto", String.valueOf(obj2[4]));
-                listaaux.put("origen", String.valueOf(obj2[5]));
-                listaaux.put("destino", String.valueOf(obj2[6]));
-                listaaux.put("asignado", String.valueOf(obj2[7]));
-                listaaux.put("iddocumento", String.valueOf(obj2[8]));
-                listaaux.put("docprincipal", "SIN DOCUMENTO");
-                listaaux.put("origprincipal", "SIN ORIGEN");
-                listadocspropios.add(listaaux);
-            }*/
+             List lista1 = new ArrayList();
+             List lista2 = new ArrayList();
+             lista1=di.getDocInternos1((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
+             lista2=di.getDocInternos2((deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu())));
+             Iterator ite1 = lista1.iterator();
+             Iterator ite2 = lista2.iterator();
+             Object obj1[] = new Object[11];
+             Object obj2[] = new Object[9];
+             while (ite1.hasNext()) {
+             obj1 = (Object[]) ite1.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("iddoc", String.valueOf(obj1[0]));
+             listaaux.put("documento", String.valueOf(obj1[1]));
+             listaaux.put("expediente", String.valueOf(obj1[2]));
+             listaaux.put("fechaexp", String.valueOf(obj1[3]));
+             listaaux.put("asunto", String.valueOf(obj1[4]));
+             listaaux.put("origen", String.valueOf(obj1[5]));
+             listaaux.put("destino", String.valueOf(obj1[6]));
+             listaaux.put("asignado", String.valueOf(obj1[7]));
+             listaaux.put("iddocumento", String.valueOf(obj1[8]));
+             listaaux.put("docprincipal", String.valueOf(obj1[9]));
+             listaaux.put("origprincipal", String.valueOf(obj1[10]));
+             listadocspropios.add(listaaux);
+             }
+             while (ite2.hasNext()) {
+             obj2 = (Object[]) ite2.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("iddoc", String.valueOf(obj2[0]));
+             listaaux.put("documento", String.valueOf(obj2[1]));
+             listaaux.put("expediente", String.valueOf(obj2[2]));
+             listaaux.put("fechaexp", String.valueOf(obj2[3]));
+             listaaux.put("asunto", String.valueOf(obj2[4]));
+             listaaux.put("origen", String.valueOf(obj2[5]));
+             listaaux.put("destino", String.valueOf(obj2[6]));
+             listaaux.put("asignado", String.valueOf(obj2[7]));
+             listaaux.put("iddocumento", String.valueOf(obj2[8]));
+             listaaux.put("docprincipal", "SIN DOCUMENTO");
+             listaaux.put("origprincipal", "SIN ORIGEN");
+             listadocspropios.add(listaaux);
+             }*/
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
@@ -248,46 +248,46 @@ public class DocumentoUsuarioBean {
 
         try {
             /*System.out.println("lista por tipo");
-            List lista1 = new ArrayList();
-            List lista2 = new ArrayList();
-            lista1=di.getDocInternosXtipo_1(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
-            lista2=di.getDocInternosXtipo_2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
-            Iterator ite1 = lista1.iterator();
-            Iterator ite2 = lista2.iterator();
-            Object obj1[] = new Object[11];
-            Object obj2[] = new Object[9];
-            while (ite1.hasNext()) {
-                obj1 = (Object[]) ite1.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("iddoc", String.valueOf(obj1[0]));
-                listaaux.put("documento", String.valueOf(obj1[1]));
-                listaaux.put("expediente", String.valueOf(obj1[2]));
-                listaaux.put("fechaexp", String.valueOf(obj1[3]));
-                listaaux.put("asunto", String.valueOf(obj1[4]));
-                listaaux.put("origen", String.valueOf(obj1[5]));
-                listaaux.put("destino", String.valueOf(obj1[6]));
-                listaaux.put("asignado", String.valueOf(obj1[7]));
-                listaaux.put("iddocumento", String.valueOf(obj1[8]));
-                listaaux.put("docprincipal", String.valueOf(obj1[9]));
-                listaaux.put("origprincipal", String.valueOf(obj1[10]));
-                listadocspropios.add(listaaux);
-            }
-            while (ite2.hasNext()) {
-                obj2 = (Object[]) ite2.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("iddoc", String.valueOf(obj2[0]));
-                listaaux.put("documento", String.valueOf(obj2[1]));
-                listaaux.put("expediente", String.valueOf(obj2[2]));
-                listaaux.put("fechaexp", String.valueOf(obj2[3]));
-                listaaux.put("asunto", String.valueOf(obj2[4]));
-                listaaux.put("origen", String.valueOf(obj2[5]));
-                listaaux.put("destino", String.valueOf(obj2[6]));
-                listaaux.put("asignado", String.valueOf(obj2[7]));
-                listaaux.put("iddocumento", String.valueOf(obj2[8]));
-                listaaux.put("docprincipal", "SIN DOCUMENTO");
-                listaaux.put("origprincipal", "SIN ORIGEN");
-                listadocspropios.add(listaaux);
-            }*/
+             List lista1 = new ArrayList();
+             List lista2 = new ArrayList();
+             lista1=di.getDocInternosXtipo_1(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
+             lista2=di.getDocInternosXtipo_2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
+             Iterator ite1 = lista1.iterator();
+             Iterator ite2 = lista2.iterator();
+             Object obj1[] = new Object[11];
+             Object obj2[] = new Object[9];
+             while (ite1.hasNext()) {
+             obj1 = (Object[]) ite1.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("iddoc", String.valueOf(obj1[0]));
+             listaaux.put("documento", String.valueOf(obj1[1]));
+             listaaux.put("expediente", String.valueOf(obj1[2]));
+             listaaux.put("fechaexp", String.valueOf(obj1[3]));
+             listaaux.put("asunto", String.valueOf(obj1[4]));
+             listaaux.put("origen", String.valueOf(obj1[5]));
+             listaaux.put("destino", String.valueOf(obj1[6]));
+             listaaux.put("asignado", String.valueOf(obj1[7]));
+             listaaux.put("iddocumento", String.valueOf(obj1[8]));
+             listaaux.put("docprincipal", String.valueOf(obj1[9]));
+             listaaux.put("origprincipal", String.valueOf(obj1[10]));
+             listadocspropios.add(listaaux);
+             }
+             while (ite2.hasNext()) {
+             obj2 = (Object[]) ite2.next();
+             Map<String, String> listaaux = new HashMap<String, String>();
+             listaaux.put("iddoc", String.valueOf(obj2[0]));
+             listaaux.put("documento", String.valueOf(obj2[1]));
+             listaaux.put("expediente", String.valueOf(obj2[2]));
+             listaaux.put("fechaexp", String.valueOf(obj2[3]));
+             listaaux.put("asunto", String.valueOf(obj2[4]));
+             listaaux.put("origen", String.valueOf(obj2[5]));
+             listaaux.put("destino", String.valueOf(obj2[6]));
+             listaaux.put("asignado", String.valueOf(obj2[7]));
+             listaaux.put("iddocumento", String.valueOf(obj2[8]));
+             listaaux.put("docprincipal", "SIN DOCUMENTO");
+             listaaux.put("origprincipal", "SIN ORIGEN");
+             listadocspropios.add(listaaux);
+             }*/
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             lista = di.getDocInternosXtipo(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()), this.tipodocupropio);
@@ -330,7 +330,7 @@ public class DocumentoUsuarioBean {
                 fechahora2 = tokens.nextToken();
             }
         }
-        System.out.println("FECHA Y HORA: "+fechaconfirmar+"-"+fechahora2);
+        System.out.println("FECHA Y HORA: " + fechaconfirmar + "-" + fechahora2);
 
     }
 
@@ -340,7 +340,7 @@ public class DocumentoUsuarioBean {
         Asignar();
         System.out.println("\nSALE DE ASIGNAR\n");
         docselec2.clear();
-        asignado=" ";
+        asignado = " ";
     }
 
     public void llenarDesignados() {
@@ -467,8 +467,8 @@ public class DocumentoUsuarioBean {
                  SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");*/
                 Date nuevFech = new Date();
                 SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                nuevFech = sdf2.parse(fechaconfirmar+ " " + fechahora2);
-                System.out.println("Movimiento: "+movi);
+                nuevFech = sdf2.parse(fechaconfirmar + " " + fechahora2);
+                System.out.println("Movimiento: " + movi);
                 deriv.ConfirmarTramites(ntram, movi, nuevFech);
                 ntram = "";
             }
@@ -673,9 +673,9 @@ public class DocumentoUsuarioBean {
             System.out.println("El codigo es: " + codigo);
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fecha,docunombre);
-                deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), getNombOficina(), codinterno, in);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
+                deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fecha, docunombre);
+                deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), hm.get("fechaenvio"), getNombOficina(), codinterno, in);
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), hm.get("fechaenvio").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
             }
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + docunombre);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -719,7 +719,7 @@ public class DocumentoUsuarioBean {
                 if (i == 0) {
                     System.out.println(hm.get("numerotramite").toString());
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
-                    motivo = dd.getMotivo(hm.get("numerotramite").toString(),hm.get("fechaenvio").toString());
+                    motivo = dd.getMotivo(hm.get("numerotramite").toString(), hm.get("fechaenvio").toString());
                     asunto = motivo;
                 } else {
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
