@@ -577,6 +577,7 @@ public class OficioBean {
 
     public void guardar_oficiounico() {
         FacesMessage message = null;
+        String cadena=" N°"+" "+correlativo2+" "+siglasdocus+" "+auxanio;
         try {
             Oficios ofi = new Oficios();
             ofi.setAsuntoOficio(asunto.toUpperCase());
@@ -591,7 +592,7 @@ public class OficioBean {
             System.out.println(escogido2);
             ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
             dd.guardarOficio2(ofi);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO"+cadena);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
