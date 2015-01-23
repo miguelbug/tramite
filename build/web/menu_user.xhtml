@@ -25,14 +25,16 @@
                     <p:menuitem value="Documentos Propios" action="documentos_internosUsuario?faces-redirect=true"/>
                     <p:menuitem value="Oficios OGPL" action="oficios_ogpl?faces-redirect=true"/>
                 </p:submenu>
+
                 <p:submenu label="Registro" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos Internos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
                     <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
-
                 </p:submenu>
+                
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametros?faces-redirect=true" />
                 </p:submenu>
+
                 <p:submenu label="Mantenimiento" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Usuarios" actionListener="#{gestionUsuarioBean.listarJefesUser()}" oncomplete="PF('GUNuevoUsuario').show()" update="gunuevousuario" />
                 </p:submenu>
@@ -79,7 +81,6 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-
             <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="doccircdialog" style="width: 150px">
                 <p:panelGrid columns="2" id="formuloficCirc">
                     <p:outputLabel value="Tipo de Documento:"/>
@@ -197,6 +198,7 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
+
         </h:form>
     </h:body>
 </html>

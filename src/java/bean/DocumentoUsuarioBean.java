@@ -92,7 +92,7 @@ public class DocumentoUsuarioBean {
 
     }
 
-    public List Detalles_Circ() {
+    public void Detalles_Circ() {
         System.out.println("listando detalles");
         detallecirc2.clear();
         try {
@@ -108,8 +108,8 @@ public class DocumentoUsuarioBean {
         } catch (Exception e) {
             System.out.println("error aca");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return detallecirc2;
     }
 
     public String partirColumnas(String aPartir) {

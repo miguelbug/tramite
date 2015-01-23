@@ -28,9 +28,9 @@
                                             <f:selectItem itemLabel="MEMOS" itemValue="7"/>
                                             <f:selectItem itemLabel="ARCHIVO" itemValue="9"/>
                                         </p:selectOneMenu>
-                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
+                                        <p:commandButton id="mostrarbotonxtipo" value="Mostrar" action="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
                                         <p:outputLabel value="Todos los Documentos:"/>
-                                        <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios,tipodoculista"/>
+                                        <p:commandButton id="mostrarbotontodos" value="Mostrar Todos" action="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios,tipodoculista"/>
                                     </p:panelGrid>
                                 </p:panelGrid>
                                 <br></br>
@@ -40,7 +40,7 @@
                             <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{objxUnidadController.docselec1}"
-                                         rowKey="#{item.iddoc}">
+                                         rowKey="#{item.iddoc}" >
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
@@ -68,6 +68,12 @@
                                 <p:column headerText="#" width="1" >
                                     <h:outputText value="#{item.iddoc}"/>
                                 </p:column>
+                               <!-- <f:facet name="footer">
+                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-search" value="Crear Doc. Internos" style="position:absolute; left:25px; height:26px " oncomplete="PF('DocuDialog').show()"
+                                                     update=":form:docudialog" action="#{oficioBean.abrirDocumento()}" />
+                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Crear Doc. Circulares" style="position:absolute; left:220px; height:26px" oncomplete="PF('DocCircdialog').show()"
+                                                     update=":form:doccircdialog" action="#{oficioBean.abriroficio()}"/>
+                                </f:facet>-->
                             </p:dataTable>
                             <br></br>
                             <center>
@@ -121,8 +127,8 @@
                                     <h:outputText value="#{item.responsable}"/>
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
-                                    <p:commandButton process="tablasoficcirc" update=":form:tabladetalloficcirc2" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
-                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}"/>
+                                    <p:commandButton process="@this" update=":form:tabladetalloficcirc2" action="#{documentoUsuarioBean.Detalles_Circ()}" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
+                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}" />
                                     </p:commandButton>
                                 </p:column>
                             </p:dataTable>
@@ -130,7 +136,7 @@
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles_Circ()}" id="tabladetalloficcirc2" >
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.detallecirc2}" id="tabladetalloficcirc2" >
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>
@@ -189,6 +195,122 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
+                   <!-- <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog">
+                        <p:panelGrid columns="2" id="panelOfUn2">
+                            <p:outputLabel value="Tipo de Documento:"/>
+                            <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{oficioBean.tiposdocus}"/>
+                                <p:ajax event="change" update="panelOfUn2" listener="#{oficioBean.generarCorrelativo2()}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Documento:"/>
+                            <p:outputLabel value="#{oficioBean.escogido2} N°#{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
+
+                            <p:outputLabel value="Asunto:"/>
+                            <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
+
+                            <p:outputLabel value="Día:"/>
+                            <p:inputText value="#{oficioBean.fechadia2}"/>
+
+                            <p:outputLabel value="Hora:"/>
+                            <p:outputLabel value="#{oficioBean.fechahora}"/>
+
+                            <p:outputLabel value="Origen:"/>
+                            <p:outputLabel value="#{oficioBean.origen}"/>
+
+                            <p:outputLabel value="Responsable:"/>
+                            <p:selectOneMenu id="listausuarios" value="#{oficioBean.responsableDI}">
+                                <f:selectItem itemLabel="Seleccione Usuario" itemValue=" "/>
+                                <f:selectItems value="#{oficioBean.listausuarios}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Tipo Destino:"/>
+                            <p:selectOneMenu id="tipodestino" value="#{oficioBean.tipodestino}" >
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                <f:selectItem itemLabel="Oficina Interna" itemValue="1"/>
+                                <f:selectItem itemLabel="Institución Externa" itemValue="2"/>
+                                <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
+                                <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
+                                <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
+                                <p:ajax event="change" listener="#{oficioBean.agregardestinos()}" update="documentosOfioUnic"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Destino:"/>
+                            <p:selectOneMenu id="documentosOfioUnic" value="#{oficioBean.destino}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="OFICINA GENERAL DE PLANIFICACION"/>
+                                <f:selectItems value="#{oficioBean.destinos}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_documentoOfiInt()}" update="docudialog">
+                                <f:ajax event="click" onevent="DocuDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="doccircdialog" style="width: 150px">
+                        <p:panelGrid columns="2" id="formuloficCirc">
+                            <p:outputLabel value="Tipo de Documento:"/>
+                            <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{oficioBean.tiposdocus}"/>
+                                <p:ajax event="change" update="formuloficCirc"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Documento:"/>
+                            <p:outputLabel value="#{oficioBean.escogido} N° #{oficioBean.correlativo}-OGPL-#{oficioBean.auxanio}"/>
+
+                            <p:selectOneMenu id="tipodocuoficirc2" value="#{oficioBean.prueba}">
+                                <f:selectItem itemLabel="Destino" itemValue=" "/>
+                                <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                <f:selectItem itemLabel="Oficina Interna" itemValue="1"/>
+                                <f:selectItem itemLabel="Institución Externa" itemValue="2"/>
+                                <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
+                                <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
+                                <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
+                                <p:ajax event="change" listener="#{oficioBean.llenar()}" update=":form:pickList"/>
+                            </p:selectOneMenu>
+                            <p:pickList id="pickList" value="#{oficioBean.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" style="width: 350px" >
+                                <p:ajax process="pickList" event="transfer"/>
+                            </p:pickList>
+
+                            <p:outputLabel value="Asunto:"/>
+                            <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33" style="text-transform:uppercase;"/>
+                            <p:outputLabel value="Día:"/>
+                            <p:inputMask value="#{oficioBean.fechadia2}" mask="99/99/9999"/>
+                            <p:outputLabel value="Hora:"/>
+                            <p:outputLabel value="#{oficioBean.fechahora}"/>
+                            <p:outputLabel value="Firma:"/>
+                            <p:outputLabel value="#{oficioBean.firma}"/>
+                            <p:outputLabel value="Responsable:"/>
+                            <p:outputLabel value="#{oficioBean.responsable}"/>
+                            <p:outputLabel value="Área Responsable:"/>
+                            <p:outputLabel value="#{oficioBean.arearesponsable}"/>
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,avisooficcircdialog" oncomplete="PF('avisoOfCircDialog').show()">
+                                <f:ajax event="click" onevent="DocCircdialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="avisooficcircdialog" style="width: 150px">
+                        <center>
+                            <p:outputLabel value="EL OFICIO CIRCULAR N° #{oficioBean.correlativo} SE HA CREADO" rendered="#{oficioBean.ver}"/>
+                            <br></br>
+                            <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarReporteOficioCircular()}" ajax="false" rendered="#{oficioBean.ver}">
+                                <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
+                            </p:commandButton>
+
+                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{oficioBean.nover}"/>
+                            <br></br>
+                            <p:commandButton value="Aceptar" rendered="#{oficioBean.nover}">
+                                <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>-->
+
                     <br></br>
                     <br></br>	
                     <script type="text/javascript">

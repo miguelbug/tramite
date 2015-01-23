@@ -614,7 +614,7 @@ public class OficioBean {
             DocusInternos di = new DocusInternos();
             di.setDocuAsunto(asunto);
             di.setDocuCorrelaint(correlativo2);
-            fecha = sdf2.parse(fechadia + " " + fechahora);
+            fecha = sdf2.parse(fechadia2 + " " + fechahora);
             di.setFecharegistro(fecha);
             di.setDependenciaByCodigo(deriv.getDep(origen));
             di.setDependenciaByCodigo1(deriv.getDep(this.destino));
@@ -651,7 +651,51 @@ public class OficioBean {
         this.escogido2 = " ";
         this.tipodestino = " ";
     }
+    public void guardar_documentoOfiInt2() throws ParseException {
+        FacesMessage message = null;
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+        try {
+            DocusInternos di = new DocusInternos();
+            di.setDocuAsunto(asunto);
+            di.setDocuCorrelaint(correlativo2);
+            fecha = sdf2.parse(auxfecha);
+            di.setFecharegistro(fecha);
+            di.setDependenciaByCodigo(deriv.getDep(origen));
+            di.setDependenciaByCodigo1(deriv.getDep(this.destino));
+            di.setTiposDocumentos(od.getTipoDocu(escogido2));
+            di.setDocuSiglasint(siglasdocus);
+            di.setDocuNombreint(escogido2);
+            di.setDocuAnioint(auxanio);
+            di.setUsuario(usu);
+            di.setUsuario1(deriv.getUsuarioDI(responsableDI));
+            di.setDocuPricint("1");
+            od.GuardarDocumentoOfiInt(di);
+            /*DocumentosOfiint doif = new DocumentosOfiint();
+             doif.setAsunto(asunto);
+             doif.setCorrelativoDocofint(correlativo2);
+             doif.setFecha(fecha);
+             doif.setDependenciaByCodigo(deriv.getDep(origen));
+             doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
+             doif.setTiposDocumentos(od.getTipoDocu(escogido2));
+             doif.setSiglas(siglasdocus);
+             doif.setUsuario(usu);
+             od.GuardarDocumentoOfiInt(doif);*/
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido2);
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + escogido2);
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println("mal guardar oficiounico");
+            System.out.println(e.getMessage());
+        }
+        getAnio();
+        generarFecha();
+        generarCorrelativo2();
+        this.asunto = "";
+        this.escogido2 = " ";
+        this.tipodestino = " ";
+    }
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
