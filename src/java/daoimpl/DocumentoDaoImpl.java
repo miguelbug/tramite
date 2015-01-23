@@ -359,7 +359,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "D1.NOMBRE AS ORIGEN,\n"
                     + "DECODE(to_char(tm.FECHA_INGR,'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(tm.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "D2.NOMBRE AS DESTINO,\n"
-                    + "DECODE(tm.MOVI_OBS,NULL,' ',tm.MOVI_OBS) AS OBSV,\n"
+                    + "DECODE(tm.MOVI_OBS,NULL,' ',UPPER(tm.MOVI_OBS)) AS OBSV,\n"
                     + "tm.ESTA_NOMBRE,\n"
                     + "I.INDI_NOMBRE,\n"
                     + "tm.ESTAD_CONFRIRM\n"

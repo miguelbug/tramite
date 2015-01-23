@@ -233,7 +233,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
                     + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
-                    + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
+                    + "DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE,\n"
                     + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
                     + "USUA.USU_NOMBRE AS NOMBRE,\n"

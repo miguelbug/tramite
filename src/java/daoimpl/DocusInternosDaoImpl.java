@@ -30,7 +30,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
-                    + "OFI.ASUNTO,\n"
+                    + "DECODE(OFI.ASUNTO,NULL,'SIN ASUNTO',UPPER(OFI.ASUNTO)) AS ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE as origen,\n"
                     + "OFI.FIRMA,\n"
@@ -171,7 +171,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "       R.DOCUMENTO,\n"
                     + "       R.TRAM_NUM,\n"
                     + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
-                    + "       R.ASUNTO,\n"
+                    + "       DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)) AS ASUNTO,\n"
                     + "       R.ORIGEN,\n"
                     + "       R.DESTINO,\n"
                     + "       R.ASIGNADO,\n"
@@ -248,7 +248,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "       R.DOCUMENTO,\n"
                     + "       R.TRAM_NUM,\n"
                     + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
-                    + "       R.ASUNTO,\n"
+                    + "       DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)),\n"
                     + "       R.ORIGEN,\n"
                     + "       R.DESTINO,\n"
                     + "       R.ASIGNADO,\n"

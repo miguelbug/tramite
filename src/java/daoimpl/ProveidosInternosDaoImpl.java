@@ -31,7 +31,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             Query query = session.createSQLQuery("SELECT DI.DOCU_NOMBREINT||' N° '|| DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
                     + " TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH:MI:SS') AS FECHA,\n"
                     + " D1.NOMBRE AS ORIGEN,\n"
-                    + " DI.DOCU_ASUNTO AS ASUNTO\n"
+                    + " DECODE(DI.DOCU_ASUNTO,NULL,'SIN ASUNTO',UPPER(DI.DOCU_ASUNTO)) AS ASUNTO\n"
                     + " FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
                     + " WHERE DI.CODIGO=D1.CODIGO\n"
                     + " AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
@@ -74,7 +74,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             session.beginTransaction();
             Query query = session.createSQLQuery("select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
                     + "DE.NUMERODOC,\n"
-                    + "DE.ASUNTO,\n"
+                    + "DECODE(DE.ASUNTO,NULL,'SIN ASUNTO',UPPER(DE.ASUNTO)) as asunto,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
                     + "to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,\n"
