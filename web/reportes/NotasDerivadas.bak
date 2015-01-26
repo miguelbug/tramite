@@ -161,9 +161,9 @@ order by DESTINO,TRAM_NUM]]></queryString>
 			<band height="37"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="8"
-						y="17"
-						width="44"
+						x="4"
+						y="7"
+						width="94"
 						height="11"
 						key="textField-15"/>
 					<box></box>
