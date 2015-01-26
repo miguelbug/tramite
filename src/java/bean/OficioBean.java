@@ -47,65 +47,25 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class OficioBean {
 
-    private String tipodepe;
-    private List oficioscirculares;
+    private String tipodepe,auxanio,correlativo = "",correlativo2 = "",asunto,fechadia,fechadia2,fechahora,firma,responsable,arearesponsable,arearesponsable2,auxfecha,destino,asunto2,seleccionado,escogido,escogido2,
+            prueba,nombre,tipodestino,siglasdocus = "",responsableDI,origen;
     private OficioDAO od;
-    private Date anio;
-    private String auxanio;
+    private Date anio,fecha;
     private DerivarDAO deriv;
-    private String correlativo = "";
-    private String correlativo2 = "";
-    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar;
-    private List docselec;
-    public List depe2;
-    private List depe;
-    private String[] escojidos;
-    private String asunto;
-    private Date fecha;
-    private String fechadia;
-    private String fechadia2;
-    private String fechahora;
-    private String firma;
-    private String responsable;
-    private String arearesponsable;
-    private String arearesponsable2;
-    private List seleccionados;
-    private boolean aparece;
-    private String auxfecha;
+    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar,oficioscirculares,docselec,depe2,depe,seleccionados,destinos,oficiosSinExp,oficiosConExp,detallecirc,
+            listausuarios,tiposdocus;
+    private String[] escojidos,selectedCities;
     private FacesContext faceContext;
     private Usuario usu;
-    private String destino;
-    private List destinos;
     private DocumentoDAO dd;
-    public List oficiosSinExp;
-    public List oficiosConExp;
-    private String asunto2;
-    private List detallecirc;
-    ///
-    private String origen;
     private Map<String, String> seleccion;
-    private String seleccionado;
-    private List listausuarios;
     private DualListModel<String> cities;
     List<String> citiesSource = new ArrayList<String>();
     List<String> citiesTarget = new ArrayList<String>();
-    //
-    private String escogido;
-    private String escogido2;
-    private List tiposdocus;
-    //
-    //pruebas
-    //
-    private String prueba;
     private List<String> cities2;
-    private String[] selectedCities;
-    private String nombre;
-    private String tipodestino;
     private static String correlativo_exportar;
-    private boolean ver, nover;
-    private String siglasdocus = "";
-    private String responsableDI;
-
+    private boolean ver, nover,aparece;
+    
     public OficioBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
