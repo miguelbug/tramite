@@ -208,16 +208,16 @@ ORDER BY R.ORIGEN_PRINCIPAL ASC]]></queryString>
 			<band height="22"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="452"
-						y="8"
-						width="44"
+						x="6"
+						y="7"
+						width="96"
 						height="11"
 						key="textField-18"/>
 					<box></box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Total: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>

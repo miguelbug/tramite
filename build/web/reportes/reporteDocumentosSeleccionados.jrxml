@@ -161,7 +161,20 @@ ORDER BY FECHA_REG DESC]]></queryString>
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="10"  isSplitAllowed="true" >
+			<band height="25"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="9"
+						width="94"
+						height="11"
+						key="textField-19"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
 			</band>
 			</groupFooter>
 		</group>

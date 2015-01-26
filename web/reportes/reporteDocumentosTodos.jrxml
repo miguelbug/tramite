@@ -172,16 +172,16 @@ ORDER BY DI.FECHAREGISTRO DESC]]></queryString>
 			<band height="27"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="677"
-						y="12"
-						width="44"
+						x="5"
+						y="10"
+						width="97"
 						height="11"
 						key="textField-19"/>
 					<box></box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Total: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>
