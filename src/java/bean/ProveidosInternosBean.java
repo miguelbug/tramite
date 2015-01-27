@@ -215,6 +215,7 @@ public class ProveidosInternosBean {
             ver = false;
             no_ver = true;
         }
+        getLista();
     }
 
     public String getAnio() {

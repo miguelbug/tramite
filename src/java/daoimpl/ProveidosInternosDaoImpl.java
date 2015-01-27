@@ -35,6 +35,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + " FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, TIPOS_DOCUMENTOS TD\n"
                     + " WHERE DI.CODIGO=D1.CODIGO\n"
                     + " AND DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + " AND DI.DOCU_NOMBREINT||' N° '|| DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT NOT IN(SELECT NUMERODOC FROM DOCUS_EXTINT)\n"
                     + " AND DI.CODIGO1='100392'\n"
                     + " ORDER BY DI.FECHAREGISTRO DESC");
             proveidos = query.list();
