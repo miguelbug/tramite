@@ -178,7 +178,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="48"  isSplitAllowed="true" >
+			<band height="59"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
@@ -194,8 +194,8 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="1"
-						y="32"
+						x="-1"
+						y="40"
 						width="528"
 						height="14"
 						key="textField-1"/>
@@ -257,10 +257,23 @@ order by DESTINO,TRAM_NUM]]></queryString>
 					</textElement>
 				<text><![CDATA[Fec. Impresion:]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="361"
+						y="27"
+						width="76"
+						height="11"
+						key="textField-16"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Lote: "+$F{CONTADOR}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="8"  isSplitAllowed="true" >
+			<band height="5"  isSplitAllowed="true" >
 			</band>
 		</columnHeader>
 		<detail>
@@ -411,19 +424,6 @@ order by DESTINO,TRAM_NUM]]></queryString>
 						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="112"
-						y="0"
-						width="76"
-						height="11"
-						key="textField-16"/>
-					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Lote: "+$F{CONTADOR}]]></textFieldExpression>
 				</textField>
 			</band>
 		</columnFooter>
