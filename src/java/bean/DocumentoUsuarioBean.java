@@ -316,20 +316,58 @@ public class DocumentoUsuarioBean {
     }
 
     public void abrirAsignacion() {
-        llenarDesignados();
-        Date nuevafecha = new Date();
+        String fechavacia = "nf", fechallena = "nf";
         fechaconfirmar = "";
         this.fechahora2 = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        StringTokenizer tokens = new StringTokenizer(sdf.format(nuevafecha), " ");
-        while (tokens.hasMoreTokens()) {
-            if (fechaconfirmar.equals("")) {
-                fechaconfirmar = tokens.nextToken();
-            }
-            if (fechahora2.equals("")) {
-                fechahora2 = tokens.nextToken();
+        for (int i = 0; i < docselec2.size(); i++) {
+            Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+            if (hm.get("fechaingr").toString().equals(" ")) {
+                fechavacia = hm.get("fechaingr").toString();
+            } else {
+                if (!hm.get("fechaingr").toString().equals(" ")) {
+                    fechallena = hm.get("fechaingr").toString();
+                }
             }
         }
+        llenarDesignados();
+        if (fechavacia.equals(" ") && fechallena.equals("nf")) {
+            Date nuevafecha = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            StringTokenizer tokens = new StringTokenizer(sdf.format(nuevafecha), " ");
+            while (tokens.hasMoreTokens()) {
+                if (fechaconfirmar.equals("")) {
+                    fechaconfirmar = tokens.nextToken();
+                }
+                if (fechahora2.equals("")) {
+                    fechahora2 = tokens.nextToken();
+                }
+            }
+        } else {
+            if (!fechallena.equals(" ")) {
+                StringTokenizer tokens = new StringTokenizer(fechallena, " ");
+                while (tokens.hasMoreTokens()) {
+                    if (fechaconfirmar.equals("")) {
+                        fechaconfirmar = tokens.nextToken();
+                    }
+                    if (fechahora2.equals("")) {
+                        fechahora2 = tokens.nextToken();
+                    }
+                }
+            }
+        }
+        /*Date nuevafecha = new Date();
+         fechaconfirmar = "";
+         this.fechahora2 = "";
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+         StringTokenizer tokens = new StringTokenizer(sdf.format(nuevafecha), " ");
+         while (tokens.hasMoreTokens()) {
+         if (fechaconfirmar.equals("")) {
+         fechaconfirmar = tokens.nextToken();
+         }
+         if (fechahora2.equals("")) {
+         fechahora2 = tokens.nextToken();
+         }
+         }*/
         System.out.println("FECHA Y HORA: " + fechaconfirmar + "-" + fechahora2);
 
     }
