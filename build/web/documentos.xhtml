@@ -67,7 +67,7 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Imprimir" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
                                                          update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Reimprimir" style="position:absolute; left:310px; height:26px" oncomplete="PF('reimpresion').show()"
                                                          update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{objxUnidadController.abrirReimpresion()}"/>

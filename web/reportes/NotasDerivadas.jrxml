@@ -34,7 +34,8 @@ DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY H
 ORIGEN,
 ASUNTO,
 DESTINO,
-TIPODOCUMENTOS
+TIPODOCUMENTOS,
+CONTADOR
 from temporal
 where impreso=1 and reimpreso IS null
 order by DESTINO,TRAM_NUM]]></queryString>
@@ -45,6 +46,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 	<field name="ASUNTO" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
 	<field name="TIPODOCUMENTOS" class="java.lang.String"/>
+	<field name="CONTADOR" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -404,6 +406,19 @@ order by DESTINO,TRAM_NUM]]></queryString>
 						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="112"
+						y="0"
+						width="44"
+						height="11"
+						key="textField-16"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Lote: "+$F{CONTADOR}]]></textFieldExpression>
 				</textField>
 			</band>
 		</columnFooter>
