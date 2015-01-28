@@ -47,14 +47,14 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class OficioBean {
 
-    private String tipodepe,auxanio,correlativo = "",correlativo2 = "",asunto,fechadia,fechadia2,fechahora,firma,responsable,arearesponsable,arearesponsable2,auxfecha,destino,asunto2,seleccionado,escogido,escogido2,
-            prueba,nombre,tipodestino,siglasdocus = "",responsableDI,origen;
+    private String tipodepe, auxanio, correlativo = "", correlativo2 = "", asunto, fechadia, fechadia2, fechahora, firma, responsable, arearesponsable, arearesponsable2, auxfecha, destino, asunto2, seleccionado, escogido, escogido2,
+            prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen;
     private OficioDAO od;
-    private Date anio,fecha;
+    private Date anio, fecha;
     private DerivarDAO deriv;
-    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar,oficioscirculares,docselec,depe2,depe,seleccionados,destinos,oficiosSinExp,oficiosConExp,detallecirc,
-            listausuarios,tiposdocus;
-    private String[] escojidos,selectedCities;
+    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar, oficioscirculares, docselec, depe2, depe, seleccionados, destinos, oficiosSinExp, oficiosConExp, detallecirc,
+            listausuarios, tiposdocus;
+    private String[] escojidos, selectedCities;
     private FacesContext faceContext;
     private Usuario usu;
     private DocumentoDAO dd;
@@ -64,8 +64,8 @@ public class OficioBean {
     List<String> citiesTarget = new ArrayList<String>();
     private List<String> cities2;
     private static String correlativo_exportar;
-    private boolean ver, nover,aparece;
-    
+    private boolean ver, nover, aparece;
+
     public OficioBean() {
         dd = new DocumentoDaoImpl();
         faceContext = FacesContext.getCurrentInstance();
@@ -115,13 +115,38 @@ public class OficioBean {
 
     }
 
+    public void onEdit2(RowEditEvent event) {
+        String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
+        String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
+        String origen = String.valueOf(((HashMap) event.getObject()).get("origen"));
+        System.out.println(correlativo + " " + asunto + " " + origen);
+        if(correlativo.length()==34){
+            correlativo=correlativo.substring(19, 24);
+        }else{
+            if(correlativo.length()==35){
+                correlativo=correlativo.substring(20, 25);
+            }
+        }
+        od.ActualizarOficioCircular(correlativo, asunto, origen);
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: "+String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+        mostrarofCirc();
+    }
+
+    public void onCancel2(RowEditEvent event) {
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: "+String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+
     public void onEdit(RowEditEvent event) {
         String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
         String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
         String asignado = String.valueOf(((HashMap) event.getObject()).get("asignado"));
         System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado);
-        if(asunto.indexOf("SIN REFERENCIA -")!=-1){
+        if (asunto.indexOf("SIN REFERENCIA -") != -1) {
             asunto = asunto.substring(17, asunto.length());
         }
         od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino, asignado);
@@ -226,7 +251,7 @@ public class OficioBean {
     }
 
     public void abrirDocumentoUnico() {
-        arearesponsable2="OFICINA GENERAL DE PLANIFICACION";
+        arearesponsable2 = "OFICINA GENERAL DE PLANIFICACION";
         getAnio();
         generarFecha4();
         generarCorrelativoOfiUnico();
@@ -537,7 +562,7 @@ public class OficioBean {
 
     public void guardar_oficiounico() {
         FacesMessage message = null;
-        String cadena=" N°"+" "+correlativo2+" "+siglasdocus+" "+auxanio;
+        String cadena = " N°" + " " + correlativo2 + " " + siglasdocus + " " + auxanio;
         try {
             Oficios ofi = new Oficios();
             ofi.setAsuntoOficio(asunto.toUpperCase());
@@ -552,7 +577,7 @@ public class OficioBean {
             System.out.println(escogido2);
             ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
             dd.guardarOficio2(ofi);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO"+cadena);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO" + cadena);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
@@ -612,6 +637,7 @@ public class OficioBean {
         this.escogido2 = " ";
         this.tipodestino = " ";
     }
+
     public void guardar_documentoOfiInt2() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -657,6 +683,7 @@ public class OficioBean {
         this.escogido2 = " ";
         this.tipodestino = " ";
     }
+
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

@@ -49,4 +49,7 @@ public interface OficioDAO {
     public void ActualizarOficio(String correla, String asunto, String destino, String asignado);
     public void DeleteOficio(String correlativo);
     public List getAllDependencias();
+    public void ActualizarOficioCircular(String correla, String asunto, String origen);
+    public void ActualizarDocusInternosOficinas(String id, String asunto);
+    public void EliminarDocumentosInternosOficinas(String id);
 }

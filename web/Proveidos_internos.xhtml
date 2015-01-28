@@ -15,7 +15,7 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <p:tabView>
-                         <p:ajax event="tabChange" listener="#{proveidosInternosBean.onTabChange}" update=":form:"/>
+                        <p:ajax event="tabChange" listener="#{proveidosInternosBean.onTabChange}" update=":form:"/>
                         <p:tab title="DOCUMENTOS INTERNOS">
                             <p:dataTable value="#{proveidosInternosBean.documentos_internos}" var="item" paginator="true" rows="15" id="tablainternos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -47,7 +47,10 @@
                             <p:dataTable value="#{proveidosInternosBean.proveidos_internos}" var="item" paginator="true" rows="15" id="tablaproveidosinternos" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{proveidosInternosBean.otrosdocus2}" selection="#{proveidosInternosBean.docselec2}"
-                                         rowKey="#{item.documento}" style="margin-bottom: 0">
+                                         rowKey="#{item.documento}" style="margin-bottom: 0" editable="true">
+
+                                <p:ajax event="rowEdit" listener="#{proveidosInternosBean.onEdit}"/>
+                                <p:ajax event="rowEditCancel" listener="#{proveidosInternosBean.onCancel}" />
 
                                 <p:column selectionMode="multiple" style="width:10px;text-align:center"/>
 
@@ -61,16 +64,46 @@
                                     <h:outputText value="#{item.fecha}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="2" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}" />
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.origen}" />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{item.origen}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="#{item.origen}" itemValue="#{item.origen}"/>
+                                                <f:selectItems value="#{proveidosInternosBean.listadependencias}"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.destino}" />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{item.destino}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="#{item.destino}" itemValue="#{item.destino}"/>
+                                                <f:selectItems value="#{proveidosInternosBean.listadependencias}"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="USUARIO" width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
                                     <h:outputText value="#{item.usuario}" />
+                                </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
@@ -97,7 +130,7 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    
+
                     <p:dialog header="Proveido - N° #{docusExternosBean.correlativo}-#{docusExternosBean.siglas}-#{docusExternosBean.auxanio}" widgetVar="provDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="docextpanel">
                         <p:panelGrid columns="2" id="panelProv">
                             <p:outputLabel value="Documento: "/>
@@ -145,7 +178,7 @@
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{docusExternosBean.dependenciasprov}"/>                           
                             </p:selectOneMenu>
-                            
+
 
                             <p:outputLabel value="Fecha: "/>
                             <p:outputLabel value="#{docusExternosBean.auxfecha}"/>
@@ -159,7 +192,7 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    
+
                     <p:dialog header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{proveidosInternosBean.correlativo_proveido} CREADO" rendered="#{proveidosInternosBean.ver}"/>
@@ -174,7 +207,7 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    
+
                     <p:dialog header="Mensaje" widgetVar="dialogMensajeExterno" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir2">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{docusExternosBean.correlativo} CREADO" rendered="#{docusExternosBean.ver}"/>

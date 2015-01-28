@@ -19,16 +19,41 @@
                             <p:dataTable value="#{oficioBean.oficioscirculares}" var="item" paginator="true" rows="15" id="tablaoficirc" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                                         rowKey="#{item.correlativo}" style="margin-bottom: 0" editable="true">
+
+
+                                <p:ajax event="rowEdit" listener="#{oficioBean.onEdit2}"/>
+                                <p:ajax event="rowEditCancel" listener="#{oficioBean.onCancel2}" />
 
                                 <p:column headerText="CORRELATIVO" width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                     <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="3" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="AREA RESP." width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origen}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.origen}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{item.origen}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE PRESUPUESTO" itemValue="1001868" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE RACIONALIZACION" itemValue="1001869" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
+                                                <f:selectItem itemLabel="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" itemValue="1001871" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="FECHA" width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
@@ -43,6 +68,9 @@
                                     <p:commandButton process="tablaoficirc" update=":form:tabladetalloficcirc" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
                                         <f:setPropertyActionListener value="#{item}" target="#{oficioBean.seleccion}"/>
                                     </p:commandButton>
+                                </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="tablaoficirc" icon="ui-icon-search" value="Crear Doc. Circ." style="position:absolute; left:25px; height:26px " oncomplete="PF('DocCircdialog').show()"

@@ -325,7 +325,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "tm.ESTA_NOMBRE,"
                     + "I.INDI_NOMBRE,"
                     + "tm.ESTAD_CONFRIRM,\n"
-                    + "tm.tram_fecha"
+                    + "tm.tram_fecha\n"
                     + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
