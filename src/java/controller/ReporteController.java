@@ -235,17 +235,17 @@ public class ReporteController {
             String archivo;
             archivo = sc.getRealPath(URL + reportParam.getNombreReport() + ".jrxml");
 
-            System.out.println("archivo:" + archivo);
+            System.out.println("ARCHIVO A EXPORTAR:" + archivo);
 
             if (!archivo.equals("")) {
                 report = JasperCompileManager.compileReport(archivo);
 
             } else {
-                System.out.println("no existe el archivo:" + archivo);
+                System.out.println("NO EXISTE EL ARCHIVO:" + archivo);
             }
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, reportParam.getQueryParams(), conexion);
-            System.out.println("pasado");
+            System.out.println("SE HA CREADO");
             return jasperPrint;
 
         } catch (JRException e) {

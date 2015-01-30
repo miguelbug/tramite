@@ -221,6 +221,7 @@
                         <f:ajax event="click" onevent="DocuDialog.hide()"/>
                     </p:commandButton>
                 </center>
+                <p:ajax event="close" listener="#{oficioBean.cerrar()}" update="docudialog"/>
             </p:dialog>
         </h:form>
     </h:body>

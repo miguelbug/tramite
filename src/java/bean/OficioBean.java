@@ -115,28 +115,34 @@ public class OficioBean {
 
     }
 
+    public void cerrar() {
+        this.asunto = "";
+        this.escogido2 = " ";
+        this.tipodestino = " ";
+    }
+
     public void onEdit2(RowEditEvent event) {
         String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
         String origen = String.valueOf(((HashMap) event.getObject()).get("origen"));
         System.out.println(correlativo + " " + asunto + " " + origen);
-        if(correlativo.length()==34){
-            correlativo=correlativo.substring(19, 24);
-        }else{
-            if(correlativo.length()==35){
-                correlativo=correlativo.substring(20, 25);
+        if (correlativo.length() == 34) {
+            correlativo = correlativo.substring(19, 24);
+        } else {
+            if (correlativo.length() == 35) {
+                correlativo = correlativo.substring(20, 25);
             }
         }
         od.ActualizarOficioCircular(correlativo, asunto, origen);
         FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: "+String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
         mostrarofCirc();
     }
 
     public void onCancel2(RowEditEvent event) {
         FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: "+String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 

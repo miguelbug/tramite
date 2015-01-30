@@ -167,30 +167,29 @@ public class DocumentosBean implements Serializable {
     }
 
     /*public void Guardar_prov() {
-        System.out.println("ENTRA LA P....");
-        DocusExtint di = new DocusExtint();
-        try {
-            System.out.println(asunto);
-            di.setNumerodoc(tramnum);
-            di.setTramiteDatos(deriv.getTramite(tramnum,));
-            di.setAsunto(asunto_prov);
-            di.setFecha(fecha);
-            di.setDependenciaByCodigo(deriv.getDep(origen_prov));
-            di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
-            di.setMovimientoDext(Long.parseLong("1"));
-            di.setUsuario(usu);
+     System.out.println("ENTRA LA P....");
+     DocusExtint di = new DocusExtint();
+     try {
+     System.out.println(asunto);
+     di.setNumerodoc(tramnum);
+     di.setTramiteDatos(deriv.getTramite(tramnum,));
+     di.setAsunto(asunto_prov);
+     di.setFecha(fecha);
+     di.setDependenciaByCodigo(deriv.getDep(origen_prov));
+     di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
+     di.setMovimientoDext(Long.parseLong("1"));
+     di.setUsuario(usu);
 
-            deriv.guardarDocusExt(di);
-            MostrarDocusInternos();
-            ver = true;
-            no_ver = false;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            ver = false;
-            no_ver = true;
-        }
-    }*/
-
+     deriv.guardarDocusExt(di);
+     MostrarDocusInternos();
+     ver = true;
+     no_ver = false;
+     } catch (Exception e) {
+     System.out.println(e.getMessage());
+     ver = false;
+     no_ver = true;
+     }
+     }*/
     public void limpiar_prov() {
         asunto = "";
         codinterno = "100392";
@@ -207,7 +206,7 @@ public class DocumentosBean implements Serializable {
         referencia = hm.get("observacion");
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
-        responsable=hm.get("origen").toString();
+        responsable = hm.get("origen").toString();
     }
 
     public void Eliminar() {
@@ -228,47 +227,55 @@ public class DocumentosBean implements Serializable {
     public void guardaroficio() {
         FacesMessage message = null;
         System.out.println("guardar oficio");
-        try {
-            String ntram = "";
-            int movi = 0;
-            for (int i = 0; i < docselec.size(); i++) {
-                Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-                Oficios ofi = new Oficios();
-                ofi.setAsuntoOficio(asunto);
-                ofi.setFechaOficio(fecha);
-                ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
-                ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
-                ofi.setCorrelativoOficio(correlativo_oficio);
-                ofi.setReferenciaOficio(dd.getMotivo(tramnum,dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
-                ofi.setTramiteDatos(deriv.getTramite(tramnum,dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
-                ofi.setUsuario(usu);
-                ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
-                ofi.setResponsable(responsable);
-                System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
-                dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
-                System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
-                
-                System.out.println("ESTE ES EL DOCSELEC: " + docselec);
-                ntram = hm.get("numerotramite").toString();
-                movi = Integer.parseInt(hm.get("movimiento").toString());
-                Date nuevFech = new Date();
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                System.out.println("confirmaar tramite entre");
-                deriv.Confirmar(ntram, movi,fecha);
-                System.out.println("confirmaar tramite sale");
+        if (tipodestino == null) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE INGRESAR EL DESTINO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println("TIENEN QUE INGRESAR EL DESTINO");
+        } else {
+            System.out.println("NADA ES NULL");
+            try {
+                String ntram = "";
+                int movi = 0;
+                for (int i = 0; i < docselec.size(); i++) {
+                    Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+                    Oficios ofi = new Oficios();
+                    ofi.setAsuntoOficio(asunto);
+                    ofi.setFechaOficio(fecha);
+                    ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
+                    ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
+                    ofi.setCorrelativoOficio(correlativo_oficio);
+                    ofi.setReferenciaOficio(dd.getMotivo(tramnum, dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
+                    ofi.setTramiteDatos(deriv.getTramite(tramnum, dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
+                    ofi.setUsuario(usu);
+                    ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
+                    ofi.setResponsable(responsable);
+                    System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+                    dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                    System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
+
+                    System.out.println("ESTE ES EL DOCSELEC: " + docselec);
+                    ntram = hm.get("numerotramite").toString();
+                    movi = Integer.parseInt(hm.get("movimiento").toString());
+                    Date nuevFech = new Date();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    System.out.println("confirmaar tramite entre");
+                    deriv.Confirmar(ntram, movi, fecha);
+                    System.out.println("confirmaar tramite sale");
+                }
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                limpiar();
+                MostrarDocusInternos();
+            } catch (Exception e) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                System.out.println("mal guardar oficio");
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-            limpiar();
-            MostrarDocusInternos();
-        } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-            System.out.println("mal guardar oficio");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
+
     }
 
     public void limpiar() {
@@ -1198,5 +1205,5 @@ public class DocumentosBean implements Serializable {
     public void setResponsable(String responsable) {
         this.responsable = responsable;
     }
-    
+
 }

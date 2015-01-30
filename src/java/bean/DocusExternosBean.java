@@ -66,7 +66,7 @@ public class DocusExternosBean implements Serializable {
     private String tipodestino;
     private String tipoorigen;
     private String siglas;
-    public static String correlativo_impresion,fecha_auxiliar;
+    public static String correlativo_impresion, fecha_auxiliar;
     private String siglasdocu;
 
     public DocusExternosBean() {
@@ -92,6 +92,17 @@ public class DocusExternosBean implements Serializable {
             MostrarDocusExt();
         }
 
+    }
+
+    public void cerrar() {
+        System.out.println("SE HA CERRADO");
+        tipoorigen=" ";
+        tipodestino=" ";
+        documento = " ";
+        asunto = "";
+        origen = " ";
+        destino = " ";
+        codigoexp="";
     }
 
     public void MostrarDocusExt() {
@@ -123,7 +134,7 @@ public class DocusExternosBean implements Serializable {
 
     public void Limpiar() {
         documento = " ";
-        asunto = " ";
+        asunto = "";
         origen = " ";
         destino = " ";
 
@@ -167,8 +178,8 @@ public class DocusExternosBean implements Serializable {
         generarCorrelativo();
         siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         correlativo_impresion = correlativo;
-        fecha_auxiliar=auxfecha;
-        System.out.println("FECHA AUX: "+fecha_auxiliar);
+        fecha_auxiliar = auxfecha;
+        System.out.println("FECHA AUX: " + fecha_auxiliar);
     }
 
     public void ObtenerDepIndic() {
@@ -271,8 +282,8 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void modificarNumeroDoc() {
-        codigoexp="";
-        codigoexp= documento+" N° "+codigoexp;
+        codigoexp = "";
+        codigoexp = documento + " N° " + codigoexp;
     }
 
     public void Guardar_ProvExt() {
