@@ -612,6 +612,7 @@ public class OficioBean {
                     dd.guardarOficio2(ofi);
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO" + cadena);
                     RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    mostrarOficioConExp();
                 } catch (Exception e) {
                     message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
                     RequestContext.getCurrentInstance().showMessageInDialog(message);

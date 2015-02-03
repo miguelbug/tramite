@@ -126,7 +126,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update=":form:">
                                 <f:ajax event="click" onevent="OFUnicDialog.hide()"/>
                             </p:commandButton>
                         </center>
