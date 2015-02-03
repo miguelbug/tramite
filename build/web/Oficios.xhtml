@@ -90,7 +90,7 @@
                     <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="ofiunicos">
                         <p:panelGrid columns="2" id="panelOfUn">
                             <p:outputLabel value="Documento:"/>
-                            <p:outputLabel value="Oficio N° #{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
+                            <p:inputText value="#{oficioBean.partedocu}"/>
                             <p:outputLabel value="Asunto:"/>
                             <p:inputTextarea  rows="2" cols="60" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 

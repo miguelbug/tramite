@@ -22,13 +22,33 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
     Session session;
 
     @Override
+    public void Elminiar(String documento) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "DELETE FROM DOCUS_EXTINT WHERE CORRELATIVOD='" + documento + "' ";
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó delete DOCUS_EXTINT");
+        } catch (Exception e) {
+            System.out.println("mal delete DOCUS_EXTINT");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
     public String getCodigoDepe(String nombre) {
         String nombredepe = "";
         session = HibernateUtil.getSessionFactory().openSession();
         String sql = "SELECT CODIGO FROM DEPENDENCIA WHERE NOMBRE='" + nombre + "' AND TIPODEPE IS NOT NULL";
         try {
             session.beginTransaction();
-            nombredepe = String.valueOf( session.createSQLQuery(sql).uniqueResult());
+            nombredepe = String.valueOf(session.createSQLQuery(sql).uniqueResult());
             session.beginTransaction().commit();
         } catch (Exception e) {
             System.out.println("mal get nombre DEPE ");

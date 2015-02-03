@@ -48,7 +48,7 @@ import org.primefaces.model.DualListModel;
 public class OficioBean {
 
     private String tipodepe, auxanio, correlativo = "", correlativo2 = "", asunto, fechadia, fechadia2, fechahora, firma, responsable, arearesponsable, arearesponsable2, auxfecha, destino, asunto2, seleccionado, escogido, escogido2,
-            prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen;
+            prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen, partedocu;
     private OficioDAO od;
     private Date anio, fecha;
     private DerivarDAO deriv;
@@ -265,6 +265,9 @@ public class OficioBean {
         ObtenerAreasResp();
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         origen = dd.getOficina(usu);
+        asunto = " ";
+        destino = " ";
+        this.partedocu = "Oficio N° "+correlativo2+"-"+siglasdocus+"-"+auxanio;
     }
 
     public void ObtenerAreasResp() {
@@ -301,6 +304,8 @@ public class OficioBean {
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
         siglasdocus = "OGPL";
+        asunto2 = " ";
+        escogido = " ";
 
     }
 
@@ -566,31 +571,56 @@ public class OficioBean {
         }
     }
 
+    public boolean validar_oficio(String documento) {
+
+        boolean encuentra = false;
+
+        for (int i = 0; i < oficiosConExp.size(); i++) {
+            Map<String, String> hm = (HashMap<String, String>) oficiosConExp.get(i);
+            if (hm.get("correlativo").toString().equals(documento)) {
+                encuentra = true;
+                break;
+            }
+        }
+        return encuentra;
+    }
+
     public void guardar_oficiounico() {
         FacesMessage message = null;
         String cadena = " N°" + " " + correlativo2 + " " + siglasdocus + " " + auxanio;
-        try {
-            Oficios ofi = new Oficios();
-            ofi.setAsuntoOficio(asunto.toUpperCase());
-            ofi.setCorrelativoOficio(correlativo2);
-            ofi.setFechaOficio(fecha);
-            ofi.setDependenciaByCodigo(deriv.getDep(origen));
-            ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
-            ofi.setReferenciaOficio(null);
-            ofi.setTramiteDatos(null);
-            ofi.setUsuario(usu);
-            ofi.setResponsable(arearesponsable2);
-            System.out.println(escogido2);
-            ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
-            dd.guardarOficio2(ofi);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO" + cadena);
+        if (validar_oficio(partedocu)) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "CORRELATIVO YA ESTA SIENDO USADO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-        } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-            System.out.println("mal guardar oficiounico");
-            System.out.println(e.getMessage());
+        } else {
+            if (asunto.equals(" ") || destino.equals(" ")) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE INGRESAR TODOS LOS DATOS");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            } else {
+                try {
+                    Oficios ofi = new Oficios();
+                    ofi.setAsuntoOficio(asunto.toUpperCase());
+                    ofi.setCorrelativoOficio(partedocu.substring(10, 15));
+                    ofi.setFechaOficio(fecha);
+                    ofi.setDependenciaByCodigo(deriv.getDep(origen));
+                    ofi.setDependenciaByCodigo1(deriv.getDep(this.destino));
+                    ofi.setReferenciaOficio(null);
+                    ofi.setTramiteDatos(null);
+                    ofi.setUsuario(usu);
+                    ofi.setResponsable(arearesponsable2);
+                    System.out.println(escogido2);
+                    ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
+                    dd.guardarOficio2(ofi);
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO" + cadena);
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                } catch (Exception e) {
+                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    System.out.println("mal guardar oficiounico");
+                    System.out.println(e.getMessage());
+                }
+            }
         }
+
         getAnio();
         generarFecha();
         this.abrirDocumentoUnico();
@@ -694,24 +724,36 @@ public class OficioBean {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         System.out.println("HORA Y FECHA: " + fechadia2 + "-" + fechahora);
-        try {
-            OficCirc ofi = new OficCirc();
-            ofi.setCorrelaOficic(correlativo);
-            ofi.setAsunto(asunto2.toUpperCase());
-            ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
-            fecha = sdf2.parse(fechadia2 + " " + fechahora);
-            ofi.setFecha(fecha);
-            ofi.setFirma(firma);
-            ofi.setResponsable(responsable);
-            ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
-            od.guardarOficioCircular(ofi);
-            mostrar();
-            ver = true;
-            nover = false;
-        } catch (Exception e) {
+        if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
             ver = false;
-            nover = true;
-            System.out.println(e.getMessage());
+            nover = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR TODOS LOS DATOS");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } else {
+            try {
+                OficCirc ofi = new OficCirc();
+                ofi.setCorrelaOficic(correlativo);
+                ofi.setAsunto(asunto2.toUpperCase());
+                ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
+                fecha = sdf2.parse(fechadia2 + " " + fechahora);
+                ofi.setFecha(fecha);
+                ofi.setFirma(firma);
+                ofi.setResponsable(responsable);
+                ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
+                od.guardarOficioCircular(ofi);
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido + " N° " + correlativo + "-" + siglasdocus + "-" + auxanio);
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                mostrar();
+                ver = true;
+                nover = false;
+            } catch (Exception e) {
+                ver = false;
+                nover = true;
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + escogido + " N° " + correlativo + "-" + siglasdocus + "-" + auxanio);
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                System.out.println(e.getMessage());
+            }
+
         }
 
         limpiar();
@@ -1303,6 +1345,14 @@ public class OficioBean {
 
     public void setListaeditar(List listaeditar) {
         this.listaeditar = listaeditar;
+    }
+
+    public String getPartedocu() {
+        return partedocu;
+    }
+
+    public void setPartedocu(String partedocu) {
+        this.partedocu = partedocu;
     }
 
 }

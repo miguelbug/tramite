@@ -72,15 +72,29 @@ public class ProveidosInternosBean {
 
     }
 
+    public void Eliminar() {
+        FacesMessage message = null;
+        try {
+            Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+            pid.Elminiar(hm.get("documento").toString().substring(13, 18));
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "ELIMINACION HECHA", "SE HA ELIMINADO EL PROVEIDO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO ELIMINAR EL PROVEIDO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+
+    }
+
     public void onEdit(RowEditEvent event) {
         String documento = String.valueOf(((HashMap) event.getObject()).get("documento"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
         String origen = String.valueOf(((HashMap) event.getObject()).get("origen"));
         String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
-        System.out.println(documento+" "+asunto+" "+origen+" "+destino+" "+hm.get("origen"));
+        System.out.println(documento + " " + asunto + " " + origen + " " + destino + " " + hm.get("origen"));
         pid.EditarProveidos(documento.substring(13, 18), asunto, origen, destino);
-        
+
         FacesMessage message = null;
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -154,6 +168,8 @@ public class ProveidosInternosBean {
     }
 
     public void mostrarProveido() {
+        tramnum = " ";
+        asunto = " ";
         fechaprov = new Date();
         System.out.println(docselec);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -216,31 +232,46 @@ public class ProveidosInternosBean {
         System.out.println("ENTRA LA P....");
         DocusExtint di = new DocusExtint();
         FacesMessage message = null;
-        TiposDocumentos td = new TiposDocumentos();
-        td.setFlag("2");
-        td.setNombreDocu("PROVEIDOS");
-        td.setIdDocumento(BigDecimal.valueOf(6));
-        try {
-            System.out.println(asunto.toUpperCase());
-            di.setNumerodoc(tramnum);
-            di.setAsunto(asunto.toUpperCase());
-            di.setFecha(fechaprov);
-            di.setFechaEnvio(fechaprov);
-            di.setDependenciaByCodigo(deriv.getDep(origen_prov));
-            di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
-            di.setMovimientoDext(Long.parseLong("1"));
-            di.setUsuario(pid.getUsuario(usu.getUsuNombre()));
-            di.setCorrelativod(correlativo_proveido);
-            di.setExtInt("pi");
-            di.setTiposDocumentos(td);
-            deriv.guardarDocusExt(di);
-            ver = true;
-            no_ver = false;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            ver = false;
-            no_ver = true;
+        if (tramnum.equals(" ")) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE SELECCIONAR EL DOCUMENTO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } else {
+            if (asunto.equals(" ")) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE INGRESAR EL ASUNTO");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            } else {
+                TiposDocumentos td = new TiposDocumentos();
+                td.setFlag("2");
+                td.setNombreDocu("PROVEIDOS");
+                td.setIdDocumento(BigDecimal.valueOf(6));
+                try {
+                    System.out.println(asunto.toUpperCase());
+                    di.setNumerodoc(tramnum);
+                    di.setAsunto(asunto.toUpperCase());
+                    di.setFecha(fechaprov);
+                    di.setFechaEnvio(fechaprov);
+                    di.setDependenciaByCodigo(deriv.getDep(origen_prov));
+                    di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
+                    di.setMovimientoDext(Long.parseLong("1"));
+                    di.setUsuario(pid.getUsuario(usu.getUsuNombre()));
+                    di.setCorrelativod(correlativo_proveido);
+                    di.setExtInt("pi");
+                    di.setTiposDocumentos(td);
+                    deriv.guardarDocusExt(di);
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL : PROVEIDO N°" + correlativo_proveido + "-" + siglasdocus + "-" + anio);
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    ver = true;
+                    no_ver = false;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDADO EL : PROVEIDO N°" + correlativo_proveido + "-" + siglasdocus + "-" + anio);
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    ver = false;
+                    no_ver = true;
+                }
+            }
         }
+
         getLista();
     }
 

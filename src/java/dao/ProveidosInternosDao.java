@@ -20,4 +20,5 @@ public interface ProveidosInternosDao {
     public List getDependencias();
     public void EditarProveidos(String documento, String asunto, String origen, String destino);
     public String getCodigoDepe(String nombre);
+    public void Elminiar(String documento);
 }

@@ -207,6 +207,7 @@ public class DocumentosBean implements Serializable {
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
         responsable = hm.get("origen").toString();
+        
     }
 
     public void Eliminar() {
@@ -227,7 +228,7 @@ public class DocumentosBean implements Serializable {
     public void guardaroficio() {
         FacesMessage message = null;
         System.out.println("guardar oficio");
-        if (tipodestino == null) {
+        if (tipodestino.equals(" ")) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE INGRESAR EL DESTINO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println("TIENEN QUE INGRESAR EL DESTINO");

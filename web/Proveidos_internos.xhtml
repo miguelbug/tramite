@@ -105,6 +105,10 @@
                                 <p:column style="width:32px">
                                     <p:rowEditor />
                                 </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="tablaproveidosinternos" icon="ui-icon-extlink" value="Eliminar Proveido" style="position:absolute; left:25px; height:26px "
+                                                     update=":form:" actionListener="#{proveidosInternosBean.Eliminar()}"/>
+                                </f:facet>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
