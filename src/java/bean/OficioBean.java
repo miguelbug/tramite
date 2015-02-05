@@ -64,7 +64,7 @@ public class OficioBean {
     List<String> citiesTarget = new ArrayList<String>();
     private List<String> cities2;
     private static String correlativo_exportar;
-    private boolean ver, nover, aparece;
+    private boolean ver, nover, aparece, render=false;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -304,7 +304,7 @@ public class OficioBean {
         System.out.println(tiposdocus);
         correlativo_exportar = correlativo;
         siglasdocus = "OGPL";
-        asunto2 = " ";
+        asunto2 = "";
         escogido = " ";
 
     }
@@ -727,9 +727,8 @@ public class OficioBean {
         System.out.println("HORA Y FECHA: " + fechadia2 + "-" + fechahora);
         if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
             ver = false;
-            nover = false;
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR TODOS LOS DATOS");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            nover = true;
+            
         } else {
             try {
                 OficCirc ofi = new OficCirc();
@@ -742,16 +741,13 @@ public class OficioBean {
                 ofi.setResponsable(responsable);
                 ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
                 od.guardarOficioCircular(ofi);
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido + " N° " + correlativo + "-" + siglasdocus + "-" + auxanio);
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 mostrar();
                 ver = true;
                 nover = false;
+                mostrarofCirc();
             } catch (Exception e) {
                 ver = false;
                 nover = true;
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + escogido + " N° " + correlativo + "-" + siglasdocus + "-" + auxanio);
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 System.out.println(e.getMessage());
             }
 
@@ -1354,6 +1350,14 @@ public class OficioBean {
 
     public void setPartedocu(String partedocu) {
         this.partedocu = partedocu;
+    }
+
+    public boolean isRender() {
+        return render;
+    }
+
+    public void setRender(boolean render) {
+        this.render = render;
     }
 
 }

@@ -125,7 +125,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update="formuloficCirc,avisooficcircdialog" oncomplete="PF('avisoOfCircDialog').show()">
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar()}" update=":form:,formuloficCirc,avisooficcircdialog" oncomplete="PF('avisoOfCircDialog').show()">
                                 <f:ajax event="click" onevent="DocCircdialog.hide()"/>
                             </p:commandButton>
                         </center>
@@ -138,7 +138,7 @@
                                 <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
                             </p:commandButton>
 
-                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{oficioBean.nover}"/>
+                            <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA O FALTA COMPLETAR DATOS" rendered="#{oficioBean.nover}"/>
                             <br></br>
                             <p:commandButton value="Aceptar" rendered="#{oficioBean.nover}">
                                 <f:ajax event="click" onevent="avisoOfCircDialog.hide()"/>
