@@ -10,7 +10,9 @@ import dao.SeguimientoDAO;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -40,7 +42,7 @@ public class BuscarDocumentosBean implements Serializable{
     private Map<String,String> seleccion;
     private List seguimientolista;
     private SeguimientoDAO sgd;
-    private List docselec;
+    private List docselec,anios;
 
     public BuscarDocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -48,7 +50,9 @@ public class BuscarDocumentosBean implements Serializable{
         seglista= new ArrayList<Map<String,String>>();
         seguimientolista= new ArrayList<Map<String,String>>();
         sgd = new SeguimientoDaoImpl();
+        anios= new ArrayList<String>();
         aparece=false;
+        mostrarAnios();
     }
 
     public void Buscar() {
@@ -75,7 +79,16 @@ public class BuscarDocumentosBean implements Serializable{
             System.out.println(e.getMessage());
         }
     }
-    
+    public void mostrarAnios(){
+        Date anio= new Date();
+        SimpleDateFormat sdf= new SimpleDateFormat("YYYY");
+        int i=Integer.parseInt(sdf.format(anio));
+        while(i>=1990){
+            anios.add(String.valueOf(i));
+            i--;
+        }
+        
+    }
     public List Detalles(){
         System.out.println("listando detalles busqparam");
         seglista.clear();
@@ -273,6 +286,14 @@ public class BuscarDocumentosBean implements Serializable{
 
     public void setDocselec(List docselec) {
         this.docselec = docselec;
+    }
+
+    public List getAnios() {
+        return anios;
+    }
+
+    public void setAnios(List anios) {
+        this.anios = anios;
     }
     
 }
