@@ -167,7 +167,7 @@ public class SeguimientoBean {
     }
 
     //seguimiento para un cierto tramite
-    public void MostrarSeguimiento(String tramnum) {
+    /*public void MostrarSeguimiento(String tramnum) {ACAAAAAAAAAAAA
         System.out.println("listando documentos");
         seguimientolista.clear();
         try {
@@ -196,7 +196,7 @@ public class SeguimientoBean {
             System.out.println(e.getMessage());
         }
 
-    }
+    }*/
 
     public void RecorrerLista2() {
         System.out.println("entra a recorrer lista 2");
@@ -216,7 +216,7 @@ public class SeguimientoBean {
 
     }
 
-    public void RecorrerLista() {
+   /* public void RecorrerLista() {ACAAAAAAAAAAAAA
         System.out.println("entra a recorrer");
         Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
         Iterator it = hm.entrySet().iterator();
@@ -232,7 +232,7 @@ public class SeguimientoBean {
         }
         docselec.clear();
 
-    }
+    }*/
     //
 
     //mostrar el total de seguimientos  

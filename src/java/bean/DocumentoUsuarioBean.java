@@ -44,7 +44,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List detallecirc2, designados, seguimientolista2, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -70,6 +70,7 @@ public class DocumentoUsuarioBean {
         designados = new ArrayList<String>();
         detallecirc2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
+        seguimientolista3 = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         listadocspropios = new ArrayList<Map<String, String>>();
         listadocpropioscir = new ArrayList<Map<String, String>>();
@@ -499,24 +500,15 @@ public class DocumentoUsuarioBean {
 
     /*----DERIVACION---------*/
     public void RecorrerLista() {
-        System.out.println(docselec2);
+        System.out.println("recorrer");
         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
-        Iterator it = hm.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            if (e.getKey().toString().equals("numerotramite")) {
-                System.out.println(e.getValue().toString());
-                MostrarSeguimiento(e.getValue().toString());
-            }
-
-        }
-        docselec2.clear();
-
+        System.out.println(hm.get("numerotramite"));
+        MostrarSeguimiento(hm.get("numerotramite"));
     }
 
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
-        seguimientolista2.clear();
+        seguimientolista3.clear();
         try {
             List lista = new ArrayList();
             lista = sgd.getSeguimientoGrande(tramnum);
@@ -534,7 +526,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("indicador", String.valueOf(obj[6]));
                 listaaux.put("observacion", String.valueOf(obj[7]));
                 listaaux.put("estado", String.valueOf(obj[8]));
-                seguimientolista2.add(listaaux);
+                seguimientolista3.add(listaaux);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1139,6 +1131,14 @@ public class DocumentoUsuarioBean {
 
     public void setFechahora2(String fechahora2) {
         this.fechahora2 = fechahora2;
+    }
+
+    public List getSeguimientolista3() {
+        return seguimientolista3;
+    }
+
+    public void setSeguimientolista3(List seguimientolista3) {
+        this.seguimientolista3 = seguimientolista3;
     }
 
 }

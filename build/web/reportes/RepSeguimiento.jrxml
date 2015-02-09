@@ -5,10 +5,10 @@
     name="RepSeguimiento"
     columnCount="1"
     printOrder="Vertical"
-    orientation="Portrait"
-    pageWidth="595"
-    pageHeight="842"
-    columnWidth="535"
+    orientation="Landscape"
+    pageWidth="842"
+    pageHeight="595"
+    columnWidth="782"
     columnSpacing="0"
     leftMargin="30"
     rightMargin="30"
@@ -95,22 +95,11 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
         </band>
     </title>
     <pageHeader>
-        <band height="126"  isSplitAllowed="true" >
-            <image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-                <reportElement
-                    x="0"
-                    y="0"
-                    width="45"
-                    height="50"
-                    key="image-1"/>
-                <box></box>
-                <graphicElement stretchType="NoStretch"/>
-                <imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
-            </image>
+        <band height="112"  isSplitAllowed="true" >
             <staticText>
                 <reportElement
-                    x="60"
-                    y="8"
+                    x="141"
+                    y="3"
                     width="260"
                     height="14"
                     key="staticText-1"/>
@@ -122,8 +111,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="59"
-                    y="25"
+                    x="140"
+                    y="20"
                     width="261"
                     height="15"
                     key="staticText-2"/>
@@ -135,8 +124,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="420"
-                    y="14"
+                    x="501"
+                    y="9"
                     width="110"
                     height="13"
                     key="textField-1"/>
@@ -148,8 +137,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" pattern="dd/MM/yyyy   h:mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="420"
-                    y="1"
+                    x="501"
+                    y="-4"
                     width="110"
                     height="13"
                     key="textField-2"/>
@@ -161,8 +150,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <staticText>
                 <reportElement
-                    x="355"
-                    y="1"
+                    x="436"
+                    y="-4"
                     width="65"
                     height="13"
                     key="staticText-3"/>
@@ -174,8 +163,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="355"
-                    y="14"
+                    x="436"
+                    y="9"
                     width="65"
                     height="13"
                     key="staticText-4"/>
@@ -187,9 +176,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="0"
-                    y="106"
-                    width="20"
+                    x="60"
+                    y="88"
+                    width="28"
                     height="20"
                     key="staticText-22"/>
                 <box>					
@@ -206,9 +195,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="20"
-                    y="106"
-                    width="100"
+                    x="88"
+                    y="88"
+                    width="129"
                     height="20"
                     key="staticText-23"/>
                 <box>					
@@ -225,9 +214,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="120"
-                    y="106"
-                    width="100"
+                    x="217"
+                    y="88"
+                    width="111"
                     height="20"
                     key="staticText-24"/>
                 <box>					
@@ -244,9 +233,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="220"
-                    y="106"
-                    width="65"
+                    x="328"
+                    y="88"
+                    width="75"
                     height="20"
                     key="staticText-25"/>
                 <box>					
@@ -263,9 +252,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="285"
-                    y="106"
-                    width="65"
+                    x="403"
+                    y="88"
+                    width="68"
                     height="20"
                     forecolor="#000000"
                     backcolor="#000000"
@@ -284,8 +273,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="-1"
-                    y="76"
+                    x="59"
+                    y="57"
                     width="535"
                     height="20"
                     key="textField-14"/>
@@ -297,9 +286,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <staticText>
                 <reportElement
-                    x="400"
-                    y="106"
-                    width="80"
+                    x="552"
+                    y="88"
+                    width="110"
                     height="20"
                     forecolor="#000000"
                     backcolor="#000000"
@@ -318,9 +307,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="480"
-                    y="106"
-                    width="55"
+                    x="662"
+                    y="88"
+                    width="75"
                     height="20"
                     forecolor="#000000"
                     backcolor="#000000"
@@ -339,9 +328,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <staticText>
                 <reportElement
-                    x="350"
-                    y="106"
-                    width="50"
+                    x="471"
+                    y="88"
+                    width="81"
                     height="20"
                     forecolor="#000000"
                     backcolor="#000000"
@@ -358,19 +347,6 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
                 </textElement>
                 <text><![CDATA[INDICACION]]></text>
             </staticText>
-            <staticText>
-                <reportElement
-                    x="60"
-                    y="45"
-                    width="441"
-                    height="20"
-                    key="staticText-30"/>
-                <box></box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font/>
-                </textElement>
-                <text><![CDATA[REPORTE DE SEGUIMIENTO DOCUMENTARIO]]></text>
-            </staticText>
         </band>
     </pageHeader>
     <columnHeader>
@@ -381,9 +357,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
         <band height="40"  isSplitAllowed="true" >
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="0"
-                    y="0"
-                    width="20"
+                    x="60"
+                    y="-4"
+                    width="28"
                     height="40"
                     key="textField-15"/>
                 <box>					
@@ -400,9 +376,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="20"
-                    y="0"
-                    width="100"
+                    x="88"
+                    y="-4"
+                    width="129"
                     height="40"
                     key="textField-16"/>
                 <box>					
@@ -419,9 +395,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="120"
-                    y="0"
-                    width="100"
+                    x="217"
+                    y="-4"
+                    width="111"
                     height="40"
                     key="textField-17"
                     positionType="Float"/>
@@ -439,9 +415,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="220"
-                    y="0"
-                    width="65"
+                    x="328"
+                    y="-4"
+                    width="75"
                     height="40"
                     key="textField-18"
                     isPrintWhenDetailOverflows="true"/>
@@ -459,9 +435,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="285"
-                    y="0"
-                    width="65"
+                    x="403"
+                    y="-4"
+                    width="68"
                     height="40"
                     key="textField-19"/>
                 <box>					
@@ -478,9 +454,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="350"
-                    y="0"
-                    width="50"
+                    x="471"
+                    y="-4"
+                    width="81"
                     height="40"
                     key="textField-20"/>
                 <box>					
@@ -497,9 +473,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="400"
-                    y="0"
-                    width="80"
+                    x="552"
+                    y="-4"
+                    width="110"
                     height="40"
                     key="textField-21"/>
                 <box>					
@@ -516,9 +492,9 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="480"
-                    y="0"
-                    width="55"
+                    x="662"
+                    y="-4"
+                    width="75"
                     height="40"
                     key="textField-22"/>
                 <box>					
@@ -543,8 +519,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
         <band height="70"  isSplitAllowed="true" >
             <staticText>
                 <reportElement
-                    x="0"
-                    y="22"
+                    x="132"
+                    y="17"
                     width="530"
                     height="20"
                     key="staticText-18"/>
@@ -556,8 +532,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="0"
-                    y="2"
+                    x="133"
+                    y="-3"
                     width="529"
                     height="20"
                     key="textField-12"/>
@@ -569,8 +545,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <staticText>
                 <reportElement
-                    x="0"
-                    y="52"
+                    x="130"
+                    y="47"
                     width="288"
                     height="10"
                     key="staticText-19"
@@ -587,8 +563,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
         <band height="69"  isSplitAllowed="true" >
             <staticText>
                 <reportElement
-                    x="0"
-                    y="20"
+                    x="130"
+                    y="28"
                     width="530"
                     height="20"
                     key="staticText-20"/>
@@ -600,8 +576,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="0"
-                    y="0"
+                    x="132"
+                    y="2"
                     width="529"
                     height="20"
                     key="textField-13"/>
@@ -613,8 +589,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <staticText>
                 <reportElement
-                    x="0"
-                    y="50"
+                    x="131"
+                    y="57"
                     width="288"
                     height="10"
                     key="staticText-21"
@@ -627,8 +603,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </staticText>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="440"
-                    y="50"
+                    x="612"
+                    y="56"
                     width="44"
                     height="11"
                     key="textField-23"/>
@@ -640,8 +616,8 @@ AND M.INDI_COD=I.INDI_COD)]]></queryString>
             </textField>
             <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
                 <reportElement
-                    x="484"
-                    y="50"
+                    x="558"
+                    y="57"
                     width="47"
                     height="11"
                     key="textField-24"/>

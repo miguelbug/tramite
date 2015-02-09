@@ -27,7 +27,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getTram_Fecha(String tramnum, String movi) {
         String tramfecha = "";
-        String sql = "SELECT TO_CHAR(TRAM_FECHA,'dd/MM/yyyy HH:mm:ss') FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM= '" + tramnum + "' AND MOVI_NUM='"+movi+"'";
+        String sql = "SELECT TO_CHAR(TRAM_FECHA,'dd/MM/yyyy HH:mm:ss') FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM= '" + tramnum + "' AND MOVI_NUM='" + movi + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -446,10 +446,15 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     @Override
     public String getSQL(String[] a) {
         int i = 0;
-        String comienzo = "SELECT TD.TRAM_NUM,"
-                + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS')) AS FECHA,"
-                + "DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,TD.ESTA_DESCRIP,DEP.NOMBRE "
-                + "FROM TRAMITE_DATOS TD, DEPENDENCIA DEP WHERE TD.CODIGO=DEP.CODIGO";
+        String comienzo = "SELECT TD.TRAM_NUM,\n"
+                + "TM.MOVI_NUM,\n"
+                + "DECODE(to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS'),NULL,' ',to_char(TD.TRAM_FECHA, 'dd/MM/yyyy HH:MI:SS')) AS FECHA,DECODE(TD.TRAM_OBS,NULL,' ',TD.TRAM_OBS) TRAM_OBS,\n"
+                + "TD.ESTA_DESCRIP,\n"
+                + "DEP.NOMBRE\n"
+                + "FROM TRAMITE_DATOS TD, TRAMITE_MOVIMIENTO TM, DEPENDENCIA DEP \n"
+                + "WHERE TD.CODIGO=DEP.CODIGO\n"
+                + "AND TD.TRAM_NUM=TM.TRAM_NUM\n"
+                + "AND TD.TRAM_FECHA=TM.TRAM_FECHA\n";
         while (i < a.length) {
             if (a[i] != null && a[i].length() != 0) {
                 System.out.println(a[i]);
@@ -457,7 +462,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             }
             i++;
         }
-        comienzo +="\nORDER BY TD.TRAM_FECHA DESC";
+        comienzo += "\nORDER BY TD.TRAM_FECHA DESC";
         return comienzo;
     }
 
@@ -467,16 +472,12 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("select TRAM_FECHA,"
-                    + "DEPE_ORIGEN,"
-                    + "TRAM_OBS,"
-                    + "ESTA_DESCRIP,"
-                    + "DOCU_NOMBRE,"
-                    + "DOCU_NUM,"
-                    + "DOCU_SIGLAS,"
-                    + "DOCU_ANIO \n"
+            Query query = session.createSQLQuery("select USU,\n"
+                    + "DEPE_ORIGEN,\n"
+                    + "DOCU_NOMBRE||'-'||DOCU_NUM||'-'||DOCU_SIGLAS||'-'||DOCU_ANIO as documento\n"
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
-                    + "where TRAM_NUM='" + tramnum + "'");
+                    + "where TRAM_NUM='" + tramnum + "'"
+            );
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
@@ -489,20 +490,79 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public List getDeatalle2(String tramnum) {
+    public List getDetalleOGPL(String tramnum) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.USU,OFI.NOMBRE_OFICINA,\n"
-                    + "DOC.DOCU_NOMBRE,\n"
-                    + "DOC.DOCU_NUM,\n"
-                    + "DOC.DOCU_SIGLAS,\n"
-                    + "DOC.DOCU_ANIO\n"
-                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI\n"
+            Query query = session.createSQLQuery("select TRAM_FECHA,\n"
+                    + "DEPE_ORIGEN,\n"
+                    + "ESTA_DESCRIP,\n"
+                    + "DOCU_NOMBRE||'-'||DOCU_NUM||'-'||DOCU_SIGLAS||'-'||DOCU_ANIO as documento\n"
+                    + "FROM vw_ogpl001@TRAMITEDBLINK\n"
+                    + "where TRAM_NUM='" + tramnum + "'"
+            );
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
+    }
+
+    @Override
+    public List getDetalleNoOGPL(String tramnum, String movi) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.USU,\n"
+                    + "OFI.NOMBRE_OFICINA,\n"
+                    + "ESTA_DESCRIP,\n"
+                    + "DOC.DOCU_NOMBRE||'-'||DOC.DOCU_NUM||'-'||DOC.DOCU_SIGLAS||'-'||DOC.DOCU_ANIO AS DOCUMENTO\n"
+                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI, TRAMITE_MOVIMIENTO TM\n"
                     + "WHERE TD.TRAM_NUM=UPPER('" + tramnum + "') \n"
+                    + "AND TD.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND TD.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND TM.MOVI_NUM='" + movi + "'\n"
                     + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
-                    + "AND U.ID_OFICINA=OFI.ID_OFICINA");
+                    + "and TM.TRAM_FECHA=DOC.TRAM_FECHA\n"
+                    + "AND TM.TRAM_NUM=DOC.TRAM_NUM\n"
+                    + "AND U.ID_OFICINA=OFI.ID_OFICINA\n"
+                    + "and U.USU=TD.USU");
+            codigos = query.list();
+            session.beginTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("no entró22222");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return codigos;
+    }
+
+    @Override
+    public List getDeatalle2(String tramnum, String movi) {
+        List codigos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TD.USU,\n"
+                    + "OFI.NOMBRE_OFICINA,\n"
+                    + "DOC.DOCU_NOMBRE||'-'||DOC.DOCU_NUM||'-'||DOC.DOCU_SIGLAS||'-'||DOC.DOCU_ANIO AS DOCUMENTO\n"
+                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI, TRAMITE_MOVIMIENTO TM\n"
+                    + "WHERE TD.TRAM_NUM=UPPER('" + tramnum + "') \n"
+                    + "AND TD.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND TD.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND TM.MOVI_NUM='" + movi + "'\n"
+                    + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
+                    + "and TM.TRAM_FECHA=DOC.TRAM_FECHA\n"
+                    + "AND TM.TRAM_NUM=DOC.TRAM_NUM\n"
+                    + "AND U.ID_OFICINA=OFI.ID_OFICINA\n"
+                    + "and U.USU=TD.USU");
             codigos = query.list();
             session.beginTransaction().commit();
             session.close();
