@@ -28,9 +28,9 @@
                                             <f:selectItem itemLabel="MEMOS" itemValue="7"/>
                                             <f:selectItem itemLabel="ARCHIVO" itemValue="9"/>
                                         </p:selectOneMenu>
-                                        <p:commandButton value="Mostrar" actionListener="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
+                                        <p:commandButton id="mostrarbotonxtipo" value="Mostrar" action="#{documentoUsuarioBean.listarDocPropiosXtipo()}" update="tablasdocpropios,tipodoculista"/>
                                         <p:outputLabel value="Todos los Documentos:"/>
-                                        <p:commandButton value="Mostrar Todos" actionListener="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios,tipodoculista"/>
+                                        <p:commandButton id="mostrarbotontodos" value="Mostrar Todos" action="#{documentoUsuarioBean.listarDocPropios()}" update="tablasdocpropios,tipodoculista"/>
                                     </p:panelGrid>
                                 </p:panelGrid>
                                 <br></br>
@@ -40,7 +40,10 @@
                             <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{objxUnidadController.docselec1}"
-                                         rowKey="#{item.iddoc}">
+                                         rowKey="#{item.iddoc}"  editable="true">
+
+                                <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit}"/>
+                                <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel}" />
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
@@ -51,7 +54,15 @@
                                     <h:outputText value="#{item.expediente}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="2" cols="70" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+
                                 </p:column>
                                 <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
@@ -68,6 +79,13 @@
                                 <p:column headerText="#" width="1" >
                                     <h:outputText value="#{item.iddoc}"/>
                                 </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Eliminar Documento" style="position:absolute; left:55px; height:26px "
+                                                     update=":form:" actionListener="#{objxUnidadController.delete()}"/>
+                                </f:facet>
                             </p:dataTable>
                             <br></br>
                             <center>
@@ -121,8 +139,8 @@
                                     <h:outputText value="#{item.responsable}"/>
                                 </p:column>
                                 <p:column style="width:32px;text-align: center">
-                                    <p:commandButton process="tablasoficcirc" update=":form:tabladetalloficcirc2" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
-                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}"/>
+                                    <p:commandButton process="@this" update=":form:tabladetalloficcirc2" action="#{documentoUsuarioBean.Detalles_Circ()}" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
+                                        <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}" />
                                     </p:commandButton>
                                 </p:column>
                             </p:dataTable>
@@ -130,7 +148,7 @@
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles_Circ()}" id="tabladetalloficcirc2" >
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.detallecirc2}" id="tabladetalloficcirc2" >
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>
@@ -189,6 +207,8 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
+
+
                     <br></br>
                     <br></br>	
                     <script type="text/javascript">

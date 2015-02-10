@@ -27,18 +27,18 @@
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <p:outputLabel value="#{item.correlativo}"/>
+                                    <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <p:outputLabel value="#{item.tramnum}"/>
+                                    <h:outputText value="#{item.tramnum}"/>
                                 </p:column>
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <p:outputLabel value="#{item.fecha}"/>
+                                    <h:outputText value="#{item.fecha}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="10" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
                                     <p:cellEditor>
                                         <f:facet name="output">
-                                            <p:outputLabel value="#{item.asunto}"/>
+                                            <h:outputText value="#{item.asunto}"/>
                                         </f:facet>
                                         <f:facet name="input">
                                             <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
@@ -49,7 +49,7 @@
                                 <p:column headerText="AREA RESP." width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
                                     <p:cellEditor>
                                         <f:facet name="output">
-                                            <p:outputLabel value="#{item.asignado}"/>
+                                            <h:outputText value="#{item.asignado}"/>
                                         </f:facet>
                                         <f:facet name="input">
                                             <p:selectOneMenu value="#{item.asignado}" filter="true" filterMatchMode="contains">
@@ -66,7 +66,7 @@
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
                                     <p:cellEditor>
                                         <f:facet name="output">
-                                            <p:outputLabel value="#{item.destino}"/>
+                                            <h:outputText value="#{item.destino}"/>
                                         </f:facet>
                                         <f:facet name="input">
                                             <p:selectOneMenu value="#{item.destino}" filter="true" filterMatchMode="contains">
@@ -90,7 +90,7 @@
                     <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="ofiunicos">
                         <p:panelGrid columns="2" id="panelOfUn">
                             <p:outputLabel value="Documento:"/>
-                            <p:outputLabel value="Oficio N° #{oficioBean.correlativo2}-#{oficioBean.siglasdocus}-#{oficioBean.auxanio}"/>
+                            <p:inputText value="#{oficioBean.partedocu}"/>
                             <p:outputLabel value="Asunto:"/>
                             <p:inputTextarea  rows="2" cols="60" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 
@@ -126,7 +126,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update="panelOfUn">
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_oficiounico()}" update=":form:">
                                 <f:ajax event="click" onevent="OFUnicDialog.hide()"/>
                             </p:commandButton>
                         </center>

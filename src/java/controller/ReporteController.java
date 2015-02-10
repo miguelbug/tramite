@@ -58,7 +58,7 @@ public class ReporteController {
      }*/
     public static ReporteController getInstance(String nombre) {
         if (reporteController == null) {
-            System.out.println("creando nuevo reporte controller");
+            System.out.println("creando nuevo reporte controller "+nombre);
             reporteController = new ReporteController();
         }
         reporteController.setReportParam(ReporteController.getInstanceReporte(nombre));
@@ -67,7 +67,7 @@ public class ReporteController {
 
     private static Reporte getInstanceReporte(String nombre) {
         if (reportParam == null) {
-            System.out.println("creando nuevo reporte");
+            System.out.println("creando nuevo reporte "+nombre);
             reportParam = new Reporte();
         }
         reportParam.setQueryParams(new HashMap<String, Object>());
@@ -142,6 +142,7 @@ public class ReporteController {
             context.responseComplete();
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 
@@ -198,6 +199,8 @@ public class ReporteController {
                     }
                     System.out.println("Tiene hojas");
                     return true;
+                }else{
+                    System.out.println("lista es null");
                 }
             }
         } catch (Exception e) {
@@ -235,17 +238,20 @@ public class ReporteController {
             String archivo;
             archivo = sc.getRealPath(URL + reportParam.getNombreReport() + ".jrxml");
 
-            System.out.println("archivo:" + archivo);
+            System.out.println("ARCHIVO A EXPORTAR:" + archivo);
 
             if (!archivo.equals("")) {
                 report = JasperCompileManager.compileReport(archivo);
 
             } else {
-                System.out.println("no existe el archivo:" + archivo);
+                System.out.println("NO EXISTE EL ARCHIVO:" + archivo);
             }
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, reportParam.getQueryParams(), conexion);
-            System.out.println("pasado");
+            System.out.println("SIZE DEL JASPERPRINT: "+jasperPrint.getPages().size());
+            System.out.println("NOMBRE DEL JASPERPRINT: "+jasperPrint.getName());
+            System.out.println("NOMBRE DE LA COEXION: "+conexion.toString());
+            System.out.println("SE HA CREADO");
             return jasperPrint;
 
         } catch (JRException e) {

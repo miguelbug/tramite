@@ -49,7 +49,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            contador =Integer.parseInt(String.valueOf((BigDecimal)session.createSQLQuery(sql).uniqueResult())) ;
+            contador = Integer.parseInt(String.valueOf((BigDecimal) session.createSQLQuery(sql).uniqueResult()));
             session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -233,7 +233,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
                     + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
                     + "I.INDI_NOMBRE,\n"
-                    + "DECODE(TM.MOVI_OBS,NULL,' ',TM.MOVI_OBS) AS MOVI,\n"
+                    + "DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
                     + "TM.ESTA_NOMBRE,\n"
                     + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
                     + "USUA.USU_NOMBRE AS NOMBRE,\n"
@@ -248,7 +248,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
                     + "                                                        SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
                     + "                                                        FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
-                    + "                                                        WHERE TM2.CODIGO1='"+oficina+"'\n"
+                    + "                                                        WHERE TM2.CODIGO1='" + oficina + "'\n"
                     + "                                                        AND INDI_NOMBRE='ARCHIVO'\n"
                     + "                                                        AND TM.INDI_COD=I.INDI_COD )\n"
                     + "AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"

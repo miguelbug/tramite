@@ -66,7 +66,7 @@ public class DocusExternosBean implements Serializable {
     private String tipodestino;
     private String tipoorigen;
     private String siglas;
-    public static String correlativo_impresion,fecha_auxiliar;
+    public static String correlativo_impresion, fecha_auxiliar;
     private String siglasdocu;
 
     public DocusExternosBean() {
@@ -92,6 +92,17 @@ public class DocusExternosBean implements Serializable {
             MostrarDocusExt();
         }
 
+    }
+
+    public void cerrar() {
+        System.out.println("SE HA CERRADO");
+        tipoorigen = " ";
+        tipodestino = " ";
+        documento = " ";
+        asunto = "";
+        origen = " ";
+        destino = " ";
+        codigoexp = "";
     }
 
     public void MostrarDocusExt() {
@@ -123,7 +134,7 @@ public class DocusExternosBean implements Serializable {
 
     public void Limpiar() {
         documento = " ";
-        asunto = " ";
+        asunto = "";
         origen = " ";
         destino = " ";
 
@@ -167,8 +178,8 @@ public class DocusExternosBean implements Serializable {
         generarCorrelativo();
         siglas = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         correlativo_impresion = correlativo;
-        fecha_auxiliar=auxfecha;
-        System.out.println("FECHA AUX: "+fecha_auxiliar);
+        fecha_auxiliar = auxfecha;
+        System.out.println("FECHA AUX: " + fecha_auxiliar);
     }
 
     public void ObtenerDepIndic() {
@@ -271,36 +282,62 @@ public class DocusExternosBean implements Serializable {
     }
 
     public void modificarNumeroDoc() {
-        codigoexp="";
-        codigoexp= documento+" N° "+codigoexp;
+        codigoexp = "";
+        codigoexp = documento + " N° " + codigoexp;
     }
 
     public void Guardar_ProvExt() {
         System.out.println("SE HA GUARDADO");
+        FacesMessage message = null;
         DocusExtint di = new DocusExtint();
-        try {
-            di.setNumerodoc(codigoexp);
-            di.setAsunto(asunto.toUpperCase());
-            di.setFecha(fechaprov);
-            di.setDependenciaByCodigo(deriv.getDep(origen));
-            di.setDependenciaByCodigo1(deriv.getDep(destino));
-            di.setMovimientoDext(Long.parseLong("1"));
-            di.setUsuario(usu);
-            di.setCorrelativod(correlativo);
-            di.setFechaEnvio(fechaprov);
-            di.setTiposDocumentos(deriv.getTipoDoc("PROVEIDOS"));
-            di.setExtInt("pe");
-            deriv.guardarDocusExt(di);
-            ver = true;
-            nover = false;
-            Limpiar();
-            MostrarDocusExt();
-        } catch (Exception e) {
-            ver = false;
-            nover = true;
-            System.out.println("PROBLEMAS PROVEIDO EXTERNO");
-            System.out.println(e.getMessage());
+        if (documento.equals(" ") && origen.equals(" ") && destino.equals(" ")) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE LLENAR TODOS LOS CAMPOS");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } else {
+            if (documento.equals(" ")) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL TIPO DE DOCUMENTO");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            } else {
+                if (origen.equals(" ")) {
+                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL ORIGEN");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                } else {
+                    if (destino.equals(" ")) {
+                        message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL DESTINO");
+                        RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    } else {
+                        try {
+                            di.setNumerodoc(codigoexp);
+                            di.setAsunto(asunto.toUpperCase());
+                            di.setFecha(fechaprov);
+                            di.setDependenciaByCodigo(deriv.getDep(origen));
+                            di.setDependenciaByCodigo1(deriv.getDep(destino));
+                            di.setMovimientoDext(Long.parseLong("1"));
+                            di.setUsuario(usu);
+                            di.setCorrelativod(correlativo);
+                            di.setFechaEnvio(fechaprov);
+                            di.setTiposDocumentos(deriv.getTipoDoc("PROVEIDOS"));
+                            di.setExtInt("pe");
+                            deriv.guardarDocusExt(di);
+                            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
+                            RequestContext.getCurrentInstance().showMessageInDialog(message);
+                            ver = true;
+                            nover = false;
+                            Limpiar();
+                            MostrarDocusExt();
+                        } catch (Exception e) {
+                            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
+                            RequestContext.getCurrentInstance().showMessageInDialog(message);
+                            ver = false;
+                            nover = true;
+                            System.out.println("PROBLEMAS PROVEIDO EXTERNO");
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                }
+            }
         }
+
     }
 
     public String getDocumento() {

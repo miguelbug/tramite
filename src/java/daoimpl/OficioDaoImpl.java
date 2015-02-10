@@ -28,16 +28,76 @@ public class OficioDaoImpl implements OficioDAO {
     Session session;
 
     @Override
+    public void EliminarDocumentosInternosOficinas(String id) {
+        String sql = "DELETE FROM DOCUS_INTERNOS WHERE IDTIP='" + id + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó delete docus internos");
+        } catch (Exception e) {
+            System.out.println("mal delete docus internos");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
+    public void ActualizarDocusInternosOficinas(String id, String asunto) {
+        String sql = "UPDATE DOCUS_INTERNOS SET DOCU_ASUNTO='" + asunto + "' WHERE IDTIP='" + id + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar DOCUS INTERNOS");
+        } catch (Exception e) {
+            System.out.println("mal actualizar DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
+    public void ActualizarOficioCircular(String correla, String asunto, String origen) {
+        String sql = "UPDATE OFIC_CIRC SET ASUNTO='" + asunto + "', CODIGO='" + origen + "' WHERE CORRELA_OFICIC='" + correla + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar oficio CIRCULAR");
+        } catch (Exception e) {
+            System.out.println("mal actualizar oficio CIRCULAR");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
     public List getAllDependencias() {
-        List lista= new ArrayList();
+        List lista = new ArrayList();
         String sql = "SELECT NOMBRE FROM DEPENDENCIA\n"
                 + "ORDER BY TIPODEPE ASC";
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery(sql);
-            lista=(List)query.list();
-             session.beginTransaction().commit();
+            lista = (List) query.list();
+            session.beginTransaction().commit();
             session.close();
         } catch (Exception e) {
             System.out.println("mal get all depe");
@@ -48,8 +108,8 @@ public class OficioDaoImpl implements OficioDAO {
 
     @Override
     public void ActualizarOficio(String correla, String asunto, String destino, String asignado) {
-        String codigo=String.valueOf(this.getDependencias2(destino).getCodigo());
-        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', RESPONSABLE='"+asignado+"' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        String codigo = String.valueOf(this.getDependencias2(destino).getCodigo());
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
@@ -133,7 +193,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "       R.tramite,\n"
                     + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "       R.referencia,\n"
-                    + "       R.asunto,\n"
+                    + "       DECODE(R.asunto,NULL,'SIN ASUNTO',UPPER(R.asunto)),\n"
                     + "       R.origen,\n"
                     + "       R.destino,\n"
                     + "       R.responsable\n"
@@ -286,15 +346,15 @@ public class OficioDaoImpl implements OficioDAO {
                     + "       R.tramite,\n"
                     + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "       R.referencia,\n"
-                    + "       R.asunto,\n"
+                    + "       DECODE(R.asunto,NULL,'SIN ASUNTO',UPPER(R.asunto)),\n"
                     + "       R.origen,\n"
                     + "       R.destino,\n"
-                    + "       R.responsable\n"
+                    + "       UPPER(R.responsable)\n"
                     + "       From (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
                     + "ofi.FECHA_OFICIO as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
-                    + "ofi.ASUNTO_OFICIO as asunto,\n"
+                    + "DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as asunto,\n"
                     + "d1.nombre as origen,\n"
                     + "d2.nombre as destino,\n"
                     + "ofi.responsable\n"
@@ -308,7 +368,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
                     + "ofi.FECHA_OFICIO as fecha,\n"
                     + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
-                    + "ofi.ASUNTO_OFICIO,\n"
+                    + "DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as asunto,\n"
                     + "d1.nombre as origen,\n"
                     + "d2.nombre as destino,\n"
                     + "ofi.responsable\n"
@@ -556,8 +616,8 @@ public class OficioDaoImpl implements OficioDAO {
         System.out.println("get oficioscirculares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
-                    + "DECODE(OFI.ASUNTO,NULL,'SIN ASUNTO',OFI.ASUNTO) AS ASUNTO,\n"
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N° '||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+                    + "DECODE(UPPER(OFI.ASUNTO),NULL,'SIN ASUNTO',UPPER(OFI.ASUNTO)) AS ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE,\n"
                     + "OFI.FIRMA,\n"

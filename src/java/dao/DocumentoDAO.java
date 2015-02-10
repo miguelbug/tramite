@@ -22,7 +22,9 @@ public interface DocumentoDAO {
     public String CrearVariable(int i);
     public String getSQL(String[] a);
     public List getDetalle(String tramnum);
-    public List getDeatalle2(String tramnum);
+    public List getDetalleOGPL(String tramnum);
+    public List getDetalleNoOGPL(String tramnum,String movi);
+    public List getDeatalle2(String tramnum, String movi);
     public String getMotivo(String tramnum, String fecha);
     public String getOficina(Usuario usu);
     public List getDocusInternos();

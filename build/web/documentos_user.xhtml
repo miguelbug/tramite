@@ -123,39 +123,8 @@
                         </p:dataTable>
 
                     </p:dialog>
-                    <p:dialog header="Seguimiento" widgetVar="segDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial2">
-                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim2" >
-                            <p:column headerText="Num. Tramite">
-                                <h:outputText value="#{seg.numerotramite}" />
-                            </p:column>
-                            <p:column headerText="Num. Mov.">
-                                <h:outputText value="#{seg.movimnum}" />
-                            </p:column>
-                            <p:column headerText="Origen">
-                                <h:outputText value="#{seg.origen}" />
-                            </p:column>
-                            <p:column headerText="Destino">
-                                <h:outputText value="#{seg.destino}" />
-                            </p:column>
-                            <p:column headerText="Fech. Envio">
-                                <h:outputText value="#{seg.fechaenvio}" />
-                            </p:column>
-                            <p:column headerText="Fech. Ing">
-                                <h:outputText value="#{seg.fechaingr}" />
-                            </p:column>
-                            <p:column headerText="Indicador">
-                                <h:outputText value="#{seg.indicador}" />
-                            </p:column>
-                            <p:column headerText="Obs.">
-                                <h:outputText value="#{seg.observacion}" />
-                            </p:column>
-                            <p:column headerText="Estado">
-                                <h:outputText value="#{seg.estado}" />
-                            </p:column>
-                        </p:dataTable>
-                    </p:dialog>
                     <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial">
-                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista2}" id="tablaseguim" >
+                        <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista3}" id="tablaseguim" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
                             </p:column>

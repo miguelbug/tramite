@@ -3,15 +3,14 @@
     
     <Resource 
         name="jdbc/hr" 
-              auth="Container"
-              type="javax.sql.DataSource" 
-              driverClassName="oracle.jdbc.OracleDriver"
-              url="jdbc:oracle:thin:@//172.16.89.123:1521/xe"
-              username="miguel" 
-              password="miguelon" 
-              maxActive="8" 
-              maxIdle="4"
-              maxWait="10"/>
-
+        auth="Container"
+        type="javax.sql.DataSource" 
+        driverClassName="oracle.jdbc.OracleDriver"
+        url="jdbc:oracle:thin:@//172.16.89.123:1521/xe"
+        username="miguel" 
+        password="miguelon" 
+        maxActive="100" 
+        maxIdle="100"
+        maxWait="6000"/>
 </Context>
 

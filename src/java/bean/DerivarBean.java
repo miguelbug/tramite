@@ -282,7 +282,7 @@ public class DerivarBean {
         siglasdocus = "";
     }
 
-    public void RecorrerLista() {
+    /*public void RecorrerLista() {ACAAAAAAAAAAAA
         System.out.println(docselec2);
         Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
         Iterator it = hm.entrySet().iterator();
@@ -296,7 +296,7 @@ public class DerivarBean {
         }
         docselec2.clear();
 
-    }
+    }*/
 
     public void MostrarConfirmadosDerivados() {
         System.out.println("CONFIRMADOS DERIVADOS¡¡¡¡¡");
@@ -327,7 +327,7 @@ public class DerivarBean {
         }
     }
 
-    public void MostrarSeguimiento(String tramnum) {
+    /*public void MostrarSeguimiento(String tramnum) {ACAAAAAAAAAAAAAA
         System.out.println("listando documentos");
         seguimientolista2.clear();
         try {
@@ -352,7 +352,7 @@ public class DerivarBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 
     public void RealizarCambio() {
         if (docunombre.equals("ARCHIVO")) {

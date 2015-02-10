@@ -77,7 +77,9 @@
                             <p:inputText value="#{gestionUsuarioBean.nuevoapell}" style="text-transform:uppercase;"/>
 
                             <p:outputLabel value="DNI:"/>
-                            <p:inputText value="#{gestionUsuarioBean.nuevodni}"/>
+                            <p:inputText value="#{gestionUsuarioBean.nuevodni}">
+                                <f:validateDoubleRange maximum="8"/>
+                            </p:inputText>
 
                             <p:outputLabel value="Profesión:"/>
                             <p:selectOneMenu id="profesiontipo" value="#{gestionUsuarioBean.nuevaprof}">

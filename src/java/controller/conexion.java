@@ -34,6 +34,7 @@ public class conexion {
             conn = ds.getConnection();
             //return conn;
         } catch (Exception e) {
+            System.out.println("PROBLEMAS EN CONEXION: "+e.getMessage());
         }
         return conn;
 

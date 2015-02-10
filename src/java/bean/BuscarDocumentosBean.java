@@ -10,7 +10,9 @@ import dao.SeguimientoDAO;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +26,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class BuscarDocumentosBean implements Serializable{
+public class BuscarDocumentosBean implements Serializable {
 
     private String codigosdepe;
     private DocumentoDAO dd;
@@ -37,75 +39,87 @@ public class BuscarDocumentosBean implements Serializable{
     private List filtro;
     private boolean aparece;
     private List seglista;
-    private Map<String,String> seleccion;
+    private Map<String, String> seleccion;
     private List seguimientolista;
     private SeguimientoDAO sgd;
-    private List docselec;
+    private List docselec, anios;
 
     public BuscarDocumentosBean() {
         dd = new DocumentoDaoImpl();
-        docus = new ArrayList<Map<String,String>>();
-        seglista= new ArrayList<Map<String,String>>();
-        seguimientolista= new ArrayList<Map<String,String>>();
+        docus = new ArrayList<Map<String, String>>();
+        seglista = new ArrayList<Map<String, String>>();
+        seguimientolista = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
-        aparece=false;
+        anios = new ArrayList<String>();
+        aparece = false;
+        mostrarAnios();
     }
 
     public void Buscar() {
         docus.clear();
         System.out.println("listando");
-        System.out.println(numerotramite+"-"+codigosdepe+"-"+anio+"-"+asunto+"-"+mes);
+        System.out.println(numerotramite + "-" + codigosdepe + "-" + anio + "-" + asunto + "-" + mes);
         try {
             List lista = new ArrayList();
             lista = dd.getBusqueda(numerotramite, codigosdepe, anio, asunto, mes);
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[5];
+            Object obj[] = new Object[6];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
-                listaaux.put("fecha", String.valueOf(obj[1]));
-                listaaux.put("observacion", String.valueOf(obj[2]));
-                listaaux.put("descripcion", String.valueOf(obj[3]));
-                listaaux.put("departorigen", String.valueOf(obj[4]));
+                listaaux.put("mov", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("observacion", String.valueOf(obj[3]));
+                listaaux.put("descripcion", String.valueOf(obj[4]));
+                listaaux.put("departorigen", String.valueOf(obj[5]));
                 docus.add(listaaux);
             }
-            aparece=true;
+            aparece = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public List Detalles(){
+
+    public void mostrarAnios() {
+        Date anio = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
+        int i = Integer.parseInt(sdf.format(anio));
+        while (i >= 1990) {
+            anios.add(String.valueOf(i));
+            i--;
+        }
+
+    }
+
+    public List Detalles() {
         System.out.println("listando detalles busqparam");
         seglista.clear();
+        int i = -1;
         try {
             List lista = new ArrayList();
-            System.out.println(seleccion.get("numerotramite").toString()+"---"+"este es");
-            if(seleccion.get("numerotramite").toString().indexOf("OGPL")!=-1){
+            System.out.println(seleccion.get("numerotramite").toString() + "---" + "este es");
+            if (seleccion.get("numerotramite").toString().indexOf("OGPL") != -1) {
                 System.out.println(seleccion.get("numerotramite").toString());
                 lista = dd.getDetalle(seleccion.get("numerotramite").toString());
                 System.out.println("1");
-            }
-            else{
-                if(seleccion.get("numerotramite").toString().indexOf("OGPL")==-1){
+                i = 1;
+            } else {
+                if (seleccion.get("numerotramite").toString().indexOf("OGPL") == -1) {
                     System.out.println(seleccion.get("numerotramite").toString());
-                    lista = dd.getDeatalle2(seleccion.get("numerotramite").toString());
+                    lista = dd.getDeatalle2(seleccion.get("numerotramite").toString(), seleccion.get("mov"));
                     System.out.println("0");
+                    i = 0;
                 }
             }
-            
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[6];
+            Object obj[] = new Object[3];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("usuario", String.valueOf(obj[0]));
                 listaaux.put("oficina", String.valueOf(obj[1]));
                 listaaux.put("docunombre", String.valueOf(obj[2]));
-                listaaux.put("docunumero", String.valueOf(obj[3]));
-                listaaux.put("docusiglas", String.valueOf(obj[4]));
-                listaaux.put("docuanio", String.valueOf(obj[5]));
                 seglista.add(listaaux);
             }
         } catch (Exception e) {
@@ -113,19 +127,15 @@ public class BuscarDocumentosBean implements Serializable{
         }
         return seglista;
     }
+
     public void RecorrerLista() {
-        Map<String,String> hm=(HashMap<String,String>)docselec.get(0);
-        Iterator it = hm.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            if(e.getKey().toString().equals("numerotramite")){
-                System.out.println(e.getValue().toString());
-                MostrarSeguimiento(e.getValue().toString());
-            }
-            
-        }
+        System.out.println("entra a recorrer lista");
+        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        System.out.println(hm.get("numerotramite"));
+        MostrarSeguimiento(hm.get("numerotramite"));
         docselec.clear();
     }
+
     public void MostrarSeguimiento(String tramnum) {
         System.out.println("listando documentos");
         seguimientolista.clear();
@@ -155,6 +165,7 @@ public class BuscarDocumentosBean implements Serializable{
             e.printStackTrace();
         }
     }
+
     public DocumentoDAO getDd() {
         return dd;
     }
@@ -274,5 +285,13 @@ public class BuscarDocumentosBean implements Serializable{
     public void setDocselec(List docselec) {
         this.docselec = docselec;
     }
-    
+
+    public List getAnios() {
+        return anios;
+    }
+
+    public void setAnios(List anios) {
+        this.anios = anios;
+    }
+
 }

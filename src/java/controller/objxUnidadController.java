@@ -24,9 +24,11 @@ import javax.servlet.ServletContext;
 import bean.DocusInternos;
 import bean.ProveidosInternosBean;
 import dao.DerivarDAO;
+import dao.OficioDAO;
 import dao.SeguimientoDAO;
 import dao.TemporaldiDao;
 import daoimpl.DerivarDaoImpl;
+import daoimpl.OficioDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import daoimpl.TemporalDiDaoImpl;
 import java.text.ParseException;
@@ -41,6 +43,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Usuario;
+import org.primefaces.context.RequestContext;
 //
 
 @ManagedBean
@@ -70,6 +73,7 @@ public class objxUnidadController implements Serializable {
     private TemporaldiDao tdi;
     private String loteinput;
     private SeguimientoDAO sgd;
+    private OficioDAO ofi;
 
     public objxUnidadController() {
         dd = new DocumentoDaoImpl();
@@ -77,6 +81,17 @@ public class objxUnidadController implements Serializable {
         tdi = new TemporalDiDaoImpl();
         deriv = new DerivarDaoImpl();
         sgd = new SeguimientoDaoImpl();
+        ofi = new OficioDaoImpl();
+    }
+
+    public void delete() {
+        for (int i = 0; i < docselec2.size(); i++) {
+            Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+            ofi.EliminarDocumentosInternosOficinas(hm.get("iddoc"));
+        }
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA(N) ELIMINADO EL(LOS) DOCUMENTO(S)");
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public void GuardarDatos() throws ParseException {
@@ -90,7 +105,7 @@ public class objxUnidadController implements Serializable {
             tldi.setTramNum(hm.get("tramnum").toString());
             System.out.println(hm.get("tramnum").toString());
             tldi.setUsuario(hm.get("asignado").toString());
-            
+
             tldi.setImpreso("1");
             tldi.setReimpreso("0");
             tdi.guardarTemporalDi(tldi);
@@ -101,15 +116,15 @@ public class objxUnidadController implements Serializable {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (int i = 0; i < docselec1.size(); i++) {
             /*TemporalUser tldi = new TemporalUser();
-            Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
-            tldi.setDocumento(hm.get("documento"));
-            tldi.setDocumentoPrinc(hm.get("docuprinc"));
-            tldi.setFecha(formatter.parse(hm.get("fecha").toString()));
-            tldi.setTramNum(hm.get("expediente"));
-            tldi.setOrigenPrinc(hm.get("origenprinc"));
-            tldi.setImpreso("1");
-            tldi.setReimpreso("0");
-            tdi.guardarTemporalUser(tldi);*/
+             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+             tldi.setDocumento(hm.get("documento"));
+             tldi.setDocumentoPrinc(hm.get("docuprinc"));
+             tldi.setFecha(formatter.parse(hm.get("fecha").toString()));
+             tldi.setTramNum(hm.get("expediente"));
+             tldi.setOrigenPrinc(hm.get("origenprinc"));
+             tldi.setImpreso("1");
+             tldi.setReimpreso("0");
+             tdi.guardarTemporalUser(tldi);*/
             TemporalUser tluser = new TemporalUser();
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tluser.setDocumento(hm.get("documento").toString());
@@ -121,7 +136,7 @@ public class objxUnidadController implements Serializable {
             tluser.setImpreso("1");
             tluser.setReimpreso("0");
             tdi.guardarTemporalUser(tluser);
-            
+
         }
     }
 
@@ -411,17 +426,19 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    public String partir(String nombre){
-        String[] cadena= new String[2];
-        int i=0;
-        StringTokenizer tokens=new StringTokenizer(nombre);
-        while(tokens.hasMoreTokens()){
-            cadena[i]=tokens.nextToken();
+
+    public String partir(String nombre) {
+        String[] cadena = new String[2];
+        int i = 0;
+        StringTokenizer tokens = new StringTokenizer(nombre);
+        while (tokens.hasMoreTokens()) {
+            cadena[i] = tokens.nextToken();
             i++;
         }
         return cadena[0];
-        
+
     }
+
     public void mostrarRepProveido2() {
 
         context = FacesContext.getCurrentInstance();

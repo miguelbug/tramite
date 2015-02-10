@@ -67,7 +67,7 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
                                                          update=":form:tablaseguim" actionListener="#{documentosBean.RecorrerLista2()}"/>
-                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
+                                        <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Imprimir" style="position:absolute; left:175px; height:26px" oncomplete="PF('aviso').show()"
                                                          update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{documentosBean.Confirmar()}"/>
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Reimprimir" style="position:absolute; left:310px; height:26px" oncomplete="PF('reimpresion').show()"
                                                          update="tabladocumentos,:form:avisohecho,:form:" actionListener="#{objxUnidadController.abrirReimpresion()}"/>
@@ -100,20 +100,17 @@
 
                         <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
                             <p:dataTable var="car" value="#{documentosBean.Detalles()}" id="tabladetalles" >
-                                <p:column headerText="fecha">
+                                <p:column headerText="FECHA">
                                     <h:outputText value="#{car.fecha}" />
                                 </p:column>
-                                <p:column headerText="Origen">
+                                <p:column headerText="ORIGEN">
                                     <h:outputText value="#{car.origen}" />
                                 </p:column>
-                                <p:column headerText="Obsv.">
-                                    <h:outputText value="#{car.observacion}" />
+                                <p:column headerText="ESTADO">
+                                    <h:outputText value="#{car.descrip}" />
                                 </p:column>
-                                <p:column headerText="Estado">
-                                    <h:outputText value="#{car.estado}" />
-                                </p:column>
-                                <p:column headerText="Documento">
-                                    <h:outputText value="#{car.docnomb}" />
+                                <p:column headerText="DOCUMENTO">
+                                    <h:outputText value="#{car.documento}" />
                                 </p:column>
                             </p:dataTable>
                         </p:dialog>
@@ -149,7 +146,7 @@
                             </p:dataTable>
                             <br></br>
                             <center>
-                                <p:commandButton id="repor10" value="Reporte de Seguimiento"  action="#{objxUnidadController.mostrarReporteSeguimiento}" title="REPORTE">
+                                <p:commandButton id="repor10" value="Reporte de Seguimiento"  action="#{objxUnidadController.mostrarReporteSeguimiento}" title="REPORTE" ajax="false">
                                     <f:ajax event="click" onevent="seguimDialog.hide()"/>
                                 </p:commandButton>
                             </center>
