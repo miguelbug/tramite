@@ -613,8 +613,10 @@ public class DocumentoUsuarioBean {
     public void RealizarCambio() {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
+            codinterno=deriv.getCodigoUsuario(usu.getUsu());
         } else {
             this.estado = "EN PROCESO";
+            codinterno="100392";
         }
         correlativo = generarCorrelativo();
         correla_exportar = correlativo;

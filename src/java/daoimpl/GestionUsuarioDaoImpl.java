@@ -158,7 +158,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         System.out.println("get JEFES");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA WHERE CARGO='JEFE DE UNIDAD' AND CODIGO='" + id + "'");
+            Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE AS NOMBRE FROM JEFATURA WHERE CARGO NOT LIKE '%JEFE DE ÁREA%' AND CODIGO='" + id + "'");
             jefesuser = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
             session.close();
