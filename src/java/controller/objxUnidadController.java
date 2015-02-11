@@ -882,6 +882,7 @@ public class objxUnidadController implements Serializable {
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
         nombre = usu.getUsuNombre();
+        System.out.println(nombre);
         return nombre;
     }
 

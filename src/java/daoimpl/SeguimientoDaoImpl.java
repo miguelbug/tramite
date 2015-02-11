@@ -34,7 +34,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.getTransaction().commit();
             System.out.println("se ha guardado en el temporal");
         } catch (Exception e) {
-            System.err.println("falló guardado en temporal" + e);
+            System.err.println("falló guardado en temporal: " + e);
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
         } finally {
