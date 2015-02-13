@@ -34,7 +34,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.getTransaction().commit();
             System.out.println("se ha guardado en el temporal");
         } catch (Exception e) {
-            System.err.println("falló guardado en temporal" + e);
+            System.err.println("falló guardado en temporal: " + e);
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
         } finally {
@@ -51,10 +51,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction();
             contador = Integer.parseInt(String.valueOf((BigDecimal) session.createSQLQuery(sql).uniqueResult()));
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problemas get contador");
             System.out.println(e.getMessage());
+        }
+        finally{
+            session.close();
         }
         return contador;
     }
@@ -344,11 +346,14 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND DOCU_PRIC='1'");
             td = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("problem oficina");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        }
+        finally{
+            session.close();
         }
         return td;
     }
@@ -365,11 +370,13 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND DOCU_PRIC='1'");
             td = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problem tiposdocus");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        }
+        finally{
+            session.close();
         }
         return td;
     }

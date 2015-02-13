@@ -173,7 +173,7 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);
         FacesMessage message = null;
         boolean rpt = false;
-        parametros.put("USUARIO", getUSUARIO());
+        parametros.put("usuario", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("lote", loteinput);
         repor.addMapParam(parametros);
@@ -334,10 +334,8 @@ public class objxUnidadController implements Serializable {
         FacesMessage message = null;
         boolean rpt = false;
         parametros.put("usuario", getUSUARIO());
-        //parametros.put("oficina","oficina oli");
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
-        // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
         if (!rpt && message == null) {
@@ -882,6 +880,7 @@ public class objxUnidadController implements Serializable {
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Usuario usu = (Usuario) session.getAttribute("sesionUsuario");
         nombre = usu.getUsuNombre();
+        System.out.println(nombre);
         return nombre;
     }
 

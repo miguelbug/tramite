@@ -29,6 +29,9 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["oficina"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[select TRAM_NUM,
 DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss')) AS FECHA,
 ORIGEN,
@@ -109,7 +112,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+¿$F{DESTINO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement

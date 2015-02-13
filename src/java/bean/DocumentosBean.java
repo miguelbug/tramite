@@ -622,12 +622,6 @@ public class DocumentosBean implements Serializable {
                 Map<String, String> hm = (HashMap<String, String>) tdaux.get(i);
                 System.out.println("llena numerotramite");
                 nuevoid.setTramNum(hm.get("numerotramite").toString());
-                /*System.out.println("entra a fecha envio td");
-                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                 Date nf = new Date();
-                 System.out.println(hm.get("fecha").toString().substring(0, 19));
-                 nf = formato.parse(hm.get("fecha").toString().substring(0, 19));
-                 nuevoid.setTramFecha(nf);*/
                 nuevo.setId(nuevoid);
                 System.out.println("llena codigo td");
                 nuevo.setDependencia(deriv.getDependencia2(hm.get("codigo").toString()));
@@ -702,7 +696,6 @@ public class DocumentosBean implements Serializable {
                 if (aux.indexOf("OGPL") != -1) {
                     System.out.println("ENTRA A OGPL");
                     td = getTramiteDato(aux);
-
                     movimiento.setTramiteDatos(td);
                     movimiento.setMoviNum(Short.parseShort(hm.get("movimiento").toString()));
                     movimiento.setEstaNombre(hm.get("estado").toString());
@@ -799,14 +792,14 @@ public class DocumentosBean implements Serializable {
 
                 t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
                 System.out.println("---------entra a guardar tramite dato---------");
-                sgd.GuadarTramiteDatos(td, tdoc);
+                sgd.GuadarTramiteDatos(td, tdoc);/////////////////tramitedatos
                 System.out.println("---------sale de guardar tramite dato---------");
                 System.out.println("---------entra a guardar tramite movimiento---------");
                 t.setImpreso(BigDecimal.valueOf(1));
                 t.setContador(String.valueOf(cont));
-                sgd.temporal(t);
+                sgd.temporal(t);////////////temporal
                 movimiento.setEstadConfrirm("SIN CONFIRMAR");
-                sgd.GuardarTramiteMovimiento(movimiento);
+                sgd.GuardarTramiteMovimiento(movimiento);//////////tramitemovimiento
                 System.out.println("---------sale de guardar tramite movimiento---------");
                 ntram = "";
                 hecho = true;

@@ -35,6 +35,8 @@ public class conexion {
             //return conn;
         } catch (Exception e) {
             System.out.println("PROBLEMAS EN CONEXION: "+e.getMessage());
+            e.printStackTrace();
+            
         }
         return conn;
 

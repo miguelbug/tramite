@@ -93,7 +93,9 @@ public class DocumentoUsuarioBean {
         }
 
     }
-
+    public void out(){
+        System.out.println("SE TIENE QUE PINTAR");
+    }
     public void onEdit(RowEditEvent event) {
         String id = String.valueOf(((HashMap) event.getObject()).get("iddoc"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
@@ -613,10 +615,10 @@ public class DocumentoUsuarioBean {
     public void RealizarCambio() {
         if (docunombre.equals("ARCHIVO")) {
             this.estado = "FINALIZADO";
-            codinterno=deriv.getCodigoUsuario(usu.getUsu());
+            codinterno = deriv.getCodigoUsuario(usu.getUsu());
         } else {
             this.estado = "EN PROCESO";
-            codinterno="100392";
+            codinterno = "100392";
         }
         correlativo = generarCorrelativo();
         correla_exportar = correlativo;

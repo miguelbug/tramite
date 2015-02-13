@@ -9,8 +9,10 @@
         url="jdbc:oracle:thin:@//172.16.89.123:1521/xe"
         username="miguel" 
         password="miguelon" 
-        maxActive="100" 
-        maxIdle="100"
-        maxWait="6000"/>
+        maxActive="100"
+        minIdle="10"
+        maxWait="10000"
+        initialSize="10"
+        jmxEnabled="true"/>
 </Context>
 
