@@ -93,7 +93,9 @@ public class DocumentoUsuarioBean {
         }
 
     }
-
+    public void out(){
+        System.out.println("SE TIENE QUE PINTAR");
+    }
     public void onEdit(RowEditEvent event) {
         String id = String.valueOf(((HashMap) event.getObject()).get("iddoc"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));

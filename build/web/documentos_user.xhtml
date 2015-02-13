@@ -20,13 +20,14 @@
                     <br></br>
                     <br></br>
                     <p:tabView>
-
                         <p:tab title="Documentos" id="tab1">
                             <center>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec2}"
-                                             rowKey="#{item.numerotramite}+#{item.movimnum}" style="margin-bottom: 0" rowStyleClass="#{item.estadDoc le 'DERIVADO' ? 'old' : null}">
+                                             rowKey="#{item.numerotramite}+#{item.movimnum}" style="margin-bottom: 0" 
+                                             rowStyleClass="#{item.estadDoc eq 'DERIVADO' ? 'pintado' : null} #{item.estadDoc eq 'ARCHIVADO' ? 'pintado1' : null}
+                                             #{item.estadDoc eq 'SIN CONFIRMAR' ? 'pintado2' : null} #{item.estadDoc eq 'CONFIRMADO' ? 'pintado3' : null}">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                     <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
@@ -154,11 +155,8 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-
-
                     <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
                         <p:panelGrid columns="2" id="panelDeriv">
-
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -168,16 +166,12 @@
                                 <f:selectItem itemLabel="CARTA" itemValue="CARTA"/>
                                 <p:ajax event="change" listener="#{documentoUsuarioBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
-
                             <p:outputLabel value="Documento: "/>
                             <p:outputLabel value="#{documentoUsuarioBean.docunombre} N° #{documentoUsuarioBean.correlativo}-#{documentoUsuarioBean.siglasdocus}-#{documentoUsuarioBean.fechanio}"/>
-
                             <p:outputLabel value="Asunto: "/>
                             <p:inputTextarea  rows="2" cols="45" value="#{documentoUsuarioBean.asunto}" style="text-transform:uppercase;"/>
-
                             <p:outputLabel value="Referencia: "/>
                             <p:outputLabel value="Expediente(s) #{documentoUsuarioBean.numtramaux}"/>
-
                             <p:outputLabel value="Oficina Interna: "/>
                             <p:selectOneMenu id="identif" value="#{documentoUsuarioBean.codinterno}">
                                 <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
@@ -187,20 +181,14 @@
                                 <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
                                 <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
                             </p:selectOneMenu>
-
                             <p:outputLabel value="Estado: "/>
                             <p:outputLabel id="estado" value="#{documentoUsuarioBean.estado}"/>
-
-
                             <p:outputLabel value="Fecha: "/>
                             <p:inputText value="#{documentoUsuarioBean.fechadia}" />
-
                             <p:outputLabel value="Hora: " />
                             <p:outputLabel value="#{documentoUsuarioBean.fechahora}" />
-
                             <p:outputLabel value="Motivo: " />
                             <p:outputLabel value="#{documentoUsuarioBean.motivo}" />
-
                             <p:outputLabel value="Usuario: " />
                             <p:outputLabel value="#{documentoUsuarioBean.usuario}" />
                         </p:panelGrid>
@@ -211,10 +199,26 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-
-
                     <br></br>
                     <br></br>
+                 <!--   <style type="text/css">
+                        .pintado {
+                            background-color: #008080;
+                            color: #FFFFFF;
+                        }
+                        .pintado1 {
+                            background-color: #228B22;
+                            color: #FFFFFF;
+                        }
+                        .pintado2 {
+                            background-color: #4169E1;
+                            color: #FFFFFF;
+                        }
+                        .pintado3 {
+                            background-color: #4B0082;
+                            color: #FFFFFF;
+                        }
+                    </style>-->
                 </h:form>
             </ui:define>
         </ui:composition>
