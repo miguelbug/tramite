@@ -10,7 +10,7 @@
         username="miguel" 
         password="miguelon" 
         maxActive="100"
-        minIdle="10"
+        minIdle="40"
         maxWait="10000"
         initialSize="10"
         jmxEnabled="true"/>
