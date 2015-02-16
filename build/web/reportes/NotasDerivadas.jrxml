@@ -29,16 +29,12 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["oficina"]]></defaultValueExpression>
-	</parameter>
 	<queryString><![CDATA[select TRAM_NUM,
 DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss')) AS FECHA,
 ORIGEN,
 ASUNTO,
 DESTINO,
-TIPODOCUMENTOS,
-CONTADOR
+TIPODOCUMENTOS
 from temporal
 where impreso=1 and reimpreso IS null
 order by DESTINO,TRAM_NUM]]></queryString>
@@ -49,7 +45,6 @@ order by DESTINO,TRAM_NUM]]></queryString>
 	<field name="ASUNTO" class="java.lang.String"/>
 	<field name="DESTINO" class="java.lang.String"/>
 	<field name="TIPODOCUMENTOS" class="java.lang.String"/>
-	<field name="CONTADOR" class="java.lang.String"/>
 
 	<variable name="fecha" class="java.util.Date" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
@@ -59,7 +54,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 		<group  name="porOficina" isStartNewPage="true" >
 			<groupExpression><![CDATA[$F{DESTINO}]]></groupExpression>
 			<groupHeader>
-			<band height="46"  isSplitAllowed="true" >
+			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="66"
@@ -112,7 +107,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+¿$F{DESTINO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
@@ -164,6 +159,19 @@ order by DESTINO,TRAM_NUM]]></queryString>
 			</groupHeader>
 			<groupFooter>
 			<band height="37"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="484"
+						y="21"
+						width="44"
+						height="11"
+						key="textField-15"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
 			</band>
 			</groupFooter>
 		</group>
@@ -176,7 +184,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="59"  isSplitAllowed="true" >
+			<band height="49"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
@@ -192,8 +200,8 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="4"
-						y="44"
+						x="1"
+						y="32"
 						width="528"
 						height="14"
 						key="textField-1"/>
@@ -255,19 +263,6 @@ order by DESTINO,TRAM_NUM]]></queryString>
 					</textElement>
 				<text><![CDATA[Fec. Impresion:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="394"
-						y="32"
-						width="44"
-						height="11"
-						key="textField-16"/>
-					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Lote: "+$F{CONTADOR}]]></textFieldExpression>
-				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -292,7 +287,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="66"
-						y="-3"
+						y="-1"
 						width="54"
 						height="30"
 						key="textField-8"/>
@@ -333,7 +328,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="529"
-						y="-21"
+						y="-19"
 						width="0"
 						height="49"
 						key="line-9"/>
@@ -342,7 +337,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="120"
-						y="-21"
+						y="-19"
 						width="0"
 						height="49"
 						key="line-11"/>
@@ -351,7 +346,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="66"
-						y="-22"
+						y="-20"
 						width="0"
 						height="48"
 						key="line-12"/>
@@ -360,7 +355,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="5"
-						y="-21"
+						y="-19"
 						width="0"
 						height="49"
 						key="line-13"/>
@@ -378,7 +373,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="420"
-						y="-21"
+						y="-19"
 						width="0"
 						height="49"
 						key="line-15"/>
@@ -387,7 +382,7 @@ order by DESTINO,TRAM_NUM]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="199"
-						y="-21"
+						y="-19"
 						width="0"
 						height="49"
 						key="line-16"/>
@@ -410,19 +405,6 @@ order by DESTINO,TRAM_NUM]]></queryString>
 		</detail>
 		<columnFooter>
 			<band height="11"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="4"
-						y="0"
-						width="94"
-						height="11"
-						key="textField-15"/>
-					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
-				</textField>
 			</band>
 		</columnFooter>
 		<pageFooter>

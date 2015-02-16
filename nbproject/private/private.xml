@@ -12,9 +12,15 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/proyecto/tramite/web/documentos.xhtml</file>
             <file>file:/D:/proyecto/tramite/src/java/bean/DocumentosBean.java</file>
             <file>file:/D:/proyecto/tramite/web/Oficios.xhtml</file>
+=======
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/reportes/NotasDerivadas.jrxml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/reportes/NotasDerivadas.bak</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
