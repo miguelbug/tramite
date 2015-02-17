@@ -45,10 +45,13 @@ public class DocusExtDaoImpl implements DocusExtDAO {
                     + "ORDER BY DE.FECHA DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("mal DOCUSEXT");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return proveidos;
     }

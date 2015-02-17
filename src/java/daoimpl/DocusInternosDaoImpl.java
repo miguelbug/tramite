@@ -44,10 +44,13 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("mal circulares");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return circulares;
     }
@@ -73,10 +76,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal circulares");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return circulares;
     }
@@ -116,10 +121,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY DI.FECHAREGISTRO DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -152,10 +159,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND DI.ID_DOCUMENTO='" + tipo + "'");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -229,10 +238,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY R.FECHA DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -303,10 +314,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY R.FECHA DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -345,10 +358,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY DI.FECHAREGISTRO DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -381,10 +396,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY DI.FECHAREGISTRO DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return docinternos;
     }
@@ -414,10 +431,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY DI.DOCU_CORRELAINT DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal getproveidos");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return proveidos;
     }
@@ -436,10 +455,12 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "ORDER BY DOCU_CORRELAINT DESC");
             correlaresp = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get respuestas");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return correlaresp;
     }

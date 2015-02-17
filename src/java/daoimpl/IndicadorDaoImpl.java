@@ -29,10 +29,10 @@ public class IndicadorDaoImpl implements IndicadorDAO {
             session.beginTransaction();
             nuevoIndic = (Indicador) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal");
             session.beginTransaction().rollback();
+        } finally{
             session.close();
         }
         return nuevoIndic;

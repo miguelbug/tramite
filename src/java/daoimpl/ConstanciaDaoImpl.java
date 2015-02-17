@@ -50,10 +50,13 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
             Query query = session.createSQLQuery("SELECT NOMBRE, APELLIDOS FROM JEFATURA");
             jefatura = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("no entró1111");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return jefatura;
 
@@ -72,10 +75,12 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
                     + "and j.id_contrato=tc.ID_CONTRATO");
             contrato = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("no get contrato");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return contrato;
     }
@@ -118,10 +123,13 @@ public class ConstanciaDaoImpl implements ConstanciaDAO {
                     + "order by co.fecha_emision desc");
             constancias = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("no getconstancias");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return constancias;
     }

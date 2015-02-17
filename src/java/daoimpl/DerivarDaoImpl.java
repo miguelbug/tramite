@@ -303,6 +303,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception ex) {
             System.err.println("falló guardado tipodocus." + ex);
             System.out.println(ex.getMessage());
+            session.beginTransaction().rollback();
             ex.printStackTrace();
         } finally {
             session.close();
@@ -332,6 +333,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -459,6 +461,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal fecha");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -490,11 +493,13 @@ public class DerivarDaoImpl implements DerivarDAO {
                     + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("no entró1111");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally{
+            session.close();
         }
         return codigos;
     }
@@ -512,6 +517,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal usu");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -545,6 +551,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal get tm");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -565,6 +572,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal confirmar");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -583,6 +591,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal confirmar");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -602,6 +611,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal confirmar");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -627,6 +637,7 @@ public class DerivarDaoImpl implements DerivarDAO {
         } catch (Exception e) {
             System.out.println("mal confirmar");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -680,11 +691,13 @@ public class DerivarDaoImpl implements DerivarDAO {
                     + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+            
         } catch (Exception e) {
             System.out.println("no entro getconfirmadosderivados");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally{
+            session.close();
         }
         return codigos;
     }

@@ -34,6 +34,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         } catch (Exception e) {
             System.out.println("mal delete DOCUS_EXTINT");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -53,6 +54,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
         } catch (Exception e) {
             System.out.println("mal get nombre DEPE ");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -92,10 +94,12 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             Query query = session.createSQLQuery("SELECT NOMBRE FROM DEPENDENCIA WHERE TIPODEPE IS NOT NULL");
             dependencias = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get docus internos (oficios)");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return dependencias;
     }
@@ -119,10 +123,12 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + " ORDER BY DI.FECHAREGISTRO DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get docus internos (oficios)");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return proveidos;
     }
@@ -137,10 +143,12 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
             Query query = session.createQuery("from Usuario where usuNombre='" + nombre + "'");
             usuario = (Usuario) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get usuario");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return usuario;
     }
@@ -169,10 +177,13 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + "ORDER BY DE.ID DESC");
             proveidos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get docus internos (oficios)");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        }
+        finally{
+            session.close();
         }
         return proveidos;
     }
