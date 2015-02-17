@@ -102,12 +102,14 @@ public class GestionUsuarioBean implements Serializable {
     public void Guardar() {
         FacesMessage message = null;
         Usuario aux = gu.ValidarClave(antiguapass, usu.getUsu());
+        System.out.println(nuevapass+"-"+antiguapass);
         if (aux == null) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Datos erroneos");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
         } else {
-            if (nuevapass.equals(confirmarcontra)) {
+            System.out.println(nuevapass+"-"+antiguapass);
+            if (nuevapass.equals(antiguapass)) {
                 try {
                     aux.setClave(nuevapass);
                     gu.Cambiar(aux);
