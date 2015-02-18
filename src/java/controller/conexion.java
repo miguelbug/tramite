@@ -6,6 +6,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -15,10 +16,23 @@ import javax.sql.DataSource;
  * @author USUARIO
  */
 public class conexion {
+    
+    Connection conn=null;
+    
+    public conexion() throws SQLException{
+        if(conn!=null){
+            conn.close();
+        }else{
+            obtenerConexion();
+        }
+        
+        
+    }
 
-    public Connection obetenerConecion() {
+    /*public Connection obetenerConecion() throws SQLException {
         Connection conn = null;
         try {
+            
             // Obtenemos un contexto inicial
             InitialContext ctx = new InitialContext();
 
@@ -32,14 +46,38 @@ public class conexion {
 
 // Ya podemos obtener una conexión y operar con ella normalmente
             conn = ds.getConnection();
+            
             //return conn;
         } catch (Exception e) {
-            System.out.println("PROBLEMAS EN CONEXION: "+e.getMessage());
+            System.out.println("PROBLEMAS EN CONEXION: " + e.getMessage());
             e.printStackTrace();
-            
+
+        } finally {
+            conn.close();
         }
         return conn;
 
+    }*/
+
+    public void obtenerConexion() {
+        try{
+            InitialContext ctx = new InitialContext();
+            Context envCtx = (Context) ctx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/hr");
+            conn = ds.getConnection();
+        }
+        catch(Exception e){
+            System.out.println("PROBLEMAS EN CONEXION: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 
 }

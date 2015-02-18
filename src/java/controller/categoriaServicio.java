@@ -19,10 +19,11 @@ import org.hibernate.jdbc.Work;
 public class categoriaServicio {
 
     Session session;
-    conexion nuevacon = new conexion();
+    conexion nuevacon;
 
-    public Connection getConexion() {
-        return nuevacon.obetenerConecion();
+    public Connection getConexion() throws SQLException {
+        nuevacon= new conexion();
+        return nuevacon.getConn();
     }
 
     /*

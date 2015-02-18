@@ -13,6 +13,7 @@
         minIdle="40"
         maxWait="10000"
         initialSize="10"
-        jmxEnabled="true"/>
+        jmxEnabled="true"
+        removeAbandoned="true"/>
 </Context>
 

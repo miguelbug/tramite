@@ -45,10 +45,12 @@ public class GestionDependenciaDaoImpl implements GestionDependenciaDao {
             Query query = session.createSQLQuery(sql);
             codigo = Integer.parseInt(String.valueOf(query.uniqueResult()));
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get respuestas");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return codigo;
     }

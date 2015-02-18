@@ -71,10 +71,10 @@
             <p:dialog header="Gestión Usuario" widgetVar="GUdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="gudialog">
                 <p:panelGrid columns="2" id="panelgu">
                     <p:outputLabel value="Contraseña Antigua:"/>
-                    <p:inputText value="#{gestionUsuarioBean.antiguapass}"/>
+                    <p:password value="#{gestionUsuarioBean.antiguapass}"/>
 
                     <p:outputLabel value="Nueva Contraseña:"/>
-                    <p:inputText value="#{gestionUsuarioBean.nuevapass}"/>
+                    <p:password value="#{gestionUsuarioBean.nuevapass}"/>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Cambios" actionListener="#{gestionUsuarioBean.Guardar()}" update="panelgu">
                         <f:ajax event="click" onevent="GUdialog.hide()"/>

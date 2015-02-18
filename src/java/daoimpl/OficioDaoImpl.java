@@ -40,6 +40,7 @@ public class OficioDaoImpl implements OficioDAO {
         } catch (Exception e) {
             System.out.println("mal delete docus internos");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -98,10 +99,13 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery(sql);
             lista = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal get all depe");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return lista;
     }
@@ -140,6 +144,7 @@ public class OficioDaoImpl implements OficioDAO {
         } catch (Exception e) {
             System.out.println("mal delete oficio");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -175,6 +180,7 @@ public class OficioDaoImpl implements OficioDAO {
         } catch (Exception e) {
             System.out.println("mal get nombre ofi ");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -228,10 +234,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -266,10 +274,12 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG2='" + f + "'");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -284,10 +294,12 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='" + g + "'");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -302,10 +314,12 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createSQLQuery("select NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='" + f + "'");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -380,10 +394,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -406,10 +422,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "and tram_num is null");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -426,10 +444,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "WHERE nombre='" + nombre + "'");
             depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal codigo");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depe;
     }
@@ -463,10 +483,12 @@ public class OficioDaoImpl implements OficioDAO {
             Query query = session.createQuery("From OficCirc where correlaOficic='" + correla + "' and to_char(fecha,'YYYY')='" + anio + "'");
             ofi = (OficCirc) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal get oficio circular");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return ofi;
     }
@@ -484,10 +506,13 @@ public class OficioDaoImpl implements OficioDAO {
                     + "AND to_char(fecha,'YYYY')='" + anio + "'");
             depe = (Long) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal indice");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depe;
     }
@@ -503,10 +528,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "WHERE nombre='" + nombre + "'");
             depe = (Dependencia) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal dpee 2");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depe;
     }
@@ -522,10 +549,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "WHERE codigo='" + nombre + "'");
             depe = (Dependencia) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal dpee");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depe;
     }
@@ -560,10 +589,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "and J.USU=U.USU");
             depes = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -581,10 +612,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "and ESTADO='activo'");
             depes = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal getresponsable");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -601,10 +634,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "where ID_OFICINA='" + usuario + "'");
             depes = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal getresponsable");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -628,10 +663,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "ORDER BY OFI.FECHA DESC");
             oficioscirc = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal oficioscirculares");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return oficioscirc;
     }
@@ -650,10 +687,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "AND OFI.CORRELA_OFICIC='" + correla + "'");
             oficioscirc = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal oficioscirculares");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return oficioscirc;
     }
@@ -669,10 +708,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "from DEPENDENCIA");
             depes = (List<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal dependencias");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -689,10 +730,12 @@ public class OficioDaoImpl implements OficioDAO {
                     + "where TIPODEPE='" + tipo + "'");
             depes = (List<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal dependencias");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return depes;
     }
@@ -727,6 +770,7 @@ public class OficioDaoImpl implements OficioDAO {
         } catch (Exception e) {
             System.out.println("mal get oficiodocumento");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();

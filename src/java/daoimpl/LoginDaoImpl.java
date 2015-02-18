@@ -30,10 +30,10 @@ public class LoginDaoImpl implements LoginDao{
             session.beginTransaction();
             nuevoUsu = (Usuario) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal");
             session.beginTransaction().rollback();
+        } finally{
             session.close();
         }
         return nuevoUsu;
@@ -49,10 +49,10 @@ public class LoginDaoImpl implements LoginDao{
             session.beginTransaction();
             nuevoUsu = (Usuario) session.createQuery(sql).uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal 2");
             session.beginTransaction().rollback();
+        } finally{
             session.close();
         }
         return nuevoUsu;

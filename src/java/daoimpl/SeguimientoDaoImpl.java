@@ -54,8 +54,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.out.println("problemas get contador");
             System.out.println(e.getMessage());
-        }
-        finally{
+            session.beginTransaction().rollback();
+        } finally {
             session.close();
         }
         return contador;
@@ -84,10 +84,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction();
             codigos = (List) session.createSQLQuery(sql).list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problemasseguimiento grande 1");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
         System.out.println("retorna grande");
         return codigos;
@@ -132,11 +134,13 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             session.beginTransaction();
             codigos = (List) session.createSQLQuery(sql).list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problemasseguimiento grande 2");
             System.out.println(e.getMessage());
             e.printStackTrace();
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
         System.out.println("retorna grande");
         return codigos;
@@ -179,10 +183,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND M.INDI_COD=I.INDI_COD");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problemasseguimiento grande");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
         System.out.println("retorna grande");
         return codigos;
@@ -212,11 +218,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "ORDER BY TM.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problemasseguimiento");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return codigos;
@@ -261,11 +268,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "ORDER BY FECHA_ENVIO DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("no entró1111");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -294,6 +302,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tramitedatos" + e);
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -311,6 +320,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tramitedatos" + e);
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -328,6 +338,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         } catch (Exception e) {
             System.err.println("falló guardado tipodocus" + e);
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -346,13 +357,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND DOCU_PRIC='1'");
             td = (List) query.list();
             session.beginTransaction().commit();
-            
+
         } catch (Exception e) {
             System.out.println("problem oficina");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
-        }
-        finally{
+        } finally {
             session.close();
         }
         return td;
@@ -374,8 +384,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
             System.out.println("problem tiposdocus");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
-        }
-        finally{
+        } finally {
             session.close();
         }
         return td;
@@ -393,11 +402,12 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "AND ESTADO='activo'");
             td = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("problem tiposdocus");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return td;
     }

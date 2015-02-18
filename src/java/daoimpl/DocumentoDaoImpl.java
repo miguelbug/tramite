@@ -76,10 +76,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             session.save(anios);
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal guardar anio");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -91,10 +94,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             session.save(ofi);
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal guardar oficio");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -127,11 +133,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             session.save(ofi);
             session.beginTransaction().commit();
-            session.close();
+
             System.out.println("se guardó oficio");
         } catch (Exception e) {
             System.out.println("?????????????mal guardar oficio¡¡¡¡");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
         System.out.println("entra a actualizar movimiento");
         ActualizarMov(tramnum, movimiento);
@@ -155,10 +164,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and di.tram_num='" + tramnum + "'");
             proveidos = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal getproveidos");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
         return proveidos;
     }
@@ -172,11 +184,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             Query query = session.createSQLQuery("select nombre from Dependencia where tipodepe='" + tipo + "' order by nombre");
             docus = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró depenencias");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return docus;
     }
@@ -190,11 +204,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             Query query = session.createSQLQuery("select indi_nombre from Indicador order by indi_nombre");
             docus = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró indicadores");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return docus;
     }
@@ -243,11 +259,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return docus;
@@ -296,12 +314,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return docus;
@@ -335,11 +355,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró a getdocusinternos");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return docus;
@@ -372,11 +394,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró a getdocusinternos");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return docus;
@@ -407,11 +431,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             Query query = session.createSQLQuery(sql);
             busqueda = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         System.out.println("retorna");
         return busqueda;
@@ -480,11 +506,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             );
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró1111");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -504,11 +532,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             );
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró1111");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -535,11 +565,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and U.USU=TD.USU");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró22222");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -565,11 +597,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and U.USU=TD.USU");
             codigos = query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("no entró22222");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -586,11 +620,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "AND TO_CHAR(TD.TRAM_FECHA,'dd/MM/yyyy')='" + partir(fecha) + "'");
             codigos = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("problemasmotivo");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -619,11 +655,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and usu.ID_OFICINA=ofic.ID_OFICINA");
             codigos = (String) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("problem oficina");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
+        } finally {
+            session.close();
         }
         return codigos;
     }
@@ -645,11 +683,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             int i = session.createSQLQuery("DELETE FROM TRAMITE_DATOS WHERE TRAM_NUM= '" + tramnum + "' AND to_char(TRAM_FECHA,'dd/MM/yyyy')='" + fecha + "'").executeUpdate();
             session.beginTransaction().commit();
-            session.close();
+
             System.out.println("eliminados: " + i);
         } catch (Exception e) {
             System.out.println("mal eliminar TD");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -662,11 +703,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
-            session.close();
+
             System.out.println("eliminados: " + i);
         } catch (Exception e) {
             System.out.println("mal eliminar TIPO DOCU");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -679,11 +723,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
-            session.close();
+
             System.out.println("eliminados: " + i);
         } catch (Exception e) {
             System.out.println("mal eliminar TM");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -696,11 +743,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
-            session.close();
+
             System.out.println("eliminados: " + i);
         } catch (Exception e) {
             System.out.println("mal eliminar TEMPORAL");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 

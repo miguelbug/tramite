@@ -53,10 +53,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
                     + "ORDER BY J.APELLIDOS ASC");
             oficinas = (List) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET personal");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return oficinas;
     }
@@ -74,6 +76,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal validar");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -91,6 +94,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal actualizar usuario");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
 
@@ -107,10 +111,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createSQLQuery("SELECT NOMBRE_OFICINA FROM OFICINA");
             oficinas = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET OFICINAS");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return oficinas;
     }
@@ -125,10 +131,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createSQLQuery("SELECT PROFESION_NOMBRE FROM PROFESION");
             profesion = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET profesion");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return profesion;
     }
@@ -143,10 +151,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createSQLQuery("SELECT NOMBRE_CONTRATO FROM TIPO_CONTRATO");
             contrato = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET contrato");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return contrato;
     }
@@ -161,10 +171,13 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE AS NOMBRE FROM JEFATURA WHERE CARGO NOT LIKE '%JEFE DE ÁREA%' AND CODIGO='" + id + "'");
             jefesuser = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
+
         } catch (Exception e) {
             System.out.println("mal GET JEFES");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return jefesuser;
     }
@@ -179,10 +192,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createSQLQuery("SELECT APELLIDOS||', '||NOMBRE FROM JEFATURA ORDER BY APELLIDOS ASC");
             jefes = (ArrayList<String>) query.list();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET JEFES");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return jefes;
     }
@@ -197,10 +212,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createQuery("FROM Usuario where usuNombre='" + nombre + "'");
             usuario = (Usuario) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET contrato");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return usuario;
     }
@@ -215,10 +232,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             Query query = session.createQuery("FROM Usuario where usu='" + usu + "'");
             usuario = (Usuario) query.uniqueResult();
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal GET usu");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
         return usuario;
     }
@@ -237,6 +256,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal get oficina");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -257,6 +277,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal get oficina");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -277,6 +298,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal get profesion");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -297,6 +319,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal get contrato");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -317,10 +340,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             session.beginTransaction();
             session.save(usu);
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal guardar usuario");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
     }
 
@@ -338,6 +363,7 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
         } catch (Exception e) {
             System.out.println("mal get contrato");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
         } finally {
             session.close();
         }
@@ -352,10 +378,12 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
             session.beginTransaction();
             session.save(jefe);
             session.beginTransaction().commit();
-            session.close();
         } catch (Exception e) {
             System.out.println("mal guardar jefe");
             System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
         }
     }
 
