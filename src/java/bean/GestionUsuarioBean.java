@@ -110,7 +110,11 @@ public class GestionUsuarioBean implements Serializable {
             Limpiar();
         } else {
             System.out.println(nuevapass+"-"+antiguapass+"-"+aux.getClave());
+<<<<<<< HEAD
             if (aux.getClave().equals(antiguapass)) {
+=======
+            if (antiguapass.equals(aux.getClave())) {
+>>>>>>> origin/master
                 try {
                     aux.setClave(nuevapass);
                     gu.Cambiar(aux);

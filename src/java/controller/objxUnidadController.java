@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.servlet.ServletContext;
-import bean.DocusInternos;
 import bean.ProveidosInternosBean;
 import dao.DerivarDAO;
 import dao.OficioDAO;
@@ -31,6 +30,7 @@ import daoimpl.DerivarDaoImpl;
 import daoimpl.OficioDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import daoimpl.TemporalDiDaoImpl;
+import java.sql.SQLException;
 import java.text.ParseException;
 //
 import java.util.HashMap;
@@ -140,14 +140,14 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void ImpresionSeleccionadosUser() throws ParseException {
+    public void ImpresionSeleccionadosUser() throws ParseException, SQLException {
         guardarDatos2();
         mostrarReporSeleccionadosUser();
         tdi.actualizarTemporalUser();
 
     }
 
-    public void ImpresionSeleccionados() throws ParseException {
+    public void ImpresionSeleccionados() throws ParseException, SQLException {
         GuardarDatos();
         mostrarReporSeleccionados();
         tdi.actualizarTemporalDi();
@@ -157,7 +157,7 @@ public class objxUnidadController implements Serializable {
         this.loteinput = String.valueOf(sgd.getContadorTemporal());
     }
 
-    public void mostrarReimpresion() {
+    public void mostrarReimpresion() throws SQLException {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -186,7 +186,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporSeleccionadosUser() {
+    public void mostrarReporSeleccionadosUser() throws SQLException {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -217,7 +217,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporSeleccionados() {
+    public void mostrarReporSeleccionados() throws SQLException {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -247,7 +247,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporRegModPres() {
+    public void mostrarReporRegModPres() throws SQLException {
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         ReporteController repor;
@@ -316,7 +316,7 @@ public class objxUnidadController implements Serializable {
         return fecha;
     }
 
-    public void mostrarReporteNotasDeriv() {
+    public void mostrarReporteNotasDeriv() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -359,7 +359,7 @@ public class objxUnidadController implements Serializable {
 
     }
 
-    public void mostrarReporteDocumentos() {
+    public void mostrarReporteDocumentos() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -392,7 +392,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarRepProveido3() {
+    public void mostrarRepProveido3() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -437,7 +437,7 @@ public class objxUnidadController implements Serializable {
 
     }
 
-    public void mostrarRepProveido2() {
+    public void mostrarRepProveido2() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -470,7 +470,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarRepProveido() {
+    public void mostrarRepProveido() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -502,7 +502,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarRepOficio() {
+    public void mostrarRepOficio() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -534,7 +534,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteFecha3() {
+    public void mostrarReporteFecha3() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -573,7 +573,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteFecha2() {
+    public void mostrarReporteFecha2() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -611,7 +611,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteFecha() {
+    public void mostrarReporteFecha() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -651,7 +651,7 @@ public class objxUnidadController implements Serializable {
     }
 
     //////////////////////////////////////
-    public void mostrarReporteTodos() {
+    public void mostrarReporteTodos() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -686,7 +686,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteTodos2() {
+    public void mostrarReporteTodos2() throws SQLException {
 
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
@@ -721,7 +721,7 @@ public class objxUnidadController implements Serializable {
     }
 
     /////////////////////////////////////
-    public void mostrarReporteSeguimiento() {
+    public void mostrarReporteSeguimiento() throws SQLException {
         String tramite = "";
         tramite = DocumentosBean.tranum;
         System.out.println(DocumentosBean.tranum);
@@ -756,7 +756,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteConstancia() {
+    public void mostrarReporteConstancia() throws SQLException {
         String tramite = "";
         tramite = DocumentosBean.tranum;
         System.out.println(DocumentosBean.tranum);
@@ -790,7 +790,7 @@ public class objxUnidadController implements Serializable {
         }
     }
 
-    public void mostrarReporteOficioCircular() {
+    public void mostrarReporteOficioCircular() throws SQLException {
         String tramite = "";
         System.out.printf("PARAMETRO DEL TRAM NUM  %s", OficioBean.getCorrelativo_exportar());
         context = FacesContext.getCurrentInstance();
