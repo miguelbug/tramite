@@ -108,8 +108,8 @@ public class GestionUsuarioBean implements Serializable {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             Limpiar();
         } else {
-            System.out.println(nuevapass+"-"+antiguapass);
-            if (nuevapass.equals(antiguapass)) {
+            System.out.println(nuevapass+"-"+antiguapass+"-"+aux.getClave());
+            if (antiguapass.equals(aux.getClave())) {
                 try {
                     aux.setClave(nuevapass);
                     gu.Cambiar(aux);
