@@ -25,6 +25,63 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List mostrar_DocumentosOfInt() {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT R.I_D,\n"
+                    + "                           R.DOCUMENTO,\n"
+                    + "                           R.TRAM_NUM,\n"
+                    + "                           TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "                           DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)),\n"
+                    + "                           R.ORIGEN,\n"
+                    + "                           R.DESTINO,\n"
+                    + "                           R.ASIGNADO,\n"
+                    + "                           R.DOCUMENTO_PRINCIPAL,\n"
+                    + "                           R.ORIGEN_PRINCIPAL\n"
+                    + "                           FROM (\n"
+                    + "                    SELECT DI.IDTIP AS I_D,\n"
+                    + "                    DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "                    DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "                    DI.FECHAREGISTRO AS FECHA,\n"
+                    + "                    DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "                    D1.NOMBRE AS ORIGEN,\n"
+                    + "                    D2.NOMBRE AS DESTINO,\n"
+                    + "                    USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "                    DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "                    'SIN DOCUMENTO' AS DOCUMENTO_PRINCIPAL,\n"
+                    + "                    'SIN ORIGEN' AS ORIGEN_PRINCIPAL\n"
+                    + "                    \n"
+                    + "                    FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "                    WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "                    AND DI.CODIGO=D1.CODIGO\n"
+                    + "                    AND DI.CODIGO1=D2.CODIGO\n"
+                    + "                    AND DI.USU=USUA.USU\n"
+                    + "                    AND DI.TRAM_NUM IS NULL\n"
+                    + "                    ) R\n"
+                    + "                    WHERE R.DESTINO='OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "                    GROUP BY R.ORIGEN,R.I_D,R.DOCUMENTO,R.TRAM_NUM,\n"
+                    + "                           R.FECHA,\n"
+                    + "                           R.ASUNTO,R.DESTINO,\n"
+                    + "                           R.ASIGNADO,\n"
+                    + "                           R.DOCUMENTO_PRINCIPAL,\n"
+                    + "                           R.ORIGEN_PRINCIPAL\n"
+                    + "                    ORDER BY R.FECHA DESC");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return docinternos;
+    }
+
+    @Override
     public String getTram_Fecha(String tramnum, String movi) {
         String tramfecha = "";
         String sql = "SELECT TO_CHAR(TRAM_FECHA,'dd/MM/yyyy HH:mm:ss') FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM= '" + tramnum + "' AND MOVI_NUM='" + movi + "'";

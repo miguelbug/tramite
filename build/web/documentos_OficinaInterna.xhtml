@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>DOCUMENTOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form" >
+                    <br></br>
+                    <br></br>
+                    <center>
+                        <p:tabView id="tabmayor" dynamic="true">
+                            <p:tab title="DOCUMENTOS DE LAS OFICINAS INTERNAS">
+                                <p:dataTable value="#{documentosBean.documentosOfiInt}" var="item" paginator="true" rows="15" id="tabladocuofiint" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus2}" selection="#{documentosBean.docselec2}"
+                                             rowKey="#{item.documento}" style="margin-bottom: 0">
+
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column headerText="DOCUMENTO" width="5" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.documento}"/>
+                                    </p:column>
+                                    <p:column headerText="EXPEDIENTE" width="1">
+                                        <h:outputText value="#{item.tramnum}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asunto}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.origen}" />
+                                    </p:column>
+                                    <p:column headerText="ASIGNADO" width="5" sortBy="#{item.fing}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asignado}" />
+                                    </p:column>
+                                    
+                                    
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>
+                        
+                    </center>
+                    <br></br>
+                    <br></br>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

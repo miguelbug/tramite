@@ -47,4 +47,5 @@ public interface DocumentoDAO {
     
     public String getFlag(String dependencia);
     public String getTram_Fecha(String tramnum, String movi);
+    public List mostrar_DocumentosOfInt();
 }

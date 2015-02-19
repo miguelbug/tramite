@@ -24,7 +24,7 @@
                                 <p:dataTable value="#{documentosBean.documentos_confirmados}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"
-                                             rowKey="#{item.numerotramite}" style="margin-bottom: 0">
+                                             rowKey="#{item.numerotramite}-#{item.movimiento}" style="margin-bottom: 0">
 
                                     <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                     <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">

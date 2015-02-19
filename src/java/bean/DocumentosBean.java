@@ -52,7 +52,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentosBean implements Serializable {
 
-    private List documentos, seglista, docselec, seguimientolista, tdaux, tdaux2, documentosprov, dependenciasprov, detalprov, documentos_confirmados, documentos_corregir, otrosdocus, docusinternos;
+    private List otrosdocus2, docselec2, documentosOfiInt, documentos, seglista, docselec, seguimientolista, tdaux, tdaux2, documentosprov, dependenciasprov, detalprov, documentos_confirmados, documentos_corregir, otrosdocus, docusinternos;
     private DocumentoDAO dd;
     private boolean mostrar = false, hecho, nohecho, ver, no_ver;
     private Map<String, String> seleccion;
@@ -74,6 +74,7 @@ public class DocumentosBean implements Serializable {
         String currentPage = facesContext.getViewRoot().getViewId();
 
         documentos = new ArrayList<Map<String, String>>();
+        this.documentosOfiInt = new ArrayList<Map<String, String>>();
         this.documentos_corregir = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
@@ -95,6 +96,7 @@ public class DocumentosBean implements Serializable {
         boolean isdocumentoscorregir = (currentPage.lastIndexOf("documentos_corregir.xhtml") > -1);
         if (isdocumentos) {
             MostrarDocumentos();
+            mostrar_documentosOfInt();
         } else {
             if (isdocusinternos) {
                 MostrarDocusInternos();
@@ -109,7 +111,33 @@ public class DocumentosBean implements Serializable {
             }
         }
     }
-
+    public void mostrar_documentosOfInt(){
+        System.out.println("listando documentos corregir");
+        this.documentosOfiInt.clear();
+        try {
+            List lista = new ArrayList();
+            lista = dd.mostrar_DocumentosOfInt();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[10];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("id", String.valueOf(obj[0]));
+                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("tramnum", String.valueOf(obj[2]));
+                listaaux.put("fecha", String.valueOf(obj[3]));
+                listaaux.put("asunto", String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
+                listaaux.put("docu_princ", String.valueOf(obj[8]));
+                listaaux.put("origen_princ", String.valueOf(obj[9]));
+                documentosOfiInt.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void generarCorrelativo_proveido() {
         int corr = 0;
         String aux = "";
@@ -204,6 +232,21 @@ public class DocumentosBean implements Serializable {
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
         referencia = hm.get("observacion");
+        siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        anio = sdf1.format(fecha);
+        responsable = hm.get("origen").toString();
+        
+    }
+    
+    public void mostrarOficio_oficinaDocus() {
+        Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+        fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
+        fechaaux = sdf.format(fecha);
+        tramnum = hm.get("documento");
+        correlativo_oficio = generarCorrelativo();
+        referencia = hm.get("asunto");
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
         responsable = hm.get("origen").toString();
@@ -1204,6 +1247,30 @@ public class DocumentosBean implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public List getDocumentosOfiInt() {
+        return documentosOfiInt;
+    }
+
+    public void setDocumentosOfiInt(List documentosOfiInt) {
+        this.documentosOfiInt = documentosOfiInt;
+    }
+
+    public List getOtrosdocus2() {
+        return otrosdocus2;
+    }
+
+    public void setOtrosdocus2(List otrosdocus2) {
+        this.otrosdocus2 = otrosdocus2;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
     }
 
 }
