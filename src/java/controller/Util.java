@@ -197,14 +197,17 @@ public class Util {
 		
 		Object	objetoEnSession = new Object();
 		try{
-			ExternalContext context = 
-			FacesContext.getCurrentInstance().getExternalContext();
-			HttpServletRequest request = 
-	    	(HttpServletRequest) context.getRequest();
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			HttpServletRequest request = (HttpServletRequest) context.getRequest();
 			objetoEnSession = (Object) request.getSession().getAttribute(alias); 
 		}
 		catch(Exception ex){
+                    System.out.println("fallo Objetosession");
+                    System.out.println(ex.getMessage());
 		}
+                finally{
+                    
+                }
 	    return objetoEnSession;
 	}
 	

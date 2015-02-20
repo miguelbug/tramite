@@ -17,48 +17,12 @@ import javax.sql.DataSource;
  */
 public class conexion {
     
-    Connection conn=null;
+    Connection conn;
     
-    public conexion() throws SQLException{
-        if(conn!=null){
-            conn.close();
-        }else{
-            obtenerConexion();
-        }
-        
-        
+    public conexion() throws SQLException{        
+        obtenerConexion();
+        System.out.println("DESPUES DE CERRAR LA CONEXION: "+conn);        
     }
-
-    /*public Connection obetenerConecion() throws SQLException {
-        Connection conn = null;
-        try {
-            
-            // Obtenemos un contexto inicial
-            InitialContext ctx = new InitialContext();
-
-// Obtenemos el contexto de nuestro entorno. La cadena
-// "java:comp/env" es siempre la misma
-            Context envCtx = (Context) ctx.lookup("java:comp/env");
-
-// Obtenemos una fuente de datos identificada con la cadena que
-// le hemos asignado en los ficheros de configuración
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/hr");
-
-// Ya podemos obtener una conexión y operar con ella normalmente
-            conn = ds.getConnection();
-            
-            //return conn;
-        } catch (Exception e) {
-            System.out.println("PROBLEMAS EN CONEXION: " + e.getMessage());
-            e.printStackTrace();
-
-        } finally {
-            conn.close();
-        }
-        return conn;
-
-    }*/
-
     public void obtenerConexion() {
         try{
             InitialContext ctx = new InitialContext();
@@ -71,7 +35,14 @@ public class conexion {
             e.printStackTrace();
         }
     }
-
+    public void cerrarConexion(){
+        try{
+            conn.close();
+            System.out.println("SE HA CERRADO");
+        }catch(SQLException e){
+            System.out.println("Error: "+e.getMessage());
+        }
+    }
     public Connection getConn() {
         return conn;
     }

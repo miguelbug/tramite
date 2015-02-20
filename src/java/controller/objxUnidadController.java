@@ -115,16 +115,6 @@ public class objxUnidadController implements Serializable {
     public void guardarDatos2() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (int i = 0; i < docselec1.size(); i++) {
-            /*TemporalUser tldi = new TemporalUser();
-             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
-             tldi.setDocumento(hm.get("documento"));
-             tldi.setDocumentoPrinc(hm.get("docuprinc"));
-             tldi.setFecha(formatter.parse(hm.get("fecha").toString()));
-             tldi.setTramNum(hm.get("expediente"));
-             tldi.setOrigenPrinc(hm.get("origenprinc"));
-             tldi.setImpreso("1");
-             tldi.setReimpreso("0");
-             tdi.guardarTemporalUser(tldi);*/
             TemporalUser tluser = new TemporalUser();
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tluser.setDocumento(hm.get("documento").toString());
@@ -184,6 +174,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporSeleccionadosUser() throws SQLException {
@@ -276,41 +267,6 @@ public class objxUnidadController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-
-    /* public void mostrarRepRespuestas() {
-     context = FacesContext.getCurrentInstance();
-     serveltcontext = (ServletContext) context.getExternalContext().getContext();
-     ReporteController repor;
-     HashMap<String, Object> parametros = new HashMap<String, Object>();
-     parametros.clear();
-     FacesContext context = FacesContext.getCurrentInstance();
-     System.out.println("context" + context);
-     ServletContext sc = (ServletContext) context.getExternalContext().getContext();
-     System.out.println("sc = " + sc.getRealPath("/reportes/"));
-     repor = ReporteController.getInstance("RepResp");
-     categoriaServicio categoriaServicio = new categoriaServicio();
-     repor.setConexion(categoriaServicio.getConexion());
-     repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
-     FacesMessage message = null;
-     boolean rpt = false;
-     int movimiento=Integer.valueOf(DocumentoUsuarioBean.movimiento_exportar)+1;
-     System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento);
-     parametros.put("usuario", getUsu());
-     parametros.put("logo", getLogo());
-     parametros.put("oficina", getOficina());
-     parametros.put("coorelativo", DocumentoUsuarioBean.correla_exportar);
-     parametros.put("tramnum",DocumentoUsuarioBean.tramnum_exportar);
-     parametros.put("movimiento",String.valueOf(movimiento));
-     parametros.put("fechaderivado", getFechaDerivado());
-     System.out.println("correla: "+DocumentoUsuarioBean.correla_exportar+"  tramnum: "+DocumentoUsuarioBean.tramnum_exportar+"  movimiento: "+movimiento+" fechaderivado: "+getFechaDerivado());
-     repor.addMapParam(parametros);
-     rpt = repor.ejecutaReporte(context, serveltcontext);
-     if (!rpt && message == null) {
-     //no tiene hojas	
-     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
-     FacesContext.getCurrentInstance().addMessage(null, message);
-     }
-     }*/
     public String getFechaDerivado() {
         String fecha = this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
         return fecha;
@@ -343,6 +299,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void ejecutarReporteDeriv() {

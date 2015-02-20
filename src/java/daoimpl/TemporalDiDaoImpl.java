@@ -61,8 +61,8 @@ public class TemporalDiDaoImpl implements TemporaldiDao{
     @Override
     public void guardarTemporalDi(TemporalDi tdi) {
         System.out.println("entra a guardar temporalDi");
+        session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(tdi);
             session.getTransaction().commit();

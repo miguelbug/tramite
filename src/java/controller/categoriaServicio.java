@@ -18,14 +18,15 @@ import org.hibernate.jdbc.Work;
  */
 public class categoriaServicio {
 
-    Session session;
     conexion nuevacon;
 
     public Connection getConexion() throws SQLException {
         nuevacon= new conexion();
         return nuevacon.getConn();
     }
-
+    public void CerrandoConexion(){
+        nuevacon.cerrarConexion();
+    }
     /*
      public void doWorkOnConnection(Session session) {
      session.doWork(new Work() {

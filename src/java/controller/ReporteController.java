@@ -130,10 +130,6 @@ public class ReporteController {
         try {
 
             pdf = JasperExportManager.exportReportToPdf(jasperPrint);
-			//para mostrar sin imprimir
-            //response.addHeader("Content-disposition", "filename="+nombreReportePDF);
-            //automaticamente para descargar
-            //response.addHeader("Content-disposition", "inline;filename="+nombreReportePDF);
             System.out.println("nombre report:" + reportParam.getNombreReport());
             response.addHeader("Content-disposition", "attachment;filename=" + reportParam.getNombreReport() + ".pdf");
             response.setContentLength(pdf.length);
