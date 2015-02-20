@@ -206,6 +206,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporSeleccionados() throws SQLException {
@@ -236,6 +237,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporRegModPres() throws SQLException {
@@ -266,6 +268,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
     public String getFechaDerivado() {
         String fecha = this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
@@ -347,6 +350,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarRepProveido3() throws SQLException {
@@ -380,6 +384,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public String partir(String nombre) {
@@ -425,6 +430,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarRepProveido() throws SQLException {
@@ -457,6 +463,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarRepOficio() throws SQLException {
@@ -489,6 +496,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteFecha3() throws SQLException {
@@ -528,6 +536,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteFecha2() throws SQLException {
@@ -566,6 +575,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteFecha() throws SQLException {
@@ -605,6 +615,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     //////////////////////////////////////
@@ -641,6 +652,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteTodos2() throws SQLException {
@@ -675,6 +687,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     /////////////////////////////////////
@@ -711,6 +724,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteConstancia() throws SQLException {
@@ -745,6 +759,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarReporteOficioCircular() throws SQLException {
@@ -777,6 +792,7 @@ public class objxUnidadController implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void setAnioActual(int anioActual) {
