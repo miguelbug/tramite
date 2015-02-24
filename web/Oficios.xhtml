@@ -23,14 +23,23 @@
 
                                 <p:ajax event="rowEdit" listener="#{oficioBean.onEdit}"/>
                                 <p:ajax event="rowEditCancel" listener="#{oficioBean.onCancel}" />
-                                
+
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
                                 <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
                                     <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tramnum}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.tramnum}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu id="listatramites" filterMatchMode="contains" filter="true" value="#{item.tramnum}">
+                                                <f:selectItems value="#{oficioBean.listatramites}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}"/>

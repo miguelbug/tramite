@@ -52,7 +52,7 @@ public class OficioBean {
     private OficioDAO od;
     private Date anio, fecha;
     private DerivarDAO deriv;
-    private List otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar, oficioscirculares, docselec, depe2, depe, seleccionados, destinos, oficiosSinExp, oficiosConExp, detallecirc,
+    private List listatramites, otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar, oficioscirculares, docselec, depe2, depe, seleccionados, destinos, oficiosSinExp, oficiosConExp, detallecirc,
             listausuarios, tiposdocus;
     private String[] escojidos, selectedCities;
     private FacesContext faceContext;
@@ -64,7 +64,7 @@ public class OficioBean {
     List<String> citiesTarget = new ArrayList<String>();
     private List<String> cities2;
     private static String correlativo_exportar;
-    private boolean ver, nover, aparece, render=false;
+    private boolean ver, nover, aparece, render = false;
 
     public OficioBean() {
         dd = new DocumentoDaoImpl();
@@ -76,7 +76,7 @@ public class OficioBean {
         depe2 = new ArrayList<Map<String, String>>();
         depe = new ArrayList<Map<String, String>>();
         deriv = new DerivarDaoImpl();
-
+        this.listatramites = new ArrayList<Map<String, String>>();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
         listausuarios = new ArrayList<String>();
@@ -90,7 +90,7 @@ public class OficioBean {
         this.areasResp = new ArrayList<String>();
         listaeditar = od.getAllDependencias();
         llenardepes();
-
+        listarTramiteNumeros();
         boolean isofcirc = (currentPage.lastIndexOf("Oficios_Circulares.xhtml") > -1);
         boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
@@ -104,6 +104,7 @@ public class OficioBean {
             } else {
                 if (isoficconexp) {
                     mostrarOficioConExp();
+
                 } else {
                     if (isoficogpluser) {
                         MostrarOficiosOgplUser();
@@ -113,6 +114,17 @@ public class OficioBean {
         }
         ObtenerTiposDocus2();
 
+    }
+
+    public void listarTramiteNumeros() {
+        System.out.println("listar tramite numeros");
+        listatramites.clear();
+        try {
+            listatramites = od.listarTramitesNumeros(deriv.getCodigoUsuario(usu.getUsu()));
+        } catch (Exception e) {
+            System.out.println("ESTA MAL TRAMITE NUMEROS");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void cerrar() {
@@ -151,15 +163,48 @@ public class OficioBean {
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
         String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
         String asignado = String.valueOf(((HashMap) event.getObject()).get("asignado"));
-        System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado);
+        String tramitenum = String.valueOf(((HashMap) event.getObject()).get("tramnum"));
+        System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado + " " + tramitenum);
+        String tram = partirTramite(tramitenum);
+        String fechita = fechatramite(tramitenum);
+        System.out.println(tram + " " + fechita);
         if (asunto.indexOf("SIN REFERENCIA -") != -1) {
             asunto = asunto.substring(17, asunto.length());
         }
-        od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino, asignado);
-        mostrarOficioConExp();
-        FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
-        RequestContext.getCurrentInstance().showMessageInDialog(message);
+        try {
+            od.ActualizarOficio(correlativo.substring(10, 15), asunto, destino, asignado, tram, fechita);
+            mostrarOficioConExp();
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR NO SE ACTUALIZÓ", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+
+    }
+
+    public String partirTramite(String tramite) {
+        String cadena[] = new String[3];
+        StringTokenizer tokens = new StringTokenizer(tramite, " ");
+        int i = 0;
+        while (tokens.hasMoreTokens()) {
+            cadena[i] = (tokens.nextToken());
+            i++;
+        }
+        return cadena[0];
+    }
+
+    public String fechatramite(String tramite) {
+        String cadena[] = new String[3];
+        StringTokenizer tokens = new StringTokenizer(tramite, " ");
+        int i = 0;
+        while (tokens.hasMoreTokens()) {
+            cadena[i] = (tokens.nextToken());
+            i++;
+        }
+        return cadena[1] + " " + cadena[2];
     }
 
     public void onCancel(RowEditEvent event) {
@@ -267,7 +312,7 @@ public class OficioBean {
         origen = dd.getOficina(usu);
         asunto = " ";
         destino = " ";
-        this.partedocu = "Oficio N° "+correlativo2+"-"+siglasdocus+"-"+auxanio;
+        this.partedocu = "Oficio N° " + correlativo2 + "-" + siglasdocus + "-" + auxanio;
     }
 
     public void ObtenerAreasResp() {
@@ -728,7 +773,7 @@ public class OficioBean {
         if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
             ver = false;
             nover = true;
-            
+
         } else {
             try {
                 OficCirc ofi = new OficCirc();
@@ -1358,6 +1403,14 @@ public class OficioBean {
 
     public void setRender(boolean render) {
         this.render = render;
+    }
+
+    public List getListatramites() {
+        return listatramites;
+    }
+
+    public void setListatramites(List listatramites) {
+        this.listatramites = listatramites;
     }
 
 }

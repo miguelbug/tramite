@@ -45,7 +45,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List oficios3,oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -84,7 +84,6 @@ public class DocumentoUsuarioBean {
         boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
         if (isdocumentosUsuario) {
             MostrarParaUsuario();
-            listar_oficios();
         }
 
     }
@@ -97,39 +96,6 @@ public class DocumentoUsuarioBean {
 
     }
 
-    public void listar_oficios() {
-        System.out.println("listando oficios");
-        oficios2.clear();
-        try {
-            oficios2 = dd.obtener_oficios();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void onEdit2(RowEditEvent event) throws ParseException{
-        String nuevoficio=partiendoOficio(String.valueOf(((HashMap) event.getObject()).get("OFICIO")));
-        System.out.println("EL OFICIO ES: "+nuevoficio);
-        Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
-        String tramNum=hm.get("numerotramite").toString();
-        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date nf2 = new Date();
-        nf2 = formato2.parse(hm.get("fechaenvio").toString());
-        dd.ActualizarOficios(tramNum, nf2, nuevoficio);
-    }
-    public void onCancel2(RowEditEvent event){
-        
-    }
-    public String partiendoOficio(String ofi){
-        String solooficio="";
-        String cadena[] = new String[4];
-        StringTokenizer tokens = new StringTokenizer(ofi, " ");
-        int i = 0;
-        while (tokens.hasMoreTokens()) {
-            cadena[i]=(tokens.nextToken());
-            i++;
-        }
-        return solooficio=cadena[2].substring(0, 5);
-    }
     public void out() {
         System.out.println("SE TIENE QUE PINTAR");
     }

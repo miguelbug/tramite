@@ -46,10 +46,11 @@ public interface OficioDAO {
     public List getDependencias(String tipo);
     public String getNombreOfi(String usu);
     public List getOficOgplUser(String user);
-    public void ActualizarOficio(String correla, String asunto, String destino, String asignado);
+    public void ActualizarOficio(String correla, String asunto, String destino, String asignado, String tramNum, String fecha);
     public void DeleteOficio(String correlativo);
     public List getAllDependencias();
     public void ActualizarOficioCircular(String correla, String asunto, String origen);
     public void ActualizarDocusInternosOficinas(String id, String asunto);
     public void EliminarDocumentosInternosOficinas(String id);
+    public List listarTramitesNumeros(String oficina);
 }

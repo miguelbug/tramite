@@ -99,12 +99,8 @@
 
                     </p:dialog>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" >
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" editable="true"
-                                     rowKey="#{car.OFICIO}">
-                            
-                            <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit2}"/>
-                            <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel2}" />
-                            
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles">
+
                             <p:column headerText="FECHA REGISTRO">
                                 <h:outputText value="#{car.FECHAENVIO}" />
                             </p:column>
@@ -115,20 +111,7 @@
                                 <h:outputText value="#{car.RESP}" />
                             </p:column>
                             <p:column headerText="OFICIO">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{car.OFICIO}" />
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:selectOneMenu id="oficioslista" filterMatchMode="contains" filter="true" value="#{car.OFICIO}">
-                                            <f:selectItem itemLabel="Seleccione Oficio" itemValue=" "/>
-                                            <f:selectItems value="#{documentoUsuarioBean.oficios2}"/>
-                                        </p:selectOneMenu>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column style="width:32px">
-                                <p:rowEditor />
+                                <h:outputText value="#{car.OFICIO}" />
                             </p:column>
                         </p:dataTable>
 

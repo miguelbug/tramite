@@ -27,29 +27,6 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
-    public void ActualizarOficios(String tramNum, Date fecha, String oficio) {
-        System.out.println("actualizar oficio");
-        SimpleDateFormat formato2 = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
-        String fecha2 = formato2.format(fecha);
-        String sql = "Update OFICIOS SET TRAM_NUM='"+tramNum+"' , TRAM_FECHA=TO_DATE('"+fecha2+"','YYYY-MM-DD HH24:MI:SS') WHERE CORRELATIVO_OFICIO='"+oficio+"'";
-        session = HibernateUtil.getSessionFactory().openSession();
-        int i = 0;
-        try {
-            session.beginTransaction();
-            i = session.createSQLQuery(sql).executeUpdate();
-            session.getTransaction().commit();
-            System.out.println("terminó actualizar tramite");
-        } catch (Exception e) {
-            System.out.println("mal actualizar tramite");
-            System.out.println(e.getMessage());
-            session.beginTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        System.out.println("se ha actualizado¡¡¡¡¡¡¡: " + i);
-    }
-
-    @Override
     public List obtener_oficios() {
         List oficios = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
