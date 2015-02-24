@@ -762,7 +762,7 @@ public class DocumentosBean implements Serializable {
                     } else {
                         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date nf2 = new Date();
-                        nf2 = formato2.parse(hm.get("fing").toString().toString());
+                        nf2 = formato2.parse(hm.get("fing").toString());
                         movimiento.setFechaIngr(nf2);
                     }
                     System.out.println("sale fecha fing");

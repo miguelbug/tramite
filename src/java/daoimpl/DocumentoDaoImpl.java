@@ -10,6 +10,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import dao.DocumentoDAO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 import maping.Anios;
 import maping.Oficios;
@@ -23,6 +25,64 @@ import util.HibernateUtil;
 public class DocumentoDaoImpl implements DocumentoDAO {
 
     Session session;
+
+    @Override
+    public void ActualizarOficios(String tramNum, Date fecha, String oficio) {
+        System.out.println("actualizar oficio");
+        SimpleDateFormat formato2 = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        String fecha2 = formato2.format(fecha);
+        String sql = "Update OFICIOS SET TRAM_NUM='"+tramNum+"' , TRAM_FECHA=TO_DATE('"+fecha2+"','YYYY-MM-DD HH24:MI:SS') WHERE CORRELATIVO_OFICIO='"+oficio+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar tramite");
+        } catch (Exception e) {
+            System.out.println("mal actualizar tramite");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado¡¡¡¡¡¡¡: " + i);
+    }
+
+    @Override
+    public List obtener_oficios() {
+        List oficios = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT UPPER(R.DOCUMENTO)||'  '||R.FECHA       \n"
+                    + "       FROM (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "ofi.FECHA_OFICIO AS FECHA\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is not null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + "union\n"
+                    + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "ofi.FECHA_OFICIO AS FECHA\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is null\n"
+                    + "and d1.nombre=oficina.nombre_oficina)R\n"
+                    + "ORDER BY R.FECHA DESC");
+            oficios = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return oficios;
+    }
 
     @Override
     public List mostrar_DocumentosOfInt() {

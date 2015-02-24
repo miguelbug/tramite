@@ -36,12 +36,6 @@
                                     <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
                                         <h:outputText value="#{item.docgene}" />
                                     </p:column>
-                                    <!--<p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.origen}"/>
-                                    </p:column>
-                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.destino}"/>
-                                    </p:column>-->
                                     <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
                                         <h:outputText value="#{item.fechaenvio}" />
                                     </p:column>
@@ -54,9 +48,6 @@
                                     <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
-                                  <!--  <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.estado}" />
-                                    </p:column>-->
                                     <p:column headerText="ESTADO" width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
                                         <h:outputText value="#{item.estadDoc}" />
                                     </p:column>
@@ -108,7 +99,12 @@
 
                     </p:dialog>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" >
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" >
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles" editable="true"
+                                     rowKey="#{car.OFICIO}">
+                            
+                            <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit2}"/>
+                            <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel2}" />
+                            
                             <p:column headerText="FECHA REGISTRO">
                                 <h:outputText value="#{car.FECHAENVIO}" />
                             </p:column>
@@ -119,7 +115,20 @@
                                 <h:outputText value="#{car.RESP}" />
                             </p:column>
                             <p:column headerText="OFICIO">
-                                <h:outputText value="#{car.OFICIO}" />
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{car.OFICIO}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="oficioslista" filterMatchMode="contains" filter="true" value="#{car.OFICIO}">
+                                            <f:selectItem itemLabel="Seleccione Oficio" itemValue=" "/>
+                                            <f:selectItems value="#{documentoUsuarioBean.oficios2}"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column style="width:32px">
+                                <p:rowEditor />
                             </p:column>
                         </p:dataTable>
 
@@ -201,24 +210,24 @@
                     </p:dialog>
                     <br></br>
                     <br></br>
-                 <!--   <style type="text/css">
-                        .pintado {
-                            background-color: #008080;
-                            color: #FFFFFF;
-                        }
-                        .pintado1 {
-                            background-color: #228B22;
-                            color: #FFFFFF;
-                        }
-                        .pintado2 {
-                            background-color: #4169E1;
-                            color: #FFFFFF;
-                        }
-                        .pintado3 {
-                            background-color: #4B0082;
-                            color: #FFFFFF;
-                        }
-                    </style>-->
+                    <!--   <style type="text/css">
+                           .pintado {
+                               background-color: #008080;
+                               color: #FFFFFF;
+                           }
+                           .pintado1 {
+                               background-color: #228B22;
+                               color: #FFFFFF;
+                           }
+                           .pintado2 {
+                               background-color: #4169E1;
+                               color: #FFFFFF;
+                           }
+                           .pintado3 {
+                               background-color: #4B0082;
+                               color: #FFFFFF;
+                           }
+                       </style>-->
                 </h:form>
             </ui:define>
         </ui:composition>
