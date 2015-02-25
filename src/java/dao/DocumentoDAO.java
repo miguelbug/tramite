@@ -6,6 +6,7 @@
 
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import maping.Oficios;
 import maping.Usuario;
@@ -48,4 +49,5 @@ public interface DocumentoDAO {
     public String getFlag(String dependencia);
     public String getTram_Fecha(String tramnum, String movi);
     public List mostrar_DocumentosOfInt();
+    public List obtener_oficios();
 }

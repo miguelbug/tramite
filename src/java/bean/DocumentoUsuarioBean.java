@@ -16,6 +16,7 @@ import daoimpl.DocusInternosDaoImpl;
 import daoimpl.OficioDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +45,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -69,6 +70,7 @@ public class DocumentoUsuarioBean {
         seguimientolista2 = new ArrayList<Map<String, String>>();
         designados = new ArrayList<String>();
         detallecirc2 = new ArrayList<Map<String, String>>();
+        this.oficios2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         seguimientolista3 = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
@@ -93,9 +95,11 @@ public class DocumentoUsuarioBean {
         }
 
     }
-    public void out(){
+
+    public void out() {
         System.out.println("SE TIENE QUE PINTAR");
     }
+
     public void onEdit(RowEditEvent event) {
         String id = String.valueOf(((HashMap) event.getObject()).get("iddoc"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
@@ -437,10 +441,6 @@ public class DocumentoUsuarioBean {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 ntram = hm.get("numerotramite").toString();
                 movi = Integer.parseInt(hm.get("movimnum").toString());
-
-                /*Date nuevFech = new Date();
-                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                 SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");*/
                 Date nuevFech = new Date();
                 SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 nuevFech = sdf2.parse(fechaconfirmar + " " + fechahora2);
@@ -1143,6 +1143,22 @@ public class DocumentoUsuarioBean {
 
     public void setSeguimientolista3(List seguimientolista3) {
         this.seguimientolista3 = seguimientolista3;
+    }
+
+    public List getOficios2() {
+        return oficios2;
+    }
+
+    public void setOficios2(List oficios2) {
+        this.oficios2 = oficios2;
+    }
+
+    public List getOficios3() {
+        return oficios3;
+    }
+
+    public void setOficios3(List oficios3) {
+        this.oficios3 = oficios3;
     }
 
 }

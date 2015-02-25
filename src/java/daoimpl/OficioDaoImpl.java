@@ -6,8 +6,13 @@
 package daoimpl;
 
 import dao.OficioDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import maping.Dependencia;
 import maping.DetallOficcirc;
 import maping.DocumentosOfiint;
@@ -26,6 +31,29 @@ import util.HibernateUtil;
 public class OficioDaoImpl implements OficioDAO {
 
     Session session;
+
+    @Override
+    public List listarTramitesNumeros(String oficina) {
+        List tramNum = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get tram numero");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TRAM_NUM||' '||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:ss')\n"
+                    + "FROM TRAMITE_MOVIMIENTO\n"
+                    + "WHERE CODIGO='"+oficina+"'"
+                    + "ORDER BY TRAM_FECHA DESC");
+            tramNum = (List) query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal tram numero");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return tramNum;
+    }
 
     @Override
     public void EliminarDocumentosInternosOficinas(String id) {
@@ -104,16 +132,26 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal get all depe");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return lista;
     }
 
     @Override
-    public void ActualizarOficio(String correla, String asunto, String destino, String asignado) {
+    public void ActualizarOficio(String correla, String asunto, String destino, String asignado, String tramNum, String fecha) {
         String codigo = String.valueOf(this.getDependencias2(destino).getCodigo());
-        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date d=null;
+        try {
+            d= formato2.parse(fecha);
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+        }
+        SimpleDateFormat formato3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String nuevafecha=formato3.format(d);
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', "
+                + "TRAM_NUM='"+tramNum+"', TRAM_FECHA=TO_DATE('"+nuevafecha+"','YYYY-MM-DD HH24:MI:SS'), RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
@@ -197,7 +235,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("select R.documento,\n"
                     + "       R.tramite,\n"
-                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH24:MI:ss') AS FECHA,\n"
                     + "       R.referencia,\n"
                     + "       DECODE(R.asunto,NULL,'SIN ASUNTO',UPPER(R.asunto)),\n"
                     + "       R.origen,\n"
@@ -238,7 +276,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -278,7 +316,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -298,7 +336,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -318,7 +356,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal tiposdocus");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -358,7 +396,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("select R.documento,\n"
                     + "       R.tramite,\n"
-                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       TO_CHAR(R.fecha,'DD/MM/YYYY HH24:MI:ss') AS FECHA,\n"
                     + "       R.referencia,\n"
                     + "       DECODE(R.asunto,NULL,'SIN ASUNTO',UPPER(R.asunto)),\n"
                     + "       R.origen,\n"
@@ -398,7 +436,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -426,7 +464,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -448,7 +486,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal codigo");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depe;
@@ -487,7 +525,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal get oficio circular");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return ofi;
@@ -511,7 +549,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal indice");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depe;
@@ -532,7 +570,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal dpee 2");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depe;
@@ -553,7 +591,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal dpee");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depe;
@@ -593,7 +631,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal firma");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -616,7 +654,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal getresponsable");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -638,7 +676,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal getresponsable");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -653,7 +691,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N° '||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
                     + "DECODE(UPPER(OFI.ASUNTO),NULL,'SIN ASUNTO',UPPER(OFI.ASUNTO)) AS ASUNTO,\n"
-                    + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
+                    + "to_char(OFI.FECHA,'DD/MM/YYYY HH24:MI:ss') as fecha,\n"
                     + "D1.NOMBRE,\n"
                     + "OFI.FIRMA,\n"
                     + "OFI.RESPONSABLE\n"
@@ -667,7 +705,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal oficioscirculares");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return oficioscirc;
@@ -691,7 +729,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal oficioscirculares");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return oficioscirc;
@@ -712,7 +750,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal dependencias");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;
@@ -734,7 +772,7 @@ public class OficioDaoImpl implements OficioDAO {
             System.out.println("mal dependencias");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return depes;

@@ -27,13 +27,13 @@
 		<defaultValueExpression ><![CDATA["escudo_reporte.jpg"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["kpios"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["achuchon"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["00012"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["00046"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["22/12/014 12:12:04"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["24/02/2015"]]></defaultValueExpression>
 	</parameter>
 	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
 DE.NUMERODOC,
@@ -41,7 +41,7 @@ DE.CORRELATIVOD,
 DE.ASUNTO,
 M1.NOMBRE AS ORIGEN,
 M2.NOMBRE AS DESTINO,
-to_char(DE.FECHA,'DD/MM/YYY HH:mm:ss') as fecha,
+to_char(DE.FECHA,'DD/MM/YYY HH24:MI:ss') as fecha,
 USUA.USU_NOMBRE
 from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina
 WHERE DE.CODIGO=M1.CODIGO
@@ -77,17 +77,6 @@ ORDER BY DE.ID DESC]]></queryString>
 		</title>
 		<pageHeader>
 			<band height="51"  isSplitAllowed="true" >
-				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="8"
-						y="0"
-						width="45"
-						height="50"
-						key="image-1"/>
-					<box></box>
-					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
-				</image>
 				<staticText>
 					<reportElement
 						x="60"
