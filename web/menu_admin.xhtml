@@ -44,6 +44,7 @@
                 <p:submenu label="Mantenimiento" icon="ui-icon-pencil" styleClass="conf">
                     <p:menuitem value="Dependencias" oncomplete="PF('GUNuevaDep').show()" actionListener="#{gestionDependenciaBean.abrirCuadroNuevaDep()}" update="gunuevadep"/>
                     <p:menuitem value="Personal" action="listaPersonal?faces-redirect=true"/>
+                    <p:menuitem value="Oficios" action="mantenimiento_oficios?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label=" #{loginBean.usu.usuNombre}" icon="ui-icon-person" style="position:absolute; right:6px;" styleClass="conf">
                     <p:menuitem value ="Salir" action="#{loginBean.logout()}" icon="ui-icon-close" />

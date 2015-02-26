@@ -30,7 +30,8 @@
                                     <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <p:cellEditor>
+                                    <h:outputText value="#{item.tramnum}"/>
+                                    <!--<p:cellEditor>
                                         <f:facet name="output">
                                             <h:outputText value="#{item.tramnum}"/>
                                         </f:facet>
@@ -39,7 +40,7 @@
                                                 <f:selectItems value="#{oficioBean.listatramites}" />
                                             </p:selectOneMenu>
                                         </f:facet>
-                                    </p:cellEditor>
+                                    </p:cellEditor>-->
                                 </p:column>
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}"/>
@@ -73,7 +74,8 @@
                                     </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <p:cellEditor>
+                                    <h:outputText value="#{item.destino}"/>
+                                    <!--<p:cellEditor>
                                         <f:facet name="output">
                                             <h:outputText value="#{item.destino}"/>
                                         </f:facet>
@@ -82,7 +84,7 @@
                                                 <f:selectItems value="#{oficioBean.listaeditar}"/>
                                             </p:selectOneMenu>
                                         </f:facet>
-                                    </p:cellEditor>
+                                    </p:cellEditor>-->
                                 </p:column>
                                 <p:column style="width:32px">
                                     <p:rowEditor />

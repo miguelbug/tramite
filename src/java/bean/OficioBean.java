@@ -95,6 +95,7 @@ public class OficioBean {
         boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
         boolean isoficogpluser = (currentPage.lastIndexOf("oficios_ogpl.xhtml") > -1);
+        boolean ismantenimoofic = (currentPage.lastIndexOf("mantenimiento_oficios.xhtml")>-1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
         if (isofcirc) {
             mostrarofCirc();
@@ -108,6 +109,10 @@ public class OficioBean {
                 } else {
                     if (isoficogpluser) {
                         MostrarOficiosOgplUser();
+                    }else{
+                        if(ismantenimoofic){
+                            mostrarOficioConExp();
+                        }
                     }
                 }
             }
