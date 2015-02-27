@@ -162,7 +162,27 @@ public class OficioBean {
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
-
+    public void onEdit3(RowEditEvent event){
+        String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
+        String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
+        String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
+        String asignado = String.valueOf(((HashMap) event.getObject()).get("asignado"));
+        System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado);
+        if (asunto.indexOf("SIN REFERENCIA -") != -1) {
+            asunto = asunto.substring(17, asunto.length());
+        }
+        try {
+            od.ActualizarOficio2(correlativo.substring(10, 15), asunto, destino, asignado);
+            mostrarOficioConExp();
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR NO SE ACTUALIZÓ", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
     public void onEdit(RowEditEvent event) {
         String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));

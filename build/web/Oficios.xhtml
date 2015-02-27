@@ -21,7 +21,7 @@
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}" selection="#{oficioBean.docselec2}"
                                          rowKey="#{item.correlativo}" style="margin-bottom: 0" editable="true">
 
-                                <p:ajax event="rowEdit" listener="#{oficioBean.onEdit}"/>
+                                <p:ajax event="rowEdit" listener="#{oficioBean.onEdit3}"/>
                                 <p:ajax event="rowEditCancel" listener="#{oficioBean.onCancel}" />
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -30,17 +30,6 @@
                                     <h:outputText value="#{item.correlativo}"/>
                                 </p:column>
                                 <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tramnum}"/>
-                                    <!--<p:cellEditor>
-                                        <f:facet name="output">
-                                            <h:outputText value="#{item.tramnum}"/>
-                                        </f:facet>
-                                        <f:facet name="input">
-                                            <p:selectOneMenu id="listatramites" filterMatchMode="contains" filter="true" value="#{item.tramnum}">
-                                                <f:selectItems value="#{oficioBean.listatramites}" />
-                                            </p:selectOneMenu>
-                                        </f:facet>
-                                    </p:cellEditor>-->
                                 </p:column>
                                 <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}"/>
@@ -74,8 +63,7 @@
                                     </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
-                                    <!--<p:cellEditor>
+                                    <p:cellEditor>
                                         <f:facet name="output">
                                             <h:outputText value="#{item.destino}"/>
                                         </f:facet>
@@ -84,7 +72,7 @@
                                                 <f:selectItems value="#{oficioBean.listaeditar}"/>
                                             </p:selectOneMenu>
                                         </f:facet>
-                                    </p:cellEditor>-->
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column style="width:32px">
                                     <p:rowEditor />

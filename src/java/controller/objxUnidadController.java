@@ -85,7 +85,7 @@ public class objxUnidadController implements Serializable {
     }
 
     public void delete() {
-        for (int i = 0; i < docselec2.size(); i++) {
+        for (int i = 0; i < docselec1.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             ofi.EliminarDocumentosInternosOficinas(hm.get("iddoc"));
         }

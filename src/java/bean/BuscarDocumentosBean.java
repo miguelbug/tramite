@@ -5,8 +5,10 @@
  */
 package bean;
 
+import dao.DerivarDAO;
 import dao.DocumentoDAO;
 import dao.SeguimientoDAO;
+import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.io.Serializable;
@@ -19,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import maping.Usuario;
 
 /**
  *
@@ -30,29 +35,94 @@ public class BuscarDocumentosBean implements Serializable {
 
     private String codigosdepe;
     private DocumentoDAO dd;
-    private List docus;
+    private DerivarDAO deriv;
+    private List docus, nuevaBusq, nuevaBusqOgpl;
     private String numerotramite;
     private String codigo;
     private String anio;
     private String asunto;
     private String mes;
-    private List filtro;
+    private List filtro, filtro2;
     private boolean aparece;
     private List seglista;
-    private Map<String, String> seleccion;
+    private Map<String, String> seleccion, seleccion2;
     private List seguimientolista;
     private SeguimientoDAO sgd;
-    private List docselec, anios;
+    private List docselec, anios, docselec2;
+    private FacesContext faceContext;
+    private Usuario usu;
 
     public BuscarDocumentosBean() {
+        faceContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) faceContext.getExternalContext().getSession(true);
+        usu = (Usuario) session.getAttribute("sesionUsuario");
         dd = new DocumentoDaoImpl();
+        deriv = new DerivarDaoImpl();
         docus = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
+        this.nuevaBusq = new ArrayList<Map<String, String>>();
+        nuevaBusqOgpl = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         anios = new ArrayList<String>();
         aparece = false;
-        mostrarAnios();
+        //mostrarAnios();
+        mostrarListaBusquedaOGPL() ;
+        mostrarListaBusqueda();
+    }
+
+    public void mostrarListaBusquedaOGPL() {
+        nuevaBusqOgpl.clear();
+        System.out.println("listando");
+        try {
+            List lista = new ArrayList();
+            lista = dd.busquedaAvanzada2();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("fechaingreso", String.valueOf(obj[0]));
+                listaaux.put("numerotramite", String.valueOf(obj[1]));
+                listaaux.put("derivadoA1", String.valueOf(obj[2]));
+                listaaux.put("fecharegistro", String.valueOf(obj[3]));
+                listaaux.put("respuesta", String.valueOf(obj[4]));
+                listaaux.put("deriivadoA2", String.valueOf(obj[5]));
+                listaaux.put("fechaoficio", String.valueOf(obj[6]));
+                listaaux.put("oficio", String.valueOf(obj[7]));
+                listaaux.put("derivadoA3", String.valueOf(obj[8]));
+                nuevaBusqOgpl.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void mostrarListaBusqueda() {
+        nuevaBusq.clear();
+        System.out.println("listando");
+        try {
+            List lista = new ArrayList();
+            lista = dd.busquedaAvanzada(deriv.getCodigoUsuario(usu.getUsu()));
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[9];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("fechaingreso", String.valueOf(obj[0]));
+                listaaux.put("numerotramite", String.valueOf(obj[1]));
+                listaaux.put("derivadoA1", String.valueOf(obj[2]));
+                listaaux.put("fecharegistro", String.valueOf(obj[3]));
+                listaaux.put("respuesta", String.valueOf(obj[4]));
+                listaaux.put("deriivadoA2", String.valueOf(obj[5]));
+                listaaux.put("fechaoficio", String.valueOf(obj[6]));
+                listaaux.put("oficio", String.valueOf(obj[7]));
+                listaaux.put("derivadoA3", String.valueOf(obj[8]));
+                nuevaBusq.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void Buscar() {
@@ -126,6 +196,50 @@ public class BuscarDocumentosBean implements Serializable {
             System.out.println(e.getMessage());
         }
         return seglista;
+    }
+
+    public List Detalles2() {
+        System.out.println("listando detalles busqparam");
+        seglista.clear();
+        int i = -1;
+        try {
+            List lista = new ArrayList();
+            System.out.println(seleccion2.get("numerotramite").toString() + "---" + "este es");
+            if (seleccion2.get("numerotramite").toString().indexOf("OGPL") != -1) {
+                System.out.println(seleccion2.get("numerotramite").toString());
+                lista = dd.getDetalle(seleccion2.get("numerotramite").toString());
+                System.out.println("1");
+                i = 1;
+            } else {
+                if (seleccion2.get("numerotramite").toString().indexOf("OGPL") == -1) {
+                    System.out.println(seleccion2.get("numerotramite").toString());
+                    lista = dd.getDeatalle2(seleccion2.get("numerotramite").toString(), seleccion2.get("mov"));
+                    System.out.println("0");
+                    i = 0;
+                }
+            }
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[3];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("usuario", String.valueOf(obj[0]));
+                listaaux.put("oficina", String.valueOf(obj[1]));
+                listaaux.put("docunombre", String.valueOf(obj[2]));
+                seglista.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return seglista;
+    }
+
+    public void RecorrerLista2() {
+        System.out.println("entra a recorrer lista");
+        Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+        System.out.println(hm.get("numerotramite"));
+        MostrarSeguimiento(hm.get("numerotramite"));
+        docselec.clear();
     }
 
     public void RecorrerLista() {
@@ -292,6 +406,70 @@ public class BuscarDocumentosBean implements Serializable {
 
     public void setAnios(List anios) {
         this.anios = anios;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public List getNuevaBusq() {
+        return nuevaBusq;
+    }
+
+    public void setNuevaBusq(List nuevaBusq) {
+        this.nuevaBusq = nuevaBusq;
+    }
+
+    public List getNuevaBusqOgpl() {
+        return nuevaBusqOgpl;
+    }
+
+    public void setNuevaBusqOgpl(List nuevaBusqOgpl) {
+        this.nuevaBusqOgpl = nuevaBusqOgpl;
+    }
+
+    public FacesContext getFaceContext() {
+        return faceContext;
+    }
+
+    public void setFaceContext(FacesContext faceContext) {
+        this.faceContext = faceContext;
+    }
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
+    public List getFiltro2() {
+        return filtro2;
+    }
+
+    public void setFiltro2(List filtro2) {
+        this.filtro2 = filtro2;
+    }
+
+    public List getDocselec2() {
+        return docselec2;
+    }
+
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
+    }
+
+    public Map<String, String> getSeleccion2() {
+        return seleccion2;
+    }
+
+    public void setSeleccion2(Map<String, String> seleccion2) {
+        this.seleccion2 = seleccion2;
     }
 
 }

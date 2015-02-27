@@ -139,6 +139,28 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
+    public void ActualizarOficio2(String correla, String asunto, String destino, String asignado) {
+        String codigo = String.valueOf(this.getDependencias2(destino).getCodigo());
+        String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', "
+                + "RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar oficio");
+        } catch (Exception e) {
+            System.out.println("mal actualizar oficio");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
     public void ActualizarOficio(String correla, String asunto, String destino, String asignado, String tramNum, String fecha) {
         String codigo = String.valueOf(this.getDependencias2(destino).getCodigo());
         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

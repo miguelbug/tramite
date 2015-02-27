@@ -19,10 +19,10 @@ and open the template in the editor.
                 <h:form id="form">
                     <br></br>
                     <center>
-                        <p:dataTable value="#{buscarDocumentosBean.nuevaBusq}" var="item" paginator="true" rows="20" id="tabladocus"
+                        <p:dataTable value="#{buscarDocumentosBean.nuevaBusqOgpl}" var="item" paginator="true" rows="20" id="tabladocus"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro}"
-                                     selection="#{buscarDocumentosBean.docselec}"
+                                     emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.filtro2}"
+                                     selection="#{buscarDocumentosBean.docselec2}"
                                      rowKey="#{item.numerotramite}" style="margin-bottom: 0">
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -64,17 +64,17 @@ and open the template in the editor.
 
                             <p:column style="width:32px;text-align: center">
                                 <p:commandButton update=":form:tabladetalles" oncomplete="PF('itemDialog').show()" icon="ui-icon-search" title="Detalle">
-                                    <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion}"/>
+                                    <f:setPropertyActionListener value="#{item}" target="#{buscarDocumentosBean.seleccion2}"/>
                                 </p:commandButton>
                             </p:column>
                             <f:facet name="footer">
                                 <p:commandButton process="tabladocus" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('seguimDialog').show()"
-                                                 update=":form:tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista()}"/>
+                                                 update=":form:tablaseguim" actionListener="#{buscarDocumentosBean.RecorrerLista2()}"/>
                             </f:facet>
                         </p:dataTable>
                     </center>
                     <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
-                        <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles()}" id="tabladetalles" >
+                        <p:dataTable var="car" value="#{buscarDocumentosBean.Detalles2()}" id="tabladetalles" >
                             <p:column headerText="Usuario">
                                 <h:outputText value="#{car.usuario}" />
                             </p:column>

@@ -50,4 +50,6 @@ public interface DocumentoDAO {
     public String getTram_Fecha(String tramnum, String movi);
     public List mostrar_DocumentosOfInt();
     public List obtener_oficios();
+    public List busquedaAvanzada(String oficina);
+    public List busquedaAvanzada2();
 }

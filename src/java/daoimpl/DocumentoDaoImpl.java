@@ -501,6 +501,143 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
+    public List busquedaAvanzada2() {
+        List docusavanzado = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("get docus avanzado");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TO_CHAR(R.FECHAINGRESO,'DD/MM/YYYY HH24:MI:SS') AS FECHA,"
+                    + "R.NUMEROTRAMITE,"
+                    + "R.DERIVADO_A,"
+                    + "R.FECHAREG,"
+                    + "R.RESPUESTA,"
+                    + "R.DERIVADO_A1,"
+                    + "R.FECHAOFICIO,"
+                    + "R.documento,"
+                    + "R.DERIVADO_A2\n"
+                    + "FROM (SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS') AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A1,\n"
+                    + "       TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, DEPENDENCIA D3, DOCUS_INTERNOS DI, OFICIOS OFI, OFICINA OFIC\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND OFI.CODIGO1=D3.CODIGO\n"
+                    + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
+                    + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "UNION\n"
+                    + "SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS') AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A,\n"
+                    + "       '---' AS FECHAOFICIO ,'---' AS documento, '---' AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, DOCUS_INTERNOS DI\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA NOT IN (SELECT OFI.TRAM_NUM||'-'||OFI.TRAM_FECHA FROM OFICIOS OFI)\n"
+                    + "UNION\n"
+                    + "SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       '---' AS FECHAREG, '---' AS RESPUESTA, '---' AS DERIVADO_A1,\n"
+                    + "       TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D3, OFICIOS OFI, OFICINA OFIC\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND OFI.CODIGO1=D3.CODIGO\n"
+                    + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
+                    + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND OFI.TRAM_NUM||'-'||OFI.TRAM_FECHA NOT IN (SELECT DI.TRAM_NUM||'-'||DI.TRAM_FECHA FROM DOCUS_INTERNOS DI))R\n"
+                    + "WHERE R.FECHAINGRESO IS NOT NULL\n"
+                    + "ORDER BY R.FECHAINGRESO DESC");
+            docusavanzado = query.list();
+            System.out.println("despues de query de gedocus avanzados");
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró a docus avanzado");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("retorna");
+        return docusavanzado;
+    }
+
+    @Override
+    public List busquedaAvanzada(String oficina) {
+        List docusavanzado = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("get docus avanzado");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT TO_CHAR(R.FECHAINGRESO,'DD/MM/YYYY HH24:MI:SS') AS FECHA,"
+                    + "R.NUMEROTRAMITE,"
+                    + "R.DERIVADO_A,"
+                    + "R.FECHAREG,"
+                    + "R.RESPUESTA,"
+                    + "R.DERIVADO_A1,"
+                    + "R.FECHAOFICIO,"
+                    + "R.documento,"
+                    + "R.DERIVADO_A2\n"
+                    + "FROM (SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS') AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A1,\n"
+                    + "       TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, DEPENDENCIA D3, DOCUS_INTERNOS DI, OFICIOS OFI, OFICINA OFIC\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
+                    + "AND DI.CODIGO IN ('"+oficina+"')\n"
+                    + "AND OFI.CODIGO1=D3.CODIGO\n"
+                    + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
+                    + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "UNION\n"
+                    + "SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS') AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A,\n"
+                    + "       '---' AS FECHAOFICIO ,'---' AS documento, '---' AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, DOCUS_INTERNOS DI\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
+                    + "AND DI.CODIGO IN ('"+oficina+"')\n"
+                    + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA NOT IN (SELECT OFI.TRAM_NUM||'-'||OFI.TRAM_FECHA FROM OFICIOS OFI)\n"
+                    + "UNION\n"
+                    + "SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
+                    + "       '---' AS FECHAREG, '---' AS RESPUESTA, '---' AS DERIVADO_A1,\n"
+                    + "       TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D3, OFICIOS OFI, OFICINA OFIC\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
+                    + "AND OFI.CODIGO1=D3.CODIGO\n"
+                    + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
+                    + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "AND OFI.TRAM_NUM||'-'||OFI.TRAM_FECHA NOT IN (SELECT DI.TRAM_NUM||'-'||DI.TRAM_FECHA FROM DOCUS_INTERNOS DI))R\n"
+                    + "WHERE R.FECHAINGRESO IS NOT NULL\n"
+                    + "ORDER BY R.FECHAINGRESO DESC");
+            docusavanzado = query.list();
+            System.out.println("despues de query de gedocus avanzados");
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró a docus avanzado");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("retorna");
+        return docusavanzado;
+    }
+
+    @Override
     public List getBusqueda(String n1, String n2, String n3, String n4, String n5) {
         System.out.println("estoy aca");
         String[] cadena = new String[5];
