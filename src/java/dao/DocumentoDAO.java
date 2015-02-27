@@ -52,4 +52,6 @@ public interface DocumentoDAO {
     public List obtener_oficios();
     public List busquedaAvanzada(String oficina);
     public List busquedaAvanzada2();
+    public List docusInternosOGPL();
+    public void eliminarDocuInternoOGPL(String id);
 }

@@ -45,7 +45,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List otrosdocus3,docusInternosOGPL, oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -73,6 +73,7 @@ public class DocumentoUsuarioBean {
         this.oficios2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         seguimientolista3 = new ArrayList<Map<String, String>>();
+        this.docusInternosOGPL = new ArrayList<Map<String, String>>();
         confirmados = new ArrayList<Map<String, String>>();
         listadocspropios = new ArrayList<Map<String, String>>();
         listadocpropioscir = new ArrayList<Map<String, String>>();
@@ -82,8 +83,13 @@ public class DocumentoUsuarioBean {
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
         boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
+        boolean isdocusInternosOGPL = (currentPage.lastIndexOf("docusInternosOGPL.xhtml") > -1);
         if (isdocumentosUsuario) {
             MostrarParaUsuario();
+        }else{
+            if(isdocusInternosOGPL){
+                mostrarDocusInternosOGPL();
+            }
         }
 
     }
@@ -94,6 +100,33 @@ public class DocumentoUsuarioBean {
 
         }
 
+    }
+
+    public void mostrarDocusInternosOGPL() {
+        System.out.println("listando documentos2");
+        docusInternosOGPL.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = dd.docusInternosOGPL();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("id", String.valueOf(obj[0]));
+                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("fecharegistro", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]));
+                listaaux.put("origen", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("asignado", String.valueOf(obj[6]));
+                listaaux.put("tipodocu", String.valueOf(obj[7]));
+                docusInternosOGPL.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void out() {
@@ -1159,6 +1192,22 @@ public class DocumentoUsuarioBean {
 
     public void setOficios3(List oficios3) {
         this.oficios3 = oficios3;
+    }
+
+    public List getDocusInternosOGPL() {
+        return docusInternosOGPL;
+    }
+
+    public void setDocusInternosOGPL(List docusInternosOGPL) {
+        this.docusInternosOGPL = docusInternosOGPL;
+    }
+
+    public List getOtrosdocus3() {
+        return otrosdocus3;
+    }
+
+    public void setOtrosdocus3(List otrosdocus3) {
+        this.otrosdocus3 = otrosdocus3;
     }
 
 }

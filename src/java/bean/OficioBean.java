@@ -764,6 +764,7 @@ public class OficioBean {
             di.setUsuario(usu);
             di.setUsuario1(deriv.getUsuarioDI(responsableDI));
             di.setDocuPricint("1");
+            di.setUsuario1(usu);
             od.GuardarDocumentoOfiInt(di);
             /*DocumentosOfiint doif = new DocumentosOfiint();
              doif.setAsunto(asunto);

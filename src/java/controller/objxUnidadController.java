@@ -54,6 +54,8 @@ public class objxUnidadController implements Serializable {
     FacesContext context;
     ServletContext serveltcontext;
     private int anioActual;
+    private String docueliminar;
+    private String ideliminar;
     private int opcionFormato;
     private int mesInicio;
     private int mesFin;
@@ -69,7 +71,7 @@ public class objxUnidadController implements Serializable {
     private String USUARIO;
     private reporteDAO rpda;
     private String tipodocumento, tipodocumento1, tipodocumento2;
-    private List docselec, docselec1, docselec2, docselec3;
+    private List docselec, docselec1, docselec2, docselec3,docselec4;
     private TemporaldiDao tdi;
     private String loteinput;
     private SeguimientoDAO sgd;
@@ -83,7 +85,20 @@ public class objxUnidadController implements Serializable {
         sgd = new SeguimientoDaoImpl();
         ofi = new OficioDaoImpl();
     }
-
+    public void abrirConfirmacion(){
+        Map<String, String> hm = (HashMap<String, String>) docselec4.get(0);
+        docueliminar=hm.get("documento").toString();
+        ideliminar=hm.get("id").toString();
+    }
+    public void eliminarDocuInternoOGPL(){
+        System.out.println(ideliminar);
+        try{
+            dd.eliminarDocuInternoOGPL(ideliminar);
+        }catch(Exception e){
+            System.out.println("error eliminar docuinternoogpl");
+            System.out.println(e.getMessage());
+        }
+    }
     public void delete() {
         for (int i = 0; i < docselec1.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
@@ -1058,6 +1073,38 @@ public class objxUnidadController implements Serializable {
 
     public void setSgd(SeguimientoDAO sgd) {
         this.sgd = sgd;
+    }
+
+    public List getDocselec4() {
+        return docselec4;
+    }
+
+    public void setDocselec4(List docselec4) {
+        this.docselec4 = docselec4;
+    }
+
+    public OficioDAO getOfi() {
+        return ofi;
+    }
+
+    public void setOfi(OficioDAO ofi) {
+        this.ofi = ofi;
+    }
+
+    public String getDocueliminar() {
+        return docueliminar;
+    }
+
+    public void setDocueliminar(String docueliminar) {
+        this.docueliminar = docueliminar;
+    }
+
+    public String getIdeliminar() {
+        return ideliminar;
+    }
+
+    public void setIdeliminar(String ideliminar) {
+        this.ideliminar = ideliminar;
     }
 
 }

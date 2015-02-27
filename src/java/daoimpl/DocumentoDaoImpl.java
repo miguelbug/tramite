@@ -27,6 +27,60 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public void eliminarDocuInternoOGPL(String id) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "DELETE FROM DOCUS_INTERNOS WHERE IDTIP= '"+id+"' ";
+        try {
+            session.beginTransaction();
+            int i = session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+
+            System.out.println("eliminados: " + i);
+        } catch (Exception e) {
+            System.out.println("mal eliminar docuinternogopl");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List docusInternosOGPL() {
+        List docusInt = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT DI.IDTIP AS I_D,\n"
+                    + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DI.FECHAREGISTRO AS FECHA,\n"
+                    + "UPPER(DI.DOCU_ASUNTO) AS ASUNTO,\n"
+                    + "D1.NOMBRE AS ORIGEN,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "DI.ID_DOCUMENTO AS IDDOCUMENTO\n"
+                    + "\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.USU1=USUA.USU\n"
+                    + "AND DI.TRAM_NUM IS NULL\n"
+                    + "AND DI.DOCU_SIGLASINT='OGPL'\n"
+                    + "ORDER BY DI.FECHAREGISTRO DESC");
+            docusInt = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return docusInt;
+    }
+
+    @Override
     public List obtener_oficios() {
         List oficios = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
@@ -590,8 +644,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
-                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
-                    + "AND DI.CODIGO IN ('"+oficina+"')\n"
+                    + "AND TM.CODIGO1 IN ('" + oficina + "')\n"
+                    + "AND DI.CODIGO IN ('" + oficina + "')\n"
                     + "AND OFI.CODIGO1=D3.CODIGO\n"
                     + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
                     + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
@@ -605,8 +659,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND DI.TRAM_FECHA=TM.TRAM_FECHA\n"
                     + "AND DI.CODIGO1=D2.CODIGO\n"
-                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
-                    + "AND DI.CODIGO IN ('"+oficina+"')\n"
+                    + "AND TM.CODIGO1 IN ('" + oficina + "')\n"
+                    + "AND DI.CODIGO IN ('" + oficina + "')\n"
                     + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA NOT IN (SELECT OFI.TRAM_NUM||'-'||OFI.TRAM_FECHA FROM OFICIOS OFI)\n"
                     + "UNION\n"
                     + "SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A, \n"
@@ -614,7 +668,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D3, OFICIOS OFI, OFICINA OFIC\n"
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
-                    + "AND TM.CODIGO1 IN ('"+oficina+"')\n"
+                    + "AND TM.CODIGO1 IN ('" + oficina + "')\n"
                     + "AND OFI.CODIGO1=D3.CODIGO\n"
                     + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
                     + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
