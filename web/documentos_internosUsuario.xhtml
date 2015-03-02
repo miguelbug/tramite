@@ -117,14 +117,24 @@
                             <p:dataTable value="#{documentoUsuarioBean.listadocpropioscir}" id="tablasoficcirc" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus2}" selection="#{objxUnidadController.docselec3}"
-                                         rowKey="#{item.documento}" style="margin-bottom: 0">
+                                         rowKey="#{item.documento}" style="margin-bottom: 0" editable="true">
+
+                                <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit2}"/>
+                                <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel2}" />
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                 <p:column headerText="DOCUMENTO" width="2" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
                                     <h:outputText value="#{item.documento}"/>
                                 </p:column>
                                 <p:column headerText="ASUNTO" width="1" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="FECH. REG." width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}"/>
@@ -142,6 +152,9 @@
                                     <p:commandButton process="@this" update=":form:tabladetalloficcirc2" action="#{documentoUsuarioBean.Detalles_Circ()}" oncomplete="PF('dialogCirculares').show()" icon="ui-icon-search" title="Detalle Of. Circ.">
                                         <f:setPropertyActionListener value="#{item}" target="#{documentoUsuarioBean.seleccion2}" />
                                     </p:commandButton>
+                                </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
                                 </p:column>
                             </p:dataTable>
                             <br></br>

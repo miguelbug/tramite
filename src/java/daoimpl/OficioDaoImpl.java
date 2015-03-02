@@ -97,6 +97,26 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
+    public void ActualizarOficioCircularUser(String correla, String asunto) {
+        String sql = "UPDATE OFIC_CIRC SET ASUNTO='" + asunto + "' WHERE CORRELA_OFICIC='" + correla + "'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar oficio CIRCULAR");
+        } catch (Exception e) {
+            System.out.println("mal actualizar oficio CIRCULAR");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
     public void ActualizarOficioCircular(String correla, String asunto, String origen) {
         String sql = "UPDATE OFIC_CIRC SET ASUNTO='" + asunto + "', CODIGO='" + origen + "' WHERE CORRELA_OFICIC='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();

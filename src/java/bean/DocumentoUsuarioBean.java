@@ -45,7 +45,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List otrosdocus3,docusInternosOGPL, oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List otrosdocus3, docusInternosOGPL, oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista, confirmados, otrosdocus, otrosdocus2, docselec, detalle, docselec2, docselec3, docselec4, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -86,8 +86,8 @@ public class DocumentoUsuarioBean {
         boolean isdocusInternosOGPL = (currentPage.lastIndexOf("docusInternosOGPL.xhtml") > -1);
         if (isdocumentosUsuario) {
             MostrarParaUsuario();
-        }else{
-            if(isdocusInternosOGPL){
+        } else {
+            if (isdocusInternosOGPL) {
                 mostrarDocusInternosOGPL();
             }
         }
@@ -131,6 +131,36 @@ public class DocumentoUsuarioBean {
 
     public void out() {
         System.out.println("SE TIENE QUE PINTAR");
+    }
+
+    public void onEdit2(RowEditEvent event) {
+        String correlativo = String.valueOf(((HashMap) event.getObject()).get("documento"));
+        String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
+        if (correlativo.length() == 34) {
+            correlativo = correlativo.substring(19, 24);
+        } else {
+            if (correlativo.length() == 35) {
+                correlativo = correlativo.substring(20, 25);
+            }
+        }
+        System.out.println(correlativo + " " + asunto);
+        try {
+         ofi.ActualizarOficioCircularUser(correlativo, asunto);
+         FacesMessage message = null;
+         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
+         RequestContext.getCurrentInstance().showMessageInDialog(message);
+
+         } catch (Exception e) {
+         FacesMessage message = null;
+         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR DE EDICION", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
+         RequestContext.getCurrentInstance().showMessageInDialog(message);
+         }
+    }
+
+    public void onCancel2(RowEditEvent event) {
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public void onEdit(RowEditEvent event) {

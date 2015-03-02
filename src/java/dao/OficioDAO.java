@@ -51,6 +51,7 @@ public interface OficioDAO {
     public void DeleteOficio(String correlativo);
     public List getAllDependencias();
     public void ActualizarOficioCircular(String correla, String asunto, String origen);
+    public void ActualizarOficioCircularUser(String correla, String asunto);
     public void ActualizarDocusInternosOficinas(String id, String asunto);
     public void EliminarDocumentosInternosOficinas(String id);
     public List listarTramitesNumeros(String oficina);
