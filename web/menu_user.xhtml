@@ -28,7 +28,7 @@
 
                 <p:submenu label="Registro" icon="ui-icon-pencil">
                     <p:menuitem value="Documentos Internos" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()" update="docudialog"/>
-                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abriroficio()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
+                    <p:menuitem value="Doc. Circulares" actionListener="#{oficioBean.abrirOficioCircular()}" oncomplete="PF('DocCircdialog').show()" update=":f3:doccircdialog"/>
                 </p:submenu>
                 
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
@@ -109,9 +109,9 @@
                     <p:outputLabel value="Asunto:"/>
                     <p:inputTextarea value="#{oficioBean.asunto2}" rows="6" cols="33" style="text-transform:uppercase;"/>
                     <p:outputLabel value="Día:"/>
-                    <p:inputMask value="#{oficioBean.fechadia2}" mask="99/99/9999"/>
+                    <p:inputMask value="#{oficioBean.fechadia3}" mask="99/99/9999"/>
                     <p:outputLabel value="Hora:"/>
-                    <p:outputLabel value="#{oficioBean.fechahora}"/>
+                    <p:outputLabel value="#{oficioBean.fechahora3}"/>
                     <p:outputLabel value="Firma:"/>
                     <p:outputLabel value="#{oficioBean.firma}"/>
                     <p:outputLabel value="Responsable:"/>

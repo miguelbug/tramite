@@ -160,8 +160,8 @@
                             <br></br>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                        <p:dataTable var="car" value="#{documentoUsuarioBean.detallecirc2}" id="tabladetalloficcirc2" >
+                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="40%">
+                        <p:dataTable var="car" value="#{documentoUsuarioBean.detallecirc2}" id="tabladetalloficcirc2" scrollable="true" scrollHeight="150" >
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>

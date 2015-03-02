@@ -32,7 +32,9 @@
 	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["oficinaParametro"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="correlativo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["00010"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[SELECT
      OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||TO_CHAR(OFI.FECHA,'YYYY') AS CORRELATIVO,
      OFI.ASUNTO,
@@ -179,17 +181,6 @@ ORDER BY TO_NUMBER(DEP2.FLAC2) ASC]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
 				</textField>
-				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="9"
-						y="8"
-						width="49"
-						height="52"
-						key="image-1"/>
-					<box></box>
-					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
-				</image>
 				<staticText>
 					<reportElement
 						x="64"
@@ -244,9 +235,9 @@ ORDER BY TO_NUMBER(DEP2.FLAC2) ASC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="268"
+						x="267"
 						y="49"
-						width="90"
+						width="127"
 						height="20"
 						key="textField-14"/>
 					<box></box>
@@ -286,6 +277,17 @@ ORDER BY TO_NUMBER(DEP2.FLAC2) ASC]]></queryString>
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="9"
+						y="9"
+						width="49"
+						height="52"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{logo}]]></imageExpression>
+				</image>
 			</band>
 		</pageHeader>
 		<columnHeader>

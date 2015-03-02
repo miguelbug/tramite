@@ -47,7 +47,7 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class OficioBean {
 
-    private String tipodepe, auxanio, correlativo = "", correlativo2 = "", asunto, fechadia, fechadia2, fechahora, firma, responsable, arearesponsable, arearesponsable2, auxfecha, destino, asunto2, seleccionado, escogido, escogido2,
+    private String fechadia3, fechahora3, tipodepe, auxanio, correlativo = "", correlativo2 = "", asunto, fechadia, fechadia2, fechahora, firma, responsable, arearesponsable, arearesponsable2, auxfecha, destino, asunto2, seleccionado, escogido, escogido2,
             prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen, partedocu;
     private OficioDAO od;
     private Date anio, fecha;
@@ -95,7 +95,7 @@ public class OficioBean {
         boolean isoficsinexp = (currentPage.lastIndexOf("documentosInternos.xhtml") > -1);
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
         boolean isoficogpluser = (currentPage.lastIndexOf("oficios_ogpl.xhtml") > -1);
-        boolean ismantenimoofic = (currentPage.lastIndexOf("mantenimiento_oficios.xhtml")>-1);
+        boolean ismantenimoofic = (currentPage.lastIndexOf("mantenimiento_oficios.xhtml") > -1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
         if (isofcirc) {
             mostrarofCirc();
@@ -109,8 +109,8 @@ public class OficioBean {
                 } else {
                     if (isoficogpluser) {
                         MostrarOficiosOgplUser();
-                    }else{
-                        if(ismantenimoofic){
+                    } else {
+                        if (ismantenimoofic) {
                             mostrarOficioConExp();
                         }
                     }
@@ -162,7 +162,8 @@ public class OficioBean {
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("correlativo")));
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
-    public void onEdit3(RowEditEvent event){
+
+    public void onEdit3(RowEditEvent event) {
         String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
         String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
@@ -183,6 +184,7 @@ public class OficioBean {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
+
     public void onEdit(RowEditEvent event) {
         String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
@@ -352,31 +354,6 @@ public class OficioBean {
 
     public void agregardestinos() {
         destinos = dd.getDependencias(tipodestino);
-    }
-
-    public void abriroficio() {
-        System.out.println("get tiposdocus2");
-        ObtenerTiposDocus2();
-        System.out.println("get anio");
-        getAnio();
-        System.out.println("get fecha");
-        generarFecha();
-        System.out.println("get correlativo");
-        generarCorrelativo();
-        System.out.println("get responsable");
-        responsable();
-        System.out.println("get arearesponsable");
-        arearesponsable();
-        System.out.println("get firma");
-        firma();
-
-        System.out.println("ESTAMOS EN ABRIR OFICIO");
-        System.out.println(tiposdocus);
-        correlativo_exportar = correlativo;
-        siglasdocus = "OGPL";
-        asunto2 = "";
-        escogido = " ";
-
     }
 
     public List Detalles() {
@@ -792,11 +769,100 @@ public class OficioBean {
         this.tipodestino = " ";
     }
 
+    public void generarFecha() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        fechadia2 = "";
+        fechahora = "";
+
+        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia2.equals("")) {
+                fechadia2 = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
+        auxfecha = sdf.format(fecha);
+        System.out.println("FECHAS: " + fechadia2 + "-" + fechahora);
+    }
+
+    public void generarFecha2() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        fechadia3 = "";
+        fechahora3 = "";
+
+        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia3.equals("")) {
+                fechadia3 = tokens.nextToken();
+            }
+            if (fechahora3.equals("")) {
+                fechahora3 = tokens.nextToken();
+            }
+        }
+        auxfecha = sdf.format(fecha);
+        System.out.println("FECHAS: " + fechadia3 + " " + fechahora3);
+    }
+
+    public void abrirOficioCircular() {
+        System.out.println("get tiposdocus2");
+        ObtenerTiposDocus2();
+        System.out.println("get anio");
+        getAnio();
+        System.out.println("get fecha");
+        generarFecha2();
+        System.out.println("get correlativo");
+        generarCorrelativo();
+        System.out.println("get responsable");
+        responsable();
+        System.out.println("get arearesponsable");
+        arearesponsable();
+        System.out.println("get firma");
+        firma();
+
+        System.out.println("ESTAMOS EN ABRIR OFICIO");
+        System.out.println(tiposdocus);
+        correlativo_exportar = correlativo;
+        siglasdocus = "OGPL";
+        asunto2 = "";
+        escogido = " ";
+    }
+
+    public void abriroficio() {
+        System.out.println("get tiposdocus2");
+        ObtenerTiposDocus2();
+        System.out.println("get anio");
+        getAnio();
+        System.out.println("get fecha");
+        generarFecha();
+        System.out.println("get correlativo");
+        generarCorrelativo();
+        System.out.println("get responsable");
+        responsable();
+        System.out.println("get arearesponsable");
+        arearesponsable();
+        System.out.println("get firma");
+        firma();
+
+        System.out.println("ESTAMOS EN ABRIR OFICIO");
+        System.out.println(tiposdocus);
+        correlativo_exportar = correlativo;
+        siglasdocus = "OGPL";
+        asunto2 = "";
+        escogido = " ";
+
+    }
+
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println("HORA Y FECHA: " + fechadia2 + "-" + fechahora);
-        if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
+        System.out.println("HORA Y FECHA: " + fechadia3 + "-" + fechahora3);
+        if (cities.equals(null) || asunto.equals(" ") || escogido.equals(" ")) {
             ver = false;
             nover = true;
 
@@ -806,7 +872,7 @@ public class OficioBean {
                 ofi.setCorrelaOficic(correlativo);
                 ofi.setAsunto(asunto2.toUpperCase());
                 ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
-                fecha = sdf2.parse(fechadia2 + " " + fechahora);
+                fecha = sdf2.parse(fechadia3 + " " + fechahora3);
                 ofi.setFecha(fecha);
                 ofi.setFirma(firma);
                 ofi.setResponsable(responsable);
@@ -857,25 +923,6 @@ public class OficioBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void generarFecha() {
-        System.out.println("entra fechaactual");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fecha = new Date();
-        fechadia2 = "";
-        fechahora = "";
-
-        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
-        while (tokens.hasMoreTokens()) {
-            if (fechadia2.equals("")) {
-                fechadia2 = tokens.nextToken();
-            }
-            if (fechahora.equals("")) {
-                fechahora = tokens.nextToken();
-            }
-        }
-        auxfecha = sdf.format(fecha);
     }
 
     public void crearOficio() {
@@ -1437,6 +1484,22 @@ public class OficioBean {
 
     public void setListatramites(List listatramites) {
         this.listatramites = listatramites;
+    }
+
+    public String getFechadia3() {
+        return fechadia3;
+    }
+
+    public void setFechadia3(String fechadia3) {
+        this.fechadia3 = fechadia3;
+    }
+
+    public String getFechahora3() {
+        return fechahora3;
+    }
+
+    public void setFechahora3(String fechahora3) {
+        this.fechahora3 = fechahora3;
     }
 
 }

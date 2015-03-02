@@ -185,7 +185,7 @@ public class DocumentoUsuarioBean {
         try {
             List lista = new ArrayList<String>();
             System.out.println(seleccion2.get("documento").toString().substring(19, 24));
-            lista = ofi.getOficoCircDetal(partirColumnas(seleccion2.get("documento").toString()));
+            lista = ofi.getOficoCircDetal(seleccion2.get("documento").toString().substring(19, 24));
             for (int i = 0; i < lista.size(); i++) {
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("nombre", lista.get(i).toString());
