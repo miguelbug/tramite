@@ -29,7 +29,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get circulares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
                     + "DECODE(OFI.ASUNTO,NULL,'SIN ASUNTO',UPPER(OFI.ASUNTO)) AS ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE as origen,\n"
@@ -62,7 +62,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
         System.out.println("get circulares");
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||oficina.siglas||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
+            Query query = session.createSQLQuery("SELECT TD.NOMBRE_DOCU||' N°-'||OFI.CORRELA_OFICIC||'-'||'OGPL'||'-'||to_char(OFI.fecha,'YYYY') as documento,\n"
                     + "OFI.ASUNTO,\n"
                     + "to_char(OFI.FECHA,'DD/MM/YYYY HH:mm:ss') as fecha,\n"
                     + "D1.NOMBRE as origen,\n"
