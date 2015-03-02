@@ -39,8 +39,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
                     + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "AND OFI.RESPONSABLE='" + usu + "'\n"
                     + "AND OFI.ID_DOCUMENTO='" + tipo + "'\n"
+                    + "AND OFI.CODIGO='"+usu+"'\n"
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();
@@ -72,7 +72,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
                     + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "AND OFI.RESPONSABLE='" + usu + "'\n"
+                    + "AND OFI.CODIGO='"+usu+"'\n"
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();

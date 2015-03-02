@@ -184,7 +184,7 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
-            lista = di.getCircularesOficInternaXtipo(usu.getUsuNombre(), tipodocupropio2);
+            lista = di.getCircularesOficInternaXtipo(deriv.getCodigoUsuario(usu.getUsu()), tipodocupropio2);
             Iterator ite = lista.iterator();
             Object obj[] = new Object[6];
             while (ite.hasNext()) {
@@ -209,7 +209,7 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
-            lista = di.getCircularesOficInterna(usu.getUsuNombre());
+            lista = di.getCircularesOficInterna(deriv.getCodigoUsuario(usu.getUsu()));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[6];
             while (ite.hasNext()) {
