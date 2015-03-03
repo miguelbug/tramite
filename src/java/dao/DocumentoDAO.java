@@ -54,4 +54,5 @@ public interface DocumentoDAO {
     public List busquedaAvanzada2();
     public List docusInternosOGPL();
     public void eliminarDocuInternoOGPL(String id);
+    public List nuevaBusqAvanzada(String expediente, String asunto, String derivadoa);
 }

@@ -27,9 +27,78 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List nuevaBusqAvanzada(String expediente, String asunto, String derivadoa) {
+        List docusInt = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT R.TRAM_NUM,"
+                    + "                                  TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS') AS FECHA,"
+                    + "                                  R.DERIVADOA,"
+                    + "                                  R.ASUNTO FROM (SELECT TM.TRAM_NUM AS TRAM_NUM, \n"
+                    + "       DECODE(TM.FECHA_INGR,NULL,'--',TM.FECHA_INGR) AS FECHA,\n"
+                    + "       D1.NOMBRE AS DERIVADOA,\n"
+                    + "       DECODE(TM.MOVI_OBS,NULL,'--',TM.MOVI_OBS) AS ASUNTO\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1\n"
+                    + "WHERE TM.CODIGO1=D1.CODIGO\n"
+                    + generarPrimeraCondicion(expediente, asunto, derivadoa)
+                    + "UNION\n"
+                    + "SELECT TM.TRAM_NUM AS TRAM_NUM, \n"
+                    + "       DECODE(TM.FECHA_INGR,NULL,'--',TM.FECHA_INGR) AS FECHA,\n"
+                    + "       D1.NOMBRE AS DERIVADOA,\n"
+                    + "       DECODE(TM.MOVI_OBS,NULL,'--',TM.MOVI_OBS) AS ASUNTO\n"
+                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, OFICIOS OFI\n"
+                    + "WHERE OFI.CODIGO1=D1.CODIGO\n"
+                    + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + generarSegundaCondicion(expediente, asunto, derivadoa)+")R\n"
+                    + "ORDER BY R.FECHA");
+            docusInt = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal NUEVA BUSQUEDA");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return docusInt;
+    }
+
+    public String generarSegundaCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"OR TM.TRAM_NUM LIKE","OR OFI.CODIGO1 LIKE", "TM.MOVI_OBS LIKE"};
+        String c2[] = {expediente, derivado, asunto};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (c2[i] == "") {
+                retorno = retorno + c1[i];
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    public String generarPrimeraCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"OR TM.TRAM_NUM LIKE", "OR TM.CODIGO1 like", "OR TM.MOVI_OBS LIKE"};
+        String c2[] = {expediente, derivado, asunto};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (c2[i] == "") {
+                retorno = retorno + c1[i];
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    @Override
     public void eliminarDocuInternoOGPL(String id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "DELETE FROM DOCUS_INTERNOS WHERE IDTIP= '"+id+"' ";
+        String sql = "DELETE FROM DOCUS_INTERNOS WHERE IDTIP= '" + id + "' ";
         try {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();

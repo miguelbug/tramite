@@ -36,8 +36,11 @@ public class BuscarDocumentosBean implements Serializable {
     private String codigosdepe;
     private DocumentoDAO dd;
     private DerivarDAO deriv;
-    private List docus, nuevaBusq, nuevaBusqOgpl;
+    private List docus, nuevaBusq, nuevaBusqOgpl,nuevabusqogplkp, otrosdocus, docselec3;
     private String numerotramite;
+    private String nuevotramite;
+    private String nuevoasunto;
+    private String derivadoa;
     private String codigo;
     private String anio;
     private String asunto;
@@ -61,6 +64,7 @@ public class BuscarDocumentosBean implements Serializable {
         docus = new ArrayList<Map<String, String>>();
         seglista = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
+        nuevabusqogplkp = new ArrayList<Map<String, String>>();
         this.nuevaBusq = new ArrayList<Map<String, String>>();
         nuevaBusqOgpl = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
@@ -70,7 +74,27 @@ public class BuscarDocumentosBean implements Serializable {
         mostrarListaBusquedaOGPL() ;
         mostrarListaBusqueda();
     }
-
+    public void mostrarNuevaListaBusqOGPL(){
+        nuevabusqogplkp.clear();
+        System.out.println("listando");
+        try {
+            List lista = new ArrayList();
+            lista = dd.nuevaBusqAvanzada(nuevotramite,nuevoasunto,derivadoa);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[4];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("expediente", String.valueOf(obj[0]));
+                listaaux.put("fechaing", String.valueOf(obj[1]));
+                listaaux.put("asunto", String.valueOf(obj[2]));
+                listaaux.put("derivadoA", String.valueOf(obj[3]));
+                nuevabusqogplkp.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void mostrarListaBusquedaOGPL() {
         nuevaBusqOgpl.clear();
         System.out.println("listando");
@@ -470,6 +494,54 @@ public class BuscarDocumentosBean implements Serializable {
 
     public void setSeleccion2(Map<String, String> seleccion2) {
         this.seleccion2 = seleccion2;
+    }
+
+    public String getNuevotramite() {
+        return nuevotramite;
+    }
+
+    public void setNuevotramite(String nuevotramite) {
+        this.nuevotramite = nuevotramite;
+    }
+
+    public String getNuevoasunto() {
+        return nuevoasunto;
+    }
+
+    public void setNuevoasunto(String nuevoasunto) {
+        this.nuevoasunto = nuevoasunto;
+    }
+
+    public String getDerivadoa() {
+        return derivadoa;
+    }
+
+    public void setDerivadoa(String derivadoa) {
+        this.derivadoa = derivadoa;
+    }
+
+    public List getNuevabusqogplkp() {
+        return nuevabusqogplkp;
+    }
+
+    public void setNuevabusqogplkp(List nuevabusqogplkp) {
+        this.nuevabusqogplkp = nuevabusqogplkp;
+    }
+
+    public List getOtrosdocus() {
+        return otrosdocus;
+    }
+
+    public void setOtrosdocus(List otrosdocus) {
+        this.otrosdocus = otrosdocus;
+    }
+
+    public List getDocselec3() {
+        return docselec3;
+    }
+
+    public void setDocselec3(List docselec3) {
+        this.docselec3 = docselec3;
     }
 
 }

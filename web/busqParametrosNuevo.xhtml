@@ -17,7 +17,58 @@
             <ui:define name="content">
                 <h:form id="form" >
                     <br></br>
+                    <p:panel header="BUSQUEDA" id="principal" style="background-color: #D0D0D0;">
+                        <center>
+                            <p:panelGrid style="margin-bottom:10px" id="panelpadre" columns="4" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Busqueda Avanzada"/>
+                                </f:facet>
+                                <p:column>
+                                    <h:outputLabel value="Numero de Trámite: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="numtramite" value="#{buscarDocumentosBean.nuevotramite}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Asunto: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="nueviasunto" value="#{buscarDocumentosBean.nuevoasunto}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Derivado A: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="nuevoderivadoa" value="#{buscarDocumentosBean.derivadoa}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel value="Realizar Búsqueda: "/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.mostrarNuevaListaBusqOGPL()}" update="tablabusqogpl"/>
+                                </p:column>
+                            </p:panelGrid>
+                        </center>
+                    </p:panel>
                     <br></br>
+                    <p:dataTable value="#{buscarDocumentosBean.nuevabusqogplkp}" var="item" paginator="true" rows="15" id="tablabusqogpl" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.otrosdocus}" selection="#{buscarDocumentosBean.docselec3}"
+                                 rowKey="#{item.expediente}" style="margin-bottom: 0">
+
+                        <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
+                            <h:outputText value="#{item.expediente}"/>
+                        </p:column>
+                        <p:column headerText="FECHA INGRESO" width="5" sortBy="#{item.fechaing}" filterBy="#{item.fechaing}" filterMatchMode="contains">
+                            <h:outputText value="#{item.fechaing}"/>
+                        </p:column>
+                        <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                            <h:outputText value="#{item.asunto}"/>
+                        </p:column>
+                        <p:column headerText="DERIVADO A" width="5" sortBy="#{item.derivadoA}" filterBy="#{item.derivadoA}" filterMatchMode="contains">
+                            <h:outputText value="#{item.derivadoA}"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>
