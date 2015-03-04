@@ -769,26 +769,6 @@ public class OficioBean {
         this.tipodestino = " ";
     }
 
-    public void generarFecha() {
-        System.out.println("entra fechaactual");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        fecha = new Date();
-        fechadia2 = "";
-        fechahora = "";
-
-        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
-        while (tokens.hasMoreTokens()) {
-            if (fechadia2.equals("")) {
-                fechadia2 = tokens.nextToken();
-            }
-            if (fechahora.equals("")) {
-                fechahora = tokens.nextToken();
-            }
-        }
-        auxfecha = sdf.format(fecha);
-        System.out.println("FECHAS: " + fechadia2 + "-" + fechahora);
-    }
-
     public void generarFecha2() {
         System.out.println("entra fechaactual");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -858,11 +838,68 @@ public class OficioBean {
 
     }
 
+    public void generarFecha() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        fechadia2 = "";
+        fechahora = "";
+
+        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia2.equals("")) {
+                fechadia2 = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
+        auxfecha = sdf.format(fecha);
+        System.out.println("FECHAS: " + fechadia2 + "-" + fechahora);
+    }
+
+    public void guardar2() throws ParseException {
+        FacesMessage message = null;
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        System.out.println("HORA Y FECHA: " + auxfecha);
+        if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
+            ver = false;
+            nover = true;
+
+        } else {
+            try {
+                OficCirc ofi = new OficCirc();
+                ofi.setCorrelaOficic(correlativo);
+                ofi.setAsunto(asunto2.toUpperCase());
+                ofi.setDependencia(od.getDependencia(usu.getOficina().getIdOficina()));
+                fecha = sdf2.parse(auxfecha);
+                ofi.setFecha(fecha);
+                ofi.setFirma(firma);
+                ofi.setResponsable(responsable);
+                ofi.setTiposDocumentos(deriv.getTipoDoc(escogido));
+                od.guardarOficioCircular(ofi);
+                mostrar();
+                ver = true;
+                nover = false;
+                mostrarofCirc();
+            } catch (Exception e) {
+                ver = false;
+                nover = true;
+                System.out.println(e.getMessage());
+            }
+
+        }
+
+        limpiar();
+        cities.getTarget().clear();
+
+    }
+
     public void guardar() throws ParseException {
         FacesMessage message = null;
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         System.out.println("HORA Y FECHA: " + fechadia3 + "-" + fechahora3);
-        if (cities.equals(null) || asunto.equals(" ") || escogido.equals(" ")) {
+        if (cities.equals(null) || asunto2.equals(" ") || escogido.equals(" ")) {
             ver = false;
             nover = true;
 
