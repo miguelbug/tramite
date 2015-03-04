@@ -39,13 +39,16 @@
                                     <h:outputLabel value="Derivado A: "/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText id="nuevoderivadoa" value="#{buscarDocumentosBean.derivadoa}"/>
+                                    <p:selectOneMenu id="nuevoderivadoa" value="#{buscarDocumentosBean.derivadoa}" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                                        <f:selectItems value="#{buscarDocumentosBean.listadependencias}"/>
+                                    </p:selectOneMenu>
                                 </p:column>
                                 <p:column>
                                     <h:outputLabel value="Realizar Búsqueda: "/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.mostrarNuevaListaBusqOGPL()}" update="tablabusqogpl"/>
+                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.mostrarNuevaListaBusqOGPL()}" update="tablabusqogpl,:form:panelpadre"/>
                                 </p:column>
                             </p:panelGrid>
                         </center>
@@ -56,8 +59,12 @@
                                  emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.otrosdocus}" selection="#{buscarDocumentosBean.docselec3}"
                                  rowKey="#{item.expediente}" style="margin-bottom: 0">
 
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
                             <h:outputText value="#{item.expediente}"/>
+                        </p:column>
+                        <p:column headerText="FECH. TRAM." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
+                            <h:outputText value="#{item.tramfecha}"/>
                         </p:column>
                         <p:column headerText="FECHA INGRESO" width="5" sortBy="#{item.fechaing}" filterBy="#{item.fechaing}" filterMatchMode="contains">
                             <h:outputText value="#{item.fechaing}"/>
@@ -68,7 +75,57 @@
                         <p:column headerText="DERIVADO A" width="5" sortBy="#{item.derivadoA}" filterBy="#{item.derivadoA}" filterMatchMode="contains">
                             <h:outputText value="#{item.derivadoA}"/>
                         </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="tablabusqogpl" icon="ui-icon-search" value="Detalle" style="position:absolute; left:25px; height:26px " oncomplete="PF('itemDialog').show()"
+                                             update=":form:itDialog" actionListener="#{buscarDocumentosBean.MostrarDetalle()}"/>
+                        </f:facet>
                     </p:dataTable>
+
+                    <p:dialog header="Detalle Documento" widgetVar="itemDialog" modal="true" id="itDialog" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
+                        <center>
+                            <p:panelGrid columns="2"  >
+                                <f:facet name="header">
+                                    <p:column colspan="2">Documento</p:column>
+                                </f:facet>
+                                <p:outputLabel value="Expediente:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r2}"/>
+                                <p:outputLabel value="Fecha Ingreso:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r1}"/>
+                                <p:outputLabel value="Derivado A:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r3}"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:panelGrid columns="2">
+                                <f:facet name="header">
+                                    <p:column colspan="2">Respuesta</p:column>
+                                </f:facet>
+                                <p:outputLabel value="Documento:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r5}"/>
+                                <p:outputLabel value="Fecha de Registro"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r4}"/>
+                                <p:outputLabel value="Derivado A:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r6}"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:panelGrid columns="2">
+                                <f:facet name="header">
+                                    <p:column colspan="2">Oficio</p:column>
+                                </f:facet>
+                                <p:outputLabel value="Oficio:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r8}"/>
+                                <p:outputLabel value="Fecha de Registro"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r7}"/>
+                                <p:outputLabel value="Derivado A:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.r9}"/>
+                            </p:panelGrid>
+                            <br></br>
+                        </center>
+                        <center>
+                            <p:commandButton value="Aceptar">
+                                <f:ajax event="click" onevent="itemDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
                 </h:form>
             </ui:define>
         </ui:composition>

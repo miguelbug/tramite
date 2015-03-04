@@ -52,7 +52,13 @@ public interface DocumentoDAO {
     public List obtener_oficios();
     public List busquedaAvanzada(String oficina);
     public List busquedaAvanzada2();
+    public List busquedaAvanzada3(String tm, String tf);
     public List docusInternosOGPL();
     public void eliminarDocuInternoOGPL(String id);
     public List nuevaBusqAvanzada(String expediente, String asunto, String derivadoa);
+    public List getDependencias();
+    public List query1(String ex,String f);
+    public List query2(String ex,String f);
+    public List query3(String ex,String f);
+    public List query4(String ex,String f);
 }
