@@ -7,6 +7,7 @@
 package daoimpl;
 
 import dao.TemporaldiDao;
+import maping.TemporalCargos;
 import maping.TemporalDi;
 import maping.TemporalUser;
 import org.hibernate.Session;
@@ -18,6 +19,45 @@ import util.HibernateUtil;
  */
 public class TemporalDiDaoImpl implements TemporaldiDao{
     Session session;
+
+    @Override
+    public void actualizarTemporalCargo() {
+        System.out.println("actualizar TEMPORAL DU");
+        String sql = "Update TEMPORALCARGOS SET REIMPRESO='1' WHERE IMPRESO='1' AND REIMPRESO='0'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("terminó actualizar TEMPORAL DU");
+        } catch (Exception e) {
+            System.out.println("mal actualizar TEMPORAL DU");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado¡¡¡¡¡¡¡: " + i);
+    }
+
+    @Override
+    public void guardarCargos(TemporalCargos tc) {
+        System.out.println("entra a guardar temporalcargos");
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(tc);
+            session.getTransaction().commit();
+            System.out.println("terminó guardar temporalcargos");
+        } catch (Exception e) {
+            System.out.println("mal guardar temporalcargos");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
 
     @Override
     public void guardarTemporalUser(TemporalUser tu) {

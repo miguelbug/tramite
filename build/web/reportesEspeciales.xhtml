@@ -16,7 +16,7 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="DOCUMENTOS PROPIOS" id="tab1_1">
-                            <!--<center>
+                           <!-- <center>
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="Escoger Tipo de Documento: "/>
                                     <p:panelGrid columns="2">
@@ -34,8 +34,8 @@
                                     </p:panelGrid>
                                 </p:panelGrid>
                                 <br></br>
-                            </center>-->
-                            <br></br>
+                            </center>
+                            <br></br>-->
                             <br></br>
                             <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -67,9 +67,6 @@
                                 <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
                                     <h:outputText value="#{item.fecha}" />
                                 </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}" />
-                                </p:column>
                                 <p:column headerText="ORIGEN" width="5" sortBy="#{item.origenprinc}" filterBy="#{item.origenprinc}" filterMatchMode="contains">
                                     <h:outputText value="#{item.origenprinc}" />
                                 </p:column>
@@ -86,9 +83,9 @@
                                     <p:rowEditor />
                                 </p:column>
                                 <f:facet name="footer">
-                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Eliminar Documento" style="position:absolute; left:185px; height:26px "
+                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Eliminar Documento" style="position:absolute; left:25px; height:26px "
                                                      update=":form:" actionListener="#{objxUnidadController.delete()}"/>
-                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Crear Documento" style="position:absolute; left:25px; height:26px"
+                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Crear Documento" style="position:absolute; left:185px; height:26px"
                                                      update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()"/>
                                 </f:facet>
                             </p:dataTable>
@@ -103,7 +100,7 @@
                             </center>
                         </p:tab>
                         <p:tab title="DOCUMENTOS CIRCULARES" id="tab1_2">
-                            <!--<center>
+                           <!-- <center>
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="Escoger Tipo de Documento: "/>
                                     <p:panelGrid columns="2">
@@ -350,7 +347,7 @@
                     </p:dialog>
                     <!--NUEVO-->
                     <br></br>
-                    <br></br>	
+                    <br></br>   
                     <script type="text/javascript">
                         PrimeFaces.locales['es'] = {
                             closeText: 'Cerrar',

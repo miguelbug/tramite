@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="maping.TemporalCargos" table="TEMPORALCARGOS" schema="MIGUEL">
+        <id name="idcargo" type="long">
+            <column name="IDCARGO" precision="10" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="documento" type="string">
+            <column name="DOCUMENTO" length="200" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" />
+        </property>
+        <property name="numexped" type="string">
+            <column name="NUMEXPED" length="200" />
+        </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="400" />
+        </property>
+        <property name="asignado" type="string">
+            <column name="ASIGNADO" length="200" />
+        </property>
+        <property name="impreso" type="string">
+            <column name="IMPRESO" length="10" />
+        </property>
+        <property name="reimpreso" type="string">
+            <column name="REIMPRESO" length="10" />
+        </property>
+        <property name="usu" type="string">
+            <column name="USU" length="20" />
+        </property>
+        <property name="destino" type="string">
+            <column name="DESTINO" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>

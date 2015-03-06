@@ -114,9 +114,22 @@ ORDER BY R.FECHA DESC]]></queryString>
 	</variable>
 
 		<group  name="porOficina" isStartNewPage="true" >
-			<groupExpression><![CDATA[$F{DESTINO}]]></groupExpression>
+			<groupExpression><![CDATA[]]></groupExpression>
 			<groupHeader>
 			<band height="47"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="5"
+						width="530"
+						height="20"
+						key="textField-13"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$P{oficina}]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement
 						x="8"
@@ -187,7 +200,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Asignado]]></text>
+				<text><![CDATA[Responsable]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -202,8 +215,8 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<reportElement
 						x="3"
 						y="24"
-						width="527"
-						height="1"
+						width="524"
+						height="0"
 						key="line-8"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
@@ -225,19 +238,6 @@ ORDER BY R.FECHA DESC]]></queryString>
 					</textElement>
 				<text><![CDATA[Asunto]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="6"
-						y="1"
-						width="522"
-						height="20"
-						key="textField-26"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" DESTINO:   "+$F{DESTINO}]]></textFieldExpression>
-				</textField>
 			</band>
 			</groupHeader>
 			<groupFooter>
@@ -335,16 +335,17 @@ ORDER BY R.FECHA DESC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="5"
-						y="41"
-						width="528"
+						x="-1"
+						y="42"
+						width="532"
 						height="14"
-						key="textField-25"/>
+						key="textField-3"
+						isPrintRepeatedValues="false"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS : "+$P{oficina}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS "]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
@@ -374,7 +375,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="89"
+						x="90"
 						y="2"
 						width="77"
 						height="24"

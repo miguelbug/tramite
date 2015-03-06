@@ -5,6 +5,7 @@
  */
 package bean;
 
+import dao.DerivarDAO;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +16,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import dao.LoginDao;
+import daoimpl.DerivarDaoImpl;
 import daoimpl.LoginDaoImpl;
 import javax.servlet.http.HttpServletRequest;
 import maping.Usuario;
@@ -34,7 +36,9 @@ public class LoginBean implements Serializable {
     private HttpServletRequest httpServletRequest;
     private FacesContext contex;
     private String direccion;
-
+    private boolean oficina;
+    private DerivarDAO deriv;
+    
     public LoginBean() {
         contex = FacesContext.getCurrentInstance();
         httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();
@@ -42,6 +46,7 @@ public class LoginBean implements Serializable {
         if (usu == null) {
             usu = new Usuario();
         }
+        deriv= new DerivarDaoImpl();
     }
 
     public String ActionLogin() {
@@ -91,7 +96,11 @@ public class LoginBean implements Serializable {
                 direccion = "menu_user.xhtml";
             }
         }
-
+        if(deriv.getCodigoUsuario(usu.getUsu()).equals("1001872")){
+            oficina=true;
+        }else{
+            oficina=false;
+        }
     }
 
     public String getUsuario() {
@@ -144,6 +153,22 @@ public class LoginBean implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public DerivarDAO getDeriv() {
+        return deriv;
+    }
+
+    public void setDeriv(DerivarDAO deriv) {
+        this.deriv = deriv;
+    }
+
+    public boolean isOficina() {
+        return oficina;
+    }
+
+    public void setOficina(boolean oficina) {
+        this.oficina = oficina;
     }
 
 }

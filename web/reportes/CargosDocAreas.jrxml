@@ -29,8 +29,15 @@
 	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="oficina" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="usu" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="lote" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["60"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="oficina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["OFICINA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usu" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["usu"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[SELECT DOCUMENTO,
        TO_CHAR(FECHA,'DD/MM/YYYY HH24:MI:SS') AS FECHA,
        NUMEXPED,
@@ -54,114 +61,14 @@ AND USU=$P{usu}]]></queryString>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 
-		<group  name="porTipo" isStartNewPage="true" >
+		<group  name="PORDESTINO" >
 			<groupExpression><![CDATA[$F{DESTINO}]]></groupExpression>
 			<groupHeader>
-			<band height="44"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="419"
-						y="24"
-						width="111"
-						height="20"
-						forecolor="#000000"
-						backcolor="#000000"
-						key="staticText-10"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[ASIGNADO]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="8"
-						y="4"
-						width="522"
-						height="20"
-						key="textField-13"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
-				</textField>
-				<line direction="TopDown">
-					<reportElement
-						x="5"
-						y="43"
-						width="524"
-						height="0"
-						key="line-7"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="21"
-						y="24"
-						width="62"
-						height="20"
-						key="staticText-13"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[DOCUMENTO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="99"
-						y="24"
-						width="54"
-						height="20"
-						key="staticText-14"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[FECHA ]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="163"
-						y="24"
-						width="88"
-						height="20"
-						key="staticText-15"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[NUM. EXPEDIENTE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="259"
-						y="24"
-						width="140"
-						height="20"
-						forecolor="#000000"
-						backcolor="#000000"
-						key="staticText-16"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
-					</textElement>
-				<text><![CDATA[ASUNTO]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="6"
-						y="23"
-						width="524"
-						height="0"
-						key="line-17"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="37"  isSplitAllowed="true" >
+			<band height="17"  isSplitAllowed="true" >
 			</band>
 			</groupFooter>
 		</group>
@@ -174,7 +81,7 @@ AND USU=$P{usu}]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="48"  isSplitAllowed="true" >
+			<band height="86"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
@@ -190,8 +97,8 @@ AND USU=$P{usu}]]></queryString>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="1"
-						y="32"
+						x="-1"
+						y="40"
 						width="528"
 						height="14"
 						key="textField-1"/>
@@ -199,7 +106,7 @@ AND USU=$P{usu}]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS :"+$P{oficina}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["CARGO DE DOCUMENTOS : "+$P{oficina}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -253,18 +160,187 @@ AND USU=$P{usu}]]></queryString>
 					</textElement>
 				<text><![CDATA[Fec. Impresion:]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="4"
+						y="61"
+						width="522"
+						height="20"
+						key="textField-18"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="8"  isSplitAllowed="true" >
+			<band height="31"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="6"
+						y="6"
+						width="523"
+						height="0"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="11"
+						y="8"
+						width="48"
+						height="20"
+						key="staticText-13"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="68"
+						y="9"
+						width="50"
+						height="20"
+						key="staticText-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[FECHA ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="123"
+						y="9"
+						width="79"
+						height="20"
+						key="staticText-15"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[NUM. EXPEDIENTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="208"
+						y="9"
+						width="140"
+						height="19"
+						forecolor="#000000"
+						backcolor="#000000"
+						key="staticText-16"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ASUNTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="351"
+						y="9"
+						width="94"
+						height="19"
+						forecolor="#000000"
+						backcolor="#000000"
+						key="staticText-17"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ASIGNADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="448"
+						y="8"
+						width="78"
+						height="20"
+						forecolor="#000000"
+						backcolor="#000000"
+						key="staticText-18"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<text><![CDATA[FIRMA]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="6"
+						y="30"
+						width="523"
+						height="0"
+						key="line-18"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="30"  isSplitAllowed="true" >
+			<band height="25"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="1"
+						width="58"
+						height="23"
+						key="textField-7"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="66"
+						y="2"
+						width="54"
+						height="23"
+						key="textField-8"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="447"
+						y="2"
+						width="81"
+						height="23"
+						key="staticText-11"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="206"
+						y="1"
+						width="142"
+						height="23"
+						key="textField-10"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASUNTO}]]></textFieldExpression>
+				</textField>
 				<line direction="TopDown">
 					<reportElement
 						x="529"
-						y="-19"
+						y="-25"
 						width="0"
 						height="49"
 						key="line-9"/>
@@ -272,8 +348,8 @@ AND USU=$P{usu}]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="159"
-						y="-20"
+						x="122"
+						y="-25"
 						width="0"
 						height="49"
 						key="line-11"/>
@@ -281,8 +357,8 @@ AND USU=$P{usu}]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="96"
-						y="-20"
+						x="66"
+						y="-24"
 						width="0"
 						height="48"
 						key="line-12"/>
@@ -291,7 +367,7 @@ AND USU=$P{usu}]]></queryString>
 				<line direction="TopDown">
 					<reportElement
 						x="5"
-						y="-19"
+						y="-24"
 						width="0"
 						height="49"
 						key="line-13"/>
@@ -299,17 +375,8 @@ AND USU=$P{usu}]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="6"
-						y="29"
-						width="523"
-						height="0"
-						key="line-14"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<line direction="TopDown">
-					<reportElement
-						x="404"
-						y="-20"
+						x="445"
+						y="-25"
 						width="0"
 						height="49"
 						key="line-15"/>
@@ -317,20 +384,42 @@ AND USU=$P{usu}]]></queryString>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="256"
-						y="-20"
+						x="204"
+						y="-24"
 						width="0"
 						height="49"
 						key="line-16"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="124"
+						y="2"
+						width="74"
+						height="23"
+						key="textField-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NUMEXPED}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="351"
+						y="-24"
+						width="0"
+						height="49"
+						key="line-17"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="411"
+						x="355"
 						y="1"
-						width="112"
-						height="25"
+						width="87"
+						height="23"
 						key="textField-17"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -338,76 +427,19 @@ AND USU=$P{usu}]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASIGNADO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<line direction="TopDown">
 					<reportElement
-						mode="Opaque"
-						x="259"
-						y="1"
-						width="139"
-						height="25"
-						key="textField-18"/>
-					<box></box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASUNTO}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="161"
-						y="3"
-						width="91"
-						height="23"
-						key="textField-19"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NUMEXPED}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="99"
-						y="3"
-						width="54"
-						height="23"
-						key="textField-20"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="9"
-						y="3"
-						width="84"
-						height="23"
-						key="textField-21"/>
-					<box></box>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
-				</textField>
+						x="6"
+						y="24"
+						width="523"
+						height="0"
+						key="line-19"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
 			</band>
 		</detail>
 		<columnFooter>
 			<band height="11"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="5"
-						y="0"
-						width="137"
-						height="11"
-						key="textField-16"/>
-					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Cantidad de Registros: "+$V{PAGE_COUNT}]]></textFieldExpression>
-				</textField>
 			</band>
 		</columnFooter>
 		<pageFooter>
@@ -493,7 +525,7 @@ AND USU=$P{usu}]]></queryString>
 					<textElement>
 						<font size="7"/>
 					</textElement>
-				<text><![CDATA[Sistema de Tramite Documentario OGPL]]></text>
+				<text><![CDATA[Sistema de Tramite Documentario - OGPL]]></text>
 				</staticText>
 			</band>
 		</lastPageFooter>

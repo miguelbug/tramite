@@ -84,11 +84,23 @@ public class DocumentoUsuarioBean {
         deriv = new DerivarDaoImpl();
         boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
         boolean isdocusInternosOGPL = (currentPage.lastIndexOf("docusInternosOGPL.xhtml") > -1);
+        boolean isdocusinternosUsu = (currentPage.lastIndexOf("documentos_internosUsuario.xhtml") > -1);
+        boolean isreporteespecial = (currentPage.lastIndexOf("reportesEspeciales.xhtml") > -1);
         if (isdocumentosUsuario) {
             MostrarParaUsuario();
         } else {
             if (isdocusInternosOGPL) {
                 mostrarDocusInternosOGPL();
+            } else {
+                if (isdocusinternosUsu) {
+                    listarDocPropios();
+                    listarDocPropiosCirc();
+                } else {
+                    if (isreporteespecial) {
+                        listarDocPropios();
+                        listarDocPropiosCirc();
+                    }
+                }
             }
         }
 
@@ -145,16 +157,16 @@ public class DocumentoUsuarioBean {
         }
         System.out.println(correlativo + " " + asunto);
         try {
-         ofi.ActualizarOficioCircularUser(correlativo, asunto);
-         FacesMessage message = null;
-         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
-         RequestContext.getCurrentInstance().showMessageInDialog(message);
+            ofi.ActualizarOficioCircularUser(correlativo, asunto);
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION HECHA", "SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
 
-         } catch (Exception e) {
-         FacesMessage message = null;
-         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR DE EDICION", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
-         RequestContext.getCurrentInstance().showMessageInDialog(message);
-         }
+        } catch (Exception e) {
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR DE EDICION", "NO SE HA MODIFICADO EL: " + String.valueOf(((HashMap) event.getObject()).get("documento")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
     }
 
     public void onCancel2(RowEditEvent event) {
@@ -600,14 +612,20 @@ public class DocumentoUsuarioBean {
 
     public void Derivar() {
         numtramaux = "";
+        boolean deriva = true;
         FacesMessage message = null;
-        try {
-            if (getFechaIngr().equals(" ")) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Advertencia", "Primero debe Confirmar");
-                System.out.println("entra a derivar null");
-                aparecer = false;
-
-            } else {
+        for (int i = 0; i < docselec2.size(); i++) {
+            HashMap<String, String> hm = (HashMap<String, String>) docselec2.get(i);
+            if (hm.get("estadDoc").toString().equals("SIN CONFIRMAR")||hm.get("estadDoc").toString().equals("DERIVADO")||hm.get("estadDoc").toString().equals("ARCHIVADO")) {
+                deriva = false;
+                System.out.println("ENTRÓ");
+                break;
+            }
+        }
+        if (deriva) {
+            try {
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('derivarDialog').show()");
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
                 correlativo = generarCorrelativo();
@@ -623,11 +641,13 @@ public class DocumentoUsuarioBean {
                 movimiento_exportar = hm.get("movimnum").toString();
                 System.out.println("ESTA ES LA FECHA DE ENVIO: " + fecha_exportar + " Mov: " + movimiento_exportar);
                 estado = "EN PROCESO";
-
+            } catch (Exception e) {
+                System.out.println("error derivar");
+                System.out.println(e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println("error derivar");
-            System.out.println(e.getMessage());
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ADVERTENCIA", "PRIMERO DEBE CONFIRMAR/DOCUMENTO YA TRABAJADO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
 
     }

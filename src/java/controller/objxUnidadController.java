@@ -43,6 +43,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Usuario;
+import maping.TemporalCargos;
 import org.primefaces.context.RequestContext;
 //
 
@@ -71,7 +72,7 @@ public class objxUnidadController implements Serializable {
     private String USUARIO;
     private reporteDAO rpda;
     private String tipodocumento, tipodocumento1, tipodocumento2;
-    private List docselec, docselec1, docselec2, docselec3,docselec4;
+    private List docselec, docselec1, docselec2, docselec3, docselec4;
     private TemporaldiDao tdi;
     private String loteinput;
     private SeguimientoDAO sgd;
@@ -85,20 +86,23 @@ public class objxUnidadController implements Serializable {
         sgd = new SeguimientoDaoImpl();
         ofi = new OficioDaoImpl();
     }
-    public void abrirConfirmacion(){
+
+    public void abrirConfirmacion() {
         Map<String, String> hm = (HashMap<String, String>) docselec4.get(0);
-        docueliminar=hm.get("documento").toString();
-        ideliminar=hm.get("id").toString();
+        docueliminar = hm.get("documento").toString();
+        ideliminar = hm.get("id").toString();
     }
-    public void eliminarDocuInternoOGPL(){
+
+    public void eliminarDocuInternoOGPL() {
         System.out.println(ideliminar);
-        try{
+        try {
             dd.eliminarDocuInternoOGPL(ideliminar);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("error eliminar docuinternoogpl");
             System.out.println(e.getMessage());
         }
     }
+
     public void delete() {
         for (int i = 0; i < docselec1.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
@@ -145,11 +149,65 @@ public class objxUnidadController implements Serializable {
         }
     }
 
+    public void guardarDatos3() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (int i = 0; i < docselec1.size(); i++) {
+            TemporalCargos tc = new TemporalCargos();
+            Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+            tc.setDocumento(hm.get("documento").toString());
+            tc.setFecha(formatter.parse(hm.get("fecha").toString()));
+            tc.setNumexped(hm.get("expediente").toString());
+            tc.setAsunto(hm.get("asunto").toString());
+            tc.setAsignado(hm.get("asignado").toString());
+            tc.setImpreso("1");
+            tc.setReimpreso("0");
+            tc.setUsu(getUsu());
+            tc.setDestino(hm.get("destino").toString());
+            tdi.guardarCargos(tc);
+        }
+    }
+
     public void ImpresionSeleccionadosUser() throws ParseException, SQLException {
-        guardarDatos2();
+        guardarDatos3();
         mostrarReporSeleccionadosUser();
         tdi.actualizarTemporalUser();
+    }
 
+    public void ImpresionCargos() throws ParseException, SQLException {
+        guardarDatos3();
+        mostrarCargos();
+        tdi.actualizarTemporalCargo();
+    }
+
+    public void mostrarCargos() throws SQLException {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("CargosDocAreas");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("usu",getUsu());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void ImpresionSeleccionados() throws ParseException, SQLException {
@@ -204,7 +262,7 @@ public class objxUnidadController implements Serializable {
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
         //repor = ReporteController.getInstance("reporteDocumentosSeleccionadosUser");
-        repor = ReporteController.getInstance("seleccionados");
+        repor = ReporteController.getInstance("seleccionados2");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);
@@ -213,6 +271,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("USUARIO", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
+        parametros.put("usu",getUsu());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
 
@@ -285,6 +344,7 @@ public class objxUnidadController implements Serializable {
         }
         categoriaServicio.CerrandoConexion();
     }
+
     public String getFechaDerivado() {
         String fecha = this.rpda.getfechaderivado(DocumentoUsuarioBean.tramnum_exportar, DocumentoUsuarioBean.movimiento_exportar);
         return fecha;
@@ -567,7 +627,7 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosUserFechas");
+        repor = ReporteController.getInstance("reporteDocumentosUserFechas2");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
@@ -683,7 +743,7 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosUserTodos");
+        repor = ReporteController.getInstance("reporteDocumentosUserTodos2");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
