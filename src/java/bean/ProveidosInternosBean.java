@@ -44,7 +44,7 @@ public class ProveidosInternosBean {
     private Usuario usu;
     private final FacesContext faceContext;
     private Date fechaprov;
-    private String fechaaux, tramnum;
+    private String fechaaux, tramnum, razon;
     private Date fecha;
     private String correlativo_proveido, origen_prov, destino_prov, siglasdocus, anio, asunto, usuario;
     private DerivarDAO deriv;
@@ -233,12 +233,22 @@ public class ProveidosInternosBean {
         DocusExtint di = new DocusExtint();
         FacesMessage message = null;
         if (tramnum.equals(" ")) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE SELECCIONAR EL DOCUMENTO");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE SELECCIONAR EL DOCUMENTO");
+             RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+            razon = "SE DEBE SELECCIONAR EL DOCUMENTO";
+            /*RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("dialogMensaje.show();");*/
+            ver = false;
+            no_ver = true;
         } else {
             if (asunto.equals(" ")) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE INGRESAR EL ASUNTO");
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBE INGRESAR EL ASUNTO");
+                 RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+                razon = "SE DEBE INGRESAR EL ASUNTO";
+                /*RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("dialogMensaje.show();");*/
+                ver = false;
+                no_ver = true;
             } else {
                 TiposDocumentos td = new TiposDocumentos();
                 td.setFlag("2");
@@ -258,14 +268,13 @@ public class ProveidosInternosBean {
                     di.setExtInt("pi");
                     di.setTiposDocumentos(td);
                     deriv.guardarDocusExt(di);
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL : PROVEIDO N°" + correlativo_proveido + "-" + siglasdocus + "-" + anio);
-                    RequestContext.getCurrentInstance().showMessageInDialog(message);
                     ver = true;
                     no_ver = false;
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDADO EL : PROVEIDO N°" + correlativo_proveido + "-" + siglasdocus + "-" + anio);
-                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    razon = "ERROR DE CONEXION";
+                    /*RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("dialogMensaje.show();");*/
                     ver = false;
                     no_ver = true;
                 }
@@ -479,6 +488,14 @@ public class ProveidosInternosBean {
 
     public void setListadependencias(List listadependencias) {
         this.listadependencias = listadependencias;
+    }
+
+    public String getRazon() {
+        return razon;
+    }
+
+    public void setRazon(String razon) {
+        this.razon = razon;
     }
 
 }

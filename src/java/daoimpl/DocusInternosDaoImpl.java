@@ -40,16 +40,16 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
                     + "AND OFI.ID_DOCUMENTO='" + tipo + "'\n"
-                    + "AND OFI.CODIGO='"+usu+"'\n"
+                    + "AND OFI.CODIGO='" + usu + "'\n"
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();
-            
+
         } catch (Exception e) {
             System.out.println("mal circulares");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return circulares;
@@ -72,7 +72,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "WHERE OFI.CODIGO=D1.CODIGO\n"
                     + "and D1.Nombre=oficina.nombre_oficina\n"
                     + "AND OFI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
-                    + "AND OFI.CODIGO='"+usu+"'\n"
+                    + "AND OFI.CODIGO='" + usu + "'\n"
                     + "ORDER BY OFI.CORRELA_OFICIC DESC");
             circulares = query.list();
             session.beginTransaction().commit();
@@ -80,7 +80,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal circulares");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return circulares;
@@ -125,7 +125,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return docinternos;
@@ -163,7 +163,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return docinternos;
@@ -210,8 +210,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND TDAT.CODIGO=D3.CODIGO\n"
                     + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
                     + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
-                    + "AND DI.DOCU_SIGLASINT='"+usu+"'\n"
-                    + "AND DI.ID_DOCUMENTO='"+tipo+"'\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "AND DI.ID_DOCUMENTO='" + tipo + "'\n"
                     + "UNION\n"
                     + "SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
@@ -232,8 +232,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND DI.USU1=USUA.USU\n"
                     + "AND DI.TRAM_NUM IS NULL\n"
                     + "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
-                    + "AND DI.DOCU_SIGLASINT='"+usu+"'\n"
-                    + "AND DI.ID_DOCUMENTO='"+tipo+"') R\n"
+                    + "AND DI.DOCU_SIGLASINT='" + usu + "'\n"
+                    + "AND DI.ID_DOCUMENTO='" + tipo + "') R\n"
                     + "\n"
                     + "ORDER BY R.FECHA DESC");
             docinternos = query.list();
@@ -242,7 +242,91 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
+            session.close();
+        }
+        return docinternos;
+    }
+
+    @Override
+    public List getDocusInternos2(String siglas) {
+        List docinternos = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("get DOCUS INTERNOS");
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT R.I_D,\n"
+                    + "                    R.DOCUMENTO,\n"
+                    + "                    R.TRAM_NUM,\n"
+                    + "                    TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "                    DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)),\n"
+                    + "                    R.ORIGEN,\n"
+                    + "                    R.DESTINO,\n"
+                    + "                    R.ASIGNADO,\n"
+                    + "                    R.DESTINOOFI\n"
+                    + "                    FROM (\n"
+                    + "                    SELECT DI.IDTIP AS I_D,\n"
+                    + "                    DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "                    DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "                    DI.FECHAREGISTRO AS FECHA,\n"
+                    + "                    DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "                    D1.NOMBRE AS ORIGEN,\n"
+                    + "                    D2.NOMBRE AS DESTINO,\n"
+                    + "                    USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "                    DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "                    D4.NOMBRE AS DESTINOOFI\n"
+                    + "                    \n"
+                    + "                    FROM DOCUS_INTERNOS DI, \n"
+                    + "                         USUARIO USUA, \n"
+                    + "                         TRAMITE_MOVIMIENTO TM, \n"
+                    + "                         DEPENDENCIA D1, \n"
+                    + "                         DEPENDENCIA D2, \n"
+                    + "                         TRAMITE_DATOS TDAT, \n"
+                    + "                         DEPENDENCIA D3,\n"
+                    + "                         DEPENDENCIA D4,\n"
+                    + "                         OFICIOS OFI\n"
+                    + "                    WHERE TM.USU=USUA.USU\n"
+                    + "                    AND DI.CODIGO=D1.CODIGO\n"
+                    + "                    AND DI.CODIGO1=D2.CODIGO\n"
+                    + "                    AND DI.TRAM_NUM IS NOT NULL\n"
+                    + "                    AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "                    AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "                    AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "                    AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "                    AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "                    AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "                    AND DI.DOCU_SIGLASINT='" + siglas + "'\n"
+                    + "                    AND OFI.TRAM_NUM=DI.TRAM_NUM\n"
+                    + "                    AND OFI.TRAM_FECHA=DI.TRAM_FECHA\n"
+                    + "                    AND OFI.CODIGO1=D4.CODIGO\n"
+                    + "                    UNION\n"
+                    + "                    SELECT DI.IDTIP AS I_D,\n"
+                    + "                    DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "                    DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "                    DI.FECHAREGISTRO AS FECHA,\n"
+                    + "                    DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "                    D1.NOMBRE AS ORIGEN,\n"
+                    + "                    D2.NOMBRE AS DESTINO,\n"
+                    + "                    USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "                    DI.ID_DOCUMENTO AS IDDOCUMENTO,\n"
+                    + "                    'SIN DESTINO' AS DESTINOOFI\n"
+                    + "                    \n"
+                    + "                    FROM DOCUS_INTERNOS DI, USUARIO USUA,  DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "                    WHERE DI.CODIGO=D1.CODIGO\n"
+                    + "                    AND DI.CODIGO1=D2.CODIGO\n"
+                    + "                    AND DI.USU1=USUA.USU\n"
+                    + "                    AND DI.TRAM_NUM IS NULL\n"
+                    + "                    AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
+                    + "                    AND DI.DOCU_SIGLASINT='" + siglas + "') R\n"
+                    + "                    \n"
+                    + "                    ORDER BY R.FECHA DESC");
+            docinternos = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal DOCUS INTERNOS");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
             session.close();
         }
         return docinternos;
@@ -318,7 +402,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return docinternos;
@@ -362,7 +446,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return docinternos;
@@ -400,7 +484,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal DOCUS INTERNOS");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return docinternos;
@@ -435,7 +519,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal getproveidos");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return proveidos;
@@ -459,7 +543,7 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
             System.out.println("mal get respuestas");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-        } finally{
+        } finally {
             session.close();
         }
         return correlaresp;

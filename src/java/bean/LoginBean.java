@@ -37,6 +37,8 @@ public class LoginBean implements Serializable {
     private FacesContext contex;
     private String direccion;
     private boolean oficina;
+    private boolean oficina2;
+    public static boolean oficina3;
     private DerivarDAO deriv;
     
     public LoginBean() {
@@ -98,8 +100,12 @@ public class LoginBean implements Serializable {
         }
         if(deriv.getCodigoUsuario(usu.getUsu()).equals("1001872")){
             oficina=true;
+            oficina2=false;
+            oficina3=true;
         }else{
             oficina=false;
+            oficina2=true;
+            oficina3=false;
         }
     }
 
@@ -169,6 +175,14 @@ public class LoginBean implements Serializable {
 
     public void setOficina(boolean oficina) {
         this.oficina = oficina;
+    }
+
+    public boolean isOficina2() {
+        return oficina2;
+    }
+
+    public void setOficina2(boolean oficina2) {
+        this.oficina2 = oficina2;
     }
 
 }

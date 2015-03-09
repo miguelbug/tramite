@@ -35,6 +35,9 @@
 	<parameter name="fecha" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["24/02/2015"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="jefe" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Mg. JUAN ANICAMA PESCORANAAA"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
 DE.NUMERODOC,
 DE.CORRELATIVOD,

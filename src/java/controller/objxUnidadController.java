@@ -497,6 +497,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", partir(ProveidosInternosBean.fecha_auxiliar));
+        parametros.put("jefe",dd.getJefe());
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);

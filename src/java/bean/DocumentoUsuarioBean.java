@@ -270,6 +270,7 @@ public class DocumentoUsuarioBean {
         }
     }
 
+    ///////////////////////////////////////////////////
     public void listarDocPropios() {
         System.out.println("listando documentos2");
         listadocspropios.clear();
@@ -277,28 +278,54 @@ public class DocumentoUsuarioBean {
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
-            lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
-            Iterator ite = lista.iterator();
-            Object obj[] = new Object[10];
-            while (ite.hasNext()) {
-                obj = (Object[]) ite.next();
-                Map<String, String> listaaux = new HashMap<String, String>();
-                listaaux.put("iddoc", String.valueOf(obj[0]));
-                listaaux.put("documento", String.valueOf(obj[1]));
-                listaaux.put("expediente", String.valueOf(obj[2]));
-                listaaux.put("fecha", String.valueOf(obj[3]));
-                listaaux.put("asunto", String.valueOf(obj[4]));
-                listaaux.put("origen", String.valueOf(obj[5]));
-                listaaux.put("destino", String.valueOf(obj[6]));
-                listaaux.put("asignado", String.valueOf(obj[7]));
-                listaaux.put("docuprinc", String.valueOf(obj[8]));
-                listaaux.put("origenprinc", String.valueOf(obj[9]));
-                listadocspropios.add(listaaux);
+            if (LoginBean.oficina3 == true) {
+                lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
+                Iterator ite = lista.iterator();
+                Object obj[] = new Object[10];
+                while (ite.hasNext()) {
+                    obj = (Object[]) ite.next();
+                    Map<String, String> listaaux = new HashMap<String, String>();
+                    listaaux.put("iddoc", String.valueOf(obj[0]));
+                    listaaux.put("documento", String.valueOf(obj[1]));
+                    listaaux.put("expediente", String.valueOf(obj[2]));
+                    listaaux.put("fecha", String.valueOf(obj[3]));
+                    listaaux.put("asunto", String.valueOf(obj[4]));
+                    listaaux.put("origen", String.valueOf(obj[5]));
+                    listaaux.put("destino", String.valueOf(obj[6]));
+                    listaaux.put("asignado", String.valueOf(obj[7]));
+                    listaaux.put("docuprinc", String.valueOf(obj[8]));
+                    listaaux.put("origenprinc", String.valueOf(obj[9]));
+                    listadocspropios.add(listaaux);
+                }
+            } else {
+                if (LoginBean.oficina3 == false) {
+                    lista = di.getDocusInternos2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
+                    Iterator ite = lista.iterator();
+                    Object obj[] = new Object[9];
+                    while (ite.hasNext()) {
+                        obj = (Object[]) ite.next();
+                        Map<String, String> listaaux = new HashMap<String, String>();
+                        listaaux.put("iddoc", String.valueOf(obj[0]));
+                        listaaux.put("documento", String.valueOf(obj[1]));
+                        listaaux.put("expediente", String.valueOf(obj[2]));
+                        listaaux.put("fecha", String.valueOf(obj[3]));
+                        listaaux.put("asunto", String.valueOf(obj[4]));
+                        listaaux.put("origen", String.valueOf(obj[5]));
+                        listaaux.put("destino", String.valueOf(obj[6]));
+                        listaaux.put("asignado", String.valueOf(obj[7]));
+                        listaaux.put("destinoofi", String.valueOf(obj[8]));
+                        listadocspropios.add(listaaux);
+                    }
+                }
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
+    ////////////////////////////////////////////////////
+   
 
     public void listarDocPropiosXtipo() {
         System.out.println("listando documentos2");
@@ -616,7 +643,7 @@ public class DocumentoUsuarioBean {
         FacesMessage message = null;
         for (int i = 0; i < docselec2.size(); i++) {
             HashMap<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-            if (hm.get("estadDoc").toString().equals("SIN CONFIRMAR")||hm.get("estadDoc").toString().equals("DERIVADO")||hm.get("estadDoc").toString().equals("ARCHIVADO")) {
+            if (hm.get("estadDoc").toString().equals("SIN CONFIRMAR") || hm.get("estadDoc").toString().equals("DERIVADO") || hm.get("estadDoc").toString().equals("ARCHIVADO")) {
                 deriva = false;
                 System.out.println("ENTRÓ");
                 break;
@@ -711,6 +738,7 @@ public class DocumentoUsuarioBean {
     }
 
     public void Guardar() {
+        String mensaje = docunombre + " N° " + correlativo;
         FacesMessage message = null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
@@ -729,11 +757,12 @@ public class DocumentoUsuarioBean {
                 deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), hm.get("fechaenvio"), getNombOficina(), codinterno, in);
                 deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), hm.get("fechaenvio").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
             }
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + docunombre);
+
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + mensaje.toUpperCase());
             RequestContext.getCurrentInstance().showMessageInDialog(message);
 
         } catch (Exception e) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + docunombre);
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + mensaje.toUpperCase());
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             System.out.println(e.getMessage());
             e.printStackTrace();

@@ -27,6 +27,29 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public String getJefe() {
+        String jefe=null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT J.GRADO||' '||J.NOMBRE||' '||J.APELLIDOS AS JEFE FROM JEFATURA J, USUARIO U"
+                    + " WHERE J.USU=U.USU\n"
+                    + "AND U.ESTADO='activo'\n"
+                    + "AND J.CARGO='JEFATURA'");
+            jefe = (String) query.uniqueResult();
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró depenencias");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return jefe;
+    }
+
+    @Override
     public List getDependencias() {
         List docus = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();

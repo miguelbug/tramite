@@ -39,6 +39,7 @@ import org.primefaces.context.RequestContext;
 public class DocusExternosBean implements Serializable {
 
     private String documento;
+    private String razon;
     private String origen;
     private String destino;
     private List dependenciasprov;
@@ -291,20 +292,40 @@ public class DocusExternosBean implements Serializable {
         FacesMessage message = null;
         DocusExtint di = new DocusExtint();
         if (documento.equals(" ") && origen.equals(" ") && destino.equals(" ")) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE LLENAR TODOS LOS CAMPOS");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE LLENAR TODOS LOS CAMPOS");
+             RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+            razon = "DEBE LLENAR TODOS LOS CAMPOS";
+            /*RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("dialogMensajeExterno.show();");*/
+            ver = false;
+            nover = true;
         } else {
             if (documento.equals(" ")) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL TIPO DE DOCUMENTO");
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL TIPO DE DOCUMENTO");
+                 RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+                razon = "SE DEBEN INGRESAR EL TIPO DE DOCUMENTO";
+                /*RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("dialogMensajeExterno.show();");*/
+                ver = false;
+                nover = true;
             } else {
                 if (origen.equals(" ")) {
-                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL ORIGEN");
-                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL ORIGEN");
+                     RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+                    razon = "SE DEBEN INGRESAR EL ORIGEN";
+                    /*RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("dialogMensajeExterno.show();");*/
+                    ver = false;
+                    nover = true;
                 } else {
                     if (destino.equals(" ")) {
-                        message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL DESTINO");
-                        RequestContext.getCurrentInstance().showMessageInDialog(message);
+                        /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "SE DEBEN INGRESAR EL DESTINO");
+                         RequestContext.getCurrentInstance().showMessageInDialog(message);*/
+                        razon = "SE DEBEN INGRESAR EL DESTINO";
+                        /*RequestContext context = RequestContext.getCurrentInstance();
+                        context.execute("dialogMensajeExterno.show();");*/
+                        ver = false;
+                        nover = true;
                     } else {
                         try {
                             di.setNumerodoc(codigoexp);
@@ -319,17 +340,19 @@ public class DocusExternosBean implements Serializable {
                             di.setTiposDocumentos(deriv.getTipoDoc("PROVEIDOS"));
                             di.setExtInt("pe");
                             deriv.guardarDocusExt(di);
-                            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
-                            RequestContext.getCurrentInstance().showMessageInDialog(message);
+                            /*message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
+                             RequestContext.getCurrentInstance().showMessageInDialog(message);*/
                             ver = true;
                             nover = false;
                             Limpiar();
                             MostrarDocusExt();
                         } catch (Exception e) {
-                            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
-                            RequestContext.getCurrentInstance().showMessageInDialog(message);
+                            /*message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA GUARDADO EL PROVEIDO N°" + correlativo + "-" + siglas + "-" + auxanio);
+                             RequestContext.getCurrentInstance().showMessageInDialog(message);*/
                             ver = false;
                             nover = true;
+                            /*RequestContext context = RequestContext.getCurrentInstance();
+                            context.execute("dialogMensajeExterno.show();");*/
                             System.out.println("PROBLEMAS PROVEIDO EXTERNO");
                             System.out.println(e.getMessage());
                         }
@@ -574,6 +597,14 @@ public class DocusExternosBean implements Serializable {
 
     public void setSiglasdocu(String siglasdocu) {
         this.siglasdocu = siglasdocu;
+    }
+
+    public String getRazon() {
+        return razon;
+    }
+
+    public void setRazon(String razon) {
+        this.razon = razon;
     }
 
 }

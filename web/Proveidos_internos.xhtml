@@ -205,7 +205,7 @@
                             <p:commandButton actionListener="#{objxUnidadController.mostrarRepProveido2()}" value="Imprimir" rendered="#{proveidosInternosBean.ver}" ajax="false">
                                 <f:ajax event="click" onevent="dialogMensaje.hide()"/>
                             </p:commandButton>
-                            <p:outputLabel value="NO SE HA PODIDO CREAR" rendered="#{proveidosInternosBean.no_ver}"/>
+                            <p:outputLabel value="NO SE HA PODIDO CREAR: #{proveidosInternosBean.razon}" rendered="#{proveidosInternosBean.no_ver}"/>
                             <br></br>
                             <p:commandButton value="Aceptar" rendered="#{proveidosInternosBean.no_ver}">
                                 <f:ajax event="click" onevent="dialogMensaje.hide()"/>
@@ -220,7 +220,7 @@
                             <p:commandButton actionListener="#{objxUnidadController.mostrarRepProveido3()}" value="Imprimir" rendered="#{docusExternosBean.ver}" ajax="false">
                                 <f:ajax event="click" onevent="dialogMensaje.hide()"/>
                             </p:commandButton>
-                            <p:outputLabel value="NO SE HA PODIDO CREAR" rendered="#{docusExternosBean.nover}"/>
+                            <p:outputLabel value="NO SE HA PODIDO CREAR: #{docusExternosBean.razon}" rendered="#{docusExternosBean.nover}"/>
                             <br></br>
                             <p:commandButton value="Aceptar" rendered="#{docusExternosBean.nover}">
                                 <f:ajax event="click" onevent="dialogMensajeExterno.hide()"/>
