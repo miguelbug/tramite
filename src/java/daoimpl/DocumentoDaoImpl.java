@@ -53,7 +53,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT R.TRAM_NUM,"
-                    + "                                  TO_CHAR(R.TFECHA,'DD/MM/YYYY HH24:MI:SS') AS FECHA2,"
+                    + "                                  DECODE(R.TFECHA,NULL,'--',TO_CHAR(R.TFECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA2,"
                     + "                                  DECODE(TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS'),NULL,'--',TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA,"
                     + "                                  R.DERIVADOA,"
                     + "                                  R.ASUNTO "
@@ -659,7 +659,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
                     + "AND TM.TRAM_NUM='" + ex + "'\n"
                     + "AND TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')='" + f + "'\n"
-                    + "AND TM.FECHA_INGR IS NOT NULL");
+                    + "AND TM.FECHA_INGR IS NOT NULL\n"
+                    + "AND TM.CODIGO='100392'");
             docusavanzado = query.list();
             System.out.println("despues de query de gedocus avanzados");
             session.beginTransaction().commit();
@@ -682,12 +683,13 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         try {
             System.out.println("get docus avanzado");
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TM.FECHA_INGR as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A \n"
+            Query query = session.createSQLQuery("SELECT DECODE(TM.FECHA_INGR,NULL,'---',TO_CHAR(TM.FECHA_INGR,'DD/MM/YYYY HH24:MI:SS')) as FECHAINGRESO, TM.TRAM_NUM AS NUMEROTRAMITE, D1.NOMBRE AS DERIVADO_A \n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1\n"
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
                     + "AND TM.TRAM_NUM='" + ex + "'\n"
                     + "AND TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')='" + f + "'\n"
-                    + "AND TM.FECHA_INGR IS NULL");
+                    + "AND TM.FECHA_INGR IS NULL\n"
+                    + "AND TM.CODIGO='100392'");
             docusavanzado = query.list();
             System.out.println("despues de query de gedocus avanzados");
             session.beginTransaction().commit();
@@ -710,7 +712,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         try {
             System.out.println("get docus avanzado");
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS') AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A\n"
+            Query query = session.createSQLQuery("SELECT DECODE(DI.FECHAREGISTRO,NULL,'--',TO_CHAR(DI.FECHAREGISTRO,'DD/MM/YYYY HH24:MI:SS')) AS FECHAREG, DI.DOCU_NOMBREINT||' '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS RESPUESTA, D2.NOMBRE AS DERIVADO_A\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D2, DOCUS_INTERNOS DI\n"
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
                     + "AND DI.TRAM_NUM=TM.TRAM_NUM\n"
@@ -741,7 +743,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         try {
             System.out.println("get docus avanzado");
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT DISTINCT TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS') AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
+            Query query = session.createSQLQuery("SELECT DISTINCT DECODE(OFI.FECHA_OFICIO,NULL,'--',TO_CHAR(OFI.FECHA_OFICIO,'DD/MM/YYYY HH24:MI:SS')) AS FECHAOFICIO,'OFICIO '||'N° '||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS documento, D3.NOMBRE AS DERIVADO_A2\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, DEPENDENCIA D3, OFICIOS OFI, OFICINA OFIC\n"
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
                     + "AND OFI.CODIGO1=D3.CODIGO\n"

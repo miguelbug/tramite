@@ -80,8 +80,8 @@
                         </p:tab>
                     </p:tabView>
 
-                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
-                        <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc" >
+                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" width="40%">
+                        <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc" scrollable="true" scrollHeight="150">
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>
