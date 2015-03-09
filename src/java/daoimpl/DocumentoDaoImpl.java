@@ -1234,8 +1234,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public void EliminarTramite(String tramnum, String fecha) {
-        this.EliminarTramMov(tramnum, fecha);
+    public void EliminarTramite(String tramnum, String fecha, String movi) {
+        this.EliminarTramMov(tramnum, fecha,movi);
         this.EliminarTipDocu(tramnum, fecha);
         this.EliminarTD(tramnum, fecha);
         this.EliminarTemporal(tramnum, fecha);
@@ -1282,10 +1282,10 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public void EliminarTramMov(String tramnum, String fecha) {
+    public void EliminarTramMov(String tramnum, String fecha, String movi) {
         System.out.println("ENTRA A ELIMINAR TM");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='" + fecha + "'";
+        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='" + fecha + "' AND MOVI_NUM='"+movi+"'";
         try {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();

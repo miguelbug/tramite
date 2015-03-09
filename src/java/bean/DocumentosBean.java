@@ -257,7 +257,7 @@ public class DocumentosBean implements Serializable {
         FacesMessage message = null;
         try {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-            dd.EliminarTramite(hm.get("numerotramite").toString(), hm.get("fenvio").toString().substring(0, 10));
+            dd.EliminarTramite(hm.get("numerotramite").toString(), hm.get("fenvio").toString().substring(0, 10),hm.get("movimiento").toString());
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA ELIMINADO EL EXPEDIENTE");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             MostrarDocusInternos();
