@@ -165,7 +165,7 @@ public class ProveidosInternosDaoImpl implements ProveidosInternosDao {
                     + "DECODE(DE.ASUNTO,NULL,'SIN ASUNTO',UPPER(DE.ASUNTO)) as asunto,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
-                    + "to_char(DE.FECHA,'DD/MM/YYY HH24:MI:ss') as fecha,\n"
+                    + "to_char(DE.FECHA,'DD/MM/YYYY HH24:MI:ss') as fecha,\n"
                     + "USUA.USU_NOMBRE\n"
                     + "from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina\n"
                     + "WHERE DE.CODIGO=M1.CODIGO\n"
