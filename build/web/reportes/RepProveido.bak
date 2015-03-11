@@ -30,10 +30,13 @@
 		<defaultValueExpression ><![CDATA["achuchon"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["00046"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["00069"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["24/02/2015"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["10/03/2015"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="jefe" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["Mg. JUAN ANICAMA PESCORANAAA"]]></defaultValueExpression>
 	</parameter>
 	<queryString><![CDATA[select TD.NOMBRE_DOCU||' N°-'||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,
 DE.NUMERODOC,
@@ -424,7 +427,7 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Mg. JUAN ANICAMA PESCORAN"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{jefe}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
