@@ -427,7 +427,7 @@ ORDER BY DE.ID DESC]]></queryString>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Mg. JUAN ANICAMA PESCORAN"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{jefe}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
