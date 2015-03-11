@@ -6,11 +6,13 @@
 package bean;
 
 import static bean.DocumentosBean.tranum;
+import controller.objxUnidadController;
 import dao.DerivarDAO;
 import dao.ProveidosInternosDao;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.ProveidosInternosDaoImpl;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,7 +87,15 @@ public class ProveidosInternosBean {
         }
 
     }
-
+    
+    public void Reimprimir() throws SQLException{
+        System.out.println("ENTRA A REIMPRIMIR");
+        Map<String, String> hm = (HashMap<String, String>) docselec2.get(0);
+        objxUnidadController obj= new objxUnidadController();
+        System.out.println("DOCUMENTO: "+hm.get("documento").toString().substring(13, 18));
+        System.out.println("FECHA: "+hm.get("fecha").toString());
+        obj.ReimprimirProveido(hm.get("documento").toString().substring(13, 18),hm.get("fecha").toString());
+    }
     public void onEdit(RowEditEvent event) {
         String documento = String.valueOf(((HashMap) event.getObject()).get("documento"));
         String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
@@ -237,7 +247,7 @@ public class ProveidosInternosBean {
              RequestContext.getCurrentInstance().showMessageInDialog(message);*/
             razon = "SE DEBE SELECCIONAR EL DOCUMENTO";
             /*RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("dialogMensaje.show();");*/
+             context.execute("dialogMensaje.show();");*/
             ver = false;
             no_ver = true;
         } else {
@@ -246,7 +256,7 @@ public class ProveidosInternosBean {
                  RequestContext.getCurrentInstance().showMessageInDialog(message);*/
                 razon = "SE DEBE INGRESAR EL ASUNTO";
                 /*RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("dialogMensaje.show();");*/
+                 context.execute("dialogMensaje.show();");*/
                 ver = false;
                 no_ver = true;
             } else {
@@ -274,7 +284,7 @@ public class ProveidosInternosBean {
                     System.out.println(e.getMessage());
                     razon = "ERROR DE CONEXION";
                     /*RequestContext context = RequestContext.getCurrentInstance();
-                    context.execute("dialogMensaje.show();");*/
+                     context.execute("dialogMensaje.show();");*/
                     ver = false;
                     no_ver = true;
                 }

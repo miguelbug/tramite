@@ -236,6 +236,7 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
+                    + "TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS') AS TMFECHA\n,"
                     + "TM.MOVI_NUM,\n"
                     + "M1.NOMBRE AS ORIGEN,\n"
                     + "M2.NOMBRE AS DESTINO,\n"
@@ -247,7 +248,8 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
                     + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
                     + "USUA.USU_NOMBRE AS NOMBRE,\n"
                     + "D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
-                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL\n"
+                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "TM.ESTADO AS ESTADO\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
                     + "WHERE TM.CODIGO1='" + oficina + "' \n"
                     + "AND TM.CODIGO=M1.CODIGO\n"

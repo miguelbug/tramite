@@ -198,7 +198,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("usuario", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
-        parametros.put("usu",getUsu());
+        parametros.put("usu", getUsu());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
 
@@ -271,7 +271,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("USUARIO", getUSUARIO());
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
-        parametros.put("usu",getUsu());
+        parametros.put("usu", getUsu());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
 
@@ -497,7 +497,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", partir(ProveidosInternosBean.fecha_auxiliar));
-        parametros.put("jefe",dd.getJefe());
+        parametros.put("jefe", dd.getJefe());
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
@@ -861,6 +861,39 @@ public class objxUnidadController implements Serializable {
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("correlativo", OficioBean.getCorrelativo_exportar());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        categoriaServicio.CerrandoConexion();
+    }
+
+    public void ReimprimirProveido(String docu, String fecha) throws SQLException {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("repProveido2");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        boolean rpt = false;
+        System.out.println("PROVEIDO A EXPORTAR "+docu);
+        System.out.println("FECHA A EXPORTAR "+partir(fecha));
+        parametros.put("correlativo",docu);
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("fecha", partir(fecha));
+        // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
         if (!rpt && message == null) {
