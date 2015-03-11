@@ -107,7 +107,7 @@
                                     </p:selectOneMenu>
                                 </p:panelGrid>
                                 <p:outputLabel value="Destino: "/>
-                                <p:selectOneMenu value="#{nuevoExpedienteBean.destino}" filter="true" filterMatchMode="contains">
+                                <p:selectOneMenu value="#{nuevoExpedienteBean.destino}" filter="true" filterMatchMode="contains" editable="true">
                                     <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                     <f:selectItems value="#{nuevoExpedienteBean.listadestinos}"/>
                                 </p:selectOneMenu>
