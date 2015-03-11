@@ -307,12 +307,12 @@ public class DocumentosBean implements Serializable {
                     deriv.Confirmar(ntram, movi, fecha);
                     System.out.println("confirmaar tramite sale");
                 }
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO");
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO N°:"+correlativo_oficio);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
                 limpiar();
                 MostrarDocusInternos();
             } catch (Exception e) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICION°:"+correlativo_oficio);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
                 System.out.println("mal guardar oficio");
                 System.out.println(e.getMessage());

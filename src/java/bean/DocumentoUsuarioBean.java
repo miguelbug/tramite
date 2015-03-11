@@ -484,24 +484,31 @@ public class DocumentoUsuarioBean {
             System.out.println(usu.getOficina().getIdOficina());
             lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[13];
+            Object obj[] = new Object[15];
+            String respuesta="";
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
                 listaaux.put("numerotramite", String.valueOf(obj[0]));
-                listaaux.put("movimnum", String.valueOf(obj[1]));
-                listaaux.put("origen", String.valueOf(obj[2]));
-                listaaux.put("destino", String.valueOf(obj[3]));
-                listaaux.put("fechaenvio", String.valueOf(obj[4]));
-                listaaux.put("fechaingr", String.valueOf(obj[5]));
-                listaaux.put("indicador", String.valueOf(obj[6]));
-                listaaux.put("observacion", String.valueOf(obj[7]));
-                listaaux.put("estado", String.valueOf(obj[8]));
-                listaaux.put("estadDoc", String.valueOf(obj[9]));
-                listaaux.put("docgene", di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[1])));
-                listaaux.put("usuario", String.valueOf(obj[10]));
-                listaaux.put("origenp", String.valueOf(obj[11]));
-                listaaux.put("docup", String.valueOf(obj[12]));
+                listaaux.put("tramfecha",String.valueOf(obj[1]));
+                listaaux.put("movimnum", String.valueOf(obj[2]));
+                listaaux.put("origen", String.valueOf(obj[3]));
+                listaaux.put("destino", String.valueOf(obj[4]));
+                listaaux.put("fechaenvio", String.valueOf(obj[5]));
+                listaaux.put("fechaingr", String.valueOf(obj[6]));
+                listaaux.put("indicador", String.valueOf(obj[7]));
+                listaaux.put("observacion", String.valueOf(obj[8]));
+                listaaux.put("estado", String.valueOf(obj[9]));
+                listaaux.put("estadDoc", String.valueOf(obj[10]));
+                if(String.valueOf(obj[14]).equals("1")){
+                    respuesta=di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[2]));
+                    listaaux.put("docgene", respuesta);
+                }else{
+                    listaaux.put("docgene", "SIN RESPUESTA");
+                }
+                listaaux.put("usuario", String.valueOf(obj[11]));
+                listaaux.put("origenp", String.valueOf(obj[12]));
+                listaaux.put("docup", String.valueOf(obj[13]));
                 seguimientolista2.add(listaaux);
             }
         } catch (Exception e) {
@@ -651,8 +658,7 @@ public class DocumentoUsuarioBean {
         }
         if (deriva) {
             try {
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('derivarDialog').show()");
+                
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
                 correlativo = generarCorrelativo();
@@ -668,6 +674,8 @@ public class DocumentoUsuarioBean {
                 movimiento_exportar = hm.get("movimnum").toString();
                 System.out.println("ESTA ES LA FECHA DE ENVIO: " + fecha_exportar + " Mov: " + movimiento_exportar);
                 estado = "EN PROCESO";
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('derivarDialog').show()");
             } catch (Exception e) {
                 System.out.println("error derivar");
                 System.out.println(e.getMessage());
@@ -800,7 +808,7 @@ public class DocumentoUsuarioBean {
                 if (i == 0) {
                     System.out.println(hm.get("numerotramite").toString());
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();
-                    motivo = dd.getMotivo(hm.get("numerotramite").toString(), hm.get("fechaenvio").toString());
+                    motivo = dd.getMotivo(hm.get("numerotramite").toString(), hm.get("tramfecha").toString());
                     asunto = motivo;
                 } else {
                     numtramaux = numtramaux + " " + hm.get("numerotramite").toString();

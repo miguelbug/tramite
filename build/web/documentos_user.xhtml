@@ -33,6 +33,9 @@
                                     <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
                                         <h:outputText value="#{item.numerotramite}"/>
                                     </p:column>
+                                    <p:column headerText="FECHA ORIG." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tramfecha}"/>
+                                    </p:column>
                                     <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
                                         <h:outputText value="#{item.docgene}" />
                                     </p:column>

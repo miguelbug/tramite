@@ -15,7 +15,7 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
         <h:outputScript name="bootstrap/js/bootstrap.js" />
-
+        <script language="JavaScript" src="./resources/NuevosJS/caducarSesiones.js" type="text/javascript"/>
 
 
     </h:head>
@@ -46,10 +46,10 @@
                     <h:panelGrid columns="1" cellpadding="5">
 
                         <div id="usuario" class="form-group">  
-                            <p:inputText id="username" value="#{loginBean.usuario}" required="true" label="username" 
+                            <p:inputText id="username" value="#{loginBean.usuario}" required="true" label="username"
                                          style="width: 250px; height:32px; text-align: center ; margin-left: 8px" placeholder="    Usuario " />
                         </div>
-                        
+
                         <div id="contrasenia" class="form-group">
                             <p:password  id="password" value="#{loginBean.pass}" required="true" label="password"  
                                          style="width: 250px; height:32px; text-align: center; margin-left: 8px" placeholder="    Contraseña"/>
@@ -67,11 +67,21 @@
                             <p:graphicImage library="img" name="ajaxloadingbar.gif" />
                         </p:dialog>
                     </h:panelGrid>
-
+                    <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="1800000" /> <!-- control del timeout -->
 
                 </p:panel>
             </h:form>
         </div>
         <br> </br>
+        <!-- Inicio control del timeout -->
+        <p:dialog header="SESIÓN CADUCADA" widgetVar="sessionTimeOutDialog" modal="true" closable="false" width="400" visible="false">
+            <h:form>
+                <center>
+                    <h:outputText value="Su sesión ha caducado, pulse el botón para reiniciar su sesión." /><br />
+                    <input type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()', 0);"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        <!-- Fin control del timeout -->
     </h:body>
 </html>
