@@ -16,37 +16,41 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="CONSTANCIAS">
-                            <p:dataTable value="#{constanciaBean.constancias}" id="constanciastablas" var="item" paginator="true" rows="15" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus1}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                            <center>
+                                <h3>CONSTANCIAS</h3>
+                                <br></br>
+                                <p:dataTable value="#{constanciaBean.constancias}" id="constanciastablas" var="item" paginator="true" rows="15" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{constanciaBean.otrosdocus1}"
+                                             rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
-                                <p:column headerText="NUM. CORR." width="1" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
-                                </p:column>
-                                <p:column headerText="FECH. EMIS." width="5" sortBy="#{item.fechaemi}" filterBy="#{item.fechaemi}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fechaemi}"/>
-                                </p:column>
-                                <p:column headerText="DRIGIDO" width="5" sortBy="#{item.dirigidoa}" filterBy="#{item.dirigidoa}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.dirigidoa}"/>
-                                </p:column>
-                                <p:column headerText="TIP. CONTR." width="5" sortBy="#{item.tipocontrato}" filterBy="#{item.tipocontrato}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tipocontrato}"/>
-                                </p:column>
-                                <p:column headerText="DESDE" width="5" sortBy="#{item.desde}" filterBy="#{item.desde}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.desde}"/>
-                                </p:column>
-                                <p:column headerText="HASTA" width="5" sortBy="#{item.hasta}" filterBy="#{item.hasta}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.hasta}"/>
-                                </p:column>
-                                <p:column headerText="USUARIO" width="5" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.usu}"/>
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton process="constanciastablas" icon="ui-icon-search" value="Crear Constancia" style="position:absolute; left:25px; height:26px " oncomplete="PF('ConstDialog').show()"
-                                                     update="constanciastablas,:form:panelconst" actionListener="#{constanciaBean.abrirconstancia()}"/>
-                                </f:facet>
-                            </p:dataTable>
+                                    <p:column headerText="NUM. CORR." width="1" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.correlativo}"/>
+                                    </p:column>
+                                    <p:column headerText="FECH. EMIS." width="5" sortBy="#{item.fechaemi}" filterBy="#{item.fechaemi}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fechaemi}"/>
+                                    </p:column>
+                                    <p:column headerText="DRIGIDO" width="5" sortBy="#{item.dirigidoa}" filterBy="#{item.dirigidoa}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.dirigidoa}"/>
+                                    </p:column>
+                                    <p:column headerText="TIP. CONTR." width="5" sortBy="#{item.tipocontrato}" filterBy="#{item.tipocontrato}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tipocontrato}"/>
+                                    </p:column>
+                                    <p:column headerText="DESDE" width="5" sortBy="#{item.desde}" filterBy="#{item.desde}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.desde}"/>
+                                    </p:column>
+                                    <p:column headerText="HASTA" width="5" sortBy="#{item.hasta}" filterBy="#{item.hasta}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.hasta}"/>
+                                    </p:column>
+                                    <p:column headerText="USUARIO" width="5" sortBy="#{item.usu}" filterBy="#{item.usu}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.usu}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton process="constanciastablas" icon="ui-icon-search" value="Crear Constancia" style="position:absolute; left:25px; height:26px " oncomplete="PF('ConstDialog').show()"
+                                                         update="constanciastablas,:form:panelconst" actionListener="#{constanciaBean.abrirconstancia()}"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </center>
                         </p:tab>
                     </p:tabView>
                     <p:dialog header="Constancia" widgetVar="ConstDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="constdialog" >
@@ -83,7 +87,7 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    
+
                     <p:dialog header="Aviso" widgetVar="constanciaImprimir" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="constanciaImprimirDialog" >
                         <center>
                             <p:outputLabel value="LA CONSTANCIA N° #{constanciaBean.correlativo} SE HA CREADO" rendered="#{constanciaBean.ver}"/>
@@ -91,7 +95,7 @@
                             <p:commandButton value="Imprimir" actionListener="#{objxUnidadController.mostrarReporteConstancia()}" ajax="false" rendered="#{constanciaBean.ver}">
                                 <f:ajax event="click" onevent="constanciaImprimir.hide()"/>
                             </p:commandButton>
-                            
+
                             <p:outputLabel value="NO SE HA PODIDO CREAR LA CONSTANCIA" rendered="#{constanciaBean.nover}"/>
                             <br></br>
                             <p:commandButton value="Aceptar" rendered="#{constanciaBean.nover}">

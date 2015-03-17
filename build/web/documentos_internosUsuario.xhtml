@@ -16,77 +16,78 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="DOCUMENTOS PROPIOS" id="tab1_1" rendered="#{loginBean.oficina}">
-
-                            <br></br>
-                            <br></br>
-                            <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{objxUnidadController.docselec1}"
-                                         rowKey="#{item.iddoc}"  editable="true">
-
-                                <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit}"/>
-                                <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel}" />
-
-                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-
-                                <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.documento}"/>
-                                </p:column>
-                                <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.expediente}"/>
-                                </p:column>
-                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <p:cellEditor>
-                                        <f:facet name="output">
-                                            <h:outputText value="#{item.asunto}"/>
-                                        </f:facet>
-                                        <f:facet name="input">
-                                            <p:inputTextarea rows="2" cols="70" value="#{item.asunto}"/>
-                                        </f:facet>
-                                    </p:cellEditor>
-
-                                </p:column>
-                                <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}" />
-                                </p:column>
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}" />
-                                </p:column>
-                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origenprinc}" filterBy="#{item.origenprinc}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.origenprinc}" />
-                                </p:column>
-                                <p:column headerText="DOC. PRINC." width="5" sortBy="#{item.docuprinc}" filterBy="#{item.docuprinc}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.docuprinc}" />
-                                </p:column>
-                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asignado}" />
-                                </p:column>
-                                <p:column headerText="#" width="1" >
-                                    <h:outputText value="#{item.iddoc}"/>
-                                </p:column>
-                                <p:column style="width:32px">
-                                    <p:rowEditor />
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Eliminar Documento" style="position:absolute; left:185px; height:26px "
-                                                     update=":form:" actionListener="#{objxUnidadController.delete()}"/>
-                                    <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Crear Documento" style="position:absolute; left:25px; height:26px"
-                                                     update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()"/>
-                                </f:facet>
-                            </p:dataTable>
-                            <br></br>
                             <center>
-                                <p:panelGrid columns="4">
-                                    <p:commandButton id="repor0" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
-                                    <p:commandButton id="repor1" value="Reporte Todos Docu." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
-                                    <p:commandButton id="repor2" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
-                                    <p:commandButton id="repor3" value="Reporte de Cargos" title="Reporte Cargos" actionListener="#{objxUnidadController.ImpresionCargos()}" ajax="false"/>
-                                </p:panelGrid>
+                                <h3>DOCUMENTOS PROPIOS</h3>
+                                <br></br>
+                                <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{objxUnidadController.docselec1}"
+                                             rowKey="#{item.iddoc}"  editable="true">
+
+                                    <p:ajax event="rowEdit" listener="#{documentoUsuarioBean.onEdit}"/>
+                                    <p:ajax event="rowEditCancel" listener="#{documentoUsuarioBean.onCancel}" />
+
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                                    <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.documento}"/>
+                                    </p:column>
+                                    <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.expediente}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.asunto}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputTextarea rows="2" cols="70" value="#{item.asunto}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+
+                                    </p:column>
+                                    <p:column headerText="FECH. REG." width="5" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}" />
+                                    </p:column>
+                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.destino}" />
+                                    </p:column>
+                                    <p:column headerText="ORIGEN" width="5" sortBy="#{item.origenprinc}" filterBy="#{item.origenprinc}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.origenprinc}" />
+                                    </p:column>
+                                    <p:column headerText="DOC. PRINC." width="5" sortBy="#{item.docuprinc}" filterBy="#{item.docuprinc}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docuprinc}" />
+                                    </p:column>
+                                    <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asignado}" />
+                                    </p:column>
+                                    <p:column headerText="#" width="1" >
+                                        <h:outputText value="#{item.iddoc}"/>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:rowEditor />
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Eliminar Documento" style="position:absolute; left:185px; height:26px "
+                                                         update=":form:" actionListener="#{objxUnidadController.delete()}"/>
+                                        <p:commandButton process="tablasdocpropios" icon="ui-icon-extlink" value="Crear Documento" style="position:absolute; left:25px; height:26px"
+                                                         update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}" oncomplete="PF('DocuDialog').show()"/>
+                                    </f:facet>
+                                </p:dataTable>
+                                <br></br>
+                                <center>
+                                    <p:panelGrid columns="4">
+                                        <p:commandButton id="repor0" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
+                                        <p:commandButton id="repor1" value="Reporte Todos Docu." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
+                                        <p:commandButton id="repor2" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
+                                        <p:commandButton id="repor3" value="Reporte de Cargos" title="Reporte Cargos" actionListener="#{objxUnidadController.ImpresionCargos()}" ajax="false"/>
+                                    </p:panelGrid>
+                                </center>
                             </center>
                         </p:tab>
                         <!-- -->
                         <p:tab title="DOCUMENTOS PROPIOS" id="tab1_3" rendered="#{loginBean.oficina2}">
-                            <br></br>
+                            <h3>DOCUMENTOS PROPIOS</h3>
                             <br></br>
                             <p:dataTable value="#{documentoUsuarioBean.listadocspropios}" var="item" paginator="true" rows="15" id="tablasdocpropios2" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -149,7 +150,7 @@
                         </p:tab>
                         <!-- -->
                         <p:tab title="DOCUMENTOS CIRCULARES" id="tab1_2">
-
+                            <h3>DOCUMENTOS CIRCULARES</h3>
                             <br></br>
                             <p:dataTable value="#{documentoUsuarioBean.listadocpropioscir}" id="tablasoficcirc" var="item" paginator="true" rows="10" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

@@ -21,6 +21,8 @@
                     <center>
                         <p:tabView id="tabmayor" dynamic="true">
                             <p:tab title="SISTEMA INTEGRAL SEC. GENERAL">
+                                <center>SISTEMA INTEGRAL SEC. GENERAL</center>
+                                <br></br>
                                 <p:dataTable value="#{documentosBean.documentos}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus}" selection="#{documentosBean.docselec}"

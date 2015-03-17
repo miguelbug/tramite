@@ -18,7 +18,8 @@ import maping.TramiteMovimiento;
  */
 public interface SeguimientoDAO {
     public List getSeguimiento(String tramnum);
-    public List seguimientoUser(String oficina);
+    public List seguimientoUser(String oficina, String siglas);
+    public List seguimientoUser2(String oficina, String siglas);
     public List getSeguimientoGrande(String tramnum);
     public List getSeguimientoGrande1(String tramnum);
     public List getSeguimientoGrande2(String tramnum);

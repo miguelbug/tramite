@@ -20,8 +20,10 @@
                     <br></br>
                     <br></br>
                     <p:tabView>
-                        <p:tab title="Documentos" id="tab1">
+                        <p:tab title="Documentos Recibidos" id="tab1">
                             <center>
+                                <h3>DOCUMENTOS RECIBIDOS</h3>
+                                <br></br>
                                 <p:dataTable value="#{documentoUsuarioBean.seguimientolista2}" var="item" paginator="true" rows="15" id="tabladocumentos" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus}" selection="#{documentoUsuarioBean.docselec2}"
@@ -36,9 +38,9 @@
                                     <p:column headerText="FECHA ORIG." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
                                         <h:outputText value="#{item.tramfecha}"/>
                                     </p:column>
-                                    <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
+                                    <!--<p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
                                         <h:outputText value="#{item.docgene}" />
-                                    </p:column>
+                                    </p:column>-->
                                     <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
                                         <h:outputText value="#{item.fechaenvio}" />
                                     </p:column>
@@ -81,6 +83,57 @@
                                         <p:commandButton process="tabladocumentos" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{documentoUsuarioBean.Derivar()}"
                                                          update=":form:panelDeriv"/>
                                     </f:facet>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
+                        <p:tab title="Documentos Derivados" id="tab2">
+                            <center>
+                                <h3>DOCUMENTOS DERIVADOS</h3>
+                                <br></br>
+                                <p:dataTable value="#{documentoUsuarioBean.seguimientolista4}" var="item" paginator="true" rows="15" id="tabladocumentos2" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus4}" selection="#{documentoUsuarioBean.docselec5}"
+                                             rowKey="#{item.numerotramite}+#{item.movimnum}" style="margin-bottom: 0" 
+                                             rowStyleClass="#{item.estadDoc eq 'DERIVADO' ? 'pintado' : null} #{item.estadDoc eq 'ARCHIVADO' ? 'pintado1' : null}
+                                             #{item.estadDoc eq 'SIN CONFIRMAR' ? 'pintado2' : null} #{item.estadDoc eq 'CONFIRMADO' ? 'pintado3' : null}">
+
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA ORIG." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tramfecha}"/>
+                                    </p:column>
+                                    <p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docgene}" />
+                                    </p:column>
+                                    <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fechaenvio}" />
+                                    </p:column>
+                                    <p:column headerText="FECH. ING." width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fechaingr}" />
+                                    </p:column>
+                                    <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.indicador}" />
+                                    </p:column>
+                                    <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.estadDoc}" />
+                                    </p:column>
+                                    <p:column headerText="MOV." width="5" style="text-align: center">
+                                        <h:outputText value="#{item.movimnum}"/>
+                                    </p:column>
+                                    <p:column headerText="ASIGN." width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.usuario}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIG. PRINC." width="5" sortBy="#{item.origenp}" filterBy="#{item.origenp}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.origenp}"/>
+                                    </p:column>
+                                    <p:column headerText="DOCU. PRINC." width="5" sortBy="#{item.docup}" filterBy="#{item.docup}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docup}"/>
+                                    </p:column>
                                 </p:dataTable>
                             </center>
                         </p:tab>

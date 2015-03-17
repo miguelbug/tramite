@@ -16,30 +16,35 @@
                 <h:form id="form" >
                     <p:tabView>
                         <p:tab title="OFICIOS DE OGPL">
-                            <p:dataTable value="#{oficioBean.oficiosOGPLuser}" id="oficiotodos" var="item" paginator="true" rows="15" 
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
-                                         rowKey="#{item.correlativo}" style="margin-bottom: 0">
+                            <center>
+                                <h3>OFICIOS DE OGPL</h3>
+                                <br></br>
+                                <p:dataTable value="#{oficioBean.oficiosOGPLuser}" id="oficiotodos" var="item" paginator="true" rows="15" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{oficioBean.otrosdocus}"
+                                             rowKey="#{item.correlativo}" style="margin-bottom: 0">
 
-                                <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.correlativo}"/>
-                                </p:column>
-                                <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.tramnum}"/>
-                                </p:column>
-                                <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.fecha}"/>
-                                </p:column>
-                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asunto}"/>
-                                </p:column>
-                                <!--<p:column headerText="OFIC. RESP." width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.asignado}"/>
-                                </p:column>-->
-                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                                    <h:outputText value="#{item.destino}"/>
-                                </p:column>
-                            </p:dataTable>
+                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.correlativo}"/>
+                                    </p:column>
+                                    <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tramnum}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asunto}"/>
+                                    </p:column>
+                                    <!--<p:column headerText="OFIC. RESP." width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.asignado}"/>
+                                    </p:column>-->
+                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.destino}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </center>
                         </p:tab>
                     </p:tabView>
                 </h:form>

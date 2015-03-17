@@ -243,7 +243,7 @@ public class SeguimientoBean {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             System.out.println(usu.getOficina().getIdOficina());
-            lista = sgd.seguimientoUser(usu.getOficina().getIdOficina());
+            lista = sgd.seguimientoUser(usu.getOficina().getIdOficina(),deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[9];
             while (ite.hasNext()) {

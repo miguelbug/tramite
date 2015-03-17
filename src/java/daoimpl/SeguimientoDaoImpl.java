@@ -230,44 +230,132 @@ public class SeguimientoDaoImpl implements SeguimientoDAO {
     }
 
     @Override
-    public List seguimientoUser(String oficina) {
+    public List seguimientoUser2(String oficina, String siglas) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("OFICINA: "+oficina+"- SIGLAS: "+siglas);
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
-                    + "TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS') AS TMFECHA\n,"
-                    + "TM.MOVI_NUM,\n"
-                    + "M1.NOMBRE AS ORIGEN,\n"
-                    + "M2.NOMBRE AS DESTINO,\n"
-                    + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
-                    + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
-                    + "I.INDI_NOMBRE,\n"
-                    + "DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
-                    + "TM.ESTA_NOMBRE,\n"
-                    + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
-                    + "USUA.USU_NOMBRE AS NOMBRE,\n"
-                    + "D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
-                    + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
-                    + "TM.ESTADO AS ESTADO\n"
-                    + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
-                    + "WHERE TM.CODIGO1='" + oficina + "' \n"
-                    + "AND TM.CODIGO=M1.CODIGO\n"
-                    + "AND TM.CODIGO1=M2.CODIGO\n"
-                    + "AND TM.INDI_COD=I.INDI_COD\n"
-                    + "AND TM.USU=USUA.USU\n"
-                    + "AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
-                    + "                                                        SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
-                    + "                                                        FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
-                    + "                                                        WHERE TM2.CODIGO1='" + oficina + "'\n"
-                    + "                                                        AND INDI_NOMBRE='ARCHIVO'\n"
-                    + "                                                        AND TM.INDI_COD=I.INDI_COD )\n"
-                    + "AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"
-                    + "AND TDATOS.TRAM_FECHA=TM.TRAM_FECHA\n"
-                    + "AND D1.CODIGO=TDATOS.CODIGO\n"
-                    + "AND TDOCU.TRAM_FECHA=TM.TRAM_FECHA\n"
-                    + "AND TDOCU.TRAM_NUM=TM.TRAM_NUM\n"
-                    + "ORDER BY FECHA_ENVIO DESC");
+                    + "                    TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS') AS TMFECHA,\n"
+                    + "                    TM.MOVI_NUM,\n"
+                    + "                    M1.NOMBRE AS ORIGEN,\n"
+                    + "                    M2.NOMBRE AS DESTINO,\n"
+                    + "                    DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
+                    + "                    DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
+                    + "                    I.INDI_NOMBRE,\n"
+                    + "                    DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
+                    + "                    TM.ESTA_NOMBRE,\n"
+                    + "                    DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
+                    + "                    USUA.USU_NOMBRE AS NOMBRE,\n"
+                    + "                    D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
+                    + "                    TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "                    TM.ESTADO AS ESTADO\n"
+                    + "                    FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
+                    + "                    WHERE TM.CODIGO1='"+oficina+"' \n"
+                    + "                    AND TM.CODIGO=M1.CODIGO\n"
+                    + "                    AND TM.CODIGO1=M2.CODIGO\n"
+                    + "                    AND TM.INDI_COD=I.INDI_COD\n"
+                    + "                    AND TM.USU=USUA.USU\n"
+                    + "                    AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
+                    + "                                                                            SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
+                    + "                                                                            FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
+                    + "                                                                            WHERE TM2.CODIGO1='"+oficina+"'\n"
+                    + "                                                                            AND INDI_NOMBRE='ARCHIVO'\n"
+                    + "                                                                            AND TM.INDI_COD=I.INDI_COD )\n"
+                    + "                    AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "                    AND TDATOS.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "                    AND D1.CODIGO=TDATOS.CODIGO\n"
+                    + "                    AND TDOCU.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "                    AND TDOCU.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "                    AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA NOT IN (SELECT TRAM_NUM||'-'||TRAM_FECHA FROM DOCUS_INTERNOS WHERE DOCU_SIGLASINT='"+siglas+"' )\n"
+                    + "                    ORDER BY FECHA_ENVIO DESC");
+            codigos = query.list();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("no entró1111");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return codigos;
+    }
+
+    @Override
+    public List seguimientoUser(String oficina, String siglas) {
+        List codigos = new ArrayList();
+        System.out.println("OFICINA: "+oficina+"- SIGLAS: "+siglas);
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            /*Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
+             + "TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS') AS TMFECHA\n,"
+             + "TM.MOVI_NUM,\n"
+             + "M1.NOMBRE AS ORIGEN,\n"
+             + "M2.NOMBRE AS DESTINO,\n"
+             + "DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
+             + "DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
+             + "I.INDI_NOMBRE,\n"
+             + "DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
+             + "TM.ESTA_NOMBRE,\n"
+             + "DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
+             + "USUA.USU_NOMBRE AS NOMBRE,\n"
+             + "D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
+             + "TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+             + "TM.ESTADO AS ESTADO\n"
+             + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
+             + "WHERE TM.CODIGO1='" + oficina + "' \n"
+             + "AND TM.CODIGO=M1.CODIGO\n"
+             + "AND TM.CODIGO1=M2.CODIGO\n"
+             + "AND TM.INDI_COD=I.INDI_COD\n"
+             + "AND TM.USU=USUA.USU\n"
+             + "AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
+             + "                                                        SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
+             + "                                                        FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
+             + "                                                        WHERE TM2.CODIGO1='" + oficina + "'\n"
+             + "                                                        AND INDI_NOMBRE='ARCHIVO'\n"
+             + "                                                        AND TM.INDI_COD=I.INDI_COD )\n"
+             + "AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"
+             + "AND TDATOS.TRAM_FECHA=TM.TRAM_FECHA\n"
+             + "AND D1.CODIGO=TDATOS.CODIGO\n"
+             + "AND TDOCU.TRAM_FECHA=TM.TRAM_FECHA\n"
+             + "AND TDOCU.TRAM_NUM=TM.TRAM_NUM\n"
+             + "ORDER BY FECHA_ENVIO DESC");*/
+            Query query = session.createSQLQuery("SELECT TM.TRAM_NUM,\n"
+                    + "                    TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS') AS TMFECHA,\n"
+                    + "                    TM.MOVI_NUM,\n"
+                    + "                    M1.NOMBRE AS ORIGEN,\n"
+                    + "                    M2.NOMBRE AS DESTINO,\n"
+                    + "                    DECODE(to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_ENVIO, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAENVIO,\n"
+                    + "                    DECODE(to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS'),NULL,' ',to_char(TM.FECHA_INGR, 'dd/MM/yyyy HH24:MI:SS')) AS FECHAINGRESO,\n"
+                    + "                    I.INDI_NOMBRE,\n"
+                    + "                    DECODE(TM.MOVI_OBS,NULL,' ',UPPER(TM.MOVI_OBS)) AS MOVI,\n"
+                    + "                    TM.ESTA_NOMBRE,\n"
+                    + "                    DECODE(TM.ESTAD_CONFRIRM,NULL,'NO CONFIRMADO',TM.ESTAD_CONFRIRM) AS CONFIRMADO,\n"
+                    + "                    USUA.USU_NOMBRE AS NOMBRE,\n"
+                    + "                    D1.NOMBRE AS ORIGEN_PRINCIPAL,\n"
+                    + "                    TDOCU.DOCU_NOMBRE||'-'||TDOCU.DOCU_NUM||'-'||TDOCU.DOCU_SIGLAS||'-'||TDOCU.DOCU_ANIO AS DOCUMENTO_PRINCIPAL,\n"
+                    + "                    TM.ESTADO AS ESTADO\n"
+                    + "                    FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA M1, DEPENDENCIA M2, INDICADOR I,USUARIO USUA, TIPO_DOCU TDOCU, TRAMITE_DATOS TDATOS, DEPENDENCIA D1\n"
+                    + "                    WHERE TM.CODIGO1='"+oficina+"' \n"
+                    + "                    AND TM.CODIGO=M1.CODIGO\n"
+                    + "                    AND TM.CODIGO1=M2.CODIGO\n"
+                    + "                    AND TM.INDI_COD=I.INDI_COD\n"
+                    + "                    AND TM.USU=USUA.USU\n"
+                    + "                    AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA||'-'||I.INDI_NOMBRE NOT IN (\n"
+                    + "                                                                            SELECT TM2.TRAM_NUM||'-'||TM2.TRAM_FECHA||'-'||I2.INDI_NOMBRE\n"
+                    + "                                                                            FROM TRAMITE_MOVIMIENTO TM2, INDICADOR I2\n"
+                    + "                                                                            WHERE TM2.CODIGO1='"+oficina+"'\n"
+                    + "                                                                            AND INDI_NOMBRE='ARCHIVO'\n"
+                    + "                                                                            AND TM.INDI_COD=I.INDI_COD )\n"
+                    + "                    AND TDATOS.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "                    AND TDATOS.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "                    AND D1.CODIGO=TDATOS.CODIGO\n"
+                    + "                    AND TDOCU.TRAM_FECHA=TM.TRAM_FECHA\n"
+                    + "                    AND TDOCU.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "                    AND TM.TRAM_NUM||'-'||TM.TRAM_FECHA IN (SELECT TRAM_NUM||'-'||TRAM_FECHA FROM DOCUS_INTERNOS WHERE DOCU_SIGLASINT='"+siglas+"')\n"
+                    + "                    ORDER BY FECHA_ENVIO DESC");
             codigos = query.list();
             session.beginTransaction().commit();
         } catch (Exception e) {
