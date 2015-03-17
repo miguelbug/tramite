@@ -226,7 +226,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             nuevotipo = "FINALIZADO";
             nuevotipo2 = "DERIVADO";
         }
-        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='" + nuevotipo2 + "' , ESTA_NOMBRE='" + nuevotipo + "',\n"
+        String sql = "Update TRAMITE_MOVIMIENTO SET ESTAD_CONFRIRM='" + nuevotipo2 + "' , ESTA_NOMBRE='" + nuevotipo + "', ESTADO='1',\n"
                 + " FECHA_DERIVACION=to_date('" + fechita + "','DD/MM/YYYY HH24:MI:SS') WHERE TRAM_NUM='" + tramaux + "' AND MOVI_NUM='" + Integer.parseInt(movimiento) + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
@@ -262,6 +262,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             tm.setIndicador(i);
             tm.setUsuario(usu);
             tm.setEstadConfrirm("EN PROCESO");
+            tm.setEstado("0");
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(tm);

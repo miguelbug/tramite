@@ -832,7 +832,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("sale indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                 }
-
+                movimiento.setEstado("0");
                 t.setSiglas(deriv.getSiglas2(dd.getOficina(usu)));
                 System.out.println("---------entra a guardar tramite dato---------");
                 sgd.GuadarTramiteDatos(td, tdoc);/////////////////tramitedatos
@@ -847,6 +847,7 @@ public class DocumentosBean implements Serializable {
                 ntram = "";
                 hecho = true;
                 nohecho = false;
+                
             }
             MostrarDocumentos();
         } catch (Exception e) {

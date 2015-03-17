@@ -22,6 +22,7 @@ public class TramiteMovimiento implements java.io.Serializable {
     private String moviObs;
     private String estaNombre;
     private String estadConfrirm;
+    private String estado;
 
     public TramiteMovimiento() {
     }
@@ -30,7 +31,7 @@ public class TramiteMovimiento implements java.io.Serializable {
         this.idMovi = idMovi;
     }
 
-    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, Date fechaDeriv, String moviObs, String estaNombre, String estadConfrirm) {
+    public TramiteMovimiento(BigDecimal idMovi, TramiteDatos tramiteDatos, Dependencia dependenciaByCodigo1, Usuario usuario, Dependencia dependenciaByCodigo, Indicador indicador, Short moviNum, Date fechaEnvio, Date fechaIngr, Date fechaDeriv, String moviObs, String estaNombre, String estadConfrirm, String estado) {
         this.idMovi = idMovi;
         this.tramiteDatos = tramiteDatos;
         this.dependenciaByCodigo1 = dependenciaByCodigo1;
@@ -44,6 +45,7 @@ public class TramiteMovimiento implements java.io.Serializable {
         this.moviObs = moviObs;
         this.estaNombre = estaNombre;
         this.estadConfrirm = estadConfrirm;
+        this.estado = estado;
     }
 
     public BigDecimal getIdMovi() {
@@ -148,6 +150,14 @@ public class TramiteMovimiento implements java.io.Serializable {
 
     public void setFechaDeriv(Date fechaDeriv) {
         this.fechaDeriv = fechaDeriv;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }
