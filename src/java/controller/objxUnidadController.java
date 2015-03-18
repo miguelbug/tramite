@@ -166,6 +166,7 @@ public class objxUnidadController implements Serializable {
             tdi.guardarCargos(tc);
         }
     }
+    
 
     public void ImpresionSeleccionadosUser() throws ParseException, SQLException {
         guardarDatos3();
@@ -177,6 +178,42 @@ public class objxUnidadController implements Serializable {
         guardarDatos3();
         mostrarCargos();
         tdi.actualizarTemporalCargo();
+    }
+
+    public void ImpresionAsignado() throws ParseException, SQLException {
+        mostrarAsignados();
+    }
+
+    public void mostrarAsignados() throws SQLException {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("CargosDocAreasAsignado");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);
+        FacesMessage message = null;
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("usu", getUsu());
+        parametros.put("asignado",getUSUARIO());
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        categoriaServicio.CerrandoConexion();
     }
 
     public void mostrarCargos() throws SQLException {
@@ -887,9 +924,9 @@ public class objxUnidadController implements Serializable {
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
         FacesMessage message = null;
         boolean rpt = false;
-        System.out.println("PROVEIDO A EXPORTAR "+docu);
-        System.out.println("FECHA A EXPORTAR "+partir(fecha));
-        parametros.put("correlativo",docu);
+        System.out.println("PROVEIDO A EXPORTAR " + docu);
+        System.out.println("FECHA A EXPORTAR " + partir(fecha));
+        parametros.put("correlativo", docu);
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("fecha", partir(fecha));
