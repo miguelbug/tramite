@@ -85,12 +85,25 @@
                                         <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
                                                          update="oficiotodos,:form:ofiunicos" actionListener="#{oficioBean.abrirDocumentoUnico()}"/>
                                         <p:commandButton process="oficiotodos" icon="ui-icon-extlink" value="Eliminar Oficio" style="position:absolute; left:190px; height:26px "
-                                                         update=":form:" actionListener="#{oficioBean.delete()}"/>
+                                                         oncomplete="PF('eliminarOficio').show()"/>
                                     </f:facet>
                                 </p:dataTable>
                             </center>
                         </p:tab>
                     </p:tabView>
+                    <p:dialog header="Eliminar Oficio" modal="true" showEffect="fade" widgetVar="eliminarOficio" hideEffect="fade" resizable="false" position="center center" id="eliminarOficios">
+                        <center>
+                            <p:outputLabel value="¿Desea Eliminar el Oficio?"/>
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Aceptar" actionListener="#{oficioBean.delete()}" update=":form:">
+                                    <f:ajax event="click" onevent="eliminarOficio.hide()"/>
+                                </p:commandButton>
+                                <p:commandButton value="Cancelar">
+                                    <f:ajax event="click" onevent="eliminarOficio.hide()"/>
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
                     <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="ofiunicos">
                         <p:panelGrid columns="2" id="panelOfUn">
                             <p:outputLabel value="Documento:"/>

@@ -25,7 +25,7 @@ import maping.Usuario;
  *
  * @author OGPL
  */
-@ManagedBean
+@ManagedBean(name = "loginBean")
 @SessionScoped
 public class LoginBean implements Serializable {
 
@@ -40,7 +40,7 @@ public class LoginBean implements Serializable {
     private boolean oficina2;
     public static boolean oficina3;
     private DerivarDAO deriv;
-    
+
     public LoginBean() {
         contex = FacesContext.getCurrentInstance();
         httpServletRequest = (HttpServletRequest) contex.getExternalContext().getRequest();
@@ -48,7 +48,7 @@ public class LoginBean implements Serializable {
         if (usu == null) {
             usu = new Usuario();
         }
-        deriv= new DerivarDaoImpl();
+        deriv = new DerivarDaoImpl();
     }
 
     public String ActionLogin() {
@@ -98,14 +98,14 @@ public class LoginBean implements Serializable {
                 direccion = "menu_user.xhtml";
             }
         }
-        if(deriv.getCodigoUsuario(usu.getUsu()).equals("1001872")){
-            oficina=true;
-            oficina2=false;
-            oficina3=true;
-        }else{
-            oficina=false;
-            oficina2=true;
-            oficina3=false;
+        if (deriv.getCodigoUsuario(usu.getUsu()).equals("1001872")) {
+            oficina = true;
+            oficina2 = false;
+            oficina3 = true;
+        } else {
+            oficina = false;
+            oficina2 = true;
+            oficina3 = false;
         }
     }
 

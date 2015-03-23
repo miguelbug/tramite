@@ -194,30 +194,6 @@ public class DocumentosBean implements Serializable {
         anio = sdf2.format(fechaprov);
     }
 
-    /*public void Guardar_prov() {
-     System.out.println("ENTRA LA P....");
-     DocusExtint di = new DocusExtint();
-     try {
-     System.out.println(asunto);
-     di.setNumerodoc(tramnum);
-     di.setTramiteDatos(deriv.getTramite(tramnum,));
-     di.setAsunto(asunto_prov);
-     di.setFecha(fecha);
-     di.setDependenciaByCodigo(deriv.getDep(origen_prov));
-     di.setDependenciaByCodigo1(deriv.getDep(destino_prov));
-     di.setMovimientoDext(Long.parseLong("1"));
-     di.setUsuario(usu);
-
-     deriv.guardarDocusExt(di);
-     MostrarDocusInternos();
-     ver = true;
-     no_ver = false;
-     } catch (Exception e) {
-     System.out.println(e.getMessage());
-     ver = false;
-     no_ver = true;
-     }
-     }*/
     public void limpiar_prov() {
         asunto = "";
         codinterno = "100392";

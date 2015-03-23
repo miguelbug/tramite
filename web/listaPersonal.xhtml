@@ -15,13 +15,15 @@
     <h:body style="background-color: #D0D0D0;" >
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
-                <h:form id="form" >
+                <h:form id="form1" >
                     <br></br>
                     <p:dataTable value="#{gestionUsuarioBean.listapersonal}" var="item" paginator="true" rows="15" id="tabladocumentospersonal" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 emptyMessage="no hay datos para este filtro" filteredValue="#{gestionUsuarioBean.otrosdocus}" selection="#{gestionUsuarioBean.docselec}"
+                                 emptyMessage="no hay datos para este filtro" filteredValue="#{gestionUsuarioBean.otrosdocus}" selection="#{gestionUsuarioBean.docselec2}"
                                  rowKey="#{item.nombre}" style="margin-bottom: 0">
+                        
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        
                         <p:column headerText="OFICINA" width="5" sortBy="#{item.oficina}" filterBy="#{item.oficina}" filterMatchMode="contains">
                             <h:outputText value="#{item.oficina}" />
                         </p:column>
@@ -60,10 +62,12 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton process="tabladocumentospersonal" icon="ui-icon-search" value="Agregar Personal" style="position:absolute; left:25px; height:26px " oncomplete="PF('GUNuevoPers').show()"
-                                             update=":form:gunuevopers" actionListener="#{gestionUsuarioBean.listar()}"/>
+                                             update=":form1:gunuevopers" actionListener="#{gestionUsuarioBean.listar()}"/>
 
                             <p:commandButton process="tabladocumentospersonal" icon="ui-icon-extlink" value="Agregar Usuario" style="position:absolute; left:205px; height:26px" oncomplete="PF('GUNuevoUsu').show()"
-                                             update=":form:gunuevousu" actionListener="#{gestionUsuarioBean.listarJefatura()}"/>
+                                             update=":form1:gunuevousu" actionListener="#{gestionUsuarioBean.listarJefatura()}">
+                                <p:ajax event="click"/>
+                            </p:commandButton>
 
                         </f:facet>
                     </p:dataTable>
@@ -119,7 +123,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers,:form:" >
+                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers,:form1:" >
                                 <f:ajax event="click" onevent="GUNuevoPers.hide()"/>
                             </p:commandButton>
                         </center>
@@ -127,10 +131,7 @@
                     <p:dialog header="Gestión Nuevos Usuarios" widgetVar="GUNuevoUsu" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="gunuevousu">
                         <p:panelGrid columns="2" id="panelusu">
                             <p:outputLabel value="Personal: "/>
-                            <p:selectOneMenu value="#{gestionUsuarioBean.nuevousu_nombre}" id="listaJefatura" >
-                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItems value="#{gestionUsuarioBean.jefes}"/>
-                            </p:selectOneMenu>
+                            <p:outputLabel value="#{gestionUsuarioBean.nuevousu_nombre}"/>
                             <p:outputLabel value="Usuario: "/>
                             <p:inputText value="#{gestionUsuarioBean.nuevousu_usuario}"/>
                             <p:outputLabel value="Oficina: "/>
@@ -141,7 +142,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarUsuario()}" update="panelusu,:form:">
+                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarUsuario()}" update="panelusu,:form1:">
                                 <f:ajax event="click" onevent="GUNuevoUsu.hide()"/>
                             </p:commandButton>
                         </center>

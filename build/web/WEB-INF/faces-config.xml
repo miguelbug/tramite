@@ -10,7 +10,7 @@
             <to-view-id>index.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
- 
+    
     <lifecycle>
         <phase-listener>util.AuthorizationListener</phase-listener>
     </lifecycle>

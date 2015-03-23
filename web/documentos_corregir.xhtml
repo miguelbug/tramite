@@ -58,14 +58,25 @@
                                         <h:outputText value="#{item.estadodoc}" />
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton id="eliminarbuton" process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:27px; height:26px" actionListener="#{documentosBean.Eliminar()}"
-                                                         update="tablaconfirmados"/>
+                                        <p:commandButton id="eliminarbuton" process="tablaconfirmados" icon="ui-icon-extlink" value="Eliminar" style="position:absolute; left:27px; height:26px" oncomplete="PF('eliminarDocu').show()"/>
                                     </f:facet>
                                 </p:dataTable>
                             </center>
                         </p:tab>
                     </p:tabView>
-
+                    <p:dialog header="Eliminar Documento" modal="true" showEffect="fade" widgetVar="eliminarDocu" hideEffect="fade" resizable="false" position="center center" id="eliminarDocu">
+                        <center>
+                            <p:outputLabel value="¿Desea Eliminar el Documento?"/>
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Aceptar" actionListener="#{documentosBean.Eliminar()}" update=":form2:">
+                                    <f:ajax event="click" onevent="eliminarDocu.hide()"/>
+                                </p:commandButton>
+                                <p:commandButton value="Cancelar">
+                                    <f:ajax event="click" onevent="eliminarDocu.hide()"/>
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
                 </h:form>
             </ui:define>
         </ui:composition>

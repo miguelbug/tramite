@@ -81,7 +81,7 @@ public class DerivarBean {
         confirmadosderivados = new ArrayList<Map<String, String>>();
         
         boolean isderivar = (currentPage.lastIndexOf("documentos.xhtml") > -1);
-        MostrarConfirmadosDerivados();
+        //MostrarConfirmadosDerivados();
     }
 
     public String getNombOficina() {

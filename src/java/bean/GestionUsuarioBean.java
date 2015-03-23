@@ -49,7 +49,7 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas,oficinas2, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec;
+    private List oficinas,oficinas2, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec2;
     //////////////
     private String nuevousu_usuario;
     private String nuevousu_nombre;
@@ -68,7 +68,13 @@ public class GestionUsuarioBean implements Serializable {
         jefes = new ArrayList<String>();
         jefesuser = new ArrayList<String>();
         listapersonal= new ArrayList<String>();
-        mostrarListaPersonal();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String currentPage = facesContext.getViewRoot().getViewId();
+        boolean islistaPersonal = (currentPage.lastIndexOf("listaPersonal.xhtml") > -1);
+        if (islistaPersonal) {
+            mostrarListaPersonal();
+        }
+        
     }
     public void mostrarListaPersonal(){
         System.out.println("listando documentos");
@@ -136,7 +142,9 @@ public class GestionUsuarioBean implements Serializable {
     }
 
     public void listarJefatura() {
-        jefes = gu.listarJefes();
+        System.out.println(docselec2);
+        /*Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        nuevousu_nombre=hm.get("nombre").toString();*/
         this.listarOficinas2();
     }
 
@@ -458,12 +466,12 @@ public class GestionUsuarioBean implements Serializable {
         this.otrosdocus = otrosdocus;
     }
 
-    public List getDocselec() {
-        return docselec;
+    public List getDocselec2() {
+        return docselec2;
     }
 
-    public void setDocselec(List docselec) {
-        this.docselec = docselec;
+    public void setDocselec2(List docselec2) {
+        this.docselec2 = docselec2;
     }
 
     public List getOficinas2() {

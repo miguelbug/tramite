@@ -114,7 +114,7 @@
                                     </p:column>
                                     <f:facet name="footer">
                                         <p:commandButton process="tablaproveidosinternos" icon="ui-icon-extlink" value="Eliminar Proveido" style="position:absolute; left:25px; height:26px "
-                                                         update=":form:" actionListener="#{proveidosInternosBean.Eliminar()}"/>
+                                                         oncomplete="PF('eliminarProveido').show()"/>
                                         <p:commandButton process="tablaproveidosinternos" icon="ui-icon-extlink" value="Imprimir Proveido" style="position:absolute; left:175px; height:26px "
                                                          actionListener="#{proveidosInternosBean.Reimprimir()}" ajax="false"/>
                                     </f:facet>
@@ -122,7 +122,19 @@
                             </center>
                         </p:tab>
                     </p:tabView>
-
+                    <p:dialog header="Eliminar Proveido" modal="true" showEffect="fade" widgetVar="eliminarProveido" hideEffect="fade" resizable="false" position="center center" id="eliminarProveidos">
+                        <center>
+                            <p:outputLabel value="¿Desea Eliminar el Proveido?"/>
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Aceptar" actionListener="#{proveidosInternosBean.Eliminar()}" update=":form:">
+                                    <f:ajax event="click" onevent="eliminarProveido.hide()"/>
+                                </p:commandButton>
+                                <p:commandButton value="Cancelar">
+                                    <f:ajax event="click" onevent="eliminarProveido.hide()"/>
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
                     <p:dialog header="Proveido N° #{proveidosInternosBean.correlativo_proveido}-#{proveidosInternosBean.siglasdocus}-#{proveidosInternosBean.anio}" widgetVar="proveidoExp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="proveidoExpediente">
                         <center>
                             <p:panelGrid columns="2" id="panelProvExp">
