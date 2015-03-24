@@ -295,7 +295,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setNumeroMovi(movi);
             di.setDependenciaByCodigo(d);
             di.setDependenciaByCodigo1(d1);
-
+            di.setEstado("0");
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(di);
@@ -617,6 +617,28 @@ public class DerivarDaoImpl implements DerivarDAO {
             session.close();
         }
         return td;
+    }
+
+    @Override
+    public void cambiarEstado(String numtram, String movimiento) {
+        int i = 0;
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "UPDATE DOCUS_INTERNOS SET ESTADO='1' WHERE TRAM_NUM='"+numtram+"' AND NUMERO_MOVI='"+movimiento+"'";
+        try {
+            System.out.println("entra a cambiar estado");
+            session.beginTransaction();
+            i= session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            System.out.println("sale de cambiar estado");
+        } catch (Exception e) {
+            System.out.println("mal cambiar estado");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        System.out.println("actualizados: " + i);
     }
 
     @Override

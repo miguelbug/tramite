@@ -25,4 +25,5 @@ public interface DocusInternosDAO {
     public List getDocInternosXtipo_2(String usu, String tipo);
     public List getCircularesOficInterna(String usu);
     public List getCircularesOficInternaXtipo(String usu, String tipo);
+    public String getDestinoOfi(String tram, String tramfecha);
 }

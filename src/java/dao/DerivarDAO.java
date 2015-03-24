@@ -97,4 +97,6 @@ public interface DerivarDAO {
     public List listaUsuarios(String oficina);
 
     public Usuario getUsuarioDI(String nombre);
+    
+    public void cambiarEstado(String numtram, String movimiento);
 }

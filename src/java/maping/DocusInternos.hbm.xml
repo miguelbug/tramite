@@ -51,5 +51,8 @@
         <property name="docuAsunto" type="string">
             <column name="DOCU_ASUNTO" length="300" />
         </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="1" />
+        </property>
     </class>
 </hibernate-mapping>

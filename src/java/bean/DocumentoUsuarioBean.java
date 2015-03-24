@@ -109,13 +109,15 @@ public class DocumentoUsuarioBean {
     }
 
     public void onTabChange(TabChangeEvent event) {
-        if (event.getTab().getTitle().equals("Sin Confirmar")) {
+        if (event.getTab().getTitle().equals("Documentos Recibidos")) {
             MostrarParaUsuario();
-
+        }else{
+            if(event.getTab().getTitle().equals("Documentos Derivados")){
+                MostrarParaUsuario2();
+            }
         }
-
     }
-
+    
     public void mostrarDocusInternosOGPL() {
         System.out.println("listando documentos2");
         docusInternosOGPL.clear();
@@ -276,7 +278,7 @@ public class DocumentoUsuarioBean {
     public void listarDocPropios() {
         System.out.println("listando documentos2");
         listadocspropios.clear();
-
+        String destino = "SIN DESTINO";
         try {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
@@ -303,19 +305,38 @@ public class DocumentoUsuarioBean {
                 if (LoginBean.oficina3 == false) {
                     lista = di.getDocusInternos2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
                     Iterator ite = lista.iterator();
-                    Object obj[] = new Object[9];
+                    Object obj[] = new Object[10];
                     while (ite.hasNext()) {
                         obj = (Object[]) ite.next();
                         Map<String, String> listaaux = new HashMap<String, String>();
                         listaaux.put("iddoc", String.valueOf(obj[0]));
                         listaaux.put("documento", String.valueOf(obj[1]));
                         listaaux.put("expediente", String.valueOf(obj[2]));
-                        listaaux.put("fecha", String.valueOf(obj[3]));
-                        listaaux.put("asunto", String.valueOf(obj[4]));
-                        listaaux.put("origen", String.valueOf(obj[5]));
-                        listaaux.put("destino", String.valueOf(obj[6]));
-                        listaaux.put("asignado", String.valueOf(obj[7]));
-                        listaaux.put("destinoofi", String.valueOf(obj[8]));
+                        listaaux.put("tramfecha", String.valueOf(obj[3]));
+                        listaaux.put("fecha", String.valueOf(obj[4]));
+                        listaaux.put("asunto", String.valueOf(obj[5]));
+                        listaaux.put("origen", String.valueOf(obj[6]));
+                        listaaux.put("destino", String.valueOf(obj[7]));
+                        listaaux.put("asignado", String.valueOf(obj[8]));
+                        if (String.valueOf(obj[9]).equals("1")) {
+                            System.out.println(String.valueOf(obj[9]));
+                            listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
+                        } else {
+                            if (String.valueOf(obj[2]).equals("SIN EXPEDIENTE")) {
+                                listaaux.put("destinoofi", "DOCUMENTO INTERNO");
+                            } else {
+                                if (String.valueOf(obj[9]).equals("0")) {
+                                    System.out.println(String.valueOf(obj[9]));
+                                    listaaux.put("destinoofi", "SIN OFICIO");
+                                } else {
+                                    if (String.valueOf(obj[9]).equals("null")) {
+                                        System.out.println(String.valueOf(obj[9]));
+                                        listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
+                                    }
+                                }
+
+                            }
+                        }
                         listadocspropios.add(listaaux);
                     }
                 }
@@ -526,7 +547,7 @@ public class DocumentoUsuarioBean {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             System.out.println(usu.getOficina().getIdOficina());
-            lista = sgd.seguimientoUser2(usu.getOficina().getIdOficina(),deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
+            lista = sgd.seguimientoUser2(usu.getOficina().getIdOficina(), deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
             Iterator ite = lista.iterator();
             Object obj[] = new Object[15];
             String respuesta = "";
@@ -545,11 +566,11 @@ public class DocumentoUsuarioBean {
                 listaaux.put("estado", String.valueOf(obj[9]));
                 listaaux.put("estadDoc", String.valueOf(obj[10]));
                 /*if (String.valueOf(obj[14]).equals("1")) {
-                    respuesta = di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[2]));
-                    listaaux.put("docgene", respuesta);
-                } else {
-                    listaaux.put("docgene", "SIN RESPUESTA");
-                }*/
+                 respuesta = di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[2]));
+                 listaaux.put("docgene", respuesta);
+                 } else {
+                 listaaux.put("docgene", "SIN RESPUESTA");
+                 }*/
                 listaaux.put("docgene", "SIN RESPUESTA");
                 listaaux.put("usuario", String.valueOf(obj[11]));
                 listaaux.put("origenp", String.valueOf(obj[12]));

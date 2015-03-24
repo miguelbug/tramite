@@ -276,11 +276,9 @@ public class DocumentosBean implements Serializable {
                     System.out.println("ESTE ES EL DOCSELEC: " + docselec);
                     ntram = hm.get("numerotramite").toString();
                     movi = Integer.parseInt(hm.get("movimiento").toString());
-                    Date nuevFech = new Date();
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     System.out.println("confirmaar tramite entre");
                     deriv.Confirmar(ntram, movi, fecha);
+                    deriv.cambiarEstado(ntram, hm.get("movimiento").toString());
                     System.out.println("confirmaar tramite sale");
                 }
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO N°:"+correlativo_oficio);

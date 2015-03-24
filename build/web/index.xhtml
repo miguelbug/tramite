@@ -70,18 +70,15 @@
                     <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="1800000" /> <!-- control del timeout -->
 
                 </p:panel>
+                <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
+                <p:dialog header="#{msg['error.sessionTimeOut.header']}" widgetVar="sessionTimeOutDialog"
+                          modal="true" closable="false" width="400" visible="false">
+                    <h:outputText value="#{msg['error.sessionTimeOut.text']}" />
+                    <input id="confirmBackToLogin" type="button" value="#{msg['error.sessionTimeOut.button']}"
+                           onclick="window.location = '#{facesContext.externalContext.requestContextPath}/index.jsf';" />
+                </p:dialog>
             </h:form>
         </div>
         <br> </br>
-        <!-- Inicio control del timeout -->
-        <p:dialog header="SESIÓN CADUCADA" widgetVar="sessionTimeOutDialog" modal="true" closable="false" width="400" visible="false">
-            <h:form>
-                <center>
-                    <h:outputText value="Su sesión ha caducado, pulse el botón para reiniciar su sesión." /><br />
-                    <input type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()', 0);"/>
-                </center>
-            </h:form>
-        </p:dialog>
-        <!-- Fin control del timeout -->
     </h:body>
 </html>

@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
-            <url>src/java/bean/ConstanciaBean.java</url>
-            <bookmark id="2">
-                <name/>
-                <line>47</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>src/java/daoimpl/DocumentoDaoImpl.java</url>
             <bookmark id="1">
                 <name/>
@@ -17,8 +9,21 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>src/java/bean/ConstanciaBean.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>47</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/docusInternosOGPL.xhtml</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/controller/objxUnidadController.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/ProveidosInternosBean.java</file>
+            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Proveidos_internos.xhtml</file>
+        </group>
     </open-files>
 </project-private>
