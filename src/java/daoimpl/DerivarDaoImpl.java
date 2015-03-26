@@ -56,6 +56,26 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
+    public String getIndice2(String tipodocu, String anio) {
+        System.out.println("getindice");
+        String index = " ";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "select max(Docu_Correlaint) from Docus_Internos where docu_Nombreint='" + tipodocu + "' AND docu_anioint='" + anio + "'";
+        try {
+            session.beginTransaction();
+            index = (String) session.createSQLQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal indice");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return index;
+    }
+
+    @Override
     public String getIndice(String tramnum, String td, String anio) {
         System.out.println("getindice");
         String index = " ";

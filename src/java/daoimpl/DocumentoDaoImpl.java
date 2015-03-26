@@ -128,7 +128,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     public String generarPrimeraCondicion(String expediente, String asunto, String derivado) {
-        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND TM.CODIGO1 like", "AND TM.MOVI_OBS LIKE"};
+        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND TM.CODIGO1 LIKE", "AND TM.MOVI_OBS LIKE"};
         String c2[] = {expediente, derivado, asunto};
         String retorno = "";
         int i = 0;

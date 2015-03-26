@@ -99,4 +99,6 @@ public interface DerivarDAO {
     public Usuario getUsuarioDI(String nombre);
     
     public void cambiarEstado(String numtram, String movimiento);
+    
+    public String getIndice2(String tipodocu, String anio);
 }

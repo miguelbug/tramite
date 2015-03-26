@@ -470,8 +470,14 @@ public class OficioBean {
         try {
             if (auxanio.equals(deriv.getAnio())) {
                 System.out.println("lleno 1");
-                corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2, auxanio));
-                //corr = Integer.parseInt(deriv.getCorrelativoOficinaInterna(usu, escogido2, auxanio));
+                if (escogido2.equals("DIRECTIVAS")) {
+                    corr = Integer.parseInt(deriv.getIndice2(escogido2, auxanio));
+                    siglasdocus = "OGPL";
+                } else {
+                    siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+                    corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2, auxanio));
+                    
+                }
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
                 if (corr < 10) {
@@ -503,6 +509,7 @@ public class OficioBean {
             System.out.println(corr);
             System.out.println(aux);
         }
+
         correlativo2 = aux;
     }
 
@@ -695,17 +702,8 @@ public class OficioBean {
             di.setUsuario(usu);
             di.setUsuario1(deriv.getUsuarioDI(responsableDI));
             di.setDocuPricint("1");
+            di.setEstado("0");
             od.GuardarDocumentoOfiInt(di);
-            /*DocumentosOfiint doif = new DocumentosOfiint();
-             doif.setAsunto(asunto);
-             doif.setCorrelativoDocofint(correlativo2);
-             doif.setFecha(fecha);
-             doif.setDependenciaByCodigo(deriv.getDep(origen));
-             doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
-             doif.setTiposDocumentos(od.getTipoDocu(escogido2));
-             doif.setSiglas(siglasdocus);
-             doif.setUsuario(usu);
-             od.GuardarDocumentoOfiInt(doif);*/
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
