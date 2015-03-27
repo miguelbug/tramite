@@ -61,5 +61,8 @@ public interface DocumentoDAO {
     public List query2(String ex,String f);
     public List query3(String ex,String f);
     public List query4(String ex,String f);
+    public List query5(String docu);
+    public List query6(String docu);
+    public List query7(String docu);
     public String getJefe();
 }

@@ -20,8 +20,7 @@ public class conexion {
     Connection conn;
     
     public conexion() throws SQLException{        
-        obtenerConexion();
-        System.out.println("DESPUES DE CERRAR LA CONEXION: "+conn);        
+        obtenerConexion();  
     }
     public void obtenerConexion() {
         try{
@@ -38,7 +37,6 @@ public class conexion {
     public void cerrarConexion(){
         try{
             conn.close();
-            System.out.println("SE HA CERRADO");
         }catch(SQLException e){
             System.out.println("Error: "+e.getMessage());
         }

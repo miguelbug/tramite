@@ -48,7 +48,7 @@
                                     <h:outputLabel value="Realizar Búsqueda: "/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.mostrarNuevaListaBusqOGPL()}" update="tablabusqogpl,:form:panelpadre"/>
+                                    <p:commandButton value="Buscar" actionListener="#{buscarDocumentosBean.mostrarNuevaListaBusqOGPL()}" update=":form:"/>
                                 </p:column>
                             </p:panelGrid>
                         </center>
@@ -60,7 +60,7 @@
                                  rowKey="#{item.expediente}" style="margin-bottom: 0">
 
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="NUM.TRAM." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
+                        <p:column headerText="DOCUMENTO" width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
                             <h:outputText value="#{item.expediente}"/>
                         </p:column>
                         <p:column headerText="FECH. TRAM." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
@@ -76,12 +76,12 @@
                             <h:outputText value="#{item.derivadoA}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton process="tablabusqogpl" icon="ui-icon-search" value="Detalle" style="position:absolute; left:25px; height:26px " oncomplete="PF('itemDialog').show()"
-                                             update=":form:itDialog" actionListener="#{buscarDocumentosBean.MostrarDetalle()}"/>
+                            <p:commandButton process="tablabusqogpl" icon="ui-icon-search" value="Detalle" style="position:absolute; left:25px; height:26px "
+                                             update=":form:" actionListener="#{buscarDocumentosBean.MostrarDetalle()}"/>
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Detalle Documento" widgetVar="itemDialog" modal="true" id="itDialog" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
+                    <p:dialog header="Detalle Documento" closable="true" widgetVar="itemDialog" modal="true" id="itDialog" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
                         <center>
                             <p:panelGrid columns="2"  >
                                 <f:facet name="header">
@@ -124,6 +124,68 @@
                             <p:commandButton value="Aceptar">
                                 <f:ajax event="click" onevent="itemDialog.hide()"/>
                             </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Detalle Oficio" closable="true" widgetVar="DetalleOficios" modal="true" id="itemDetalleOfi" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
+                        <center>
+                            <p:panelGrid columns="2"  >
+                                <p:outputLabel value="Documento:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi1}"/>
+                                <p:outputLabel value="N° de Expediente:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi2}"/>
+                                <p:outputLabel value="Fecha Origen:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi3}"/>
+                                <p:outputLabel value="Referencia:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi4}"/>
+                                <p:outputLabel value="Origen:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi5}"/>
+                                <p:outputLabel value="Destino:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi6}"/>
+                                <p:outputLabel value="Responsable:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.ofi7}"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Detalle Documento Interno"  closable="true" widgetVar="DetalleDI" modal="true" id="itemDocuInt" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
+                        <center>
+                            <p:panelGrid columns="2"  >
+                                <p:outputLabel value="Documento:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di1}"/>
+                                <p:outputLabel value="N° de Expediente:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di2}"/>
+                                <p:outputLabel value="Fecha Origen:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di3}"/>
+                                <p:outputLabel value="Fecha Registro:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di4}"/>
+                                <p:outputLabel value="Asunto:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di5}"/>
+                                <p:outputLabel value="Origen"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di6}"/>
+                                <p:outputLabel value="Destino:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di7}"/>
+                                <p:outputLabel value="Asignado:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.di8}"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Detalle Documento Externo"  closable="true" widgetVar="DetalleDE" modal="true" id="itemDocuExt" showEffect="fade" hideEffect="fade" position="center center" resizable="false" >
+                        <center>
+                            <p:panelGrid columns="2"  >
+                                <p:outputLabel value="Documento:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de1}"/>
+                                <p:outputLabel value="Nombre Documento:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de2}"/>
+                                <p:outputLabel value="Fecha Registro:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de6}"/>
+                                <p:outputLabel value="Asunto:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de3}"/>
+                                <p:outputLabel value="Origen:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de4}"/>
+                                <p:outputLabel value="Destino:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de5}"/>
+                                <p:outputLabel value="Responsable:"/>
+                                <p:outputLabel value="#{buscarDocumentosBean.de7}"/>
+                            </p:panelGrid>
                         </center>
                     </p:dialog>
                 </h:form>

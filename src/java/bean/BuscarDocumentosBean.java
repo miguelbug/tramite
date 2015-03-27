@@ -24,6 +24,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Usuario;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -45,6 +46,9 @@ public class BuscarDocumentosBean implements Serializable {
     private String anio;
     private String asunto;
     private String mes;
+    private String ofi1 = "--", ofi2 = "--", ofi3 = "--", ofi4 = "--", ofi5 = "--", ofi6 = "--", ofi7 = "--";
+    private String di1 = "--", di2 = "--", di3 = "--", di4 = "--", di5 = "--", di6 = "--", di7 = "--", di8 = "--";
+    private String de1 = "--", de2 = "--", de3 = "--", de4 = "--", de5 = "--", de6 = "--", de7 = "--";
     private String r1 = "---", r2 = "---", r3 = "---", r4 = "---", r5 = "---", r6 = "---", r7 = "---", r8 = "---", r9 = "---";
     private List filtro, filtro2;
     private boolean aparece;
@@ -56,6 +60,7 @@ public class BuscarDocumentosBean implements Serializable {
     private FacesContext faceContext;
     private Usuario usu;
     private List listadependencias;
+    private String nombre;
 
     public BuscarDocumentosBean() {
         faceContext = FacesContext.getCurrentInstance();
@@ -81,9 +86,111 @@ public class BuscarDocumentosBean implements Serializable {
 
     public void MostrarDetalle() {
         System.out.println("detalle");
-        ObtenerDatosExpediente();
-        ObtenerDatosRespuesta();
-        ObtenerDatosOFicios();
+        Map<String, String> hm = (HashMap<String, String>) docselec3.get(0);
+        System.out.println(hm.get("expediente").toString().toUpperCase());
+        if (hm.get("expediente").toString().toUpperCase().indexOf("OFICIO") != -1 || hm.get("expediente").toString().toUpperCase().indexOf("OGPL") != -1) {
+            System.out.println("1");
+            ObtenerOficios(hm.get("expediente").toString());
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('DetalleOficios').show()");
+        } else {
+            if (hm.get("expediente").toString().toUpperCase().indexOf("CARTA") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("ARCHIVO") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("DIRECTIVAS") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("REPORTE") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("EXPEDIENTE") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("OFICIO") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("MEMORANDUM") != -1
+                    || hm.get("expediente").toString().toUpperCase().indexOf("INFORME") != -1) {
+                
+                System.out.println("2");                
+                ObtenerDocusInternos(hm.get("expediente").toString());
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('DetalleDI').show()");
+            } else {
+                if (hm.get("expediente").toString().toUpperCase().indexOf("PROVEIDOS") != -1
+                        || hm.get("expediente").toString().toUpperCase().indexOf("OFICIO") != -1) {
+                    
+                    System.out.println("3");
+                    ObtenerDocusExtInt(hm.get("expediente").toString());
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('DetalleDE').show()");
+                } else {
+                    System.out.println("4");
+                    ObtenerDatosExpediente();
+                    ObtenerDatosRespuesta();
+                    ObtenerDatosOFicios();
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('itemDialog').show()");
+                }
+            }
+
+        }
+
+    }
+
+    public void ObtenerOficios(String docu) {
+        try {
+            List lista = new ArrayList();
+            lista = dd.query5(docu);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                ofi1 = String.valueOf(obj[0]);
+                ofi2 = String.valueOf(obj[1]);
+                ofi3 = String.valueOf(obj[2]);
+                ofi4 = String.valueOf(obj[3]) + " " + String.valueOf(obj[4]);
+                ofi5 = String.valueOf(obj[5]);
+                ofi6 = String.valueOf(obj[6]);
+                ofi7 = String.valueOf(obj[7]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void ObtenerDocusExtInt(String docu) {
+        try {
+            List lista = new ArrayList();
+            lista = dd.query7(docu);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[7];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                this.de1 = String.valueOf(obj[0]);
+                this.de2 = String.valueOf(obj[1]);
+                this.de3 = String.valueOf(obj[2]);
+                this.de4 = String.valueOf(obj[3]);
+                this.de5 = String.valueOf(obj[4]);
+                this.de6 = String.valueOf(obj[5]);
+                this.de7 = String.valueOf(obj[6]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void ObtenerDocusInternos(String docu) {
+        try {
+            List lista = new ArrayList();
+            lista = dd.query6(docu);
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                this.di1 = String.valueOf(obj[0]);
+                this.di2 = String.valueOf(obj[1]);
+                this.di3 = String.valueOf(obj[2]);
+                this.di4 = String.valueOf(obj[3]);
+                this.di5 = String.valueOf(obj[4]);
+                this.di6 = String.valueOf(obj[5]);
+                this.di7 = String.valueOf(obj[6]);
+                this.di8 = String.valueOf(obj[7]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void ObtenerDatosExpediente() {
@@ -184,9 +291,9 @@ public class BuscarDocumentosBean implements Serializable {
     }
 
     public void limpiar() {
-        nuevotramite="";
-        nuevoasunto="";
-        derivadoa="";
+        nuevotramite = "";
+        nuevoasunto = "";
+        derivadoa = "";
     }
 
     public void mostrarListaBusquedaOGPL() {
@@ -724,6 +831,190 @@ public class BuscarDocumentosBean implements Serializable {
 
     public void setR9(String r9) {
         this.r9 = r9;
+    }
+
+    public String getOfi1() {
+        return ofi1;
+    }
+
+    public void setOfi1(String ofi1) {
+        this.ofi1 = ofi1;
+    }
+
+    public String getOfi2() {
+        return ofi2;
+    }
+
+    public void setOfi2(String ofi2) {
+        this.ofi2 = ofi2;
+    }
+
+    public String getOfi3() {
+        return ofi3;
+    }
+
+    public void setOfi3(String ofi3) {
+        this.ofi3 = ofi3;
+    }
+
+    public String getOfi4() {
+        return ofi4;
+    }
+
+    public void setOfi4(String ofi4) {
+        this.ofi4 = ofi4;
+    }
+
+    public String getOfi5() {
+        return ofi5;
+    }
+
+    public void setOfi5(String ofi5) {
+        this.ofi5 = ofi5;
+    }
+
+    public String getOfi6() {
+        return ofi6;
+    }
+
+    public void setOfi6(String ofi6) {
+        this.ofi6 = ofi6;
+    }
+
+    public String getOfi7() {
+        return ofi7;
+    }
+
+    public void setOfi7(String ofi7) {
+        this.ofi7 = ofi7;
+    }
+
+    public String getDi1() {
+        return di1;
+    }
+
+    public void setDi1(String di1) {
+        this.di1 = di1;
+    }
+
+    public String getDi2() {
+        return di2;
+    }
+
+    public void setDi2(String di2) {
+        this.di2 = di2;
+    }
+
+    public String getDi3() {
+        return di3;
+    }
+
+    public void setDi3(String di3) {
+        this.di3 = di3;
+    }
+
+    public String getDi4() {
+        return di4;
+    }
+
+    public void setDi4(String di4) {
+        this.di4 = di4;
+    }
+
+    public String getDi5() {
+        return di5;
+    }
+
+    public void setDi5(String di5) {
+        this.di5 = di5;
+    }
+
+    public String getDi6() {
+        return di6;
+    }
+
+    public void setDi6(String di6) {
+        this.di6 = di6;
+    }
+
+    public String getDi7() {
+        return di7;
+    }
+
+    public void setDi7(String di7) {
+        this.di7 = di7;
+    }
+
+    public String getDi8() {
+        return di8;
+    }
+
+    public void setDi8(String di8) {
+        this.di8 = di8;
+    }
+
+    public String getDe1() {
+        return de1;
+    }
+
+    public void setDe1(String de1) {
+        this.de1 = de1;
+    }
+
+    public String getDe2() {
+        return de2;
+    }
+
+    public void setDe2(String de2) {
+        this.de2 = de2;
+    }
+
+    public String getDe3() {
+        return de3;
+    }
+
+    public void setDe3(String de3) {
+        this.de3 = de3;
+    }
+
+    public String getDe4() {
+        return de4;
+    }
+
+    public void setDe4(String de4) {
+        this.de4 = de4;
+    }
+
+    public String getDe5() {
+        return de5;
+    }
+
+    public void setDe5(String de5) {
+        this.de5 = de5;
+    }
+
+    public String getDe6() {
+        return de6;
+    }
+
+    public void setDe6(String de6) {
+        this.de6 = de6;
+    }
+
+    public String getDe7() {
+        return de7;
+    }
+
+    public void setDe7(String de7) {
+        this.de7 = de7;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
 }

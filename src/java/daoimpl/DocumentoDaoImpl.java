@@ -28,7 +28,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
 
     @Override
     public String getJefe() {
-        String jefe=null;
+        String jefe = null;
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -76,19 +76,19 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         try {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT R.TRAM_NUM,"
-                    + "                                  DECODE(R.TFECHA,NULL,'--',TO_CHAR(R.TFECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA2,"
-                    + "                                  DECODE(TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS'),NULL,'--',TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA,"
-                    + "                                  R.DERIVADOA,"
-                    + "                                  R.ASUNTO "
-                    + "                                  FROM (SELECT TM.TRAM_NUM AS TRAM_NUM, \n"
-                    + "                                  TM.TRAM_FECHA AS TFECHA,\n"
+                    + "DECODE(R.TFECHA,NULL,'--',TO_CHAR(R.TFECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA2,"
+                    + "DECODE(TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS'),NULL,'--',TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA,"
+                    + "R.DERIVADOA,"
+                    + "UPPER(R.ASUNTO) AS ASUNTO\n"
+                    + "FROM (SELECT TM.TRAM_NUM AS TRAM_NUM, \n"
+                    + "       TM.TRAM_FECHA AS TFECHA,\n"
                     + "       TM.FECHA_INGR AS FECHA,\n"
                     + "       D1.NOMBRE AS DERIVADOA,\n"
                     + "       DECODE(TM.MOVI_OBS,NULL,'--',TM.MOVI_OBS) AS ASUNTO\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1\n"
                     + "WHERE TM.CODIGO1=D1.CODIGO\n"
                     + generarPrimeraCondicion(expediente, asunto, derivadoa)
-                    + "UNION\n"
+                    + "\nUNION\n"
                     + "SELECT TM.TRAM_NUM AS TRAM_NUM, \n"
                     + "       TM.TRAM_FECHA AS TFECHA,\n"
                     + "       TM.FECHA_INGR AS FECHA,\n"
@@ -98,7 +98,59 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "WHERE OFI.CODIGO1=D1.CODIGO\n"
                     + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
-                    + generarSegundaCondicion(expediente, asunto, derivadoa) + ")R\n"
+                    + generarSegundaCondicion(expediente, asunto, derivadoa)
+                    + "\nUNION\n"
+                    + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "ofi.FECHA_OFICIO as fecha1,\n"
+                    + "ofi.FECHA_OFICIO as fecha2,\n"
+                    + "d2.nombre as destino,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO)||'  '||DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as referencia\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is not null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + generarTerceraCondicion(expediente, asunto, derivadoa)
+                    + "\nUNION\n"
+                    + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "ofi.FECHA_OFICIO as fecha1,\n"
+                    + "ofi.FECHA_OFICIO as fecha2,\n"
+                    + "d2.nombre as destino,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO)||'  '||DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as referencia\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + generarCuartaCondicion(expediente, asunto, derivadoa)
+                    + "\nUNION\n"
+                    + "select TD.NOMBRE_DOCU||' N° '||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
+                    + "DE.FECHA as fecha1,\n"
+                    + "DE.FECHA as fecha2,\n"
+                    + "M2.NOMBRE AS DESTINO,\n"
+                    + "DECODE(DE.ASUNTO,NULL,'SIN ASUNTO',UPPER(DE.ASUNTO)) as asunto\n"
+                    + "from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina\n"
+                    + "WHERE DE.CODIGO=M1.CODIGO\n"
+                    + "AND DE.CODIGO1=M2.CODIGO\n"
+                    + "AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DE.USU=USUA.USU\n"
+                    + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
+                    + "AND DE.EXT_INT IN ('pe','pi')\n"
+                    + generarQuintaCondicion(expediente, asunto, derivadoa)
+                    + "\nUNION\n"
+                    + "SELECT DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "DI.FECHAREGISTRO AS FECHA1,\n"
+                    + "DI.FECHAREGISTRO AS FECHA2,\n"
+                    + "D2.NOMBRE AS DESTINO,\n"
+                    + "UPPER(DI.DOCU_ASUNTO) AS ASUNTO\n"
+                    + "FROM DOCUS_INTERNOS DI, USUARIO USUA, TIPOS_DOCUMENTOS TD, DEPENDENCIA D1, DEPENDENCIA D2\n"
+                    + "WHERE DI.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DI.CODIGO=D1.CODIGO\n"
+                    + "AND DI.CODIGO1=D2.CODIGO\n"
+                    + "AND DI.USU1=USUA.USU\n"
+                    + "AND DI.TRAM_NUM IS NULL\n"
+                    + "AND DI.DOCU_SIGLASINT='OGPL'\n"
+                    + generarSextaCondicion(expediente, asunto, derivadoa) + ")R\n"
                     + "ORDER BY R.FECHA");
             docusInt = query.list();
             session.beginTransaction().commit();
@@ -112,9 +164,71 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         return docusInt;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////
+    public String generarTerceraCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"AND ofi.CORRELATIVO_OFICIO LIKE", "AND ofi.codigo1 LIKE", "AND UPPER(ofi.REFERENCIA_OFICIO||' '||ofi.ASUNTO_OFICIO) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (!c2[i].equals("")) {
+                retorno = retorno + c1[i] + " '%" + c2[i] + "%'";
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    public String generarCuartaCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"AND ofi.CORRELATIVO_OFICIO LIKE", "AND ofi.codigo1 LIKE", "AND UPPER(ofi.REFERENCIA_OFICIO||' '||ofi.ASUNTO_OFICIO) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (!c2[i].equals("")) {
+                retorno = retorno + c1[i] + " '%" + c2[i] + "%'";
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    public String generarQuintaCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"AND DE.CORRELATIVOD LIKE", "AND DE.CODIGO1 LIKE", "AND UPPER(DE.ASUNTO) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (!c2[i].equals("")) {
+                retorno = retorno + c1[i] + " '%" + c2[i] + "%'";
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    public String generarSextaCondicion(String expediente, String asunto, String derivado) {
+        String c1[] = {"AND DI.DOCU_CORRELAINT LIKE", "AND DI.CODIGO1 LIKE", "AND UPPER(DI.DOCU_ASUNTO) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
+        String retorno = "";
+        int i = 0;
+        while (i < c2.length) {
+            if (!c2[i].equals("")) {
+                retorno = retorno + c1[i] + " '%" + c2[i] + "%'";
+            }
+            i++;
+        }
+        retorno = retorno + "\n";
+        return retorno;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
     public String generarSegundaCondicion(String expediente, String asunto, String derivado) {
-        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND OFI.CODIGO1 LIKE", "AND TM.MOVI_OBS LIKE"};
-        String c2[] = {expediente, derivado, asunto};
+        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND OFI.CODIGO1 LIKE", "AND UPPER(TM.MOVI_OBS) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
         String retorno = "";
         int i = 0;
         while (i < c2.length) {
@@ -128,8 +242,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     public String generarPrimeraCondicion(String expediente, String asunto, String derivado) {
-        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND TM.CODIGO1 LIKE", "AND TM.MOVI_OBS LIKE"};
-        String c2[] = {expediente, derivado, asunto};
+        String c1[] = {"AND TM.TRAM_NUM LIKE", "AND TM.CODIGO1 LIKE", "AND UPPER(TM.MOVI_OBS) LIKE"};
+        String c2[] = {expediente, derivado, asunto.toUpperCase()};
         String retorno = "";
         int i = 0;
         while (i < c2.length) {
@@ -773,8 +887,178 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "AND OFIC.ID_OFICINA=OFI.CODIGO\n"
                     + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
-                    + "AND TM.TRAM_NUM='"+ex+"'\n"
-                    + "AND TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')='"+f+"'");
+                    + "AND TM.TRAM_NUM='" + ex + "'\n"
+                    + "AND TO_CHAR(TM.TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')='" + f + "'");
+            docusavanzado = query.list();
+            System.out.println("despues de query de gedocus avanzados");
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró a docus avanzado");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("retorna");
+        return docusavanzado;
+    }
+
+    @Override
+    public List query5(String docu) {
+        List docusavanzado = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("get docus avanzado");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("Select R.documento,\n"
+                    + "R.tramite,\n"
+                    + "TO_CHAR(R.fecha,'DD/MM/YYYY HH24:MI:ss') AS FECHA,\n"
+                    + "R.referencia,\n"
+                    + "DECODE(R.asunto,NULL,'SIN ASUNTO',UPPER(R.asunto)),\n"
+                    + "R.origen,\n"
+                    + "R.destino,\n"
+                    + "UPPER(R.responsable)\n"
+                    + "From (select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
+                    + "DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as asunto,\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is not null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + "and 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "'\n"
+                    + "union\n"
+                    + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
+                    + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
+                    + "ofi.FECHA_OFICIO as fecha,\n"
+                    + "decode(ofi.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',ofi.REFERENCIA_OFICIO) as referencia,\n"
+                    + "DECODE(ofi.ASUNTO_OFICIO,NULL,'SIN ASUNTO',ofi.ASUNTO_OFICIO) as asunto,\n"
+                    + "d1.nombre as origen,\n"
+                    + "d2.nombre as destino,\n"
+                    + "ofi.responsable\n"
+                    + "from OFICIOS ofi, Dependencia d1, Dependencia d2,Oficina oficina\n"
+                    + "where d1.codigo=ofi.codigo\n"
+                    + "and d2.codigo=ofi.codigo1\n"
+                    + "and tram_num is null\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + "and 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "') R\n"
+                    + "order by R.fecha desc");
+            docusavanzado = query.list();
+            System.out.println("despues de query de gedocus avanzados");
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró a docus avanzado");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("retorna");
+        return docusavanzado;
+    }
+
+    @Override
+    public List query6(String docu) {
+        List docusavanzado = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("get docus avanzado");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT R.DOCUMENTO,\n"
+                    + "       R.TRAM_NUM,\n"
+                    + "       R.TRAM_FECHA AS TRAM_FECHA,\n"
+                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)),\n"
+                    + "       R.ORIGEN,\n"
+                    + "       R.DESTINO,\n"
+                    + "       R.ASIGNADO\n"
+                    + "       FROM (SELECT DI.DOCU_NOMBREINT||' NÂ° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "             DI.TRAM_NUM AS TRAM_NUM,\n"
+                    + "             TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY') AS TRAM_FECHA,\n"
+                    + "             DI.FECHAREGISTRO AS FECHA,\n"
+                    + "             DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "             D1.NOMBRE AS ORIGEN,\n"
+                    + "             D2.NOMBRE AS DESTINO,\n"
+                    + "             USUA.USU_NOMBRE AS ASIGNADO\n"
+                    + "             FROM DOCUS_INTERNOS DI, \n"
+                    + "                  USUARIO USUA, \n"
+                    + "                  TRAMITE_MOVIMIENTO TM, \n"
+                    + "                  DEPENDENCIA D1, \n"
+                    + "                  DEPENDENCIA D2, \n"
+                    + "                  TRAMITE_DATOS TDAT, \n"
+                    + "                  DEPENDENCIA D3\n"
+                    + "             WHERE TM.USU=USUA.USU\n"
+                    + "             AND DI.CODIGO=D1.CODIGO\n"
+                    + "             AND DI.CODIGO1=D2.CODIGO\n"
+                    + "             AND DI.TRAM_NUM IS NOT NULL\n"
+                    + "             AND DI.TRAM_NUM=TM.TRAM_NUM\n"
+                    + "             AND DI.NUMERO_MOVI=TM.MOVI_NUM\n"
+                    + "             AND DI.TRAM_NUM=TDAT.TRAM_NUM\n"
+                    + "             AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
+                    + "             AND TDAT.CODIGO=D3.CODIGO\n"
+                    + "             AND DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT='" + docu + "'\n"
+                    + "             UNION\n"
+                    + "             SELECT DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
+                    + "             DECODE(DI.TRAM_NUM,NULL,'SIN EXPEDIENTE',DI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "             DECODE(TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY'),NULL,'SIN FECHA',TO_CHAR(DI.TRAM_FECHA,'DD/MM/YYYY')) AS TRAM_FECHA,\n"
+                    + "             DI.FECHAREGISTRO AS FECHA,\n"
+                    + "             DI.DOCU_ASUNTO AS ASUNTO,\n"
+                    + "             D1.NOMBRE AS ORIGEN,\n"
+                    + "             D2.NOMBRE AS DESTINO,\n"
+                    + "             USUA.USU_NOMBRE AS ASIGNADO\n"
+                    + "             FROM DOCUS_INTERNOS DI, DEPENDENCIA D1, DEPENDENCIA D2, USUARIO USUA\n"
+                    + "             WHERE DI.CODIGO=D1.CODIGO\n"
+                    + "             AND DI.CODIGO1=D2.CODIGO\n"
+                    + "             AND DI.USU=USUA.USU\n"
+                    + "             AND DI.TRAM_NUM IS NULL\n"
+                    + "             AND DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT='" + docu + "') R\n"
+                    + "                                        \n"
+                    + "     ORDER BY R.FECHA DESC");
+            docusavanzado = query.list();
+            System.out.println("despues de query de gedocus avanzados");
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró a docus avanzado");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        System.out.println("retorna");
+        return docusavanzado;
+    }
+
+    @Override
+    public List query7(String docu) {
+        List docusavanzado = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            System.out.println("get docus avanzado");
+            session.beginTransaction();
+            Query query = session.createSQLQuery("select TD.NOMBRE_DOCU||' N° '||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY') as documento,\n"
+                    + "DE.NUMERODOC,\n"
+                    + "DECODE(DE.ASUNTO,NULL,'SIN ASUNTO',UPPER(DE.ASUNTO)) as asunto,\n"
+                    + "M1.NOMBRE AS ORIGEN,\n"
+                    + "M2.NOMBRE AS DESTINO,\n"
+                    + "to_char(DE.FECHA,'DD/MM/YYYY HH24:MI:ss') as fecha,\n"
+                    + "USUA.USU_NOMBRE\n"
+                    + "from DOCUS_EXTINT DE, DEPENDENCIA M1, DEPENDENCIA M2, TIPOS_DOCUMENTOS TD, USUARIO USUA, OFICINA oficina\n"
+                    + "WHERE DE.CODIGO=M1.CODIGO\n"
+                    + "AND DE.CODIGO1=M2.CODIGO\n"
+                    + "AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO\n"
+                    + "AND DE.USU=USUA.USU\n"
+                    + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
+                    + "AND DE.EXT_INT IN ('pe','pi')\n"
+                    + "AND TD.NOMBRE_DOCU||' N° '||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY')='"+docu+"'\n"
+                    + "ORDER BY DE.ID DESC");
             docusavanzado = query.list();
             System.out.println("despues de query de gedocus avanzados");
             session.beginTransaction().commit();
@@ -1260,7 +1544,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
 
     @Override
     public void EliminarTramite(String tramnum, String fecha, String movi) {
-        this.EliminarTramMov(tramnum, fecha,movi);
+        this.EliminarTramMov(tramnum, fecha, movi);
         this.EliminarTipDocu(tramnum, fecha);
         this.EliminarTD(tramnum, fecha);
         this.EliminarTemporal(tramnum, fecha);
@@ -1310,7 +1594,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     public void EliminarTramMov(String tramnum, String fecha, String movi) {
         System.out.println("ENTRA A ELIMINAR TM");
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='" + fecha + "' AND MOVI_NUM='"+movi+"'";
+        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM='" + tramnum + "' AND to_char(FECHA_ENVIO,'dd/MM/yyyy')='" + fecha + "' AND MOVI_NUM='" + movi + "'";
         try {
             session.beginTransaction();
             int i = session.createSQLQuery(sql).executeUpdate();

@@ -27,14 +27,5 @@ public class categoriaServicio {
     public void CerrandoConexion(){
         nuevacon.cerrarConexion();
     }
-    /*
-     public void doWorkOnConnection(Session session) {
-     session.doWork(new Work() {
-     @Override
-     public void execute(Connection connection) throws SQLException {
-        
-     }
-     });
-     }
-     */
+
 }

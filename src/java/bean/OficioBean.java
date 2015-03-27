@@ -741,16 +741,6 @@ public class OficioBean {
             di.setDocuPricint("1");
             di.setUsuario1(usu);
             od.GuardarDocumentoOfiInt(di);
-            /*DocumentosOfiint doif = new DocumentosOfiint();
-             doif.setAsunto(asunto);
-             doif.setCorrelativoDocofint(correlativo2);
-             doif.setFecha(fecha);
-             doif.setDependenciaByCodigo(deriv.getDep(origen));
-             doif.setDependenciaByCodigo1(deriv.getDep(this.destino));
-             doif.setTiposDocumentos(od.getTipoDocu(escogido2));
-             doif.setSiglas(siglasdocus);
-             doif.setUsuario(usu);
-             od.GuardarDocumentoOfiInt(doif);*/
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception e) {
