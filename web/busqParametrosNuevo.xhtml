@@ -57,7 +57,7 @@
                     <p:dataTable value="#{buscarDocumentosBean.nuevabusqogplkp}" var="item" paginator="true" rows="15" id="tablabusqogpl" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  emptyMessage="no hay datos para este filtro" filteredValue="#{buscarDocumentosBean.otrosdocus}" selection="#{buscarDocumentosBean.docselec3}"
-                                 rowKey="#{item.expediente}" style="margin-bottom: 0">
+                                 rowKey="#{item.expediente}+#{item.tramfecha}+#{item.fechaing}" style="margin-bottom: 0">
 
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="DOCUMENTO" width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">

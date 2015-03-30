@@ -75,7 +75,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT R.TRAM_NUM,"
+            Query query = session.createSQLQuery("SELECT UPPER(R.TRAM_NUM),"
                     + "DECODE(R.TFECHA,NULL,'--',TO_CHAR(R.TFECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA2,"
                     + "DECODE(TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS'),NULL,'--',TO_CHAR(R.FECHA,'DD/MM/YYYY HH24:MI:SS')) AS FECHA,"
                     + "R.DERIVADOA,"
@@ -96,6 +96,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       DECODE(TM.MOVI_OBS,NULL,'--',TM.MOVI_OBS) AS ASUNTO\n"
                     + "FROM TRAMITE_MOVIMIENTO TM, DEPENDENCIA D1, OFICIOS OFI\n"
                     + "WHERE OFI.CODIGO1=D1.CODIGO\n"
+                    + "AND TM.CODIGO1=OFI.CODIGO\n"
                     + "AND OFI.TRAM_NUM=TM.TRAM_NUM\n"
                     + "AND OFI.TRAM_FECHA=TM.TRAM_FECHA\n"
                     + generarSegundaCondicion(expediente, asunto, derivadoa)
@@ -932,7 +933,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is not null\n"
                     + "and d1.nombre=oficina.nombre_oficina\n"
-                    + "and 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "'\n"
+                    + "and 'OFICIO '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "'\n"
                     + "union\n"
                     + "select 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') AS documento,\n"
                     + "decode(ofi.TRAM_NUM,NULL,'SIN NUMERO DE TRAMITE',ofi.TRAM_NUM) as tramite,\n"
@@ -947,7 +948,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is null\n"
                     + "and d1.nombre=oficina.nombre_oficina\n"
-                    + "and 'Oficio '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "') R\n"
+                    + "and 'OFICIO '||'N° '||ofi.CORRELATIVO_OFICIO||'-'||oficina.SIGLAS||'-'||TO_CHAR(ofi.FECHA_OFICIO,'YYYY') ='" + docu + "') R\n"
                     + "order by R.fecha desc");
             docusavanzado = query.list();
             System.out.println("despues de query de gedocus avanzados");
@@ -1018,7 +1019,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "             AND DI.CODIGO1=D2.CODIGO\n"
                     + "             AND DI.USU=USUA.USU\n"
                     + "             AND DI.TRAM_NUM IS NULL\n"
-                    + "             AND DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT='" + docu + "') R\n"
+                    + "             AND UPPER(DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT)='" + docu + "') R\n"
                     + "                                        \n"
                     + "     ORDER BY R.FECHA DESC");
             docusavanzado = query.list();
