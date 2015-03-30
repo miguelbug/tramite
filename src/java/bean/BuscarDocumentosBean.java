@@ -88,7 +88,8 @@ public class BuscarDocumentosBean implements Serializable {
         System.out.println("detalle");
         Map<String, String> hm = (HashMap<String, String>) docselec3.get(0);
         System.out.println(hm.get("expediente").toString().toUpperCase());
-        if (hm.get("expediente").toString().toUpperCase().indexOf("OFICIO") != -1 || hm.get("expediente").toString().toUpperCase().indexOf("OGPL") != -1) {
+        if (hm.get("expediente").toString().toUpperCase().indexOf("OFICIO") != -1 || hm.get("expediente").toString().toUpperCase().indexOf("OGPL") != -1 &&
+               hm.get("expediente").toString().toUpperCase().indexOf("DIRECTIVAS") == -1 ) {
             System.out.println("1");
             ObtenerOficios(hm.get("expediente").toString());
             RequestContext context = RequestContext.getCurrentInstance();
