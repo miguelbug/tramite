@@ -111,13 +111,13 @@ public class DocumentoUsuarioBean {
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getTitle().equals("Documentos Recibidos")) {
             MostrarParaUsuario();
-        }else{
-            if(event.getTab().getTitle().equals("Documentos Derivados")){
+        } else {
+            if (event.getTab().getTitle().equals("Documentos Derivados")) {
                 MostrarParaUsuario2();
             }
         }
     }
-    
+
     public void mostrarDocusInternosOGPL() {
         System.out.println("listando documentos2");
         docusInternosOGPL.clear();
@@ -283,7 +283,7 @@ public class DocumentoUsuarioBean {
             System.out.println("entra a seguimiento2");
             List lista = new ArrayList();
             if (LoginBean.oficina3 == true) {
-                lista = di.getDocInternos(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
+                lista = di.getDocInternos(usu.getOficina().getIdOficina());
                 Iterator ite = lista.iterator();
                 Object obj[] = new Object[10];
                 while (ite.hasNext()) {
@@ -303,7 +303,7 @@ public class DocumentoUsuarioBean {
                 }
             } else {
                 if (LoginBean.oficina3 == false) {
-                    lista = di.getDocusInternos2(deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu()));
+                    lista = di.getDocusInternos2(usu.getOficina().getIdOficina());
                     Iterator ite = lista.iterator();
                     Object obj[] = new Object[10];
                     while (ite.hasNext()) {
@@ -325,13 +325,18 @@ public class DocumentoUsuarioBean {
                             if (String.valueOf(obj[2]).equals("SIN EXPEDIENTE")) {
                                 listaaux.put("destinoofi", "DOCUMENTO INTERNO");
                             } else {
-                                if (String.valueOf(obj[9]).equals("0")) {
+                                if (String.valueOf(obj[9]).equals("0") && String.valueOf(obj[1]).indexOf("ARCHIVO") == -1) {
                                     System.out.println(String.valueOf(obj[9]));
                                     listaaux.put("destinoofi", "SIN OFICIO");
                                 } else {
                                     if (String.valueOf(obj[9]).equals("null")) {
                                         System.out.println(String.valueOf(obj[9]));
                                         listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
+                                    } else {
+                                        if (String.valueOf(obj[1]).indexOf("ARCHIVO") != -1) {
+                                            System.out.println(String.valueOf(obj[1]));
+                                            listaaux.put("destinoofi", String.valueOf(obj[7]));
+                                        }
                                     }
                                 }
 
