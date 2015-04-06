@@ -209,10 +209,7 @@
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
-                                <f:selectItem itemLabel="INFORME" itemValue="INFORME" />
-                                <f:selectItem itemLabel="MEMORANDUM" itemValue="MEMORANDUM" />
-                                <f:selectItem itemLabel="ARCHIVO" itemValue="ARCHIVO"/>
-                                <f:selectItem itemLabel="CARTA" itemValue="CARTA"/>
+                                <f:selectItems value="#{documentoUsuarioBean.tiposdocus}"/>
                                 <p:ajax event="change" listener="#{documentoUsuarioBean.RealizarCambio()}" update="panelDeriv" />                                
                             </p:selectOneMenu>
                             <p:outputLabel value="Documento: "/>

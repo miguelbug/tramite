@@ -27,6 +27,26 @@ public class GestionUsuarioDaoImpl implements GestionUsuarioDAO {
     private Session session;
 
     @Override
+    public void CambiarEstado(String usu) {
+        System.out.println("actualizar usuario");
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "UPDATE USUARIO SET ESTADO='inactivo' WHERE USU='"+usu+"'";
+        int i=0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal UPDATE USUARIO");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("actualizados: "+i);
+    }
+
+    @Override
     public List listarPersonal() {
         List oficinas = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();

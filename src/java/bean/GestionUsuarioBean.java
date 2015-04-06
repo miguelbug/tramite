@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,7 @@ import org.primefaces.context.RequestContext;
  * @author OGPL
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class GestionUsuarioBean implements Serializable {
 
     private Usuario usu;
@@ -49,12 +50,13 @@ public class GestionUsuarioBean implements Serializable {
     private String nuevocargo;
     private String nuevogrado;
     private String nuevocorreo;
-    private List oficinas,oficinas2, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec2;
+    private List oficinas,oficinas2, profesion, contrato, jefes, jefesuser, listapersonal, otrosdocus, docselec2,docselec3;
     //////////////
     private String nuevousu_usuario;
     private String nuevousu_nombre;
     private String nuevousu_oficina;
     private String nuevo_celular;
+    private String cambusu;
 
     public GestionUsuarioBean() {
         gu = new GestionUsuarioDaoImpl();
@@ -70,7 +72,7 @@ public class GestionUsuarioBean implements Serializable {
         listapersonal= new ArrayList<String>();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
-        boolean islistaPersonal = (currentPage.lastIndexOf("listaPersonal.xhtml") > -1);
+        boolean islistaPersonal = (currentPage.lastIndexOf("Personal.xhtml") > -1);
         if (islistaPersonal) {
             mostrarListaPersonal();
         }
@@ -140,14 +142,31 @@ public class GestionUsuarioBean implements Serializable {
         listarProfesion();
         listarContrato();
     }
-
+    public void MostrarUsuario(){
+        Map<String, String> hm = (HashMap<String, String>) docselec3.get(0);
+        System.out.println(hm.get("usuario").toString());
+        cambusu = hm.get("usuario").toString();
+    }
+    public void CambiarEstado(){
+        FacesMessage message = null;
+        try{
+            gu.CambiarEstado(cambusu);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA ACTUALIZADO EL USUARIO "+cambusu);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA ACTUALIZADO EL USUARIO "+cambusu);
+        }
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
     public void listarJefatura() {
-        System.out.println(docselec2);
-        /*Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        nuevousu_nombre=hm.get("nombre").toString();*/
+        System.out.println(docselec3);
+        Map<String, String> hm = (HashMap<String, String>) docselec3.get(0);
+        nuevousu_nombre=hm.get("nombre").toString();
         this.listarOficinas2();
     }
-
+    public void prueba(){
+        System.out.println("SI FUNCIONA");
+    }
     public void listarJefesUser() {
         jefesuser= gu.listarJefesUser(usu.getOficina().getIdOficina());
         listarOficinas();
@@ -480,6 +499,22 @@ public class GestionUsuarioBean implements Serializable {
 
     public void setOficinas2(List oficinas2) {
         this.oficinas2 = oficinas2;
+    }
+
+    public String getCambusu() {
+        return cambusu;
+    }
+
+    public void setCambusu(String cambusu) {
+        this.cambusu = cambusu;
+    }
+
+    public List getDocselec3() {
+        return docselec3;
+    }
+
+    public void setDocselec3(List docselec3) {
+        this.docselec3 = docselec3;
     }
 
 }

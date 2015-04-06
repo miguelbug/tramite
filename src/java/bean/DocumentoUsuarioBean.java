@@ -45,7 +45,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentoUsuarioBean {
 
-    private List otrosdocus3, docusInternosOGPL, oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista4, seguimientolista, confirmados, otrosdocus, otrosdocus2, otrosdocus4, docselec, detalle, docselec2, docselec3, docselec4, docselec5, confirmadosderivados, listadocspropios, listadocpropioscir;
+    private List tiposdocus,otrosdocus3, docusInternosOGPL, oficios3, oficios2, detallecirc2, designados, seguimientolista2, seguimientolista3, seguimientolista4, seguimientolista, confirmados, otrosdocus, otrosdocus2, otrosdocus4, docselec, detalle, docselec2, docselec3, docselec4, docselec5, confirmadosderivados, listadocspropios, listadocpropioscir;
     private Map<String, String> seleccion, seleccion2;
     private DocumentoDAO dd;
     private Date fecha, anio;
@@ -70,6 +70,7 @@ public class DocumentoUsuarioBean {
         seguimientolista2 = new ArrayList<Map<String, String>>();
         seguimientolista4 = new ArrayList<Map<String, String>>();
         designados = new ArrayList<String>();
+        tiposdocus = new ArrayList<String>();
         detallecirc2 = new ArrayList<Map<String, String>>();
         this.oficios2 = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
@@ -729,7 +730,7 @@ public class DocumentoUsuarioBean {
         }
         if (deriva) {
             try {
-
+                getTipoDocumentos();
                 System.out.println("entra a getsiglas");
                 siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
                 correlativo = generarCorrelativo();
@@ -757,7 +758,13 @@ public class DocumentoUsuarioBean {
         }
 
     }
-
+    public void getTipoDocumentos(){
+        try{
+            tiposdocus=dd.getTipoDocu();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
     public String generarCorrelativo() {
         int corr = 0;
         String aux = "";
@@ -1390,6 +1397,14 @@ public class DocumentoUsuarioBean {
 
     public void setDocselec5(List docselec5) {
         this.docselec5 = docselec5;
+    }
+
+    public List getTiposdocus() {
+        return tiposdocus;
+    }
+
+    public void setTiposdocus(List tiposdocus) {
+        this.tiposdocus = tiposdocus;
     }
 
 }

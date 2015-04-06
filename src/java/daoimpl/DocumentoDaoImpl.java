@@ -27,6 +27,26 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     Session session;
 
     @Override
+    public List getTipoDocu() {
+        List docus = new ArrayList();
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createSQLQuery("SELECT NOMBRE_DOCU FROM TIPOS_DOCUMENTOS WHERE FLAG='0'");
+            docus = (List) query.list();
+            session.beginTransaction().commit();
+
+        } catch (Exception e) {
+            System.out.println("no entró TIPOS DOCUS");
+            session.beginTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return docus;
+    }
+
+    @Override
     public String getJefe() {
         String jefe = null;
         session = HibernateUtil.getSessionFactory().openSession();
