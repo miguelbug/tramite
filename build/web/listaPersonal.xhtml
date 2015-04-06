@@ -15,15 +15,15 @@
     <h:body style="background-color: #D0D0D0;" >
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
-                <h:form id="form1" >
+                <h:form id="form">
                     <br></br>
                     <p:dataTable value="#{gestionUsuarioBean.listapersonal}" var="item" paginator="true" rows="15" id="tabladocumentospersonal" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  emptyMessage="no hay datos para este filtro" filteredValue="#{gestionUsuarioBean.otrosdocus}" selection="#{gestionUsuarioBean.docselec2}"
                                  rowKey="#{item.nombre}" style="margin-bottom: 0">
-                        
+
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        
+
                         <p:column headerText="OFICINA" width="5" sortBy="#{item.oficina}" filterBy="#{item.oficina}" filterMatchMode="contains">
                             <h:outputText value="#{item.oficina}" />
                         </p:column>
@@ -62,15 +62,28 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton process="tabladocumentospersonal" icon="ui-icon-search" value="Agregar Personal" style="position:absolute; left:25px; height:26px " oncomplete="PF('GUNuevoPers').show()"
-                                             update=":form1:gunuevopers" actionListener="#{gestionUsuarioBean.listar()}"/>
+                                             update=":form:gunuevopers" actionListener="#{gestionUsuarioBean.listar()}"/>
 
-                            <p:commandButton process="tabladocumentospersonal" icon="ui-icon-extlink" value="Agregar Usuario" style="position:absolute; left:205px; height:26px" oncomplete="PF('GUNuevoUsu').show()"
-                                             update=":form1:gunuevousu" actionListener="#{gestionUsuarioBean.listarJefatura()}">
-                                <p:ajax event="click"/>
+                            <p:commandButton process="tabladocumentospersonal" icon="ui-icon-extlink" value="Agregar Usuario" style="position:absolute; left:175px; height:26px" oncomplete="PF('GUNuevoUsu').show()"
+                                             update=":form:gunuevousu" actionListener="#{gestionUsuarioBean.listarJefatura()}">
                             </p:commandButton>
+                            <p:commandButton process="tabladocumentospersonal" icon="ui-icon-extlink" value="Cambiar Estado" style="position:absolute; left:321px; height:26px" oncomplete="PF('CambEstado').show()"
+                                             update=":form:cambiarestadousu" actionListener="#{gestionUsuarioBean.MostrarUsuario()}">
+                            </p:commandButton>
+
 
                         </f:facet>
                     </p:dataTable>
+                    <p:dialog header="Cambiar Estado de Usuario" widgetVar="CambEstado" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="cambiarestadousu">
+                        <center>
+                            <p:outputLabel value="¿DESEA CAMBIAR EL ESTADO? DEL USUARIO: #{gestionUsuarioBean.cambusu}"/>
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Aceptar" actionListener="#{gestionUsuarioBean.CambiarEstado()}"><f:ajax event="click" onevent="CambEstado.hide()"/></p:commandButton>
+                                <p:commandButton value="Cancelar"><f:ajax event="click" onevent="CambEstado.hide()"/></p:commandButton>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
+
                     <p:dialog header="Gestión Nuevo Personal" widgetVar="GUNuevoPers" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="gunuevopers">
                         <p:panelGrid columns="2" id="panelpers">
 
@@ -96,13 +109,13 @@
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{gestionUsuarioBean.contrato}"/>
                             </p:selectOneMenu>
-                            
+
                             <p:outputLabel value="Oficina:"/>
                             <p:selectOneMenu id="oficinas" value="#{gestionUsuarioBean.nuevoofi}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                 <f:selectItems value="#{gestionUsuarioBean.oficinas}"/>
                             </p:selectOneMenu>
-                            
+
                             <p:outputLabel value="Telefono:"/>
                             <p:inputText value="#{gestionUsuarioBean.nuevotelefono}"/>
 
@@ -123,7 +136,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers,:form1:" >
+                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarJefatura()}" update="panelpers,:form:" >
                                 <f:ajax event="click" onevent="GUNuevoPers.hide()"/>
                             </p:commandButton>
                         </center>
@@ -142,7 +155,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarUsuario()}" update="panelusu,:form1:">
+                            <p:commandButton value="Guardar" actionListener="#{gestionUsuarioBean.guardarUsuario()}" update="panelusu,:form:">
                                 <f:ajax event="click" onevent="GUNuevoUsu.hide()"/>
                             </p:commandButton>
                         </center>

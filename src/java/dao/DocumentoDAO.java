@@ -65,4 +65,5 @@ public interface DocumentoDAO {
     public List query6(String docu);
     public List query7(String docu);
     public String getJefe();
+    public List getTipoDocu();
 }
