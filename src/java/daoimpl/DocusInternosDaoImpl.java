@@ -259,8 +259,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     "SELECT R.I_D,\n"
                     + "       R.DOCUMENTO,\n"
                     + "       R.TRAM_NUM,\n"
-                    + "       R.TRAM_FECHA AS TRAM_FECHA\n,"
-                    + "       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
+                    + "       R.TRAM_FECHA AS TRAM_FECHA\n"
+                    + ",       TO_CHAR(R.FECHA,'DD/MM/YYYY HH:mm:ss') AS FECHA,\n"
                     + "       DECODE(R.ASUNTO,NULL,'SIN ASUNTO',UPPER(R.ASUNTO)),\n"
                     + "       R.ORIGEN,\n"
                     + "       R.DESTINO,\n"
@@ -295,7 +295,6 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "             AND DI.TRAM_FECHA=TDAT.TRAM_FECHA\n"
                     + "             AND TDAT.CODIGO=D3.CODIGO\n"
                     + "             AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='"+siglas+"')\n"
-                    /*+ "             AND DI.DOCU_SIGLASINT='" + siglas + "'\n"*/
                     + "             UNION\n"
                     + "             SELECT DI.IDTIP AS I_D,\n"
                     + "             DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
@@ -313,9 +312,24 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "             AND DI.CODIGO1=D2.CODIGO\n"
                     + "             AND DI.USU=USUA.USU\n"
                     + "             AND DI.TRAM_NUM IS NULL\n"
-                    + "             AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='"+siglas+"'))R"
-                    /*+ "             AND DI.DOCU_SIGLASINT='" + siglas + "') R\n"*/
-                    + "                                        \n"
+                    + "             AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='"+siglas+"')                                        \n"
+                    + "             UNION\n"
+                    + "             SELECT OFI.ID_OFICIO AS I_D,\n"
+                    + "             'OFICIO'||' N°'||OFI.CORRELATIVO_OFICIO||'-'||OFIC.SIGLAS||'-'||TO_CHAR(OFI.FECHA_OFICIO,'YYYY') AS DOCUMENTO,\n"
+                    + "             DECODE(OFI.TRAM_NUM,NULL,'SIN EXPEDIENTE',OFI.TRAM_NUM) AS TRAM_NUM,\n"
+                    + "             DECODE(TO_CHAR(OFI.TRAM_FECHA,'DD/MM/YYYY'),NULL,'SIN FECHA',TO_CHAR(OFI.TRAM_FECHA,'DD/MM/YYYY')) AS TRAM_FECHA,\n"
+                    + "             OFI.FECHA_OFICIO AS FECHA,\n"
+                    + "             DECODE(OFI.ASUNTO_OFICIO,NULL,'SIN ASUNTO',OFI.ASUNTO_OFICIO)||'-'||DECODE(OFI.REFERENCIA_OFICIO,NULL,'SIN REFERENCIA',OFI.REFERENCIA_OFICIO) AS ASUNTO,\n"
+                    + "             D1.NOMBRE AS ORIGEN,\n"
+                    + "             D2.NOMBRE AS DESTINO,\n"
+                    + "             USUA.USU_NOMBRE AS ASIGNADO,\n"
+                    + "             '1' AS ESTADO\n"
+                    + "              FROM OFICIOS OFI, OFICINA OFIC, DEPENDENCIA D1, DEPENDENCIA D2, USUARIO USUA\n"
+                    + "              where D1.CODIGO=OFI.CODIGO\n"
+                    + "              AND D2.CODIGO=OFI.CODIGO1\n"
+                    + "              AND D1.NOMBRE=OFIC.NOMBRE_OFICINA\n"
+                    + "              AND OFI.USU=USUA.USU\n"
+                    + "              AND OFI.CODIGO1='"+siglas+"')R\n"
                     + "     ORDER BY R.FECHA DESC");
             docinternos = query.list();
             session.beginTransaction().commit();
@@ -393,8 +407,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND TDAT.CODIGO=D3.CODIGO\n"
                     + "AND DI.TRAM_NUM||'-'||DI.TRAM_FECHA = TDOCU.TRAM_NUM||'-'||TDOCU.TRAM_FECHA\n"
                     /*+ "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
-                    + "AND DI.DOCU_SIGLASINT='" + siglas + "'\n"*/
-                    + "AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='"+siglas+"')\n"
+                     + "AND DI.DOCU_SIGLASINT='" + siglas + "'\n"*/
+                    + "AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='" + siglas + "')\n"
                     + "UNION\n"
                     + "SELECT DI.IDTIP AS I_D,\n"
                     + "DI.DOCU_NOMBREINT||' N° '||DI.DOCU_CORRELAINT||'-'||DI.DOCU_SIGLASINT||'-'||DI.DOCU_ANIOINT AS DOCUMENTO,\n"
@@ -415,8 +429,8 @@ public class DocusInternosDaoImpl implements DocusInternosDAO {
                     + "AND DI.USU1=USUA.USU\n"
                     + "AND DI.TRAM_NUM IS NULL\n"
                     /*+ "AND DI.DOCU_SIGLASINT NOT IN ('OGPL')\n"
-                    + "AND DI.DOCU_SIGLASINT='" + siglas + "') R\n"*/
-                    + "AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='"+siglas+"')) R\n"
+                     + "AND DI.DOCU_SIGLASINT='" + siglas + "') R\n"*/
+                    + "AND DI.USU IN (SELECT USU FROM USUARIO WHERE ID_OFICINA='" + siglas + "')) R\n"
                     + "\n"
                     + "ORDER BY R.FECHA DESC");
             docinternos = query.list();

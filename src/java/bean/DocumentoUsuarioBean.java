@@ -324,13 +324,13 @@ public class DocumentoUsuarioBean {
                             listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
                         } else {
                             if (String.valueOf(obj[2]).equals("SIN EXPEDIENTE")) {
-                                listaaux.put("destinoofi", "DOCUMENTO INTERNO");
+                                listaaux.put("destinoofi", String.valueOf(obj[7]));
                             } else {
                                 if (String.valueOf(obj[9]).equals("0") && String.valueOf(obj[1]).indexOf("ARCHIVO") == -1) {
                                     System.out.println(String.valueOf(obj[9]));
                                     listaaux.put("destinoofi", "SIN OFICIO");
                                 } else {
-                                    if (String.valueOf(obj[9]).equals("null")) {
+                                    if (String.valueOf(obj[9]).equals("null") || String.valueOf(obj[9]).equals("1")) {
                                         System.out.println(String.valueOf(obj[9]));
                                         listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
                                     } else {

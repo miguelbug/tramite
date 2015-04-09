@@ -10,7 +10,6 @@
         <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
         <h:outputStylesheet name="bootstrap/css/docs.css" />
-        <h:outputStylesheet name="css/dashboard.css" />
         <h:outputStylesheet name="css/codecomparator.css" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
@@ -70,13 +69,13 @@
                     <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="1800000" /> <!-- control del timeout -->
 
                 </p:panel>
-                <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
+                <!--<p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
                 <p:dialog header="#{msg['error.sessionTimeOut.header']}" widgetVar="sessionTimeOutDialog"
                           modal="true" closable="false" width="400" visible="false">
                     <h:outputText value="#{msg['error.sessionTimeOut.text']}" />
                     <input id="confirmBackToLogin" type="button" value="#{msg['error.sessionTimeOut.button']}"
                            onclick="window.location = '#{facesContext.externalContext.requestContextPath}/index.jsf';" />
-                </p:dialog>
+                </p:dialog>-->
             </h:form>
         </div>
         <br> </br>

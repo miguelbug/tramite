@@ -25,7 +25,7 @@ public class LoginDaoImpl implements LoginDao{
         Usuario nuevoUsu = null;
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("impl: "+usu+" "+pass);
-        String sql = "FROM Usuario WHERE usu = '" + usu + "' AND clave='" + pass + "'";
+        String sql = "FROM Usuario WHERE usu = '" + usu + "' AND clave='" + pass + "' AND estado='activo'";
         try {
             session.beginTransaction();
             nuevoUsu = (Usuario) session.createQuery(sql).uniqueResult();

@@ -470,7 +470,8 @@ public class OficioDaoImpl implements OficioDAO {
                     + "where d1.codigo=ofi.codigo\n"
                     + "and d2.codigo=ofi.codigo1\n"
                     + "and tram_num is null\n"
-                    + "and d1.nombre=oficina.nombre_oficina) R\n"
+                    + "and d1.nombre=oficina.nombre_oficina\n"
+                    + ") R\n"
                     + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();
