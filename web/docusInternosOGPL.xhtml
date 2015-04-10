@@ -8,61 +8,64 @@
         <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
-    <h:body style="background-color: #D0D0D0;" >
+    <h:body>
         <ui:composition template="./menucentral.xhtml">
             <ui:define name="content">
                 <h:form id="form" >
-                    <br></br>
-                    <center>
-                        <h3>DOCUMENTOS INTERNOS</h3>
-                    </center>
-                    <br></br>
-                    <p:dataTable value="#{documentoUsuarioBean.docusInternosOGPL}" var="item" paginator="true" rows="15" id="tabladocusInternosOGPL" 
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus3}" selection="#{objxUnidadController.docselec4}"
-                                 rowKey="#{item.id}"  editable="true">
+                    <p:tabView id="tabmayor" dynamic="true" style="background-color: #D0D0D0;">
+                        <p:tab title="DOCUMENTOS INTERNOS OGPL">
+                            <center>
+                                <h3>DOCUMENTOS INTERNOS</h3>
+                            </center>
+                            <br></br>
+                            <p:dataTable value="#{documentoUsuarioBean.docusInternosOGPL}" var="item" paginator="true" rows="15" id="tabladocusInternosOGPL" 
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus3}" selection="#{objxUnidadController.docselec4}"
+                                         rowKey="#{item.id}"  editable="true">
 
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-                        <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
-                            <h:outputText value="#{item.documento}"/>
-                        </p:column>
-                        <p:column headerText="FECH. REG." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
-                            <h:outputText value="#{item.fecharegistro}"/>
-                        </p:column>
-                        <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{item.asunto}"/>
+                                <p:column headerText="DOCUMENTO" width="3" sortBy="#{item.documento}" filterBy="#{item.documento}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.documento}"/>
+                                </p:column>
+                                <p:column headerText="FECH. REG." width="5" sortBy="#{item.expediente}" filterBy="#{item.expediente}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.fecharegistro}"/>
+                                </p:column>
+                                <p:column headerText="ASUNTO" width="5" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.asunto}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputTextarea rows="2" cols="70" value="#{item.asunto}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+
+                                </p:column>
+                                <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.origen}" />
+                                </p:column>
+                                <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.destino}" />
+                                </p:column>
+                                <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.asignado}" />
+                                </p:column>
+                                <p:column headerText="#" width="1" >
+                                    <h:outputText value="#{item.id}"/>
+                                </p:column>
+                                <p:column style="width:32px">
+                                    <p:rowEditor />
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Crear Documento" style="position:absolute; left:25px; height:26px " oncomplete="PF('DocuDialog').show()"
+                                                     update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}"/>
+                                    <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Eliminar Documento" style="position:absolute; left:175px; height:26px " oncomplete="PF('ConfirmarDialog').show()"
+                                                     actionListener="#{objxUnidadController.abrirConfirmacion()}" update=":form:ConfirmarDialog"/>
                                 </f:facet>
-                                <f:facet name="input">
-                                    <p:inputTextarea rows="2" cols="70" value="#{item.asunto}"/>
-                                </f:facet>
-                            </p:cellEditor>
-
-                        </p:column>
-                        <p:column headerText="ORIGEN" width="5" sortBy="#{item.origen}" filterBy="#{item.origen}" filterMatchMode="contains">
-                            <h:outputText value="#{item.origen}" />
-                        </p:column>
-                        <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
-                            <h:outputText value="#{item.destino}" />
-                        </p:column>
-                        <p:column headerText="RESPONSABLE" width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
-                            <h:outputText value="#{item.asignado}" />
-                        </p:column>
-                        <p:column headerText="#" width="1" >
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column style="width:32px">
-                            <p:rowEditor />
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Crear Documento" style="position:absolute; left:25px; height:26px " oncomplete="PF('DocuDialog').show()"
-                                             update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}"/>
-                            <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Eliminar Documento" style="position:absolute; left:175px; height:26px " oncomplete="PF('ConfirmarDialog').show()"
-                                             actionListener="#{objxUnidadController.abrirConfirmacion()}" update=":form:ConfirmarDialog"/>
-                        </f:facet>
-                    </p:dataTable>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
                     <br></br>
                     <p:dialog header="Eliminar Documento" widgetVar="ConfirmarDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="ConfirmarDialog">
                         <center>

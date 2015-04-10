@@ -34,7 +34,8 @@
 
         <div class="container">
             <p:growl id="growl" sticky="true" showDetail="true" life="1000" />
-            <h:form id="login">  
+            <h:form id="login">
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
                 <p:panel id="basic" header=" Oficina General de planificacion " >
 
                     <img src="resources/img/unmsm3.jpg" style="width: 38%;border-radius: 55%;margin-left: 32%;opacity: 0.5; filter:alpha(opacity=50);"
@@ -56,18 +57,15 @@
                         <br></br>
                         <f:facet name="footer">
 
-                            <p:commandButton  value=" Ingresar" update=":growl" style="width: 150px; height:50px; text-align: center ;float:bottom; margin-left: 57px;
-                                              color: #fff;background-color: #428bca; border-color: #357ebd" action="#{loginBean.ActionLogin()}">
-                                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                            <p:commandButton  value=" Ingresar" update=":growl,:login:" style="width: 150px; height:50px; text-align: center ;float:bottom; margin-left: 57px;
+                                              color: #fff;background-color: #428bca; border-color: #357ebd" action="#{loginBean.ActionLogin()}" >
                             </p:commandButton>
-
                         </f:facet>
-                        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                            <p:graphicImage library="img" name="ajaxloadingbar.gif" />
-                        </p:dialog>
                     </h:panelGrid>
                     <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="1800000" /> <!-- control del timeout -->
-
+                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <p:graphicImage url="/resources/img/ajaxloadingbar.gif" />
+                    </p:dialog>
                 </p:panel>
                 <!--<p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
                 <p:dialog header="#{msg['error.sessionTimeOut.header']}" widgetVar="sessionTimeOutDialog"
