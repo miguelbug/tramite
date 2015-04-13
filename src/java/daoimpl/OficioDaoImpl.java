@@ -41,7 +41,7 @@ public class OficioDaoImpl implements OficioDAO {
             session.beginTransaction();
             Query query = session.createSQLQuery("SELECT TRAM_NUM||' '||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:ss')\n"
                     + "FROM TRAMITE_MOVIMIENTO\n"
-                    + "WHERE CODIGO='"+oficina+"'"
+                    + "WHERE CODIGO='" + oficina + "'"
                     + "ORDER BY TRAM_FECHA DESC");
             tramNum = (List) query.list();
             session.beginTransaction().commit();
@@ -184,16 +184,16 @@ public class OficioDaoImpl implements OficioDAO {
     public void ActualizarOficio(String correla, String asunto, String destino, String asignado, String tramNum, String fecha) {
         String codigo = String.valueOf(this.getDependencias2(destino).getCodigo());
         SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date d=null;
+        Date d = null;
         try {
-            d= formato2.parse(fecha);
+            d = formato2.parse(fecha);
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         }
         SimpleDateFormat formato3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String nuevafecha=formato3.format(d);
+        String nuevafecha = formato3.format(d);
         String sql = "UPDATE OFICIOS SET ASUNTO_OFICIO='" + asunto + "', CODIGO1='" + codigo + "', "
-                + "TRAM_NUM='"+tramNum+"', TRAM_FECHA=TO_DATE('"+nuevafecha+"','YYYY-MM-DD HH24:MI:SS'), RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
+                + "TRAM_NUM='" + tramNum + "', TRAM_FECHA=TO_DATE('" + nuevafecha + "','YYYY-MM-DD HH24:MI:SS'), RESPONSABLE='" + asignado + "' WHERE CORRELATIVO_OFICIO='" + correla + "'";
         session = HibernateUtil.getSessionFactory().openSession();
         int i = 0;
         try {
@@ -311,6 +311,7 @@ public class OficioDaoImpl implements OficioDAO {
                     + "and tram_num is null\n"
                     + "and d1.nombre=oficina.nombre_oficina) R\n"
                     + "where R.responsable='" + user + "'\n"
+                    + "OR R.destino='" + user + "'"
                     + "order by R.fecha desc");
             depes = (List) query.list();
             session.beginTransaction().commit();
