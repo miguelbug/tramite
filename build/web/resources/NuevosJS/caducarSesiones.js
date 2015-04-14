@@ -1,3 +1,3 @@
 function redireccionar() {
-    window.location.href='http://localhost:8080/pruebatramite/index.jsf';
+    window.location.href='http://localhost:8080/pruebatramite/';
 }

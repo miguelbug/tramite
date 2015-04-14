@@ -6,7 +6,7 @@
     <class name="maping.Indicador" table="INDICADOR" schema="MIGUEL">
         <id name="indiCod" type="int">
             <column name="INDI_COD" precision="5" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="indiNombre" type="string">
             <column name="INDI_NOMBRE" length="60" />

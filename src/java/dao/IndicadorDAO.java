@@ -14,4 +14,6 @@ import maping.Indicador;
  */
 public interface IndicadorDAO {
     public Indicador getIndicador(String nombre);
+    public boolean validarIndicador(String nombre);
+    public void insertarIndicador(Indicador Ind);
 }

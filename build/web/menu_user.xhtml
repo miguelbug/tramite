@@ -9,6 +9,7 @@
         <title>Facelet Title</title>
         <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+        <script language="JavaScript" src="./resources/NuevosJS/caducarSesiones.js" type="text/javascript"/>
     </h:head>
     <h:body>
         <img src="resources/img/banner4.jpg" style=" height:150px; width: 100%;border-radius: 30%;opacity: 0.7s; filter:alpha(opacity=90);"
@@ -25,14 +26,14 @@
                     <p:menuitem value="Documentos Internos" action="documentos_internosUsuario?faces-redirect=true"/>
                     <p:menuitem value="Oficios OGPL" action="oficios_ogpl?faces-redirect=true"/>
                 </p:submenu>    
-                
+
                 <p:submenu label="Reportes Especiales" icon="ui-icon-wrench" rendered="#{loginBean.oficina}">
                     <p:menuitem value="Ver Reportes" action="reportesEspeciales?faces-redirect=true"/>
                 </p:submenu>
                 <p:submenu label="Busqueda Avanzada" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Por parámetros" action="busqParametrosNuevo?faces-redirect=true" />
                 </p:submenu>
-                
+
 
                 <p:submenu label="Mantenimiento" icon="ui-icon-wrench" styleClass="conf">
                     <p:menuitem value="Usuarios" actionListener="#{gestionUsuarioBean.listarJefesUser()}" oncomplete="PF('GUNuevoUsuario').show()" update="gunuevousuario" />
@@ -80,9 +81,17 @@
                     </p:commandButton>
                 </center>
             </p:dialog>
-            
-
-            
+            <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="2700000" /> <!-- control del timeout -->
         </h:form>
+        <p:dialog header="SESIÓN CADUCADA" widgetVar="sessionTimeOutDialog" modal="true" closable="false" width="400" visible="false">
+            <h:form>
+                <center>
+                    <h:outputText value="Su sesión ha caducado, pulse el botón para reiniciar su sesión." /><br/><br/>
+                    <p:commandButton type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()',0);"/>
+                    <!--<input type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()', 0);"/>-->
+                </center>
+            </h:form>
+        </p:dialog>
+        <!-- Fin control del timeout -->
     </h:body>
 </html>

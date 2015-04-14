@@ -284,7 +284,7 @@
                             <p:inputTextarea  rows="6" cols="33" value="#{oficioBean.asunto}" style="text-transform:uppercase;"/>
 
                             <p:outputLabel value="Día:"/>
-                            <p:inputText value="#{oficioBean.fechadia2}"/>
+                            <p:inputMask value="#{oficioBean.fechadia2}" mask="99/99/9999"/>
 
                             <p:outputLabel value="Hora:"/>
                             <p:outputLabel value="#{oficioBean.fechahora}"/>

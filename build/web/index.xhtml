@@ -15,8 +15,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
         <h:outputScript name="bootstrap/js/bootstrap.js" />
         <script language="JavaScript" src="./resources/NuevosJS/caducarSesiones.js" type="text/javascript"/>
-
-
     </h:head>
 
     <h:body style="background-color: #D0D0D0;" >
@@ -62,20 +60,25 @@
                             </p:commandButton>
                         </f:facet>
                     </h:panelGrid>
-                    <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="1800000" /> <!-- control del timeout -->
+                    
                     <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                         <p:graphicImage url="/resources/img/ajaxloadingbar.gif" />
                     </p:dialog>
                 </p:panel>
-                <!--<p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
-                <p:dialog header="#{msg['error.sessionTimeOut.header']}" widgetVar="sessionTimeOutDialog"
-                          modal="true" closable="false" width="400" visible="false">
-                    <h:outputText value="#{msg['error.sessionTimeOut.text']}" />
-                    <input id="confirmBackToLogin" type="button" value="#{msg['error.sessionTimeOut.button']}"
-                           onclick="window.location = '#{facesContext.externalContext.requestContextPath}/index.jsf';" />
-                </p:dialog>-->
+                <p:idleMonitor onidle="PF('sessionTimeOutDialog').show()" timeout="2700000" /> <!-- control del timeout -->
             </h:form>
         </div>
         <br> </br>
+        <!-- Inicio control del timeout -->
+        <p:dialog header="SESIÓN CADUCADA" widgetVar="sessionTimeOutDialog" modal="true" closable="false" width="400" visible="false">
+            <h:form>
+                <center>
+                    <h:outputText value="Su sesión ha caducado, pulse el botón para reiniciar su sesión." /><br/><br/>
+                    <p:commandButton type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()',0);"/>
+                    <!--<input type="submit" value="Reiniciar" onclick="setTimeout('redireccionar()', 0);"/>-->
+                </center>
+            </h:form>
+        </p:dialog>
+        <!-- Fin control del timeout -->
     </h:body>
 </html>

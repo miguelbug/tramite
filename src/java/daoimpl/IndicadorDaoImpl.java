@@ -37,6 +37,49 @@ public class IndicadorDaoImpl implements IndicadorDAO {
         }
         return nuevoIndic;
     }
+
+    @Override
+    public boolean validarIndicador(String nombre) {
+        boolean esta;
+        Indicador nuevoIndic = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        System.out.println("nombre");
+        String sql = "FROM INDICADOR WHERE INDI_NOMBRE='" + nombre + "'";
+        try {
+            session.beginTransaction();
+            nuevoIndic = (Indicador) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("mal");
+            session.beginTransaction().rollback();
+        } finally{
+            session.close();
+        }
+        if(!nuevoIndic.equals(null)){
+            esta=false;
+        }else{
+            esta=true;
+        }
+        return esta;
+    }
+
+    @Override
+    public void insertarIndicador(Indicador Ind) {
+        System.out.println("entra a guardar indicador");
+        session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.save(Ind);
+            session.getTransaction().commit();
+            System.out.println("terminó guardar indicador");
+        } catch (Exception e) {
+            System.out.println("mal guardar indicador");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
     
     
 }

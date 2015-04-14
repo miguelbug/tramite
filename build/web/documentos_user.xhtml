@@ -148,7 +148,7 @@
                                     <f:selectItems value="#{documentoUsuarioBean.designados}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Fecha: "/>
-                                <p:inputText value="#{documentoUsuarioBean.fechaconfirmar}"/>
+                                <p:inputMask value="#{documentoUsuarioBean.fechaconfirmar}" mask="99/99/9999"/>
                             </p:panelGrid>
                             <br></br>
                             <p:commandButton value="Confirmar" actionListener="#{documentoUsuarioBean.ConfirmarAsignar()}" update=":form:"/>
@@ -230,7 +230,7 @@
                             <p:outputLabel value="Estado: "/>
                             <p:outputLabel id="estado" value="#{documentoUsuarioBean.estado}"/>
                             <p:outputLabel value="Fecha: "/>
-                            <p:inputText value="#{documentoUsuarioBean.fechadia}" />
+                            <p:inputMask value="#{documentoUsuarioBean.fechadia}" mask="99/99/9999" />
                             <p:outputLabel value="Hora: " />
                             <p:outputLabel value="#{documentoUsuarioBean.fechahora}" />
                             <p:outputLabel value="Motivo: " />
