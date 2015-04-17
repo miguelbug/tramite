@@ -1078,7 +1078,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "AND DE.USU=USUA.USU\n"
                     + "AND USUA.ID_OFICINA=oficina.ID_OFICINA\n"
                     + "AND DE.EXT_INT IN ('pe','pi')\n"
-                    + "AND TD.NOMBRE_DOCU||' N° '||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY')='"+docu+"'\n"
+                    + "AND TD.NOMBRE_DOCU||' N° '||DE.CORRELATIVOD||'-'||oficina.siglas||'-'||to_char(DE.Fecha,'YYYY')='" + docu + "'\n"
                     + "ORDER BY DE.ID DESC");
             docusavanzado = query.list();
             System.out.println("despues de query de gedocus avanzados");
@@ -1415,7 +1415,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public List getDetalleOGPL(String tramnum) {
+    public List getDetalleOGPL(String tramnum, String fecha) {
         List codigos = new ArrayList();
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -1425,7 +1425,8 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "ESTA_DESCRIP,\n"
                     + "DOCU_NOMBRE||'-'||DOCU_NUM||'-'||DOCU_SIGLAS||'-'||DOCU_ANIO as documento\n"
                     + "FROM vw_ogpl001@TRAMITEDBLINK\n"
-                    + "where TRAM_NUM='" + tramnum + "'"
+                    + "where TRAM_NUM='" + tramnum + "'\n"
+                    + "AND TO_CHAR(TRAM_FECHA,'DD/MM/YYYY')='" + fecha + "'"
             );
             codigos = query.list();
             session.beginTransaction().commit();
@@ -1446,20 +1447,10 @@ public class DocumentoDaoImpl implements DocumentoDAO {
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            Query query = session.createSQLQuery("SELECT TD.USU,\n"
-                    + "OFI.NOMBRE_OFICINA,\n"
-                    + "ESTA_DESCRIP,\n"
-                    + "DOC.DOCU_NOMBRE||'-'||DOC.DOCU_NUM||'-'||DOC.DOCU_SIGLAS||'-'||DOC.DOCU_ANIO AS DOCUMENTO\n"
-                    + "FROM TRAMITE_DATOS TD, USUARIO U, TIPO_DOCU DOC,OFICINA OFI, TRAMITE_MOVIMIENTO TM\n"
-                    + "WHERE TD.TRAM_NUM=UPPER('" + tramnum + "') \n"
-                    + "AND TD.TRAM_NUM=TM.TRAM_NUM\n"
-                    + "AND TD.TRAM_FECHA=TM.TRAM_FECHA\n"
-                    + "AND TM.MOVI_NUM='" + movi + "'\n"
-                    + "AND TD.TRAM_NUM=DOC.TRAM_NUM\n"
-                    + "and TM.TRAM_FECHA=DOC.TRAM_FECHA\n"
-                    + "AND TM.TRAM_NUM=DOC.TRAM_NUM\n"
-                    + "AND U.ID_OFICINA=OFI.ID_OFICINA\n"
-                    + "and U.USU=TD.USU");
+            Query query = session.createSQLQuery("SELECT MOVI_FEC_ENV,MOVI_ORIGEN,ESTA_NOMBRE,TRAM_NUM\n"
+                    + "FROM vw_ogpl002@TRAMITEDBLINK\n"
+                    + "WHERE TRAM_NUM='"+tramnum+"'\n"
+                    + "AND MOVI_NUM='"+movi+"'");
             codigos = query.list();
             session.beginTransaction().commit();
 
