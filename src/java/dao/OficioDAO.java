@@ -9,7 +9,6 @@ package dao;
 import java.util.List;
 import maping.Dependencia;
 import maping.DetallOficcirc;
-import maping.DocumentosOfiint;
 import maping.DocusInternos;
 import maping.OficCirc;
 import maping.Oficina;

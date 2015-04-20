@@ -7,7 +7,7 @@
 package daoimpl;
 
 import dao.TemporaldiDao;
-import maping.TemporalCargos;
+import maping.Temporalcargos;
 import maping.TemporalDi;
 import maping.TemporalUser;
 import org.hibernate.Session;
@@ -42,7 +42,7 @@ public class TemporalDiDaoImpl implements TemporaldiDao{
     }
 
     @Override
-    public void guardarCargos(TemporalCargos tc) {
+    public void guardarCargos(Temporalcargos tc) {
         System.out.println("entra a guardar temporalcargos");
         try {
             session = HibernateUtil.getSessionFactory().openSession();

@@ -1,5 +1,5 @@
 package maping;
-// Generated 05/11/2014 09:54:41 AM by Hibernate Tools 3.6.0
+// Generated 17/04/2015 04:53:35 PM by Hibernate Tools 3.6.0
 
 
 import java.math.BigDecimal;
@@ -11,8 +11,8 @@ public class DetallOficcirc  implements java.io.Serializable {
 
 
      private BigDecimal idDetalloficirc;
-     private OficCirc oficCirc;
      private TiposDocumentos tiposDocumentos;
+     private OficCirc oficCirc;
      private Dependencia dependencia;
 
     public DetallOficcirc() {
@@ -22,10 +22,10 @@ public class DetallOficcirc  implements java.io.Serializable {
     public DetallOficcirc(BigDecimal idDetalloficirc) {
         this.idDetalloficirc = idDetalloficirc;
     }
-    public DetallOficcirc(BigDecimal idDetalloficirc, OficCirc oficCirc, TiposDocumentos tiposDocumentos, Dependencia dependencia) {
+    public DetallOficcirc(BigDecimal idDetalloficirc, TiposDocumentos tiposDocumentos, OficCirc oficCirc, Dependencia dependencia) {
        this.idDetalloficirc = idDetalloficirc;
-       this.oficCirc = oficCirc;
        this.tiposDocumentos = tiposDocumentos;
+       this.oficCirc = oficCirc;
        this.dependencia = dependencia;
     }
    
@@ -36,19 +36,19 @@ public class DetallOficcirc  implements java.io.Serializable {
     public void setIdDetalloficirc(BigDecimal idDetalloficirc) {
         this.idDetalloficirc = idDetalloficirc;
     }
-    public OficCirc getOficCirc() {
-        return this.oficCirc;
-    }
-    
-    public void setOficCirc(OficCirc oficCirc) {
-        this.oficCirc = oficCirc;
-    }
     public TiposDocumentos getTiposDocumentos() {
         return this.tiposDocumentos;
     }
     
     public void setTiposDocumentos(TiposDocumentos tiposDocumentos) {
         this.tiposDocumentos = tiposDocumentos;
+    }
+    public OficCirc getOficCirc() {
+        return this.oficCirc;
+    }
+    
+    public void setOficCirc(OficCirc oficCirc) {
+        this.oficCirc = oficCirc;
     }
     public Dependencia getDependencia() {
         return this.dependencia;

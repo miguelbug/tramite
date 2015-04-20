@@ -33,7 +33,7 @@ import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession; 
 import maping.DocusExtint;
 import maping.Indicador;
 import maping.Oficios;
@@ -780,7 +780,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("sle indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                     t.setAsunto(hm.get("observacion").toString());
-                    t.setTiposdocumentos(hm.get("docunomb").toString());
+                    t.setTipodocumentos(hm.get("docunomb").toString());
                     tdoc = getTipodocumento(aux, td);
                     //}
                 } else {
@@ -834,7 +834,7 @@ public class DocumentosBean implements Serializable {
                         tdoc.setDocuNum("SIN NUMERO");
                         tdoc.setDocuSiglas(siglas(hm.get("numerotramite").toString()));
                         tdoc.setDocuPric("1");
-                        t.setTiposdocumentos(hm.get("docunomb").toString());
+                        t.setTipodocumentos(hm.get("docunomb").toString());
                     }
                     System.out.println("entra a indicador");
                     if (this.indicador.validarIndicador(hm.get("indicador").toString()) == false) {

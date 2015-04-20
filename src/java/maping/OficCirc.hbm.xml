@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.OficCirc" table="OFIC_CIRC" schema="MIGUEL">
+    <class name="maping.OficCirc" table="OFIC_CIRC" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idOfcirc" type="long">
             <column name="ID_OFCIRC" precision="10" scale="0" />
             <generator class="increment" />
         </id>
-        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
-            <column name="CODIGO" precision="10" scale="0" />
-        </many-to-one>
         <many-to-one name="tiposDocumentos" class="maping.TiposDocumentos" fetch="select">
             <column name="ID_DOCUMENTO" precision="22" scale="0" />
+        </many-to-one>
+        <many-to-one name="dependencia" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
         <property name="correlaOficic" type="string">
             <column name="CORRELA_OFICIC" length="30" />

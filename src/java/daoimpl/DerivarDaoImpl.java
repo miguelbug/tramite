@@ -310,7 +310,7 @@ public class DerivarDaoImpl implements DerivarDAO {
             di.setTramiteDatos(getTramite(numtram,tramfecha));
             di.setTiposDocumentos(getTipoDoc(nombre));
             di.setFecharegistro(fecharegistro);
-            di.setUsuario(usu);
+            di.setUsuarioByUsu(usu);
             di.setDocuAsunto(asunto);
             di.setNumeroMovi(movi);
             di.setDependenciaByCodigo(d);

@@ -43,7 +43,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import maping.Usuario;
-import maping.TemporalCargos;
+import maping.Temporalcargos;
 import org.primefaces.context.RequestContext;
 //
 
@@ -152,7 +152,7 @@ public class objxUnidadController implements Serializable {
     public void guardarDatos3() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (int i = 0; i < docselec1.size(); i++) {
-            TemporalCargos tc = new TemporalCargos();
+            Temporalcargos tc = new Temporalcargos();
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tc.setDocumento(hm.get("documento").toString());
             tc.setFecha(formatter.parse(hm.get("fecha").toString()));

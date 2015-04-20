@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.Temporal" table="TEMPORAL" schema="MIGUEL">
+    <class name="maping.Temporal" table="TEMPORAL" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
             <generator class="increment" />
@@ -29,14 +29,14 @@
         <property name="destino" type="string">
             <column name="DESTINO" length="300" />
         </property>
-        <property name="contador" type="string">
-            <column name="CONTADOR" length="20" />
-        </property>
         <property name="siglas" type="string">
             <column name="SIGLAS" length="30" />
         </property>
-        <property name="tiposdocumentos" type="string">
+        <property name="tipodocumentos" type="string">
             <column name="TIPODOCUMENTOS" length="100" />
+        </property>
+        <property name="contador" type="string">
+            <column name="CONTADOR" length="20" />
         </property>
     </class>
 </hibernate-mapping>

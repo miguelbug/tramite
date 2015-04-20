@@ -1,5 +1,5 @@
 package maping;
-// Generated 23/10/2014 05:20:25 PM by Hibernate Tools 3.6.0
+// Generated 17/04/2015 04:53:35 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -16,12 +16,14 @@ public class Usuario  implements java.io.Serializable {
      private String usuNombre;
      private String clave;
      private String estado;
+     private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
      private Set<TramiteDatos> tramiteDatoses = new HashSet<TramiteDatos>(0);
-     private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
+     private Set<DocusInternos> docusInternosesForUsu1 = new HashSet<DocusInternos>(0);
      private Set<Constancias> constanciases = new HashSet<Constancias>(0);
-     private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
-     private Set<DocusInternos> docusInternoses1 = new HashSet<DocusInternos>(0);
+     private Set<DocusInternos> docusInternosesForUsu = new HashSet<DocusInternos>(0);
+     private Set<Oficios> oficioses = new HashSet<Oficios>(0);
      private Set<Jefatura> jefaturas = new HashSet<Jefatura>(0);
+     private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
 
     public Usuario() {
     }
@@ -32,18 +34,20 @@ public class Usuario  implements java.io.Serializable {
         this.usuNombre = usuNombre;
         this.clave = clave;
     }
-    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteDatos> tramiteDatoses, Set<DocusExtint> docusExtints, Set<Constancias> constanciases, Set<DocusInternos> docusInternoses, Set<Jefatura> jefaturas, Set<DocusInternos> docusInternoses1) {
+    public Usuario(String usu, Oficina oficina, String usuNombre, String clave, String estado, Set<TramiteMovimiento> tramiteMovimientos, Set<TramiteDatos> tramiteDatoses, Set<DocusInternos> docusInternosesForUsu1, Set<Constancias> constanciases, Set<DocusInternos> docusInternosesForUsu, Set<Oficios> oficioses, Set<Jefatura> jefaturas, Set<DocusExtint> docusExtints) {
        this.usu = usu;
        this.oficina = oficina;
        this.usuNombre = usuNombre;
        this.clave = clave;
        this.estado = estado;
+       this.tramiteMovimientos = tramiteMovimientos;
        this.tramiteDatoses = tramiteDatoses;
-       this.docusExtints = docusExtints;
+       this.docusInternosesForUsu1 = docusInternosesForUsu1;
        this.constanciases = constanciases;
-       this.docusInternoses = docusInternoses;
+       this.docusInternosesForUsu = docusInternosesForUsu;
+       this.oficioses = oficioses;
        this.jefaturas = jefaturas;
-       this.docusInternoses1 = docusInternoses1;
+       this.docusExtints = docusExtints;
     }
    
     public String getUsu() {
@@ -81,6 +85,13 @@ public class Usuario  implements java.io.Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    public Set<TramiteMovimiento> getTramiteMovimientos() {
+        return this.tramiteMovimientos;
+    }
+    
+    public void setTramiteMovimientos(Set<TramiteMovimiento> tramiteMovimientos) {
+        this.tramiteMovimientos = tramiteMovimientos;
+    }
     public Set<TramiteDatos> getTramiteDatoses() {
         return this.tramiteDatoses;
     }
@@ -88,12 +99,12 @@ public class Usuario  implements java.io.Serializable {
     public void setTramiteDatoses(Set<TramiteDatos> tramiteDatoses) {
         this.tramiteDatoses = tramiteDatoses;
     }
-    public Set<DocusExtint> getDocusExtints() {
-        return this.docusExtints;
+    public Set<DocusInternos> getDocusInternosesForUsu1() {
+        return this.docusInternosesForUsu1;
     }
     
-    public void setDocusExtints(Set<DocusExtint> docusExtints) {
-        this.docusExtints = docusExtints;
+    public void setDocusInternosesForUsu1(Set<DocusInternos> docusInternosesForUsu1) {
+        this.docusInternosesForUsu1 = docusInternosesForUsu1;
     }
     public Set<Constancias> getConstanciases() {
         return this.constanciases;
@@ -102,12 +113,19 @@ public class Usuario  implements java.io.Serializable {
     public void setConstanciases(Set<Constancias> constanciases) {
         this.constanciases = constanciases;
     }
-    public Set<DocusInternos> getDocusInternoses() {
-        return this.docusInternoses;
+    public Set<DocusInternos> getDocusInternosesForUsu() {
+        return this.docusInternosesForUsu;
     }
     
-    public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
-        this.docusInternoses = docusInternoses;
+    public void setDocusInternosesForUsu(Set<DocusInternos> docusInternosesForUsu) {
+        this.docusInternosesForUsu = docusInternosesForUsu;
+    }
+    public Set<Oficios> getOficioses() {
+        return this.oficioses;
+    }
+    
+    public void setOficioses(Set<Oficios> oficioses) {
+        this.oficioses = oficioses;
     }
     public Set<Jefatura> getJefaturas() {
         return this.jefaturas;
@@ -116,13 +134,12 @@ public class Usuario  implements java.io.Serializable {
     public void setJefaturas(Set<Jefatura> jefaturas) {
         this.jefaturas = jefaturas;
     }
-
-    public Set<DocusInternos> getDocusInternoses1() {
-        return docusInternoses1;
+    public Set<DocusExtint> getDocusExtints() {
+        return this.docusExtints;
     }
-
-    public void setDocusInternoses1(Set<DocusInternos> docusInternoses1) {
-        this.docusInternoses1 = docusInternoses1;
+    
+    public void setDocusExtints(Set<DocusExtint> docusExtints) {
+        this.docusExtints = docusExtints;
     }
 
 

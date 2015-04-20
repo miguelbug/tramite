@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="MIGUEL">
+    <class name="maping.DocusExtint" table="DOCUS_EXTINT" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="id" type="long">
             <column name="ID" precision="10" scale="0" />
             <generator class="increment" />
         </id>
         <many-to-one name="tiposDocumentos" class="maping.TiposDocumentos" fetch="select">
-            <column name="ID_DOCUMENTO" precision="38" scale="0" />
+            <column name="ID_DOCUMENTO" precision="22" scale="0" />
         </many-to-one>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
@@ -20,12 +20,6 @@
         <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
             <column name="CODIGO" precision="10" scale="0" />
         </many-to-one>
-        <property name="correlativod" type="string">
-            <column name="CORRELATIVOD" length="30" />
-        </property>
-        <property name="fechaEnvio" type="date">
-            <column name="FECHA_ENVIO" length="7" />
-        </property>
         <property name="numerodoc" type="string">
             <column name="NUMERODOC" length="60" />
         </property>
@@ -37,6 +31,12 @@
         </property>
         <property name="movimientoDext" type="java.lang.Long">
             <column name="MOVIMIENTO_DEXT" precision="10" scale="0" />
+        </property>
+        <property name="correlativod" type="string">
+            <column name="CORRELATIVOD" length="30" />
+        </property>
+        <property name="fechaEnvio" type="date">
+            <column name="FECHA_ENVIO" length="7" />
         </property>
         <property name="extInt" type="string">
             <column name="EXT_INT" length="30" />

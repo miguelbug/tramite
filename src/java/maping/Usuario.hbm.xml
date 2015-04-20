@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.Usuario" table="USUARIO" schema="MIGUEL">
+    <class name="maping.Usuario" table="USUARIO" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="usu" type="string">
             <column name="USU" length="30" />
             <generator class="assigned" />
@@ -20,17 +20,23 @@
         <property name="estado" type="string">
             <column name="ESTADO" length="20" />
         </property>
+        <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU" length="30" />
+            </key>
+            <one-to-many class="maping.TramiteMovimiento" />
+        </set>
         <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="USU" length="30" />
             </key>
             <one-to-many class="maping.TramiteDatos" />
         </set>
-        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+        <set name="docusInternosesForUsu1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="USU" length="30" />
+                <column name="USU1" length="30" />
             </key>
-            <one-to-many class="maping.DocusExtint" />
+            <one-to-many class="maping.DocusInternos" />
         </set>
         <set name="constanciases" table="CONSTANCIAS" inverse="true" lazy="true" fetch="select">
             <key>
@@ -38,25 +44,29 @@
             </key>
             <one-to-many class="maping.Constancias" />
         </set>
-        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+        <set name="docusInternosesForUsu" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="USU" length="30" />
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
-        
-        <set name="docusInternoses1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+        <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="USU" length="30" />
             </key>
-            <one-to-many class="maping.DocusInternos" />
+            <one-to-many class="maping.Oficios" />
         </set>
-        
         <set name="jefaturas" table="JEFATURA" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="USU" length="30" />
             </key>
             <one-to-many class="maping.Jefatura" />
+        </set>
+        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USU" length="30" />
+            </key>
+            <one-to-many class="maping.DocusExtint" />
         </set>
     </class>
 </hibernate-mapping>

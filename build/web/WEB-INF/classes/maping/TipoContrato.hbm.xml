@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/10/2014 03:11:30 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TipoContrato" table="TIPO_CONTRATO" schema="MIGUEL">
+    <class name="maping.TipoContrato" table="TIPO_CONTRATO" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idContrato" type="long">
             <column name="ID_CONTRATO" precision="10" scale="0" />
             <generator class="increment" />
