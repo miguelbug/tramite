@@ -27,6 +27,7 @@
 		<defaultValueExpression ><![CDATA["escudo_reporte.jpg"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="jefe" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[SELECT CO.CORRELATIVO,
 TO_CHAR(CO.FECHA_EMISION,'DD') AS FECHAEMISION_DIA,
 TO_CHAR(CO.FECHA_EMISION,'MONTH') AS FECHAEMISION_MES,
@@ -55,8 +56,7 @@ AND PROFE.ID_PROFESION=JEFA.ID_PROFESION
 AND TC.ID_CONTRATO=JEFA.ID_CONTRATO
 AND D.CODIGO=JEFA.CODIGO
 AND CO.DRIGIDO_A=JEFA.NOMBRE||' '||JEFA.APELLIDOS
-AND CO.CORRELATIVO=$P{correlativo}
-]]></queryString>
+AND CO.CORRELATIVO=$P{correlativo}]]></queryString>
 
 	<field name="CORRELATIVO" class="java.lang.String"/>
 	<field name="FECHAEMISION_DIA" class="java.lang.String"/>
@@ -556,19 +556,6 @@ AND CO.CORRELATIVO=$P{correlativo}
 			<band height="59"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="139"
-						y="2"
-						width="249"
-						height="21"
-						key="staticText-9"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
-					</textElement>
-				<text><![CDATA[Mg. JUAN E. ANICAMA PESCORAN]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
 						x="140"
 						y="26"
 						width="249"
@@ -580,6 +567,19 @@ AND CO.CORRELATIVO=$P{correlativo}
 					</textElement>
 				<text><![CDATA[Jefe de la Oficina General de Planificación]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="140"
+						y="2"
+						width="247"
+						height="24"
+						key="textField-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{jefe}]]></textFieldExpression>
+				</textField>
 			</band>
 		</columnFooter>
 		<pageFooter>

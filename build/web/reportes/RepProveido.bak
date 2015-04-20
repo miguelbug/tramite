@@ -30,10 +30,10 @@
 		<defaultValueExpression ><![CDATA["achuchon"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["00069"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["00067"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["10/03/2015"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["05/03/2015"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="jefe" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["Mg. JUAN ANICAMA PESCORANAAA"]]></defaultValueExpression>

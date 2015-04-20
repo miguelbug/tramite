@@ -26,9 +26,6 @@
 	<parameter name="logo" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["escudo_reporte.jpg"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="usuario" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["achuchon"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="correlativo" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["00067"]]></defaultValueExpression>
 	</parameter>
@@ -51,7 +48,6 @@ WHERE DE.CODIGO=M1.CODIGO
 AND DE.CODIGO1=M2.CODIGO
 AND DE.ID_DOCUMENTO=TD.ID_DOCUMENTO
 AND DE.USU=USUA.USU
-AND DE.USU=$P{usuario}
 AND DE.CORRELATIVOD=$P{correlativo}
 AND to_char(DE.FECHA,'DD/MM/YYYY')=$P{fecha}
 AND USUA.ID_OFICINA=oficina.ID_OFICINA

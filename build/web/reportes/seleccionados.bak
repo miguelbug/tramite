@@ -55,7 +55,7 @@ AND USU=$P{usu}]]></queryString>
 	</variable>
 
 		<group  name="porTipo" isStartNewPage="true" >
-			<groupExpression><![CDATA[]]></groupExpression>
+			<groupExpression><![CDATA[$F{DESTINO}]]></groupExpression>
 			<groupHeader>
 			<band height="44"  isSplitAllowed="true" >
 				<staticText>
@@ -71,7 +71,7 @@ AND USU=$P{usu}]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
-				<text><![CDATA[AGIGNADO]]></text>
+				<text><![CDATA[ASIGNADO]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -84,7 +84,7 @@ AND USU=$P{usu}]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$P{oficina}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" OFICINA INTERNA:   "+$F{DESTINO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
@@ -199,7 +199,7 @@ AND USU=$P{usu}]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS "]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE DOCUMENTOS :"+$P{oficina}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
