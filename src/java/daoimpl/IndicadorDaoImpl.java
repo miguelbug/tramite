@@ -43,14 +43,9 @@ public class IndicadorDaoImpl implements IndicadorDAO {
         boolean esta=false;
         Indicador nuevoIndic = null;
         session = HibernateUtil.getSessionFactory().openSession();
-<<<<<<< HEAD
-        System.out.println("nombre");
-        String sql = "FROM Indicador WHERE indiNombre='" + nombre + "'";
-=======
         System.out.println("validar Indicador");
         String sql = "FROM Indicador WHERE indiNombre='" + nombre + "'";
         System.out.println(sql);
->>>>>>> origin/master
         try {
             session.beginTransaction();
             nuevoIndic = (Indicador) session.createSQLQuery(sql).uniqueResult();
@@ -58,19 +53,11 @@ public class IndicadorDaoImpl implements IndicadorDAO {
             esta=true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-<<<<<<< HEAD
             System.out.println("mal");
             session.beginTransaction().rollback();
         } finally{
             session.close();
         }
-
-=======
-            System.out.println("malazo ps xD");
-        } finally{
-            session.close();
-        }
->>>>>>> origin/master
         return esta;
     }
 
