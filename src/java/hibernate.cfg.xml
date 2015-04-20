@@ -7,6 +7,7 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@172.16.89.130:1521:XE</property>
     <property name="hibernate.connection.username">tramitedocumentario_test</property>
     <property name="hibernate.connection.password">tramite$test</property>
+    <property name="hibernate.show_sql">true</property>
     <mapping resource="maping/OficCirc.hbm.xml"/>
     <mapping resource="maping/Dependencia.hbm.xml"/>
     <mapping resource="maping/TipoDocu.hbm.xml"/>

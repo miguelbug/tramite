@@ -37,7 +37,7 @@ DESTINO,
 TIPODOCUMENTOS
 from temporal
 where impreso=1 and reimpreso IS null
-order by TRAM_NUM]]></queryString>
+order by DESTINO,TRAM_NUM]]></queryString>
 
 	<field name="TRAM_NUM" class="java.lang.String"/>
 	<field name="FECHA" class="java.lang.String"/>
@@ -159,6 +159,19 @@ order by TRAM_NUM]]></queryString>
 			</groupHeader>
 			<groupFooter>
 			<band height="37"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="484"
+						y="21"
+						width="44"
+						height="11"
+						key="textField-15"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total: "+$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
 			</band>
 			</groupFooter>
 		</group>
@@ -171,7 +184,7 @@ order by TRAM_NUM]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="48"  isSplitAllowed="true" >
+			<band height="49"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="0"
