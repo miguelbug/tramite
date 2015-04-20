@@ -30,7 +30,7 @@
 		<defaultValueExpression ><![CDATA["parametroUsuario"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="lote" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["60"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["6"]]></defaultValueExpression>
 	</parameter>
 	<queryString><![CDATA[select TRAM_NUM,
 DECODE(TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss'),NULL,' ',TO_CHAR(FECHA,'DD/MM/YYYY HH:mm:ss')) AS FECHA,
