@@ -33,7 +33,7 @@ import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession; 
 import maping.DocusExtint;
 import maping.Indicador;
 import maping.Oficios;
@@ -207,17 +207,21 @@ public class DocumentosBean implements Serializable {
     }
 
     public void mostrarOficio() {
-        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
+        referencia="";
+        for (int i = 0; i < docselec.size(); i++) {
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+            referencia = referencia+"/"+hm.get("observacion");
+            responsable = hm.get("origen").toString();
+        }
+        
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
         fechaaux = sdf.format(fecha);
         tramnum = obtenerNumeroTramite();
         correlativo_oficio = generarCorrelativo();
-        referencia = hm.get("observacion");
         siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
         anio = sdf1.format(fecha);
-        responsable = hm.get("origen").toString();
 
     }
 
@@ -271,8 +275,8 @@ public class DocumentosBean implements Serializable {
                     ofi.setDependenciaByCodigo(deriv.getDep("OFICINA GENERAL DE PLANIFICACION"));
                     ofi.setDependenciaByCodigo1(deriv.getDep(this.destino_ofic));
                     ofi.setCorrelativoOficio(correlativo_oficio);
-                    ofi.setReferenciaOficio(dd.getMotivo(tramnum, dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
-                    ofi.setTramiteDatos(deriv.getTramite(tramnum, dd.getTram_Fecha(tramnum, hm.get("movimiento"))));
+                    ofi.setReferenciaOficio(dd.getMotivo(hm.get("numerotramite"), dd.getTram_Fecha(hm.get("numerotramite"), hm.get("movimiento"))));
+                    ofi.setTramiteDatos(deriv.getTramite(hm.get("numerotramite"), dd.getTram_Fecha(hm.get("numerotramite"), hm.get("movimiento"))));
                     ofi.setUsuario(usu);
                     ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
                     ofi.setResponsable(responsable);
@@ -434,8 +438,10 @@ public class DocumentosBean implements Serializable {
 
     public String obtenerNumeroTramite() {
         String numerotramite = "";
-        Map<String, String> hm = (HashMap<String, String>) docselec.get(0);
-        numerotramite = hm.get("numerotramite").toString();
+        for(int i=0;i<docselec.size();i++){
+            Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
+            numerotramite = numerotramite+"\n"+hm.get("numerotramite").toString();
+        }
         return numerotramite;
     }
 
@@ -556,17 +562,35 @@ public class DocumentosBean implements Serializable {
         return detalprov;
     }
 
+    public String partir(String fecha) {
+        StringTokenizer tokens = new StringTokenizer(fecha, " ");
+        String[] cadena = new String[2];
+        int i = 0;
+        while (tokens.hasMoreTokens()) {
+            cadena[i] = tokens.nextToken();
+            i++;
+        }
+        return cadena[0];
+    }
+
     public List Detalles() {
         System.out.println("listando detalles");
         seglista.clear();
+        int movimiento = -1;
+        String valor;
         try {
             List lista = new ArrayList();
             System.out.println(seleccion.get("numerotramite").toString());
             if (seleccion.get("numerotramite").toString().indexOf("OGPL") != -1) {
-                lista = dd.getDetalleOGPL(seleccion.get("numerotramite").toString());
+                lista = dd.getDetalleOGPL(seleccion.get("numerotramite").toString(), partir(seleccion.get("fenvio").toString()));
             } else {
                 if (seleccion.get("numerotramite").toString().indexOf("OGPL") == -1) {
-                    lista = dd.getDetalleNoOGPL(seleccion.get("numerotramite").toString(), seleccion.get("movimiento"));
+                    valor = seleccion.get("movimiento");
+                    if (Integer.parseInt(seleccion.get("movimiento")) > 1) {
+                        movimiento = Integer.parseInt(seleccion.get("movimiento")) - 1;
+                        valor = String.valueOf(movimiento);
+                    }
+                    lista = dd.getDetalleNoOGPL(seleccion.get("numerotramite").toString(), valor);
                 }
             }
             Iterator ite = lista.iterator();
@@ -751,7 +775,7 @@ public class DocumentosBean implements Serializable {
                     System.out.println("sle indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
                     t.setAsunto(hm.get("observacion").toString());
-                    t.setTiposdocumentos(hm.get("docunomb").toString());
+                    t.setTipodocumentos(hm.get("docunomb").toString());
                     tdoc = getTipodocumento(aux, td);
                     //}
                 } else {
@@ -805,7 +829,7 @@ public class DocumentosBean implements Serializable {
                         tdoc.setDocuNum("SIN NUMERO");
                         tdoc.setDocuSiglas(siglas(hm.get("numerotramite").toString()));
                         tdoc.setDocuPric("1");
-                        t.setTiposdocumentos(hm.get("docunomb").toString());
+                        t.setTipodocumentos(hm.get("docunomb").toString());
                     }
                     System.out.println("entra a indicador");
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));

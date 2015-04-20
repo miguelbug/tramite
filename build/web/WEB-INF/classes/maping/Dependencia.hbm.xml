@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.Dependencia" table="DEPENDENCIA" schema="MIGUEL">
+    <class name="maping.Dependencia" table="DEPENDENCIA" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="codigo" type="long">
             <column name="CODIGO" precision="10" scale="0" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <property name="nombre" type="string">
             <column name="NOMBRE" length="300" />
@@ -23,29 +23,11 @@
         <property name="flac3" type="string">
             <column name="FLAC3" length="20" />
         </property>
-        <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteDatos" />
-        </set>
-        <set name="tramiteMovimientosForCodigo" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
         <set name="oficCircs" table="OFIC_CIRC" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.OficCirc" />
-        </set>
-        <set name="jefaturas" table="JEFATURA" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.Jefatura" />
         </set>
         <set name="detallOficcircs" table="DETALL_OFICCIRC" inverse="true" lazy="true" fetch="select">
             <key>
@@ -53,30 +35,17 @@
             </key>
             <one-to-many class="maping.DetallOficcirc" />
         </set>
-        <set name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO1" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.TramiteMovimiento" />
-        </set>
-        
         <set name="docusExtintsForCodigo" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.DocusExtint" />
         </set>
-        <set name="oficiosesForCodigo1" table="OFICIOS" inverse="true" lazy="true" fetch="select">
+        <set name="tramiteMovimientosForCodigo1" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO1" precision="10" scale="0" />
             </key>
-            <one-to-many class="maping.Oficios" />
-        </set>
-        <set name="oficiosesForCodigo" table="OFICIOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="CODIGO" precision="10" scale="0" />
-            </key>
-            <one-to-many class="maping.Oficios" />
+            <one-to-many class="maping.TramiteMovimiento" />
         </set>
         <set name="docusExtintsForCodigo1" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
             <key>
@@ -84,17 +53,47 @@
             </key>
             <one-to-many class="maping.DocusExtint" />
         </set>
-        <set name="docusInternosForCodigo" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+        <set name="jefaturas" table="JEFATURA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.Jefatura" />
+        </set>
+        <set name="oficiosesForCodigo" table="OFICIOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.Oficios" />
+        </set>
+        <set name="docusInternosesForCodigo" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
-        <set name="docusInternosForCodigo1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
+        <set name="oficiosesForCodigo1" table="OFICIOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO1" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.Oficios" />
+        </set>
+        <set name="docusInternosesForCodigo1" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="CODIGO1" precision="10" scale="0" />
             </key>
             <one-to-many class="maping.DocusInternos" />
+        </set>
+        <set name="tramiteMovimientosForCodigo" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.TramiteMovimiento" />
+        </set>
+        <set name="tramiteDatoses" table="TRAMITE_DATOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" precision="10" scale="0" />
+            </key>
+            <one-to-many class="maping.TramiteDatos" />
         </set>
     </class>
 </hibernate-mapping>

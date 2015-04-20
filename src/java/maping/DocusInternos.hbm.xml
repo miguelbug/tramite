@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/11/2014 03:02:41 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="MIGUEL">
+    <class name="maping.DocusInternos" table="DOCUS_INTERNOS" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idtip" type="int">
             <column name="IDTIP" precision="5" scale="0" />
             <generator class="increment" />
@@ -15,21 +15,18 @@
             <column name="TRAM_NUM" length="42" />
             <column name="TRAM_FECHA" length="7" />
         </many-to-one>
-        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
-            <column name="CODIGO" precision="10" scale="0" />
-        </many-to-one>
         <many-to-one name="dependenciaByCodigo1" class="maping.Dependencia" fetch="select">
             <column name="CODIGO1" precision="10" scale="0" />
         </many-to-one>
-        <many-to-one name="usuario" class="maping.Usuario" fetch="select">
+        <many-to-one name="usuarioByUsu" class="maping.Usuario" fetch="select">
             <column name="USU" length="30" />
         </many-to-one>
-        <many-to-one name="usuario1" class="maping.Usuario" fetch="select">
+        <many-to-one name="dependenciaByCodigo" class="maping.Dependencia" fetch="select">
+            <column name="CODIGO" precision="10" scale="0" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsu1" class="maping.Usuario" fetch="select">
             <column name="USU1" length="30" />
         </many-to-one>
-        <property name="numeroMovi" type="string">
-            <column name="NUMERO_MOVI" length="20"/>
-        </property>
         <property name="docuCorrelaint" type="string">
             <column name="DOCU_CORRELAINT" length="20" not-null="true" />
         </property>
@@ -50,6 +47,9 @@
         </property>
         <property name="docuAsunto" type="string">
             <column name="DOCU_ASUNTO" length="300" />
+        </property>
+        <property name="numeroMovi" type="string">
+            <column name="NUMERO_MOVI" length="20" />
         </property>
         <property name="estado" type="string">
             <column name="ESTADO" length="1" />

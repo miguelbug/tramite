@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/11/2014 03:02:41 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="MIGUEL">
+    <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idMovi" type="big_decimal">
             <column name="ID_MOVI" precision="38" scale="0" />
             <generator class="increment" />
@@ -33,9 +33,6 @@
         <property name="fechaIngr" type="date">
             <column name="FECHA_INGR" length="7" />
         </property>
-        <property name="fechaDeriv" type="date">
-            <column name="FECHA_DERIVACION" length="7" />
-        </property>
         <property name="moviObs" type="string">
             <column name="MOVI_OBS" length="250" />
         </property>
@@ -44,6 +41,9 @@
         </property>
         <property name="estadConfrirm" type="string">
             <column name="ESTAD_CONFRIRM" length="30" />
+        </property>
+        <property name="fechaDerivacion" type="date">
+            <column name="FECHA_DERIVACION" length="7" />
         </property>
         <property name="estado" type="string">
             <column name="ESTADO" length="1" />

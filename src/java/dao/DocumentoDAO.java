@@ -23,7 +23,7 @@ public interface DocumentoDAO {
     public String CrearVariable(int i);
     public String getSQL(String[] a);
     public List getDetalle(String tramnum);
-    public List getDetalleOGPL(String tramnum);
+    public List getDetalleOGPL(String tramnum, String fecha);
     public List getDetalleNoOGPL(String tramnum,String movi);
     public List getDeatalle2(String tramnum, String movi);
     public String getMotivo(String tramnum, String fecha);

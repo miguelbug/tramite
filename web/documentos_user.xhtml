@@ -139,7 +139,7 @@
                             </center>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Asignación" widgetVar="asignadosDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="asignados">
+                    <p:dialog header="Asignación" widgetVar="asignadosDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="asignados" closeOnEscape="true">
                         <center>
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Asignando a:"/>
@@ -155,7 +155,7 @@
                         </center>
 
                     </p:dialog>
-                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" >
+                    <p:dialog header="Detalle Tramite" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true">
                         <p:dataTable var="car" value="#{documentoUsuarioBean.Detalles()}" id="tabladetalles">
 
                             <p:column headerText="FECHA REGISTRO">
@@ -173,7 +173,7 @@
                         </p:dataTable>
 
                     </p:dialog>
-                    <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial">
+                    <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdial" closeOnEscape="true">
                         <p:dataTable var="seg" value="#{documentoUsuarioBean.seguimientolista3}" id="tablaseguim" >
                             <p:column headerText="Num. Tramite">
                                 <h:outputText value="#{seg.numerotramite}" />
@@ -204,7 +204,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center">
+                    <p:dialog header="Derivación - #{documentoUsuarioBean.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true">
                         <p:panelGrid columns="2" id="panelDeriv">
                             <p:outputLabel value="Tipo de Documento: "/>
                             <p:selectOneMenu id="tipodocum" value="#{documentoUsuarioBean.docunombre}">

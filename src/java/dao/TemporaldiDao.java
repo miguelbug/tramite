@@ -6,7 +6,7 @@
 
 package dao;
 
-import maping.TemporalCargos;
+import maping.Temporalcargos;
 import maping.TemporalDi;
 import maping.TemporalUser;
 
@@ -19,6 +19,6 @@ public interface TemporaldiDao {
     public void actualizarTemporalDi();
     public void guardarTemporalUser(TemporalUser tu);
     public void actualizarTemporalUser();
-    public void guardarCargos(TemporalCargos tc);
+    public void guardarCargos(Temporalcargos tc);
     public void actualizarTemporalCargo();
 }

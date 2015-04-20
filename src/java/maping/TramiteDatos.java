@@ -1,5 +1,5 @@
 package maping;
-// Generated 28/11/2014 11:44:21 AM by Hibernate Tools 3.6.0
+// Generated 17/04/2015 04:53:35 PM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -17,10 +17,9 @@ public class TramiteDatos  implements java.io.Serializable {
      private String tramObs;
      private String estaDescrip;
      private Set<DocusInternos> docusInternoses = new HashSet<DocusInternos>(0);
-     private Set<DocusExtint> docusExtints = new HashSet<DocusExtint>(0);
-     private Set<Oficios> oficioses = new HashSet<Oficios>(0);
      private Set<TramiteMovimiento> tramiteMovimientos = new HashSet<TramiteMovimiento>(0);
      private Set<TipoDocu> tipoDocus = new HashSet<TipoDocu>(0);
+     private Set<Oficios> oficioses = new HashSet<Oficios>(0);
 
     public TramiteDatos() {
     }
@@ -29,17 +28,16 @@ public class TramiteDatos  implements java.io.Serializable {
     public TramiteDatos(TramiteDatosId id) {
         this.id = id;
     }
-    public TramiteDatos(TramiteDatosId id, Usuario usuario, Dependencia dependencia, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<DocusExtint> docusExtints, Set<Oficios> oficioses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus) {
+    public TramiteDatos(TramiteDatosId id, Usuario usuario, Dependencia dependencia, String tramObs, String estaDescrip, Set<DocusInternos> docusInternoses, Set<TramiteMovimiento> tramiteMovimientos, Set<TipoDocu> tipoDocus, Set<Oficios> oficioses) {
        this.id = id;
        this.usuario = usuario;
        this.dependencia = dependencia;
        this.tramObs = tramObs;
        this.estaDescrip = estaDescrip;
        this.docusInternoses = docusInternoses;
-       this.docusExtints = docusExtints;
-       this.oficioses = oficioses;
        this.tramiteMovimientos = tramiteMovimientos;
        this.tipoDocus = tipoDocus;
+       this.oficioses = oficioses;
     }
    
     public TramiteDatosId getId() {
@@ -84,20 +82,6 @@ public class TramiteDatos  implements java.io.Serializable {
     public void setDocusInternoses(Set<DocusInternos> docusInternoses) {
         this.docusInternoses = docusInternoses;
     }
-    public Set<DocusExtint> getDocusExtints() {
-        return this.docusExtints;
-    }
-    
-    public void setDocusExtints(Set<DocusExtint> docusExtints) {
-        this.docusExtints = docusExtints;
-    }
-    public Set<Oficios> getOficioses() {
-        return this.oficioses;
-    }
-    
-    public void setOficioses(Set<Oficios> oficioses) {
-        this.oficioses = oficioses;
-    }
     public Set<TramiteMovimiento> getTramiteMovimientos() {
         return this.tramiteMovimientos;
     }
@@ -111,6 +95,13 @@ public class TramiteDatos  implements java.io.Serializable {
     
     public void setTipoDocus(Set<TipoDocu> tipoDocus) {
         this.tipoDocus = tipoDocus;
+    }
+    public Set<Oficios> getOficioses() {
+        return this.oficioses;
+    }
+    
+    public void setOficioses(Set<Oficios> oficioses) {
+        this.oficioses = oficioses;
     }
 
 

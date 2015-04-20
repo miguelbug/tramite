@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TramiteDatos" table="TRAMITE_DATOS" schema="MIGUEL">
+    <class name="maping.TramiteDatos" table="TRAMITE_DATOS" schema="TRAMITEDOCUMENTARIO_TEST">
         <composite-id name="id" class="maping.TramiteDatosId">
             <key-property name="tramNum" type="string">
                 <column name="TRAM_NUM" length="42" />
@@ -31,20 +31,6 @@
             </key>
             <one-to-many class="maping.DocusInternos" />
         </set>
-        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="TRAM_NUM" length="42" />
-                <column name="TRAM_FECHA" length="7" />
-            </key>
-            <one-to-many class="maping.DocusExtint" />
-        </set>
-        <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="TRAM_NUM" length="42" />
-                <column name="TRAM_FECHA" length="7" />
-            </key>
-            <one-to-many class="maping.Oficios" />
-        </set>
         <set name="tramiteMovimientos" table="TRAMITE_MOVIMIENTO" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="TRAM_NUM" length="42" />
@@ -58,6 +44,13 @@
                 <column name="TRAM_FECHA" length="7" />
             </key>
             <one-to-many class="maping.TipoDocu" />
+        </set>
+        <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TRAM_NUM" length="42" />
+                <column name="TRAM_FECHA" length="7" />
+            </key>
+            <one-to-many class="maping.Oficios" />
         </set>
     </class>
 </hibernate-mapping>

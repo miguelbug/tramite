@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 05/11/2014 09:54:41 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TiposDocumentos" table="TIPOS_DOCUMENTOS" schema="MIGUEL">
+    <class name="maping.TiposDocumentos" table="TIPOS_DOCUMENTOS" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idDocumento" type="big_decimal">
             <column name="ID_DOCUMENTO" precision="22" scale="0" />
             <generator class="increment" />
@@ -14,17 +14,26 @@
         <property name="flag" type="string">
             <column name="FLAG" length="5" />
         </property>
+        <property name="flag2" type="string">
+            <column name="FLAG2" length="30" />
+        </property>
+        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
+            </key>
+            <one-to-many class="maping.DocusExtint" />
+        </set>
+        <set name="oficCircs" table="OFIC_CIRC" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
+            </key>
+            <one-to-many class="maping.OficCirc" />
+        </set>
         <set name="detallOficcircs" table="DETALL_OFICCIRC" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_DOCUMENTO" precision="22" scale="0" />
             </key>
             <one-to-many class="maping.DetallOficcirc" />
-        </set>
-        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_DOCUMENTO" precision="22" scale="0" />
-            </key>
-            <one-to-many class="maping.DocusInternos" />
         </set>
         <set name="oficioses" table="OFICIOS" inverse="true" lazy="true" fetch="select">
             <key>
@@ -32,23 +41,17 @@
             </key>
             <one-to-many class="maping.Oficios" />
         </set>
-        <set name="documentosOfiints" table="DOCUMENTOS_OFIINT" inverse="true" lazy="true" fetch="select">
+        <set name="docusInternoses" table="DOCUS_INTERNOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_DOCUMENTO" precision="22" scale="0" />
             </key>
-            <one-to-many class="maping.DocumentosOfiint" />
+            <one-to-many class="maping.DocusInternos" />
         </set>
-        <set name="docusExtints" table="DOCUS_EXTINT" inverse="true" lazy="true" fetch="select">
+        <set name="constanciases" table="CONSTANCIAS" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ID_DOCUMENTO" precision="38" scale="0" />
+                <column name="ID_DOCUMENTO" precision="22" scale="0" />
             </key>
-            <one-to-many class="maping.DocusExtint" />
-        </set>
-        <set name="oficCirc" table="OFIC_CIRC" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_DOCUMENTO" precision="38" scale="0" />
-            </key>
-            <one-to-many class="maping.OficCirc" />
+            <one-to-many class="maping.Constancias" />
         </set>
     </class>
 </hibernate-mapping>
