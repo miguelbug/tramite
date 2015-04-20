@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/10/2014 05:20:27 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 17/04/2015 04:53:37 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="maping.TemporalCargos" table="TEMPORALCARGOS" schema="MIGUEL">
-        <id name="idcargo" type="long">
-            <column name="IDCARGO" precision="10" scale="0" />
+    <class name="maping.Temporalcargos" table="TEMPORALCARGOS" schema="TRAMITEDOCUMENTARIO_TEST">
+        <id name="idcargo" type="big_decimal">
+            <column name="IDCARGO" precision="22" scale="0" />
             <generator class="increment" />
         </id>
         <property name="documento" type="string">
