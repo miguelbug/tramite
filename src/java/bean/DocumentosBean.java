@@ -747,11 +747,6 @@ public class DocumentosBean implements Serializable {
                     }
                     System.out.println("sale fecha fing");
                     System.out.println("entra a indicador");
-                    if (this.indicador.validarIndicador(hm.get("indicador").toString()) == false) {
-                        Indicador ind = new Indicador();
-                        ind.setIndiNombre(hm.get("indicador").toString());
-                        indicador.insertarIndicador(ind);
-                    }
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
                     System.out.println("sle indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
@@ -813,11 +808,6 @@ public class DocumentosBean implements Serializable {
                         t.setTiposdocumentos(hm.get("docunomb").toString());
                     }
                     System.out.println("entra a indicador");
-                    if (this.indicador.validarIndicador(hm.get("indicador").toString()) == false) {
-                        Indicador ind = new Indicador();
-                        ind.setIndiNombre(hm.get("indicador").toString());
-                        indicador.insertarIndicador(ind);
-                    }
                     movimiento.setIndicador(deriv.getIndic(hm.get("indicador").toString()));
                     System.out.println("sale indicador");
                     movimiento.setMoviObs(hm.get("observacion").toString());
