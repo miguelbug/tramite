@@ -82,7 +82,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update="panelconst,constanciaImprimirDialog" oncomplete="PF('constanciaImprimir').show()">
+                            <p:commandButton value="Guardar" actionListener="#{constanciaBean.guardarconstancia()}" update=":form:,panelconst,constanciaImprimirDialog" oncomplete="PF('constanciaImprimir').show()">
                                 <f:ajax event="click" onevent="ConstDialog.hide()"/>
                             </p:commandButton>
                         </center>

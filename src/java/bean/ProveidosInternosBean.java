@@ -280,6 +280,7 @@ public class ProveidosInternosBean {
                     deriv.guardarDocusExt(di);
                     ver = true;
                     no_ver = false;
+                    getLista();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     razon = "ERROR DE CONEXION";

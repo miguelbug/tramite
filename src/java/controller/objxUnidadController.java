@@ -87,21 +87,9 @@ public class objxUnidadController implements Serializable {
         ofi = new OficioDaoImpl();
     }
 
-    public void abrirConfirmacion() {
-        Map<String, String> hm = (HashMap<String, String>) docselec4.get(0);
-        docueliminar = hm.get("documento").toString();
-        ideliminar = hm.get("id").toString();
-    }
+    
 
-    public void eliminarDocuInternoOGPL() {
-        System.out.println(ideliminar);
-        try {
-            dd.eliminarDocuInternoOGPL(ideliminar);
-        } catch (Exception e) {
-            System.out.println("error eliminar docuinternoogpl");
-            System.out.println(e.getMessage());
-        }
-    }
+    
 
     public void delete() {
         for (int i = 0; i < docselec1.size(); i++) {
@@ -166,7 +154,6 @@ public class objxUnidadController implements Serializable {
             tdi.guardarCargos(tc);
         }
     }
-    
 
     public void ImpresionSeleccionadosUser() throws ParseException, SQLException {
         guardarDatos3();
@@ -204,7 +191,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
         parametros.put("usu", getUsu());
-        parametros.put("asignado",getUSUARIO());
+        parametros.put("asignado", getUSUARIO());
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);
 
@@ -488,7 +475,7 @@ public class objxUnidadController implements Serializable {
         parametros.put("fecha", partir(DocusExternosBean.fecha_auxiliar));
         parametros.put("logo", getLogo());
         parametros.put("oficina", getOficina());
-        parametros.put("jefe",dd.getJefe());
+        parametros.put("jefe", dd.getJefe());
         // parametros.put("USUARIO","miguel" ); 
         repor.addMapParam(parametros);
         rpt = repor.ejecutaReporte(context, serveltcontext);

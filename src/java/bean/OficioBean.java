@@ -47,12 +47,12 @@ import org.primefaces.model.DualListModel;
 public class OficioBean {
 
     private String fechadia3, fechahora3, tipodepe, auxanio, correlativo = "", correlativo2 = "", asunto, fechadia, fechadia2, fechahora, firma, responsable, arearesponsable, arearesponsable2, auxfecha, destino, asunto2, seleccionado, escogido, escogido2,
-            prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen, partedocu;
+            prueba, nombre, tipodestino, siglasdocus = "", responsableDI, origen, partedocu, docueliminar, ideliminar;
     private OficioDAO od;
     private Date anio, fecha;
     private DerivarDAO deriv;
-    private List listatramites, otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar, oficioscirculares, docselec, depe2, depe, seleccionados, destinos, oficiosSinExp, oficiosConExp, detallecirc,
-            listausuarios, tiposdocus;
+    private List docusInternosOGPL, listatramites, otrosdocus, otrosdocus1, otrosdocus2, areasResp, oficiosOGPLuser, docselec2, listaeditar, oficioscirculares, docselec, depe2, depe, seleccionados, destinos, oficiosSinExp, oficiosConExp, detallecirc,
+            listausuarios, tiposdocus, docuselec4;
     private String[] escojidos, selectedCities;
     private FacesContext faceContext;
     private Usuario usu;
@@ -83,6 +83,7 @@ public class OficioBean {
         oficiosConExp = new ArrayList<Map<String, String>>();
         detallecirc = new ArrayList<Map<String, String>>();
         tiposdocus = new ArrayList<String>();
+        this.docusInternosOGPL = new ArrayList<Map<String, String>>();
         cities2 = new ArrayList<String>();
         this.listaeditar = new ArrayList<String>();
         this.oficiosOGPLuser = new ArrayList<Map<String, String>>();
@@ -95,6 +96,8 @@ public class OficioBean {
         boolean isoficconexp = (currentPage.lastIndexOf("Oficios.xhtml") > -1);
         boolean isoficogpluser = (currentPage.lastIndexOf("oficios_ogpl.xhtml") > -1);
         boolean ismantenimoofic = (currentPage.lastIndexOf("mantenimiento_oficios.xhtml") > -1);
+        boolean isdocurespt = (currentPage.lastIndexOf("documentos_respta.xhtml") > -1);
+        boolean isdocusInternosOGPL = (currentPage.lastIndexOf("docusInternosOGPL.xhtml") > -1);
         cities = new DualListModel<String>(citiesSource, citiesTarget);
         if (isofcirc) {
             mostrarofCirc();
@@ -111,6 +114,10 @@ public class OficioBean {
                     } else {
                         if (ismantenimoofic) {
                             mostrarOficioConExp();
+                        } else {
+                            if (isdocusInternosOGPL) {
+                                mostrarDocusInternosOGPL();
+                            }
                         }
                     }
                 }
@@ -120,6 +127,28 @@ public class OficioBean {
 
     }
 
+    public void abrirConfirmacion() {
+        Map<String, String> hm = (HashMap<String, String>) docuselec4.get(0);
+        docueliminar = hm.get("documento").toString();
+        ideliminar = hm.get("id").toString();
+    }
+
+    public void eliminarDocuInternoOGPL() {
+        FacesMessage message = null;
+        System.out.println(ideliminar);
+        try {
+            dd.eliminarDocuInternoOGPL(ideliminar);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA(N) ELIMINADO EL(LOS) DOCUMENTO(S)");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            mostrarDocusInternosOGPL();
+        } catch (Exception e) {
+            System.out.println("error eliminar docuinternoogpl");
+            System.out.println(e.getMessage());
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "!!!ERROR¡¡¡", "NO SE HA ELIMINADO EL(LOS) DOCUMENTO(S)");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
+
     public void listarTramiteNumeros() {
         System.out.println("listar tramite numeros");
         listatramites.clear();
@@ -127,6 +156,33 @@ public class OficioBean {
             listatramites = od.listarTramitesNumeros(deriv.getCodigoUsuario(usu.getUsu()));
         } catch (Exception e) {
             System.out.println("ESTA MAL TRAMITE NUMEROS");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void mostrarDocusInternosOGPL() {
+        System.out.println("listando documentos2");
+        docusInternosOGPL.clear();
+        try {
+            System.out.println("entra a seguimiento2");
+            List lista = new ArrayList();
+            lista = dd.docusInternosOGPL();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("id", String.valueOf(obj[0]));
+                listaaux.put("documento", String.valueOf(obj[1]));
+                listaaux.put("fecharegistro", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]));
+                listaaux.put("origen", String.valueOf(obj[4]));
+                listaaux.put("destino", String.valueOf(obj[5]));
+                listaaux.put("asignado", String.valueOf(obj[6]));
+                listaaux.put("tipodocu", String.valueOf(obj[7]));
+                docusInternosOGPL.add(listaaux);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -475,7 +531,7 @@ public class OficioBean {
                 } else {
                     siglasdocus = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
                     corr = Integer.parseInt(deriv.getIndice(siglasdocus, escogido2, auxanio));
-                    
+
                 }
                 System.out.println("aumentando el correlativo: " + corr);
                 corr = corr + 1;
@@ -736,11 +792,15 @@ public class OficioBean {
             di.setDocuNombreint(escogido2);
             di.setDocuAnioint(auxanio);
             di.setUsuarioByUsu(usu);
-            di.setUsuarioByUsu1(deriv.getUsuarioDI(responsableDI));
+            //di.setUsuarioByUsu1(deriv.getUsuarioDI(responsableDI));
+            di.setUsuarioByUsu1(usu);
+            di.setEstado("0");
             di.setDocuPricint("1");
             od.GuardarDocumentoOfiInt(di);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
+            this.mostrarDocusInternosOGPL();
+
         } catch (Exception e) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL " + escogido2);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -1523,6 +1583,38 @@ public class OficioBean {
 
     public void setFechahora3(String fechahora3) {
         this.fechahora3 = fechahora3;
+    }
+
+    public List getDocusInternosOGPL() {
+        return docusInternosOGPL;
+    }
+
+    public void setDocusInternosOGPL(List docusInternosOGPL) {
+        this.docusInternosOGPL = docusInternosOGPL;
+    }
+
+    public List getDocuselec4() {
+        return docuselec4;
+    }
+
+    public void setDocuselec4(List docuselec4) {
+        this.docuselec4 = docuselec4;
+    }
+
+    public String getDocueliminar() {
+        return docueliminar;
+    }
+
+    public void setDocueliminar(String docueliminar) {
+        this.docueliminar = docueliminar;
+    }
+
+    public String getIdeliminar() {
+        return ideliminar;
+    }
+
+    public void setIdeliminar(String ideliminar) {
+        this.ideliminar = ideliminar;
     }
 
 }

@@ -147,7 +147,7 @@
                                 </p:commandButton>
                             </center>
                         </p:dialog>
-                        <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" position="center center" id="avisohecho">
+                        <p:dialog header="Aviso" modal="true" showEffect="fade" widgetVar="aviso" hideEffect="fade" resizable="false" closeOnEscape="true" position="center center" id="avisohecho">
                             <center>
                                 <p:outputLabel value="SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.hecho}"/>
                                 <p:outputLabel value="NO SE HA CONFIRMADO EL DOCUMENTO" rendered="#{documentosBean.nohecho}"/>

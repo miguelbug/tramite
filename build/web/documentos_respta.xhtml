@@ -17,9 +17,10 @@
             <ui:define name="content">
                 <h:form id="form2" >
                     <p:tabView style="background-color: #D0D0D0;">
-                        <p:tab title="SISTEMA TRAMITE INTERNO OGPL" id="tab2">
+                        <p:ajax event="tabChange" listener="#{documentosBean.onTabChange}" update=":form2:"/>
+                        <p:tab title="DOCUMENTOS INTERNOS - OFICINAS OGPL" id="tab2">
                             <center>
-                                <h3>SISTEMA TRAMITE INTERNO OGPL</h3>
+                                <h3>DOCUMENTOS INTERNOS - OFICINAS OGPL</h3>
                                 <br></br>
                                 <p:dataTable value="#{documentosBean.docusinternos}" var="item" paginator="true" rows="15" id="tablaconfirmados" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -71,8 +72,145 @@
                                 </p:dataTable>
                             </center>
                         </p:tab>
+                        <p:tab title="OFICIOS - OGPL">
+                            <center>
+                                <h3>OFICIOS - OGPL</h3>
+                                <br></br>
+                                <p:dataTable value="#{documentosBean.oficiosConExp}" id="oficiotodos" var="item" paginator="true" rows="15" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{documentosBean.otrosdocus3}" selection="#{documentosBean.docselec3}"
+                                             rowKey="#{item.correlativo}" style="margin-bottom: 0" editable="true">
+
+                                    <p:ajax event="rowEdit" listener="#{documentosBean.onEdit3}"/>
+                                    <p:ajax event="rowEditCancel" listener="#{documentosBean.onCancel}" />
+
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                                    <p:column headerText="NUM. CORR." width="5" sortBy="#{item.correlativo}" filterBy="#{item.correlativo}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.correlativo}"/>
+                                    </p:column>
+                                    <p:column headerText="NUM.TRAM." width="1" sortBy="#{item.tramnum}" filterBy="#{item.tramnum}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tramnum}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA" width="1" sortBy="#{item.fecha}" filterBy="#{item.fecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fecha}"/>
+                                    </p:column>
+                                    <p:column headerText="ASUNTO" width="10" sortBy="#{item.asunto}" filterBy="#{item.asunto}" filterMatchMode="contains">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.asunto}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputTextarea rows="3" cols="90" value="#{item.asunto}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+
+                                    </p:column>
+                                    <p:column headerText="AREA RESP." width="5" sortBy="#{item.asignado}" filterBy="#{item.asignado}" filterMatchMode="contains">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.asignado}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:selectOneMenu value="#{item.asignado}" filter="true" filterMatchMode="contains">
+                                                    <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="OFICINA GENERAL DE PLANIFICACION" />
+                                                    <f:selectItem itemLabel="OGPL - OFICINA DE PLANES Y PROGRAMAS" itemValue="OGPL - OFICINA DE PLANES Y PROGRAMAS" />
+                                                    <f:selectItem itemLabel="OGPL - OFICINA DE PRESUPUESTO" itemValue="OGPL - OFICINA DE PRESUPUESTO" />
+                                                    <f:selectItem itemLabel="OGPL - OFICINA DE RACIONALIZACION" itemValue="OGPL - OFICINA DE RACIONALIZACION" />
+                                                    <f:selectItem itemLabel="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" itemValue="OGPL - OFICINA DE ESTADISTICA E INFORMATICA" />
+                                                    <f:selectItem itemLabel="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" itemValue="OGPL - OFICINA DE COORDINACION DE CENTROS DE PRODUCCION" />
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="DESTINO" width="5" sortBy="#{item.destino}" filterBy="#{item.destino}" filterMatchMode="contains">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.destino}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:selectOneMenu value="#{item.destino}" filter="true" filterMatchMode="contains">
+                                                    <f:selectItems value="#{oficioBean.listaeditar}"/>
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:rowEditor />
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton process="oficiotodos" icon="ui-icon-search" value="Crear Oficio" style="position:absolute; left:25px; height:26px " oncomplete="PF('OFUnicDialog').show()"
+                                                         update="oficiotodos,:form2:ofiunicos" actionListener="#{documentosBean.abrirDocumentoUnico()}"/>
+                                        <p:commandButton process="oficiotodos" icon="ui-icon-extlink" value="Eliminar Oficio" style="position:absolute; left:190px; height:26px "
+                                                         oncomplete="PF('eliminarOficio').show()"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
                     </p:tabView>
-                    <p:dialog header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir">
+                    <!-- -->
+                    <p:dialog header="Eliminar Oficio" modal="true" showEffect="fade" widgetVar="eliminarOficio" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true" id="eliminarOficios">
+                        <center>
+                            <p:outputLabel value="¿Desea Eliminar el Oficio?"/>
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Aceptar" actionListener="#{documentosBean.delete()}" update=":form2:">
+                                    <f:ajax event="click" onevent="eliminarOficio.hide()"/>
+                                </p:commandButton>
+                                <p:commandButton value="Cancelar">
+                                    <f:ajax event="click" onevent="eliminarOficio.hide()"/>
+                                </p:commandButton>
+                            </p:panelGrid>
+                        </center>
+                    </p:dialog>
+                    <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true" id="ofiunicos">
+                        <p:panelGrid columns="2" id="panelOfUn2">
+                            <p:outputLabel value="Documento:"/>
+                            <p:inputText value="#{documentosBean.partedocu2}"/>
+                            <p:outputLabel value="Asunto:"/>
+                            <p:inputTextarea  rows="2" cols="60" value="#{documentosBean.asunto2}" style="text-transform:uppercase;"/>
+
+                            <p:outputLabel value="Fecha:"/>
+                            <p:outputLabel value="#{documentosBean.auxfecha}"/>
+
+                            <p:outputLabel value="Origen:"/>
+                            <p:outputLabel value="#{documentosBean.origen2}"/>
+
+                            <p:outputLabel value="Área Responsable:"/>
+                            <p:selectOneMenu value="#{documentosBean.arearesponsable2}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{documentosBean.areasResp}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Tipo Destino:"/>
+                            <p:selectOneMenu value="#{documentosBean.tipodestino}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItem itemLabel="Facultad" itemValue="0"/>
+                                <f:selectItem itemLabel="Oficina Interna" itemValue="1"/>
+                                <f:selectItem itemLabel="Institucion Externa" itemValue="2"/>
+                                <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
+                                <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
+                                <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
+                                <p:ajax event="change" listener="#{documentosBean.agregardestinos()}" update="documentosOfioUnic"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Destino:"/>
+                            <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino2}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{documentosBean.destinos}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{documentosBean.guardar_oficiounico()}" update=":form2:">
+                                <f:ajax event="click" onevent="OFUnicDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+
+                    <br></br>
+                    <br></br>	
+                    <!-- -->
+                    <p:dialog closeOnEscape="true" header="Mensaje" widgetVar="dialogMensaje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="mensajeImprimir">
                         <center>
                             <p:outputLabel value="PROVEIDO N° #{documentosBean.correlativo_proveido} CREADO" rendered="#{documentosBean.ver}"/>
                             <br></br>
@@ -88,7 +226,7 @@
 
                         </center>
                     </p:dialog>
-                    <p:dialog header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="detallrespuestaresp" closeOnEscape="true">
+                    <p:dialog  header="Detalle Respuesta" widgetVar="itemDetallResp" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="detallrespuestaresp" closeOnEscape="true">
                         <p:dataTable var="car" value="#{documentosBean.Detalle_documento()}" id="tabladetallesResp" >
                             <p:column headerText="Nombre Doc.">
                                 <h:outputText value="#{car.nombredoc}" />
@@ -101,7 +239,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Oficio N° #{documentosBean.correlativo_oficio}-#{documentosBean.siglasdocus}-#{documentosBean.anio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="dialogOficioUnico" closeOnEscape="true">
+                    <p:dialog  header="Oficio N° #{documentosBean.correlativo_oficio}-#{documentosBean.siglasdocus}-#{documentosBean.anio}" widgetVar="oficiounicodialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="dialogOficioUnico" closeOnEscape="true">
                         <center>
                             <p:panelGrid columns="2" id="panelOfUn">
                                 <p:outputLabel value="Expediente:"/>
@@ -125,20 +263,21 @@
                                     <f:selectItem itemLabel="Dependencia Int. UNMSM" itemValue="3"/>
                                     <f:selectItem itemLabel="Dependencia Ext. UNMSM" itemValue="4"/>
                                     <f:selectItem itemLabel="Dependencia Sede Central" itemValue="5"/>
-                                    <p:ajax event="change" listener="#{documentosBean.getDependencias()}" update="documentosOfioUnic"/>
+                                    <p:ajax event="change" listener="#{documentosBean.getDependencias()}" update="documentosOfioUnic2"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel value="Destino:"/>
-                                <p:selectOneMenu id="documentosOfioUnic" value="#{documentosBean.destino_ofic}" filter="true" filterMatchMode="contains">
+                                <p:selectOneMenu id="documentosOfioUnic2" value="#{documentosBean.destino_ofic}" filter="true" filterMatchMode="contains">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItems value="#{documentosBean.dependenciasprov}"/>
                                 </p:selectOneMenu>
                             </p:panelGrid>
                             <br></br>
-                            <p:commandButton value="Guardar" actionListener="#{documentosBean.guardaroficio()}">
+                            <p:commandButton value="Guardar" actionListener="#{documentosBean.guardaroficio()}" update=":form2:">
                                 <f:ajax event="click" onevent="oficiounicodialog.hide()"/>
                             </p:commandButton>
                         </center>
                     </p:dialog>
+
                 </h:form>
             </ui:define>
         </ui:composition>

@@ -84,14 +84,14 @@
                         </p:tab>
                     </p:tabView>
 
-                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" width="40%">
+                    <p:dialog header="Detalle Of. Circ." widgetVar="dialogCirculares" modal="true" showEffect="fade" hideEffect="fade" position="center center" closeOnEscape="true" resizable="false" width="40%">
                         <p:dataTable var="car" value="#{oficioBean.Detalles()}" id="tabladetalloficcirc" scrollable="true" scrollHeight="150">
                             <p:column headerText="DESTINO">
                                 <h:outputText value="#{car.nombre}" />
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="doccircdialog" style="width: 150px">
+                    <p:dialog header="Doc. Circulares" widgetVar="DocCircdialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closeOnEscape="true" position="center center" id="doccircdialog" style="width: 150px">
                         <p:panelGrid columns="2" id="formuloficCirc">
                             <p:outputLabel value="Tipo de Documento:"/>
                             <p:selectOneMenu id="tipodocuoficirc" value="#{oficioBean.escogido}" >
@@ -134,7 +134,7 @@
                             </p:commandButton>
                         </center>
                     </p:dialog>
-                    <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="avisooficcircdialog" style="width: 150px">
+                    <p:dialog header="Aviso" widgetVar="avisoOfCircDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closeOnEscape="true" position="center center" id="avisooficcircdialog" style="width: 150px">
                         <center>
                             <p:outputLabel value="EL OFICIO CIRCULAR N° #{oficioBean.correlativo} SE HA CREADO" rendered="#{oficioBean.ver}"/>
                             <br></br>

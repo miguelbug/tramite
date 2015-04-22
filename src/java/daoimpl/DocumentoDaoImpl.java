@@ -783,12 +783,14 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "DECODE(tm.MOVI_OBS,NULL,' ',UPPER(tm.MOVI_OBS)) AS OBSV,\n"
                     + "tm.ESTA_NOMBRE,\n"
                     + "I.INDI_NOMBRE,\n"
-                    + "tm.ESTAD_CONFRIRM\n"
+                    + "tm.ESTAD_CONFRIRM,\n"
+                    + "to_char(tm.tram_fecha,'dd/MM/yyyy') as tramfecha\n"
                     + "FROM TRAMITE_MOVIMIENTO tm, INDICADOR I, DEPENDENCIA D1, DEPENDENCIA D2\n"
                     + "WHERE tm.INDI_COD=I.INDI_COD\n"
                     + "and tm.CODIGO=D1.CODIGO\n"
                     + "and tm.CODIGO1=D2.CODIGO\n"
                     + "and D2.NOMBRE='OFICINA GENERAL DE PLANIFICACION'\n"
+                    + "AND tm.tram_num||'-'||tm.tram_fecha not in (Select tram_num||'-'||tram_fecha from Oficios)\n"
                     + "order by tm.FECHA_ENVIO desc");
             docus = query.list();
             System.out.println("despues de query de getdocusinternos");

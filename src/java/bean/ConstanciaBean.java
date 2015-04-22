@@ -175,6 +175,7 @@ public class ConstanciaBean {
             cons.guardarConstancia(c);
             ver=true;
             nover=false;
+            mostrarConstancias();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ver=false;

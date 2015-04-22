@@ -91,7 +91,7 @@
                             </center>
                         </p:tab>
                     </p:tabView>
-                    <p:dialog header="Eliminar Oficio" modal="true" showEffect="fade" widgetVar="eliminarOficio" hideEffect="fade" resizable="false" position="center center" id="eliminarOficios">
+                    <p:dialog header="Eliminar Oficio" modal="true" showEffect="fade" widgetVar="eliminarOficio" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true" id="eliminarOficios">
                         <center>
                             <p:outputLabel value="¿Desea Eliminar el Oficio?"/>
                             <p:panelGrid columns="2">
@@ -104,7 +104,7 @@
                             </p:panelGrid>
                         </center>
                     </p:dialog>
-                    <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="ofiunicos">
+                    <p:dialog header="Oficio" widgetVar="OFUnicDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true" id="ofiunicos">
                         <p:panelGrid columns="2" id="panelOfUn">
                             <p:outputLabel value="Documento:"/>
                             <p:inputText value="#{oficioBean.partedocu}"/>

@@ -19,11 +19,13 @@ import javax.faces.bean.ViewScoped;
 import dao.DocumentoDAO;
 import dao.IndicadorDAO;
 import dao.LoginDao;
+import dao.OficioDAO;
 import dao.SeguimientoDAO;
 import daoimpl.DerivarDaoImpl;
 import daoimpl.DocumentoDaoImpl;
 import daoimpl.IndicadorDaoImpl;
 import daoimpl.LoginDaoImpl;
+import daoimpl.OficioDaoImpl;
 import daoimpl.SeguimientoDaoImpl;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -33,7 +35,7 @@ import java.util.StringTokenizer;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession; 
+import javax.servlet.http.HttpSession;
 import maping.DocusExtint;
 import maping.Indicador;
 import maping.Oficios;
@@ -55,7 +57,7 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class DocumentosBean implements Serializable {
 
-    private List otrosdocus2, docselec2, documentosOfiInt, documentos, seglista, docselec, seguimientolista, tdaux, tdaux2, documentosprov, dependenciasprov, detalprov, documentos_confirmados, documentos_corregir, otrosdocus, docusinternos;
+    private List destinos, otrosdocus3, docselec3, tiposdocus, oficiosConExp, otrosdocus2, docselec2, documentosOfiInt, documentos, seglista, docselec, seguimientolista, tdaux, tdaux2, documentosprov, dependenciasprov, detalprov, documentos_confirmados, documentos_corregir, otrosdocus, docusinternos;
     private DocumentoDAO dd;
     private boolean mostrar = false, hecho, nohecho, ver, no_ver;
     private Map<String, String> seleccion;
@@ -68,6 +70,22 @@ public class DocumentosBean implements Serializable {
     private Date fechaprov, aux, fecha;
     private String anio = "", siglasdocus, documento, origen, asunto_prov, origen_prov, asunto, tramnum, fechaaux, destino_ofic, correlativo_oficio, referencia, correlativo_proveido, destino_prov, codinterno, tipodestino, responsable;
     public static String tranum;
+    private OficioDAO od;
+    private String siglasdocus2;
+    private String origen2;
+    private String asunto2;
+    private String destino2;
+    private String correlativo2;
+    private String auxanio2;
+    private String partedocu2;
+    private String arearesponsable2;
+    private List areasResp;
+    private String auxfecha;
+    private String auxanio;
+    private String fechadia2;
+    private String fechahora;
+    private boolean escogido2;
+    private Date anio2;
 
     public DocumentosBean() {
         dd = new DocumentoDaoImpl();
@@ -76,7 +94,7 @@ public class DocumentosBean implements Serializable {
         usu = (Usuario) session.getAttribute("sesionUsuario");
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String currentPage = facesContext.getViewRoot().getViewId();
-
+        tiposdocus = new ArrayList<String>();
         documentos = new ArrayList<Map<String, String>>();
         this.documentosOfiInt = new ArrayList<Map<String, String>>();
         this.documentos_corregir = new ArrayList<Map<String, String>>();
@@ -87,10 +105,12 @@ public class DocumentosBean implements Serializable {
         indicador = new IndicadorDaoImpl();
         fechaprov = new Date();
         fecha = new Date();
+        od = new OficioDaoImpl();
         documentosprov = new ArrayList<Map<String, String>>();
         documentos_confirmados = new ArrayList<Map<String, String>>();
         dependenciasprov = new ArrayList<Map<String, String>>();
         docusinternos = new ArrayList<Map<String, String>>();
+        oficiosConExp = new ArrayList<Map<String, String>>();
         seguimientolista = new ArrayList<Map<String, String>>();
         detalprov = new ArrayList<Map<String, String>>();
         tdaux = new ArrayList<Map<String, String>>();
@@ -104,7 +124,9 @@ public class DocumentosBean implements Serializable {
             mostrar_documentosOfInt();
         } else {
             if (isdocusinternos) {
+                System.out.println("INICIAL");
                 MostrarDocusInternos();
+                mostrarOficioConExp();
             } else {
                 if (isdocumentosconfirm) {
                     this.MostrarDocumentosConfirmados();
@@ -116,6 +138,257 @@ public class DocumentosBean implements Serializable {
             }
         }
     }
+
+    public void onTabChange(TabChangeEvent event) {
+        if (event.getTab().getTitle().equals("DOCUMENTOS INTERNOS - OFICINAS OGPL")) {
+            MostrarDocusInternos();
+        }else{
+            if (event.getTab().getTitle().equals("OFICIOS - OGPL")) {
+                mostrarOficioConExp();
+            }
+        }
+    }
+
+    /////////////////////OFICIOS//////////////////////////
+    public void onEdit3(RowEditEvent event) {
+        String correlativo = String.valueOf(((HashMap) event.getObject()).get("correlativo"));
+        String asunto = String.valueOf(((HashMap) event.getObject()).get("asunto"));
+        String destino = String.valueOf(((HashMap) event.getObject()).get("destino"));
+        String asignado = String.valueOf(((HashMap) event.getObject()).get("asignado"));
+        System.out.println(correlativo + " " + asunto + " " + destino + " " + asignado);
+        if (asunto.indexOf("SIN REFERENCIA -") != -1) {
+            asunto = asunto.substring(17, asunto.length());
+        }
+        try {
+            od.ActualizarOficio2(correlativo.substring(10, 15), asunto, destino, asignado);
+            mostrarOficioConExp();
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION REALIZADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception e) {
+            FacesMessage message = null;
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR NO SE ACTUALIZÓ", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
+
+    public void onCancel(RowEditEvent event) {
+        FacesMessage message = null;
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "EDICION CANCELADA", String.valueOf(((HashMap) event.getObject()).get("correlativo")));
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+
+    public void mostrarOficioConExp() {
+        System.out.println("listando oficios");
+        oficiosConExp.clear();
+        try {
+            List lista = new ArrayList();
+            lista = od.getOficioUnicoExpediente();
+            Iterator ite = lista.iterator();
+            Object obj[] = new Object[8];
+            while (ite.hasNext()) {
+                obj = (Object[]) ite.next();
+                Map<String, String> listaaux = new HashMap<String, String>();
+                listaaux.put("correlativo", String.valueOf(obj[0]));
+                listaaux.put("tramnum", String.valueOf(obj[1]));
+                listaaux.put("fecha", String.valueOf(obj[2]));
+                listaaux.put("asunto", String.valueOf(obj[3]) + " - " + String.valueOf(obj[4]));
+                listaaux.put("origen", String.valueOf(obj[5]));
+                listaaux.put("destino", String.valueOf(obj[6]));
+                listaaux.put("asignado", String.valueOf(obj[7]));
+                oficiosConExp.add(listaaux);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void agregardestinos() {
+        destinos = dd.getDependencias(tipodestino);
+    }
+
+    public void abrirDocumentoUnico() {
+        arearesponsable2 = "OFICINA GENERAL DE PLANIFICACION";
+        getAnio2();
+        generarFecha4();
+        generarCorrelativoOfiUnico();
+        ObtenerTiposDocus();
+        ObtenerAreasResp();
+        siglasdocus2 = deriv.getSiglas(usu.getOficina().getIdOficina(), usu.getUsu());
+        origen2 = dd.getOficina(usu);
+        asunto2 = " ";
+        destino2 = " ";
+        this.partedocu2 = "Oficio N° " + correlativo2 + "-" + siglasdocus2 + "-" + auxanio2;
+    }
+
+    public void getAnio2() {
+        System.out.println("entra getanio");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        anio2 = new Date();
+        auxanio2 = sdf.format(anio2);
+        System.out.println(auxanio2);
+    }
+
+    public void ObtenerAreasResp() {
+        this.areasResp = od.getDependencias("1");
+    }
+
+    public void generarFecha4() {
+        fecha = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        auxfecha = sdf.format(fecha);
+    }
+
+    public void generarCorrelativoOfiUnico() {
+        int corr = 0;
+        String aux = "";
+        try {
+            if (auxanio2.equals(deriv.getAnio())) {
+                System.out.println("lleno 1");
+                corr = Integer.parseInt(deriv.getCorrelativoOficio(auxanio2));
+                System.out.println("aumentando el correlativo: " + corr);
+                corr = corr + 1;
+                if (corr < 10) {
+                    aux = "0000" + corr;
+                }
+                if (corr > 9 && corr < 100) {
+                    aux = "000" + corr;
+                }
+                if (corr > 99 && corr < 1000) {
+                    aux = "00" + corr;
+                }
+                if (corr > 999 && corr < 10000) {
+                    aux = "0" + corr;
+                }
+                if (corr > 10000) {
+                    aux = String.valueOf(corr);
+                }
+            } else {
+                System.out.println("lleno 2");
+                corr = corr + 1;
+                aux = "0000" + corr;
+            }
+
+        } catch (Exception e) {
+            System.out.println("no lleno");
+            corr = corr + 1;
+            aux = "0000" + corr;
+            System.out.println(corr);
+            System.out.println(aux);
+        }
+        correlativo2 = aux;
+    }
+
+    public void ObtenerTiposDocus() {
+        System.out.println("listando tipos docus");
+        tiposdocus.clear();
+        try {
+            System.out.println("OBTENER TIPOS DOCUS");
+            tiposdocus = od.gettipos("0");
+        } catch (Exception e) {
+            System.out.println("obtener tipo doccus ERROR 2");
+            System.out.println(e.getMessage());
+        }
+        System.out.println(tiposdocus);
+    }
+
+    public void delete() {
+        FacesMessage message = null;
+        try {
+            for (int i = 0; i < docselec3.size(); i++) {
+                Map<String, String> hm = (HashMap<String, String>) docselec3.get(i);
+                od.DeleteOficio(hm.get("correlativo").toString().substring(10, 15));
+            }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA(N) ELIMINADO EL(LOS) OFICIO(S)");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            mostrarOficioConExp();
+        } catch (Exception e) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "!!!ERROR¡¡¡", "SE HA(N) ELIMINADO EL(LOS) OFICIO(S)");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            System.out.println(e.getMessage());
+            System.out.println("ERROR AL ELMINAR");
+        }
+
+    }
+
+    public boolean validar_oficio(String documento) {
+
+        boolean encuentra = false;
+
+        for (int i = 0; i < oficiosConExp.size(); i++) {
+            Map<String, String> hm = (HashMap<String, String>) oficiosConExp.get(i);
+            if (hm.get("correlativo").toString().equals(documento)) {
+                encuentra = true;
+                break;
+            }
+        }
+        return encuentra;
+    }
+
+    public void guardar_oficiounico() {
+        FacesMessage message = null;
+        String cadena = " N°" + " " + correlativo2 + " " + siglasdocus2 + " " + auxanio;
+        if (validar_oficio(partedocu2)) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "CORRELATIVO YA ESTA SIENDO USADO");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } else {
+            if (asunto2.equals(" ") || destino2.equals(" ")) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "DEBE INGRESAR TODOS LOS DATOS");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            } else {
+                try {
+                    Oficios ofi = new Oficios();
+                    ofi.setAsuntoOficio(asunto2.toUpperCase());
+                    ofi.setCorrelativoOficio(partedocu2.substring(10, 15));
+                    ofi.setFechaOficio(fecha);
+                    ofi.setDependenciaByCodigo(deriv.getDep(origen2));
+                    ofi.setDependenciaByCodigo1(deriv.getDep(this.destino2));
+                    ofi.setReferenciaOficio(null);
+                    ofi.setTramiteDatos(null);
+                    ofi.setUsuario(usu);
+                    ofi.setResponsable(arearesponsable2);
+                    System.out.println(escogido2);
+                    ofi.setTiposDocumentos(od.getTipoDocu("OFICIO"));
+                    dd.guardarOficio2(ofi);
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO" + cadena);
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    mostrarOficioConExp();
+                } catch (Exception e) {
+                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICIO");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
+                    System.out.println("mal guardar oficiounico");
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        getAnio();
+        generarFecha();
+        this.abrirDocumentoUnico();
+        this.asunto2 = "";
+        this.arearesponsable2 = " ";
+    }
+
+    public void generarFecha() {
+        System.out.println("entra fechaactual");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        fecha = new Date();
+        fechadia2 = "";
+        fechahora = "";
+
+        StringTokenizer tokens = new StringTokenizer(sdf.format(fecha), " ");
+        while (tokens.hasMoreTokens()) {
+            if (fechadia2.equals("")) {
+                fechadia2 = tokens.nextToken();
+            }
+            if (fechahora.equals("")) {
+                fechahora = tokens.nextToken();
+            }
+        }
+        auxfecha = sdf.format(fecha);
+        System.out.println("FECHAS: " + fechadia2 + "-" + fechahora);
+    }
+/////////////////////OFICIOS//////////////////////////
 
     public void mostrar_documentosOfInt() {
         System.out.println("listando documentos corregir");
@@ -207,13 +480,13 @@ public class DocumentosBean implements Serializable {
     }
 
     public void mostrarOficio() {
-        referencia="";
+        referencia = "";
         for (int i = 0; i < docselec.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-            referencia = referencia+"/"+hm.get("observacion");
+            referencia = referencia + "/" + hm.get("observacion");
             responsable = hm.get("origen").toString();
         }
-        
+
         fecha = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY");
@@ -294,8 +567,9 @@ public class DocumentosBean implements Serializable {
                 }
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO N°:" + correlativo_oficio);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
-                limpiar();
                 MostrarDocusInternos();
+                limpiar();
+
             } catch (Exception e) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA PODIDO GUARDAR EL OFICION°:" + correlativo_oficio);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
@@ -438,9 +712,9 @@ public class DocumentosBean implements Serializable {
 
     public String obtenerNumeroTramite() {
         String numerotramite = "";
-        for(int i=0;i<docselec.size();i++){
+        for (int i = 0; i < docselec.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec.get(i);
-            numerotramite = numerotramite+"\n"+hm.get("numerotramite").toString();
+            numerotramite = numerotramite + "\n" + hm.get("numerotramite").toString();
         }
         return numerotramite;
     }
@@ -463,7 +737,7 @@ public class DocumentosBean implements Serializable {
             List lista = new ArrayList();
             lista = dd.getDocusInternos();
             Iterator ite = lista.iterator();
-            Object obj[] = new Object[10];
+            Object obj[] = new Object[11];
             while (ite.hasNext()) {
                 obj = (Object[]) ite.next();
                 Map<String, String> listaaux = new HashMap<String, String>();
@@ -477,6 +751,7 @@ public class DocumentosBean implements Serializable {
                 listaaux.put("estado", String.valueOf(obj[7]));
                 listaaux.put("indicador", String.valueOf(obj[8]));
                 listaaux.put("estadodoc", String.valueOf(obj[9]));
+                listaaux.put("fechatramite", String.valueOf(obj[10]));
                 docusinternos.add(listaaux);
             }
         } catch (Exception e) {
@@ -1284,6 +1559,170 @@ public class DocumentosBean implements Serializable {
 
     public void setIndicador(IndicadorDAO indicador) {
         this.indicador = indicador;
+    }
+
+    public List getOficiosConExp() {
+        return oficiosConExp;
+    }
+
+    public void setOficiosConExp(List oficiosConExp) {
+        this.oficiosConExp = oficiosConExp;
+    }
+
+    public List getOtrosdocus3() {
+        return otrosdocus3;
+    }
+
+    public void setOtrosdocus3(List otrosdocus3) {
+        this.otrosdocus3 = otrosdocus3;
+    }
+
+    public List getDocselec3() {
+        return docselec3;
+    }
+
+    public void setDocselec3(List docselec3) {
+        this.docselec3 = docselec3;
+    }
+
+    public List getTiposdocus() {
+        return tiposdocus;
+    }
+
+    public void setTiposdocus(List tiposdocus) {
+        this.tiposdocus = tiposdocus;
+    }
+
+    public OficioDAO getOd() {
+        return od;
+    }
+
+    public void setOd(OficioDAO od) {
+        this.od = od;
+    }
+
+    public String getSiglasdocus2() {
+        return siglasdocus2;
+    }
+
+    public void setSiglasdocus2(String siglasdocus2) {
+        this.siglasdocus2 = siglasdocus2;
+    }
+
+    public String getOrigen2() {
+        return origen2;
+    }
+
+    public void setOrigen2(String origen2) {
+        this.origen2 = origen2;
+    }
+
+    public String getAsunto2() {
+        return asunto2;
+    }
+
+    public void setAsunto2(String asunto2) {
+        this.asunto2 = asunto2;
+    }
+
+    public String getDestino2() {
+        return destino2;
+    }
+
+    public void setDestino2(String destino2) {
+        this.destino2 = destino2;
+    }
+
+    public String getCorrelativo2() {
+        return correlativo2;
+    }
+
+    public void setCorrelativo2(String correlativo2) {
+        this.correlativo2 = correlativo2;
+    }
+
+    public String getAuxanio2() {
+        return auxanio2;
+    }
+
+    public void setAuxanio2(String auxanio2) {
+        this.auxanio2 = auxanio2;
+    }
+
+    public String getPartedocu2() {
+        return partedocu2;
+    }
+
+    public void setPartedocu2(String partedocu2) {
+        this.partedocu2 = partedocu2;
+    }
+
+    public String getArearesponsable2() {
+        return arearesponsable2;
+    }
+
+    public void setArearesponsable2(String arearesponsable2) {
+        this.arearesponsable2 = arearesponsable2;
+    }
+
+    public List getAreasResp() {
+        return areasResp;
+    }
+
+    public void setAreasResp(List areasResp) {
+        this.areasResp = areasResp;
+    }
+
+    public String getAuxfecha() {
+        return auxfecha;
+    }
+
+    public void setAuxfecha(String auxfecha) {
+        this.auxfecha = auxfecha;
+    }
+
+    public String getAuxanio() {
+        return auxanio;
+    }
+
+    public void setAuxanio(String auxanio) {
+        this.auxanio = auxanio;
+    }
+
+    public String getFechadia2() {
+        return fechadia2;
+    }
+
+    public void setFechadia2(String fechadia2) {
+        this.fechadia2 = fechadia2;
+    }
+
+    public String getFechahora() {
+        return fechahora;
+    }
+
+    public void setFechahora(String fechahora) {
+        this.fechahora = fechahora;
+    }
+
+    public boolean isEscogido2() {
+        return escogido2;
+    }
+
+    public void setEscogido2(boolean escogido2) {
+        this.escogido2 = escogido2;
+    }
+
+    public void setAnio2(Date anio2) {
+        this.anio2 = anio2;
+    }
+
+    public List getDestinos() {
+        return destinos;
+    }
+
+    public void setDestinos(List destinos) {
+        this.destinos = destinos;
     }
 
 }

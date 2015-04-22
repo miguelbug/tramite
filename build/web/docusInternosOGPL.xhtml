@@ -18,9 +18,9 @@
                                 <h3>DOCUMENTOS INTERNOS</h3>
                             </center>
                             <br></br>
-                            <p:dataTable value="#{documentoUsuarioBean.docusInternosOGPL}" var="item" paginator="true" rows="15" id="tabladocusInternosOGPL" 
+                            <p:dataTable value="#{oficioBean.docusInternosOGPL}" var="item" paginator="true" rows="15" id="tabladocusInternosOGPL" 
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus3}" selection="#{objxUnidadController.docselec4}"
+                                         emptyMessage="no hay datos para este filtro" filteredValue="#{documentoUsuarioBean.otrosdocus3}" selection="#{oficioBean.docuselec4}"
                                          rowKey="#{item.id}"  editable="true">
 
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
@@ -61,17 +61,17 @@
                                     <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Crear Documento" style="position:absolute; left:25px; height:26px " oncomplete="PF('DocuDialog').show()"
                                                      update=":form:docudialog" actionListener="#{oficioBean.abrirDocumento()}"/>
                                     <p:commandButton process="tabladocusInternosOGPL" icon="ui-icon-search" value="Eliminar Documento" style="position:absolute; left:175px; height:26px " oncomplete="PF('ConfirmarDialog').show()"
-                                                     actionListener="#{objxUnidadController.abrirConfirmacion()}" update=":form:ConfirmarDialog"/>
+                                                     actionListener="#{oficioBean.abrirConfirmacion()}" update=":form:ConfirmarDialog"/>
                                 </f:facet>
                             </p:dataTable>
                         </p:tab>
                     </p:tabView>
                     <br></br>
-                    <p:dialog header="Eliminar Documento" widgetVar="ConfirmarDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="ConfirmarDialog">
+                    <p:dialog header="Eliminar Documento" widgetVar="ConfirmarDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="ConfirmarDialog" closeOnEscape="true">
                         <center>
-                            <p:outputLabel value="¿Desea Eliminar el Documento: #{objxUnidadController.docueliminar}?"/>
+                            <p:outputLabel value="¿Desea Eliminar el Documento: #{oficioBean.docueliminar}?"/>
                             <p:panelGrid columns="2">
-                                <p:commandButton value="Aceptar" actionListener="#{objxUnidadController.eliminarDocuInternoOGPL()}">
+                                <p:commandButton value="Aceptar" actionListener="#{oficioBean.eliminarDocuInternoOGPL()}" update=":form:">
                                     <f:ajax event="click" onevent="ConfirmarDialog.hide()"/>
                                 </p:commandButton>
                                 <p:commandButton value="Cancelar">
@@ -80,7 +80,7 @@
                             </p:panelGrid>
                         </center>
                     </p:dialog>
-                    <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog">
+                    <p:dialog header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog" closeOnEscape="true">
                         <p:panelGrid columns="2" id="panelOfUn2">
                             <p:outputLabel value="Tipo de Documento:"/>
                             <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}">
@@ -122,7 +122,7 @@
                         </p:panelGrid>
                         <br></br>
                         <center>
-                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_documentoOfiInt2()}" update="docudialog">
+                            <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_documentoOfiInt2()}" update=":form:,docudialog">
                                 <f:ajax event="click" onevent="DocuDialog.hide()"/>
                             </p:commandButton>
                         </center>
