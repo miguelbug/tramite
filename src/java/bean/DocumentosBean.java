@@ -327,7 +327,7 @@ public class DocumentosBean implements Serializable {
 
     public void guardar_oficiounico() {
         FacesMessage message = null;
-        String cadena = " N°" + " " + correlativo2 + " " + siglasdocus2 + " " + auxanio;
+        String cadena = " N°" + " " + correlativo2 + "-" + siglasdocus2 + "-" + auxanio2;
         if (validar_oficio(partedocu2)) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "CORRELATIVO YA ESTA SIENDO USADO");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
