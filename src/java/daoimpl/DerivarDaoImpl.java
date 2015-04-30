@@ -298,52 +298,83 @@ public class DerivarDaoImpl implements DerivarDAO {
     }
 
     @Override
-    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, String tramfecha, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1) {
+    public boolean validar_TIpoDocu(String tramNum, String tramFecha) {
+        boolean esta = false;
+        Date date = null;
+        TipoDocu td = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
-            System.out.println("entra a guardar tipo docus");
-            DocusInternos di = new DocusInternos();
-            di.setDocuCorrelaint(aux);
-            di.setDocuNombreint(nombre);
-            di.setDocuPricint(String.valueOf(pric));
-            di.setDocuSiglasint(siglas);
-            di.setDocuAnioint(anio);
-            di.setTramiteDatos(getTramite(numtram,tramfecha));
-            di.setTiposDocumentos(getTipoDoc(nombre));
-            di.setFecharegistro(fecharegistro);
-            di.setUsuarioByUsu(usu);
-            di.setDocuAsunto(asunto);
-            di.setNumeroMovi(movi);
-            di.setDependenciaByCodigo(d);
-            di.setDependenciaByCodigo1(d1);
-            di.setEstado("0");
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(di);
-            session.getTransaction().commit();
-            System.out.println("terminó tipodocus");
-        } catch (Exception ex) {
-            System.err.println("falló guardado tipodocus." + ex);
+            date = sdf.parse(tramFecha);
+        } catch (ParseException ex) {
             System.out.println(ex.getMessage());
+        }
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf1.format(date);
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "FROM TipoDocu WHERE tramiteDatos.id.tramNum='" + tramNum + "' AND TO_CHAR(tramiteDatos.id.tramFecha,'dd/MM/yyyy')='" + fecha + "'";
+        try {
+            session.beginTransaction();
+            td = (TipoDocu) session.createQuery(sql).uniqueResult();
+            session.beginTransaction().commit();
+            esta = true;
+        } catch (Exception e) {
+            System.out.println("mal");
+            System.out.println(e.getMessage());
             session.beginTransaction().rollback();
-            ex.printStackTrace();
         } finally {
             session.close();
         }
+        return esta;
+    }
+
+    @Override
+    public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, String tramfecha, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1) {
+            try {
+                System.out.println("entra a guardar tipo docus");
+                DocusInternos di = new DocusInternos();
+                di.setDocuCorrelaint(aux);
+                di.setDocuNombreint(nombre);
+                di.setDocuPricint(String.valueOf(pric));
+                di.setDocuSiglasint(siglas);
+                di.setDocuAnioint(anio);
+                di.setTramiteDatos(getTramite(numtram, tramfecha));
+                di.setTiposDocumentos(getTipoDoc(nombre));
+                di.setFecharegistro(fecharegistro);
+                di.setUsuarioByUsu(usu);
+                di.setDocuAsunto(asunto);
+                di.setNumeroMovi(movi);
+                di.setDependenciaByCodigo(d);
+                di.setDependenciaByCodigo1(d1);
+                di.setEstado("0");
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                session.save(di);
+                session.getTransaction().commit();
+                System.out.println("terminó tipodocus");
+            } catch (Exception ex) {
+                System.err.println("falló guardado tipodocus." + ex);
+                System.out.println(ex.getMessage());
+                session.beginTransaction().rollback();
+                ex.printStackTrace();
+            } finally {
+                session.close();
+            }
+        
     }
 
     @Override
     public TramiteDatos getTramite(String tramite, String tramfecha) {
         System.out.println("gettramite");
         TramiteDatos td = null;
-        Date date=null;
-        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
-            date=sdf.parse(tramfecha);
+            date = sdf.parse(tramfecha);
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         }
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha=sdf1.format(date);
+        String fecha = sdf1.format(date);
         session = HibernateUtil.getSessionFactory().openSession();
         System.out.println("impl: " + tramite);
         String sql = "FROM TramiteDatos WHERE id.tramNum='" + tramite + "' AND TO_CHAR(id.tramFecha,'dd/MM/yyyy')='" + fecha + "'";
@@ -514,12 +545,12 @@ public class DerivarDaoImpl implements DerivarDAO {
                     + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            
+
         } catch (Exception e) {
             System.out.println("no entró1111");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
-        } finally{
+        } finally {
             session.close();
         }
         return codigos;
@@ -643,11 +674,11 @@ public class DerivarDaoImpl implements DerivarDAO {
     public void cambiarEstado(String numtram, String movimiento) {
         int i = 0;
         session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "UPDATE DOCUS_INTERNOS SET ESTADO='1' WHERE TRAM_NUM='"+numtram+"' AND NUMERO_MOVI='"+movimiento+"'";
+        String sql = "UPDATE DOCUS_INTERNOS SET ESTADO='1' WHERE TRAM_NUM='" + numtram + "' AND NUMERO_MOVI='" + movimiento + "'";
         try {
             System.out.println("entra a cambiar estado");
             session.beginTransaction();
-            i= session.createSQLQuery(sql).executeUpdate();
+            i = session.createSQLQuery(sql).executeUpdate();
             session.beginTransaction().commit();
             System.out.println("sale de cambiar estado");
         } catch (Exception e) {
@@ -734,12 +765,12 @@ public class DerivarDaoImpl implements DerivarDAO {
                     + "ORDER BY mi.FECHA_INGR DESC");
             codigos = query.list();
             session.beginTransaction().commit();
-            
+
         } catch (Exception e) {
             System.out.println("no entro getconfirmadosderivados");
             session.beginTransaction().rollback();
             System.out.println(e.getMessage());
-        } finally{
+        } finally {
             session.close();
         }
         return codigos;

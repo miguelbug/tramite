@@ -809,8 +809,8 @@ public class DocumentoUsuarioBean {
             for (int i = 0; i < docselec2.size(); i++) {
                 Map<String, String> hm = (HashMap<String, String>) docselec2.get(i);
                 deriv.ActualizarTramite(hm.get("numerotramite").toString(), String.valueOf(deriv.getMovimiento(hm.get("numerotramite").toString())), fecha, docunombre);
-                deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), hm.get("fechaenvio"), getNombOficina(), codinterno, in);
-                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), hm.get("fechaenvio").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
+                deriv.InsertarMovimiento(usu, deriv.getMovimiento(hm.get("numerotramite").toString()) + 1, fecha, asunto, hm.get("estado").toString(), hm.get("numerotramite").toString(), hm.get("tramfecha"), getNombOficina(), codinterno, in);
+                deriv.InsertarTipoDocus(correlativo, docunombre, 1, siglasdocus, d.format(fecha), hm.get("numerotramite").toString(), hm.get("tramfecha").toString(), fecha, usu, asunto, hm.get("movimnum").toString(), deriv.getDependencia2(codigo), deriv.getDependencia2(codinterno));
             }
 
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL " + mensaje.toUpperCase());

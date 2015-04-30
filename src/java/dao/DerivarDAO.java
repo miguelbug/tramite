@@ -101,4 +101,6 @@ public interface DerivarDAO {
     public void cambiarEstado(String numtram, String movimiento);
     
     public String getIndice2(String tipodocu, String anio);
+    
+    public boolean validar_TIpoDocu(String tramNum, String tramFecha);
 }
