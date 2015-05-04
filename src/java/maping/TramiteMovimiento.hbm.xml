@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="maping.TramiteMovimiento" table="TRAMITE_MOVIMIENTO" schema="TRAMITEDOCUMENTARIO_TEST">
         <id name="idMovi" type="big_decimal">
-            <column name="ID_MOVI" precision="38" scale="0" />
+            <column name="ID_MOVI" precision="38" scale="0"/>
             <generator class="increment" />
         </id>
         <many-to-one name="tramiteDatos" class="maping.TramiteDatos" fetch="select">
