@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>web/index.xhtml</url>
-            <bookmark id="1">
-                <name/>
-                <line>80</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/menu_admin.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/Proveidos_internos.xhtml</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/maping/Anios.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/OficioBean.java</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/documentos.xhtml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
         </group>
     </open-files>
 </project-private>
