@@ -141,13 +141,13 @@
                                 </p:dataTable>
                                 <br></br>
                                 <center>
-                                    <p:panelGrid columns="5">
+                                    <h:panelGrid columns="5" cellspacing="8">
                                         <p:commandButton id="repor02" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
                                         <p:commandButton id="repor12" value="Reporte Todos Docu." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
                                         <p:commandButton id="repor22" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
                                         <p:commandButton id="repor32" value="Reporte de Cargos" title="Reporte Cargos" actionListener="#{objxUnidadController.ImpresionCargos()}" ajax="false"/>
                                         <p:commandButton id="repor42" value="Reporte de Asignados" title="Reporte Asignados" actionListener="#{objxUnidadController.mostrarAsignados()}" ajax="false"/>
-                                    </p:panelGrid>
+                                    </h:panelGrid>
                                 </center>
                             </center>
                         </p:tab>

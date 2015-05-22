@@ -562,7 +562,9 @@ public class DocumentosBean implements Serializable {
                     movi = Integer.parseInt(hm.get("movimiento").toString());
                     System.out.println("confirmaar tramite entre");
                     deriv.Confirmar(ntram, movi, fecha);
-                    deriv.cambiarEstado(ntram, hm.get("movimiento").toString());
+                    int numerotram=Integer.parseInt(hm.get("movimiento").toString());
+                    numerotram=numerotram-1;
+                    deriv.cambiarEstado(ntram,String.valueOf(numerotram) );
                     System.out.println("confirmaar tramite sale");
                 }
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO N°:" + correlativo_oficio);

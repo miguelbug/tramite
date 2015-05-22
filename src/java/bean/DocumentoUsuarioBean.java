@@ -287,22 +287,22 @@ public class DocumentoUsuarioBean {
                         listaaux.put("destino", String.valueOf(obj[7]));
                         listaaux.put("asignado", String.valueOf(obj[8]));
                         if (String.valueOf(obj[9]).equals("1")) {
-                            System.out.println(String.valueOf(obj[9]));
+                            System.out.println(String.valueOf(obj[2])+"-"+String.valueOf(obj[9]));
                             listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
                         } else {
                             if (String.valueOf(obj[2]).equals("SIN EXPEDIENTE")) {
                                 listaaux.put("destinoofi", String.valueOf(obj[7]));
                             } else {
                                 if (String.valueOf(obj[9]).equals("0") && String.valueOf(obj[1]).indexOf("ARCHIVO") == -1) {
-                                    System.out.println(String.valueOf(obj[9]));
+                                    System.out.println(String.valueOf(obj[2])+"-"+String.valueOf(obj[9]));
                                     listaaux.put("destinoofi", "SIN OFICIO");
                                 } else {
                                     if (String.valueOf(obj[9]).equals("null") || String.valueOf(obj[9]).equals("1")) {
-                                        System.out.println(String.valueOf(obj[9]));
+                                        System.out.println(String.valueOf(obj[2])+"-"+String.valueOf(obj[9]));
                                         listaaux.put("destinoofi", di.getDestinoOfi(String.valueOf(obj[2]), String.valueOf(obj[3])));
                                     } else {
                                         if (String.valueOf(obj[1]).indexOf("ARCHIVO") != -1) {
-                                            System.out.println(String.valueOf(obj[1]));
+                                            System.out.println(String.valueOf(obj[2])+"-"+String.valueOf(obj[1]));
                                             listaaux.put("destinoofi", String.valueOf(obj[7]));
                                         }
                                     }

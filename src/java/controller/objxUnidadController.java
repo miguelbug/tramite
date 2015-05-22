@@ -156,7 +156,7 @@ public class objxUnidadController implements Serializable {
     }
 
     public void ImpresionSeleccionadosUser() throws ParseException, SQLException {
-        guardarDatos3();
+        guardarDatos2();
         mostrarReporSeleccionadosUser();
         tdi.actualizarTemporalUser();
     }
@@ -653,7 +653,7 @@ public class objxUnidadController implements Serializable {
         System.out.println("context" + context);
         ServletContext sc = (ServletContext) context.getExternalContext().getContext();
         System.out.println("sc = " + sc.getRealPath("/reportes/"));
-        repor = ReporteController.getInstance("reporteDocumentosUserFechas2");
+        repor = ReporteController.getInstance("reporteDocumentosUserFechas");
         categoriaServicio categoriaServicio = new categoriaServicio();
         repor.setConexion(categoriaServicio.getConexion());
         repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05

@@ -137,10 +137,10 @@ ORDER BY R.FECHA DESC]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="0"
+						x="1"
 						y="25"
 						width="91"
-						height="20"
+						height="21"
 						key="staticText-7"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -176,7 +176,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 						x="92"
 						y="25"
 						width="85"
-						height="20"
+						height="21"
 						key="staticText-9"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -192,9 +192,9 @@ ORDER BY R.FECHA DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="259"
-						y="25"
+						y="24"
 						width="186"
-						height="20"
+						height="22"
 						key="staticText-11"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -210,9 +210,9 @@ ORDER BY R.FECHA DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="445"
-						y="25"
+						y="24"
 						width="85"
-						height="20"
+						height="23"
 						key="staticText-12"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -238,7 +238,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<reportElement
 						x="2"
 						y="46"
-						width="524"
+						width="528"
 						height="0"
 						key="line-3"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -425,10 +425,10 @@ ORDER BY R.FECHA DESC]]></queryString>
 			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="262"
-						y="-1"
-						width="180"
-						height="29"
+						x="259"
+						y="0"
+						width="186"
+						height="28"
 						key="textField-14"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -439,14 +439,14 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASUNTO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{ASUNTO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="96"
-						y="-2"
-						width="78"
-						height="30"
+						x="91"
+						y="0"
+						width="86"
+						height="28"
 						key="textField-15"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -457,7 +457,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FECHA}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{FECHA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -475,14 +475,14 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["  "+$F{ASUNTO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{TRAM_NUM}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="4"
-						y="-2"
-						width="85"
-						height="30"
+						x="2"
+						y="0"
+						width="89"
+						height="28"
 						key="textField-17"/>
 					<box>					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -493,13 +493,13 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{DOCUMENTO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="448"
-						y="-2"
-						width="79"
+						x="445"
+						y="0"
+						width="85"
 						height="28"
 						key="textField-19"/>
 					<box>					<pen lineWidth="0.25"/>
@@ -511,7 +511,7 @@ ORDER BY R.FECHA DESC]]></queryString>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASIGNADO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{ASIGNADO}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
