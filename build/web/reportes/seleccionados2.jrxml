@@ -59,9 +59,9 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 			<band height="44"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="115"
+						x="113"
 						y="24"
-						width="85"
+						width="89"
 						height="20"
 						key="staticText-6"/>
 					<box></box>
@@ -72,16 +72,16 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="204"
+						x="202"
 						y="24"
-						width="99"
+						width="101"
 						height="20"
 						key="staticText-9"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DOCUMENTO PRINCIPAL]]></text>
+				<text><![CDATA[DOCUMENTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -133,7 +133,7 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DOCUMENTO]]></text>
+				<text><![CDATA[DOCUMENTO PRINCIPAL]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -147,9 +147,9 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="7"
-						y="28"
-						width="102"
-						height="13"
+						y="24"
+						width="105"
+						height="20"
 						key="staticText-14"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -262,22 +262,22 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 			<band height="30"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="206"
+						x="202"
 						y="0"
-						width="91"
-						height="28"
+						width="101"
+						height="30"
 						key="textField-7"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{TRAM_NUM}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="114"
+						x="112"
 						y="0"
-						width="87"
+						width="89"
 						height="30"
 						key="textField-8"/>
 					<box></box>
@@ -289,16 +289,16 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="307"
+						x="303"
 						y="0"
-						width="111"
+						width="116"
 						height="28"
 						key="textField-10"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DOCUMENTO_PRINC}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{DOCUMENTO_PRINC}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
@@ -365,10 +365,10 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 				</line>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="8"
+						x="6"
 						y="0"
-						width="101"
-						height="28"
+						width="106"
+						height="30"
 						key="textField-14"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -379,16 +379,16 @@ ORDER BY CODIGO,FECHA DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="424"
+						x="421"
 						y="0"
-						width="99"
+						width="107"
 						height="28"
 						key="textField-15"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TRAM_NUM}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[ $F{TRAM_NUM}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
