@@ -6,19 +6,13 @@
         <group/>
 =======
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/bean/DocumentosBean.java</file>
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/documentos.xhtml</file>
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/resources/NuevosJS/caducarSesiones.js</file>
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/web/documentos_respta.xhtml</file>
             <file>file:/C:/Users/Administrador/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
-=======
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DocumentoDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/bean/DocumentoUsuarioBean.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/src/java/daoimpl/DerivarDaoImpl.java</file>
-            <file>file:/C:/Users/OGPL/Documents/GitHub/tramite/web/documentos_user.xhtml</file>
->>>>>>> origin/master
         </group>
 >>>>>>> origin/master
     </open-files>
