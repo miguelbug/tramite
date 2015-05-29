@@ -863,8 +863,38 @@ public class objxUnidadController implements Serializable {
         categoriaServicio.CerrandoConexion();
     }
 
+    public void mostrarReporteOficioCircular2() throws SQLException {
+        context = FacesContext.getCurrentInstance();
+        serveltcontext = (ServletContext) context.getExternalContext().getContext();
+        ReporteController repor;
+        HashMap<String, Object> parametros = new HashMap<String, Object>();
+        parametros.clear();
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("context" + context);
+        ServletContext sc = (ServletContext) context.getExternalContext().getContext();
+        System.out.println("sc = " + sc.getRealPath("/reportes/"));
+        repor = ReporteController.getInstance("oficioCircular2");
+        categoriaServicio categoriaServicio = new categoriaServicio();
+        repor.setConexion(categoriaServicio.getConexion());
+        repor.setTipoFormato(opcionFormato);   /// para tIPO FORMATO  08/05
+        FacesMessage message = null;
+        Map<String, String> hm = (HashMap<String, String>) docselec3.get(0);
+        boolean rpt = false;
+        parametros.put("usuario", getUSUARIO());
+        parametros.put("logo", getLogo());
+        parametros.put("oficina", getOficina());
+        parametros.put("correlativo", hm.get("documento").substring(19,24));
+        repor.addMapParam(parametros);
+        rpt = repor.ejecutaReporte(context, serveltcontext);
+        if (!rpt && message == null) {
+            //no tiene hojas	
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "No hay datos para generar reporte");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        categoriaServicio.CerrandoConexion();
+    }
+    
     public void mostrarReporteOficioCircular() throws SQLException {
-        String tramite = "";
         System.out.printf("PARAMETRO DEL TRAM NUM  %s", OficioBean.getCorrelativo_exportar());
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();

@@ -5,6 +5,7 @@
  */
 package bean;
 
+import controller.objxUnidadController;
 import dao.DerivarDAO;
 import dao.DocumentoDAO;
 import dao.DocusInternosDAO;
@@ -58,6 +59,7 @@ public class DocumentoUsuarioBean {
     private DocusInternosDAO di;
     private OficioDAO ofi;
     public static String correla_exportar, tramnum_exportar, fecha_exportar, movimiento_exportar;
+    private objxUnidadController obu;
 
     public DocumentoUsuarioBean() {
         dd = new DocumentoDaoImpl();
@@ -83,6 +85,7 @@ public class DocumentoUsuarioBean {
         confirmadosderivados = new ArrayList<Map<String, String>>();
         sgd = new SeguimientoDaoImpl();
         deriv = new DerivarDaoImpl();
+        obu= new objxUnidadController();
         boolean isdocumentosUsuario = (currentPage.lastIndexOf("documentos_user.xhtml") > -1);
         boolean isdocusinternosUsu = (currentPage.lastIndexOf("documentos_internosUsuario.xhtml") > -1);
         boolean isreporteespecial = (currentPage.lastIndexOf("reportesEspeciales.xhtml") > -1);
@@ -112,7 +115,7 @@ public class DocumentoUsuarioBean {
             }
         }
     }
-
+    
     public void out() {
         System.out.println("SE TIENE QUE PINTAR");
     }
@@ -1366,6 +1369,14 @@ public class DocumentoUsuarioBean {
 
     public void setTiposdocus(List tiposdocus) {
         this.tiposdocus = tiposdocus;
+    }
+
+    public objxUnidadController getObu() {
+        return obu;
+    }
+
+    public void setObu(objxUnidadController obu) {
+        this.obu = obu;
     }
 
 }

@@ -201,6 +201,8 @@
                                     <f:facet name="footer">
                                         <p:commandButton process="tablasoficcirc" icon="ui-icon-extlink" value="Crear Circular" style="position:absolute; left:25px; height:26px "
                                                          update=":form:doccircdialog" actionListener="#{oficioBean.abrirOficioCircular()}" oncomplete="PF('DocCircdialog').show()"/>
+                                        <p:commandButton process="tablasoficcirc" icon="ui-icon-arrowrefresh-1-n" value="Imprimir Circular" style="position:absolute; left:150px; height:26px "
+                                                         ajax="false" actionListener="#{objxUnidadController.mostrarReporteOficioCircular2()}"/>
                                     </f:facet>
                                 </p:dataTable>
                                 <br></br>
