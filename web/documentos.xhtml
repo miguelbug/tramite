@@ -9,7 +9,6 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>DOCUMENTOS</title>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
     <h:body style="background-color: #D0D0D0;" >
@@ -137,10 +136,10 @@
 
                         <p:dialog header="Reimpresion" modal="true" showEffect="fade" widgetVar="reimpresion" hideEffect="fade" resizable="false" position="center center" id="reimpresionDialog" closeOnEscape="true">
                             <center>
-                                <p:panelGrid columns="2">
+                                <h:panelGrid columns="2">
                                     <p:outputLabel value="Lote: "/>
                                     <p:inputText value="#{objxUnidadController.loteinput}"/>
-                                </p:panelGrid>
+                                </h:panelGrid>
                                 <br></br>
                                 <p:commandButton id="reporte" value="Reporte Reimpres."  ajax="false" update="msj" icon="ui-icon-arrowstop-1-s" actionListener="#{objxUnidadController.mostrarReimpresion()}" title="Reporte">
                                     <f:ajax event="click" onevent="reimpresion.hide()"/>

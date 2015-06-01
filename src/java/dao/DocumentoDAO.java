@@ -32,7 +32,7 @@ public interface DocumentoDAO {
     public List getDependencias(String tipos);
     public List getIndicadores();
     public List getProveidos(String tramnum);
-    public void guardarOficio(Oficios ofi, String tramnum, String movimiento);
+    public void guardarOficio(Oficios ofi);
     public void guardarOficio2(Oficios ofi);
     public void ActualizarMov(String tramnum, String mov);
     

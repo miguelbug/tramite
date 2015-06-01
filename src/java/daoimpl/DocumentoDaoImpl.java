@@ -525,7 +525,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
     }
 
     @Override
-    public void guardarOficio(Oficios ofi, String tramnum, String movimiento) {
+    public void guardarOficio(Oficios ofi) {
         System.out.println("guardar oficio");
         session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -542,7 +542,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
             session.close();
         }
         System.out.println("entra a actualizar movimiento");
-        ActualizarMov(tramnum, movimiento);
+        //ActualizarMov(tramnum, movimiento);
     }
 
     @Override

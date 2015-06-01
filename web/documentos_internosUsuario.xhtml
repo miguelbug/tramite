@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>DOCUMENTOS INTERNOS</title>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
     <h:body style="background-color: #D0D0D0;" >
@@ -141,7 +140,7 @@
                                 </p:dataTable>
                                 <br></br>
                                 <center>
-                                    <h:panelGrid columns="5" cellspacing="8">
+                                    <h:panelGrid columns="5" cellpadding="6">
                                         <p:commandButton id="repor02" value="Reporte Doc. por Fecha" title="Reporte por Fecha" oncomplete="PF('reporteDialog1').show()" />
                                         <p:commandButton id="repor12" value="Reporte Todos Docu." title="Reporte Todos" actionListener="#{objxUnidadController.mostrarReporteTodos2()}" ajax="false"/>
                                         <p:commandButton id="repor22" value="Reporte Seleccionados" title="Reporte Seleccionados" actionListener="#{objxUnidadController.ImpresionSeleccionadosUser()}" ajax="false"/>
