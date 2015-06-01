@@ -76,6 +76,89 @@ public class OficioDaoImpl implements OficioDAO {
     }
 
     @Override
+    public String getTramNUm_TramFecha(String id) {
+        String sql = "SELECT TRAM_NUM||'-'||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')||'-'||(NUMERO_MOVI+1) FROM DOCUS_INTERNOS WHERE IDTIP='"+id+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String cadena="";
+        try {
+            session.beginTransaction();
+            cadena = (String)session.createSQLQuery(sql).uniqueResult();
+            session.getTransaction().commit();
+            System.out.println("numero tram y fecha tram");
+        } catch (Exception e) {
+            System.out.println("mal numero tram y fecha tram");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return cadena;
+    }
+
+    @Override
+    public String getTramNUm_TramFecha2(String id) {
+        String sql = "SELECT TRAM_NUM||'-'||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')||'-'||NUMERO_MOVI FROM DOCUS_INTERNOS WHERE IDTIP='"+id+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        String cadena="";
+        try {
+            session.beginTransaction();
+            cadena = (String)session.createSQLQuery(sql).uniqueResult();
+            session.getTransaction().commit();
+            System.out.println("numero tram y fecha tram");
+        } catch (Exception e) {
+            System.out.println("mal numero tram y fecha tram");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return cadena;
+    }
+
+    @Override
+    public void ActualizarTramite(String tram_fecha) {
+        String sql = "UPDATE TRAMITE_MOVIMIENTO SET ESTA_NOMBRE='EN PROCESO', ESTAD_CONFRIRM='CONFIRMADO', FECHA_DERIVACION=NULL, "
+                + "ESTADO=0 WHERE TRAM_NUM||'-'||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')||'-'||MOVI_NUM='"+tram_fecha+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("actualizó tramite");
+        } catch (Exception e) {
+            System.out.println("mal actualizacion");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+
+    @Override
+    public void ELiminarTramite(String cadena) {
+        String sql = "DELETE FROM TRAMITE_MOVIMIENTO WHERE TRAM_NUM||'-'||TO_CHAR(TRAM_FECHA,'DD/MM/YYYY HH24:MI:SS')||'-'||MOVI_NUM='"+cadena+"'";
+        session = HibernateUtil.getSessionFactory().openSession();
+        int i = 0;
+        try {
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("actualizó tramite");
+        } catch (Exception e) {
+            System.out.println("mal actualizacion");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        System.out.println("se ha actualizado: " + i);
+    }
+    
+    @Override
     public void ActualizarDocusInternosOficinas(String id, String asunto) {
         String sql = "UPDATE DOCUS_INTERNOS SET DOCU_ASUNTO='" + asunto + "' WHERE IDTIP='" + id + "'";
         session = HibernateUtil.getSessionFactory().openSession();

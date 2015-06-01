@@ -329,37 +329,37 @@ public class DerivarDaoImpl implements DerivarDAO {
 
     @Override
     public void InsertarTipoDocus(String aux, String nombre, int pric, String siglas, String anio, String numtram, String tramfecha, Date fecharegistro, Usuario usu, String asunto, String movi, Dependencia d, Dependencia d1) {
-            try {
-                System.out.println("entra a guardar tipo docus");
-                DocusInternos di = new DocusInternos();
-                di.setDocuCorrelaint(aux);
-                di.setDocuNombreint(nombre);
-                di.setDocuPricint(String.valueOf(pric));
-                di.setDocuSiglasint(siglas);
-                di.setDocuAnioint(anio);
-                di.setTramiteDatos(getTramite(numtram, tramfecha));
-                di.setTiposDocumentos(getTipoDoc(nombre));
-                di.setFecharegistro(fecharegistro);
-                di.setUsuarioByUsu(usu);
-                di.setDocuAsunto(asunto);
-                di.setNumeroMovi(movi);
-                di.setDependenciaByCodigo(d);
-                di.setDependenciaByCodigo1(d1);
-                di.setEstado("0");
-                session = HibernateUtil.getSessionFactory().openSession();
-                session.beginTransaction();
-                session.save(di);
-                session.getTransaction().commit();
-                System.out.println("terminó tipodocus");
-            } catch (Exception ex) {
-                System.err.println("falló guardado tipodocus." + ex);
-                System.out.println(ex.getMessage());
-                session.beginTransaction().rollback();
-                ex.printStackTrace();
-            } finally {
-                session.close();
-            }
-        
+        try {
+            System.out.println("entra a guardar tipo docus");
+            DocusInternos di = new DocusInternos();
+            di.setDocuCorrelaint(aux);
+            di.setDocuNombreint(nombre);
+            di.setDocuPricint(String.valueOf(pric));
+            di.setDocuSiglasint(siglas);
+            di.setDocuAnioint(anio);
+            di.setTramiteDatos(getTramite(numtram, tramfecha));
+            di.setTiposDocumentos(getTipoDoc(nombre));
+            di.setFecharegistro(fecharegistro);
+            di.setUsuarioByUsu(usu);
+            di.setDocuAsunto(asunto);
+            di.setNumeroMovi(movi);
+            di.setDependenciaByCodigo(d);
+            di.setDependenciaByCodigo1(d1);
+            di.setEstado("0");
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(di);
+            session.getTransaction().commit();
+            System.out.println("terminó tipodocus");
+        } catch (Exception ex) {
+            System.err.println("falló guardado tipodocus." + ex);
+            System.out.println(ex.getMessage());
+            session.beginTransaction().rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+
     }
 
     @Override
@@ -683,6 +683,30 @@ public class DerivarDaoImpl implements DerivarDAO {
             System.out.println("sale de cambiar estado");
         } catch (Exception e) {
             System.out.println("mal cambiar estado");
+            System.out.println(e.getMessage());
+            session.beginTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        System.out.println("actualizados: " + i);
+    }
+
+    @Override
+    public void ActualizarTramMov(String numtram, String movi, Date fecha) {
+        int i = 0;
+        SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String nuevFech=sdf.format(fecha);
+        session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "UPDATE TRAMITE_MOVIMIENTO SET ESTADO='1',FECHA_DERIVACION=TO_DATE('"+nuevFech+"','DD/MM/YYYY HH24:MI:SS') WHERE TRAM_NUM='" + numtram + "' AND MOVI_NUM='" + movi + "'";
+        try {
+            System.out.println("ACTUALIZA TRAM MOV");
+            session.beginTransaction();
+            i = session.createSQLQuery(sql).executeUpdate();
+            session.beginTransaction().commit();
+            System.out.println("sale de cambiar estado");
+        } catch (Exception e) {
+            System.out.println("mal ACTUALIZA TRAM MOV");
             System.out.println(e.getMessage());
             session.beginTransaction().rollback();
             e.printStackTrace();

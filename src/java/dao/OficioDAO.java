@@ -54,4 +54,8 @@ public interface OficioDAO {
     public void ActualizarDocusInternosOficinas(String id, String asunto);
     public void EliminarDocumentosInternosOficinas(String id);
     public List listarTramitesNumeros(String oficina);
+    public String getTramNUm_TramFecha(String id);
+    public String getTramNUm_TramFecha2(String id);
+    public void ActualizarTramite(String tram_fecha);
+    public void ELiminarTramite(String tram_fecha_movi);
 }

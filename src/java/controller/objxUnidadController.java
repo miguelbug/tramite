@@ -94,7 +94,12 @@ public class objxUnidadController implements Serializable {
     public void delete() {
         for (int i = 0; i < docselec1.size(); i++) {
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
+            String cadena=ofi.getTramNUm_TramFecha(hm.get("iddoc"));
+            String cadena2=ofi.getTramNUm_TramFecha2(hm.get("iddoc"));
             ofi.EliminarDocumentosInternosOficinas(hm.get("iddoc"));
+            ofi.ELiminarTramite(cadena);
+            
+            ofi.ActualizarTramite(cadena2);
         }
         FacesMessage message = null;
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "REALIZADO", "SE HA(N) ELIMINADO EL(LOS) DOCUMENTO(S)");

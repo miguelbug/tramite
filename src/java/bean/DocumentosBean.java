@@ -554,7 +554,7 @@ public class DocumentosBean implements Serializable {
                     ofi.setTiposDocumentos(deriv.getTipoDoc("OFICIO"));
                     ofi.setResponsable(responsable);
                     System.out.println("\\\\\\\\ENTRA A GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
-                    dd.guardarOficio(ofi, tramnum, obtenerMovimiento());
+                    dd.guardarOficio(ofi);
                     System.out.println("\\\\\\\\SALE DE GUARDAR OFIICO¡¡¡¡¡¡¡¡¡¡¡¡¡¡");
 
                     System.out.println("ESTE ES EL DOCSELEC: " + docselec);
@@ -562,9 +562,9 @@ public class DocumentosBean implements Serializable {
                     movi = Integer.parseInt(hm.get("movimiento").toString());
                     System.out.println("confirmaar tramite entre");
                     deriv.Confirmar(ntram, movi, fecha);
-                    int numerotram=Integer.parseInt(hm.get("movimiento").toString());
-                    numerotram=numerotram-1;
-                    deriv.cambiarEstado(ntram,String.valueOf(numerotram) );
+                    deriv.ActualizarTramMov(ntram, hm.get("movimiento").toString(), fecha);
+                    movi=movi-1;
+                    deriv.cambiarEstado(ntram,String.valueOf(movi) );
                     System.out.println("confirmaar tramite sale");
                 }
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "SE HA GUARDADO EL OFICIO N°:" + correlativo_oficio);
