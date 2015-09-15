@@ -709,7 +709,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       )R\n"
                     + "WHERE R.FECHAING in (' ')\n"
                     + "and R.TRAM_NUM||'-'||to_char(R.MOVI_FEC_ENV,'dd/MM/yyyy')  not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy') from tramite_datos)\n"
-                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872','100392')\n"
+                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n"
                     + "AND R.DEPE_COD NOT IN ('1001868','1001869','1001870','1001871','1001872')");
             docus = query.list();
             System.out.println("despues de query session");
