@@ -694,6 +694,7 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       vista2.MOVI_ORIGEN,\n"
                     + "       vista2.MOVI_DESTINO,\n"
                     + "       vista2.DEST_COD,\n"
+                    + "       vista2.DEPE_COD,\n"
                     + "       vista2.MOVI_FEC_ENV,\n"
                     + "       DECODE(to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ENV, 'dd/MM/yyyy HH:mm:ss')) AS FECHAENVIO,\n"
                     + "       DECODE(to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss'),NULL,' ',to_char(vista2.MOVI_FEC_ING, 'dd/MM/yyyy HH:mm:ss')) AS FECHAING,\n"
@@ -707,9 +708,9 @@ public class DocumentoDaoImpl implements DocumentoDAO {
                     + "       ORDER BY vista2.MOVI_FEC_ENV DESC\n"
                     + "       )R\n"
                     + "WHERE R.FECHAING in (' ')\n"
-                    + "AND R.MOVI_ORIGEN = 'OFICINA GENERAL DE PLANIFICACION'\n"
                     + "and R.TRAM_NUM||'-'||to_char(R.MOVI_FEC_ENV,'dd/MM/yyyy')  not in (select tram_num||'-'||to_char(tram_fecha, 'dd/MM/yyyy') from tramite_datos)\n"
-                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872')\n");
+                    + "AND R.DEST_COD IN ('1001868','1001869','1001870','1001871','1001872','100392')\n"
+                    + "AND R.DEPE_COD NOT IN ('1001868','1001869','1001870','1001871','1001872')");
             docus = query.list();
             System.out.println("despues de query session");
             session.beginTransaction().commit();

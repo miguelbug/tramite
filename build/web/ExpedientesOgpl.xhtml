@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>DOCUMENTOS</title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+    </h:head>
+    <h:body style="background-color: #D0D0D0;" >
+        <ui:composition template="./menucentral.xhtml">
+            <ui:define name="content">
+                <h:form id="form" >
+                    <p:growl id="growl" showDetail="true" sticky="true" life="1000"/> 
+                    <br></br>
+                    <br></br>
+                    <p:tabView style="background-color: #D0D0D0;">
+                        <p:tab title="Documentos Recibidos" id="tab1" >
+                            <center>
+                                <h3>DOCUMENTOS RECIBIDOS</h3>
+                                <br></br>
+                                <p:dataTable value="#{expedientes_Ogpl.seguimientolista}" var="item" paginator="true" rows="15" id="tablaExpOgpl" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             emptyMessage="no hay datos para este filtro" filteredValue="#{expedientes_Ogpl.otrosdocus}" selection="#{expedientes_Ogpl.docselec}"
+                                             rowKey="#{item.numerotramite}+#{item.movimnum}" style="margin-bottom: 0">
+                                             
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column headerText="NUM. TRAM." width="5" sortBy="#{item.numerotramite}" filterBy="#{item.numerotramite}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.numerotramite}"/>
+                                    </p:column>
+                                    <p:column headerText="FECHA ORIG." width="5" sortBy="#{item.tramfecha}" filterBy="#{item.tramfecha}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.tramfecha}"/>
+                                    </p:column>
+                                    <!--<p:column headerText="RESP." width="5" sortBy="#{item.docgene}" filterBy="#{item.docgene}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docgene}" />
+                                    </p:column>-->
+                                    <p:column headerText="FECH. ENVIO" width="5" sortBy="#{item.fechaenvio}" filterBy="#{item.fechaenvio}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fechaenvio}" />
+                                    </p:column>
+                                    <p:column headerText="FECH. ING." width="5" sortBy="#{item.fechaingr}" filterBy="#{item.fechaingr}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.fechaingr}" />
+                                    </p:column>
+                                    <p:column headerText="INDICADOR" width="5" sortBy="#{item.indicador}" filterBy="#{item.indicador}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.indicador}" />
+                                    </p:column>
+                                    <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.observacion}" />
+                                    </p:column>
+                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.estadDoc}" />
+                                    </p:column>
+                                    <p:column headerText="MOV." width="5" style="text-align: center">
+                                        <h:outputText value="#{item.movimnum}"/>
+                                    </p:column>
+                                    <p:column headerText="ASIGN." width="5" sortBy="#{item.usuario}" filterBy="#{item.usuario}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.usuario}"/>
+                                    </p:column>
+                                    <p:column headerText="ORIG. PRINC." width="5" sortBy="#{item.origenp}" filterBy="#{item.origenp}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.origenp}"/>
+                                    </p:column>
+                                    <p:column headerText="DOCU. PRINC." width="5" sortBy="#{item.docup}" filterBy="#{item.docup}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.docup}"/>
+                                    </p:column>
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton process="tablaExpOgpl" update=":form:segdialog,:form:tablaseguim" oncomplete="PF('segDialog').show()" icon="ui-icon-search" title="Detalle">
+                                            <f:setPropertyActionListener value="#{item}" target="#{expedientes_Ogpl.seleccion}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandButton>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton process="tablaExpOgpl" icon="ui-icon-search" value="Seguimiento" style="position:absolute; left:25px; height:26px " oncomplete="PF('segDialog').show()"
+                                                         update=":form:tablaseguim" actionListener="#{expedientes_Ogpl.RecorrerLista()}"/>
+
+                                        <p:commandButton process="tablaExpOgpl" icon="ui-icon-extlink" value="Confirmar" style="position:absolute; left:190px; height:26px" actionListener="#{expedientes_Ogpl.abrirAsignacion()}"
+                                                         update=":form:asignados" oncomplete="PF('asignadosDialogOgpl').show()"/>
+                                        <p:commandButton process="tablaExpOgpl" icon="ui-icon-extlink" value="Derivar" style="position:absolute; left:325px; height:26px" actionListener="#{expedientes_Ogpl.Derivar()}"
+                                                         update=":form:panelDeriv"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
+                    </p:tabView>
+                    <p:dialog header="Asignación" widgetVar="asignadosDialogOgpl" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="asignados" closeOnEscape="true">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Asignando a:"/>
+                                <p:selectOneMenu value="#{expedientes_Ogpl.asignado}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                    <f:selectItems value="#{expedientes_Ogpl.designados}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Fecha: "/>
+                                <p:inputMask value="#{expedientes_Ogpl.fechaconfirmar}" mask="99/99/9999"/>
+                            </p:panelGrid>
+                            <br></br>
+                            <p:commandButton value="Confirmar" actionListener="#{expedientes_Ogpl.ConfirmarAsignar()}" update=":form:"/>
+                        </center>
+
+                    </p:dialog>
+                    <p:dialog header="Seguimiento" widgetVar="segDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" id="segdialog" closeOnEscape="true">
+                        <p:dataTable var="seg" value="#{expedientes_Ogpl.seguimientolista2}" id="tablaseguim" >
+                            <p:column headerText="Num. Tramite">
+                                <h:outputText value="#{seg.numerotramite}" />
+                            </p:column>
+                            <p:column headerText="Num. Mov.">
+                                <h:outputText value="#{seg.movimnum}" />
+                            </p:column>
+                            <p:column headerText="Origen">
+                                <h:outputText value="#{seg.origen}" />
+                            </p:column>
+                            <p:column headerText="Destino">
+                                <h:outputText value="#{seg.destino}" />
+                            </p:column>
+                            <p:column headerText="Fech. Envio">
+                                <h:outputText value="#{seg.fechaenvio}" />
+                            </p:column>
+                            <p:column headerText="Fech. Ing">
+                                <h:outputText value="#{seg.fechaingr}" />
+                            </p:column>
+                            <p:column headerText="Indicador">
+                                <h:outputText value="#{seg.indicador}" />
+                            </p:column>
+                            <p:column headerText="Obs.">
+                                <h:outputText value="#{seg.observacion}" />
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{seg.estado}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                    <p:dialog header="Derivación - #{expedientes_Ogpl.nombOficina}" widgetVar="derivarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" position="center center" closeOnEscape="true">
+                        <p:panelGrid columns="2" id="panelDeriv">
+                            <p:outputLabel value="Tipo de Documento: "/>
+                            <p:selectOneMenu id="tipodocum" value="#{expedientes_Ogpl.docunombre}">
+                                <f:selectItem itemLabel="Seleccione" itemValue=" "/>
+                                <f:selectItems value="#{expedientes_Ogpl.tiposdocus}"/>
+                                <p:ajax event="change" listener="#{expedientes_Ogpl.RealizarCambio()}" update="panelDeriv" />                                
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Documento: "/>
+                            <p:outputLabel value="#{expedientes_Ogpl.docunombre} N° #{expedientes_Ogpl.correlativo}-#{expedientes_Ogpl.siglasdocus}-#{expedientes_Ogpl.fechanio}"/>
+                            <p:outputLabel value="Asunto: "/>
+                            <p:inputTextarea  rows="2" cols="45" value="#{expedientes_Ogpl.asunto}" style="text-transform:uppercase;"/>
+                            <p:outputLabel value="Referencia: "/>
+                            <p:outputLabel value="Expediente(s) #{expedientes_Ogpl.numtramaux}"/>
+                            <p:outputLabel value="Oficina Interna: "/>
+                            <p:selectOneMenu id="identif" value="#{expedientes_Ogpl.codinterno}">
+                                <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="100392" />
+                                <f:selectItem itemLabel="OFICINA DE PRESUPUESTO" itemValue="1001868" />
+                                <f:selectItem itemLabel="OFICINA DE RACIONALIZACION" itemValue="1001869" />
+                                <f:selectItem itemLabel="OFICINA DE ESTADISTICA E INFORMATICA" itemValue="1001870" />
+                                <f:selectItem itemLabel="OFICINA DE COORDINACION DE CENPRO" itemValue="1001871" />
+                                <f:selectItem itemLabel="OFICINA DE PLANES Y PROGRAMAS" itemValue="1001872" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Estado: "/>
+                            <p:outputLabel id="estado" value="#{expedientes_Ogpl.estado}"/>
+                            <p:outputLabel value="Fecha: "/>
+                            <p:inputMask value="#{expedientes_Ogpl.fechadia}" mask="99/99/9999" />
+                            <p:outputLabel value="Hora: " />
+                            <p:outputLabel value="#{expedientes_Ogpl.fechahora}" />
+                            <p:outputLabel value="Motivo: " />
+                            <p:outputLabel value="#{expedientes_Ogpl.motivo}" />
+                            <p:outputLabel value="Usuario: " />
+                            <p:outputLabel value="#{expedientes_Ogpl.usuario}" />
+                        </p:panelGrid>
+                        <br></br>
+                        <center>
+                            <p:commandButton value="Guardar" actionListener="#{expedientes_Ogpl.Guardar()}" update="growl,:form:">
+                                <f:ajax event="click" onevent="derivarDialog.hide()"/>
+                            </p:commandButton>
+                        </center>
+                    </p:dialog>
+                    <br></br>
+                    <br></br>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

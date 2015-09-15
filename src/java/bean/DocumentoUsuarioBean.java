@@ -466,7 +466,6 @@ public class DocumentoUsuarioBean {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "NO SE HA REALIZADO LA ACCION");
         }
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-
     }
 
     public void MostrarParaUsuario2() {
@@ -540,13 +539,6 @@ public class DocumentoUsuarioBean {
                 listaaux.put("indicador", String.valueOf(obj[7]));
                 listaaux.put("observacion", String.valueOf(obj[8]));
                 listaaux.put("estado", String.valueOf(obj[9]));
-                listaaux.put("estadDoc", String.valueOf(obj[10]));
-                /*if (String.valueOf(obj[14]).equals("1")) {
-                 respuesta = di.getRespuesta(String.valueOf(obj[0]), String.valueOf(obj[2]));
-                 listaaux.put("docgene", respuesta);
-                 } else {
-                 listaaux.put("docgene", "SIN RESPUESTA");
-                 }*/
                 listaaux.put("docgene", "SIN RESPUESTA");
                 listaaux.put("usuario", String.valueOf(obj[11]));
                 listaaux.put("origenp", String.valueOf(obj[12]));
@@ -692,7 +684,7 @@ public class DocumentoUsuarioBean {
         FacesMessage message = null;
         for (int i = 0; i < docselec2.size(); i++) {
             HashMap<String, String> hm = (HashMap<String, String>) docselec2.get(i);
-            if (hm.get("estadDoc").toString().equals("SIN CONFIRMAR") || hm.get("estadDoc").toString().equals("DERIVADO") || hm.get("estadDoc").toString().equals("ARCHIVADO")) {
+            if (hm.get("estado").toString().equals("SIN CONFIRMAR") || hm.get("estado").toString().equals("DERIVADO") || hm.get("estado").toString().equals("ARCHIVADO")) {
                 deriva = false;
                 System.out.println("ENTRÓ");
                 break;

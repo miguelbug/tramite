@@ -32,5 +32,11 @@
         <property name="codigo" type="string">
             <column name="CODIGO" length="20" />
         </property>
+        <property name="asunto" type="string">
+            <column name="ASUNTO" length="700" />
+        </property>
+        <property name="destino" type="string">
+            <column name="DESTINO" length="500" />
+        </property>
     </class>
 </hibernate-mapping>

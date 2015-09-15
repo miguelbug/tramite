@@ -10,6 +10,7 @@ import bean.ConstanciaBean;
 import bean.DocumentoUsuarioBean;
 import bean.DocumentosBean;
 import bean.DocusExternosBean;
+import bean.LoginBean;
 import bean.OficioBean;
 import dao.DocumentoDAO;
 import dao.reporteDAO;
@@ -131,10 +132,9 @@ public class objxUnidadController implements Serializable {
             Map<String, String> hm = (HashMap<String, String>) docselec1.get(i);
             tluser.setDocumento(hm.get("documento").toString());
             tluser.setTramNum(hm.get("expediente").toString());
-            tluser.setDocumentoPrinc(hm.get("docuprinc").toString());
             tluser.setFecha(formatter.parse(hm.get("fecha").toString()));
-            tluser.setOrigenPrinc(hm.get("origenprinc").toString());
-            tluser.setCodigo(dd.getFlag(hm.get("origenprinc").toString()));
+            tluser.setDestino(hm.get("destinoofi").toString());
+            tluser.setResponsable(hm.get("asignado").toString());
             tluser.setImpreso("1");
             tluser.setReimpreso("0");
             tdi.guardarTemporalUser(tluser);
@@ -646,7 +646,11 @@ public class objxUnidadController implements Serializable {
     }
 
     public void mostrarReporteFecha2() throws SQLException {
-
+        if(LoginBean.oficina3==true){
+            
+        }else{
+            
+        }
         context = FacesContext.getCurrentInstance();
         serveltcontext = (ServletContext) context.getExternalContext().getContext();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);

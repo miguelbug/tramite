@@ -215,10 +215,10 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                    <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <center>
                             <br></br>
-                            <p:panelGrid columns="2">
+                            <h:panelGrid columns="2" cellspacing="4">
                                 <p:outputLabel value="Tipo de Documento:"/>
                                 <p:selectOneMenu value="#{objxUnidadController.tipodocumento1}">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -228,15 +228,15 @@
                                     <f:selectItem itemLabel="MEMOS" itemValue="7"/>
                                     <f:selectItem itemLabel="ARCHIVO" itemValue="9"/>
                                 </p:selectOneMenu>
-                            </p:panelGrid>
+                            </h:panelGrid>
                             <br></br>
-                            <p:panelGrid columns="4">
+                            <h:panelGrid columns="4" cellspacing="4">
                                 <p:outputLabel value="Desde:"/>
                                 <p:calendar value="#{objxUnidadController.date3}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                                 <p:outputLabel value="Hasta:"/>
                                 <p:calendar value="#{objxUnidadController.date4}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
 
-                            </p:panelGrid>
+                            </h:panelGrid>
                             <br></br>
                             <p:commandButton id="mostrado1" value="Exportar" actionListener="#{objxUnidadController.mostrarReporteFecha2()}" ajax="false" title="Reporte">
                                 <f:ajax event="click" onevent="reporteDialog1.close()"/>
@@ -246,22 +246,22 @@
                     <p:dialog header="Reporte Documento por Fecha" widgetVar="reporteDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                         <center>
                             <br></br>
-                            <p:panelGrid columns="2">
+                            <h:panelGrid columns="2">
                                 <p:outputLabel value="Tipo de Documento:"/>
                                 <p:selectOneMenu value="#{objxUnidadController.tipodocumento2}">
                                     <f:selectItem itemLabel="Seleccione" itemValue=" "/>
                                     <f:selectItem itemLabel="OFICIOS CIRCULARES" itemValue="3"/>
                                     <f:selectItem itemLabel="INFORMES CIRCULARES" itemValue="5"/>
                                 </p:selectOneMenu>
-                            </p:panelGrid>
+                            </h:panelGrid>
                             <br></br>
-                            <p:panelGrid columns="4">
+                            <h:panelGrid columns="4">
                                 <p:outputLabel value="Desde:"/>
                                 <p:calendar value="#{objxUnidadController.date5}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
                                 <p:outputLabel value="Hasta:"/>
                                 <p:calendar value="#{objxUnidadController.date6}" mode="inline" navigator="true" pattern="dd-MM-yyyy" locale="es"/>
 
-                            </p:panelGrid>
+                            </h:panelGrid>
                             <br></br>
                             <p:commandButton id="mostrado2" value="Exportar" actionListener="#{objxUnidadController.mostrarReporteFecha3()}" ajax="false" title="Reporte">
                                 <f:ajax event="click" onevent="reporteDialog2.close()"/>
@@ -270,7 +270,7 @@
                     </p:dialog>
                     <!--NUEVO-->
                     <p:dialog closeOnEscape="true" header="Generar Documento" widgetVar="DocuDialog" modal="true" showEffect="fade" hideEffect="fade" position="center center" resizable="false" id="docudialog">
-                        <p:panelGrid columns="2" id="panelOfUn2">
+                        <h:panelGrid columns="2" id="panelOfUn2">
                             <p:outputLabel value="Tipo de Documento:"/>
                             <p:selectOneMenu id="tipodocuofunic2" value="#{oficioBean.escogido2}">
                                 <f:selectItem itemLabel="Seleccione" itemValue=" "/>
@@ -316,7 +316,7 @@
                                 <f:selectItem itemLabel="OFICINA GENERAL DE PLANIFICACION" itemValue="OFICINA GENERAL DE PLANIFICACION"/>
                                 <f:selectItems value="#{oficioBean.destinos}"/>
                             </p:selectOneMenu>
-                        </p:panelGrid>
+                        </h:panelGrid>
                         <br></br>
                         <center>
                             <p:commandButton value="Guardar" actionListener="#{oficioBean.guardar_documentoOfiInt()}" update="docudialog">

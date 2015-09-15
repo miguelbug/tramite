@@ -7,10 +7,6 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.persistence.EntityManager;
-import org.hibernate.Session;
-import org.hibernate.impl.SessionFactoryImpl;
-import org.hibernate.jdbc.Work;
 
 /**
  *

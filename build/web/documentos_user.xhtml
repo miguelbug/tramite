@@ -9,7 +9,6 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>DOCUMENTOS</title>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
     </h:head>
     <h:body style="background-color: #D0D0D0;" >
@@ -54,8 +53,8 @@
                                     <p:column headerText="OBSERVACION" width="5" sortBy="#{item.observacion}" filterBy="#{item.observacion}" filterMatchMode="contains">
                                         <h:outputText value="#{item.observacion}" />
                                     </p:column>
-                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estadDoc}" filterBy="#{item.estadDoc}" filterMatchMode="contains">
-                                        <h:outputText value="#{item.estadDoc}" />
+                                    <p:column headerText="ESTADO" width="5" sortBy="#{item.estado}" filterBy="#{item.estado}" filterMatchMode="contains">
+                                        <h:outputText value="#{item.estado}" />
                                     </p:column>
                                     <p:column headerText="MOV." width="5" style="text-align: center">
                                         <h:outputText value="#{item.movimnum}"/>
