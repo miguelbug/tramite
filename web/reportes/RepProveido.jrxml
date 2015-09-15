@@ -249,7 +249,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="67"
+						y="82"
 						width="90"
 						height="19"
 						key="staticText-10"/>
@@ -262,7 +262,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<staticText>
 					<reportElement
 						x="0"
-						y="87"
+						y="102"
 						width="90"
 						height="19"
 						key="staticText-11"/>
@@ -290,7 +290,7 @@ ORDER BY DE.ID DESC]]></queryString>
 						x="101"
 						y="48"
 						width="420"
-						height="19"
+						height="32"
 						key="textField-5"/>
 					<box></box>
 					<textElement>
@@ -301,7 +301,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="67"
+						y="82"
 						width="310"
 						height="20"
 						key="textField-7"/>
@@ -314,7 +314,7 @@ ORDER BY DE.ID DESC]]></queryString>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="101"
-						y="88"
+						y="103"
 						width="420"
 						height="19"
 						key="textField-8"/>
