@@ -24,7 +24,7 @@
             <column name="NUMERODOC" length="60" />
         </property>
         <property name="asunto" type="string">
-            <column name="ASUNTO" length="300" />
+            <column name="ASUNTO" length="700" />
         </property>
         <property name="fecha" type="date">
             <column name="FECHA" length="7" />
