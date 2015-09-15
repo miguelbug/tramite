@@ -538,7 +538,7 @@ public class DocumentoUsuarioBean {
                 listaaux.put("fechaingr", String.valueOf(obj[6]));
                 listaaux.put("indicador", String.valueOf(obj[7]));
                 listaaux.put("observacion", String.valueOf(obj[8]));
-                listaaux.put("estado", String.valueOf(obj[9]));
+                listaaux.put("estado", String.valueOf(obj[10]));
                 listaaux.put("docgene", "SIN RESPUESTA");
                 listaaux.put("usuario", String.valueOf(obj[11]));
                 listaaux.put("origenp", String.valueOf(obj[12]));
